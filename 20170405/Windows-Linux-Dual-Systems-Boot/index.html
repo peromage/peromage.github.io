@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Windows + Linux 双系统引导手记 | Doghouse</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="0x00 情况简述由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。这台电脑的基本情况是这样的，64GB 固态硬盘 + 720GB 机械硬盘（实际可用空间有折损，这里为了表示方便），Windows 10 已经安装到了固态硬盘上。由于主板较老，只能支持 BIOS。巨硬又说过 Windows 只能支持 BIOS + MBR，所以第一块主位（Master）上的固态硬盘就只能采用 MBR">
+<meta name="keywords" content="多系统,引导,Windows,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows + Linux 双系统引导手记">
+<meta property="og:url" content="https://peromage.github.io/20170405/Windows-Linux-Dual-Systems-Boot/index.html">
+<meta property="og:site_name" content="Doghouse">
+<meta property="og:description" content="0x00 情况简述由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。这台电脑的基本情况是这样的，64GB 固态硬盘 + 720GB 机械硬盘（实际可用空间有折损，这里为了表示方便），Windows 10 已经安装到了固态硬盘上。由于主板较老，只能支持 BIOS。巨硬又说过 Windows 只能支持 BIOS + MBR，所以第一块主位（Master）上的固态硬盘就只能采用 MBR">
+<meta property="og:updated_time" content="2017-04-05T23:26:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows + Linux 双系统引导手记">
+<meta name="twitter:description" content="0x00 情况简述由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。这台电脑的基本情况是这样的，64GB 固态硬盘 + 720GB 机械硬盘（实际可用空间有折损，这里为了表示方便），Windows 10 已经安装到了固态硬盘上。由于主板较老，只能支持 BIOS。巨硬又说过 Windows 只能支持 BIOS + MBR，所以第一块主位（Master）上的固态硬盘就只能采用 MBR">
+  
+    <link rel="alternate" href="/atom.xml" title="Doghouse" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Doghouse</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://peromage.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Windows-Linux-Dual-Systems-Boot" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/20170405/Windows-Linux-Dual-Systems-Boot/" class="article-date">
+  <time datetime="2017-04-05T23:26:41.000Z" itemprop="datePublished">2017-04-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Fixit/">Fixit</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Windows + Linux 双系统引导手记
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="0x00-情况简述"><a href="#0x00-情况简述" class="headerlink" title="0x00 情况简述"></a>0x00 情况简述</h1><p>由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。<br>这台电脑的基本情况是这样的，64GB 固态硬盘 + 720GB 机械硬盘（实际可用空间有折损，这里为了表示方便），Windows 10 已经安装到了固态硬盘上。由于主板较老，只能支持 BIOS。巨硬又说过 Windows 只能支持 BIOS + MBR，所以第一块主位（Master）上的固态硬盘就只能采用 MBR 分区表，分成了两个区，500MB 用作启动分区，剩下的部分全部划给了系统分区。<br>但是 Linux 表示没有巨硬这种尿性，所以为什么不使用更先进的 GPT 分区表？因此从位（Slave）上的机械硬盘被我分成了这个样子：<br><strong>10MB BIOS 启动分区（No File System） + 500MB /boot 启动挂载点（EXT4） + 100GB / 根挂载点（EXT4） +  199.5GB /home 用户目录挂载点（EXT4） + 420GB Windows 数据分区（NTFS）</strong>。<br>BIOS 启动分区 1MB 足以，我只是考虑到后续扩展问题。之后在第二块硬盘上安装了 Arch Linux。  </p>
+<h1 id="0x01-有啥好折腾的？"><a href="#0x01-有啥好折腾的？" class="headerlink" title="0x01 有啥好折腾的？"></a>0x01 有啥好折腾的？</h1><p>双系统安装好以后相安无事，BIOS 默认从主位固态硬盘启动。也就是说开机不进行任何操作的话，默认进入的是 Windows 10。只有在开机的时候使用 BIOS 的 Fast Boot 功能，选择从第二块硬盘启动才能进入 Arch Linux。换句话说两个系统彼此都是透明的。<br>但是作为一个强迫症和完美主义者，万一我想进入 Linux，但是开机的时候错过了，岂不是要重启一次才行？或者万一我又反悔想进入 Windows 又要重启一次？这怎么能忍，所以才有了这次的折腾……</p>
+<h1 id="0x02-在-GRUB-中添加引导菜单"><a href="#0x02-在-GRUB-中添加引导菜单" class="headerlink" title="0x02 在 GRUB 中添加引导菜单"></a>0x02 在 GRUB 中添加引导菜单</h1><p>对于 GRUB （注：这里所说的 GRUB 指的是 GRUB 2 而不是 GRUB Legacy） 引导的 Linux 来说，切换到 Windows 的 <em>bootmgr</em> 是一件很容易的事情，最新版的 GRUB 可以直接启动 <em>bootmgr</em> 而不需要之前的 chainloading 模式。<br>进入 Arch Linux，以 root 权限编辑 <strong><em>/etc/grub.d/40_custom</em></strong> ，加入以下菜单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">menuentry &quot;Switch to Microsoft Boot Manager&quot; &#123;</div><div class="line">    insmod part_msdos</div><div class="line">    insmod ntfs</div><div class="line">    insmod search_fs_uuid</div><div class="line">    insmod ntldr     </div><div class="line">    search --fs-uuid --set=root  69B235F6749E84CE</div><div class="line">    ntldr /bootmgr</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p><code>insmod</code> 是用于加载必要的模块以便 GRUB 识别并正确启动 Windows。值得注意的是，<code>search</code> 一行指定的 UUID 与 Linux 下 <strong><code>lsblk -f</code></strong> 看到的 UUID 是不一样的，需要使用 <strong><code>sudo grub-probe --target=fs_uuid -d /dev/sda1</code></strong> 来获取 GRUB 下对应的分区 UUID。这个例子中，Windows 启动分区是 <em>sda1</em>。UUID 是唯一的，勿照搬。  </p>
+<p>当然也可以使用传统的 chainloading 模式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">menuentry &quot;Switch to Microsoft Boot Manager&quot; &#123;</div><div class="line">    insmod part_msdos</div><div class="line">    insmod ntfs</div><div class="line">    insmod search_fs_uuid  </div><div class="line">    search --fs-uuid --set=root  69B235F6749E84CE</div><div class="line">    chainloader +1</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>保存以后，执行 <strong><code>sudo grub-mkconfig -o /boot/grub/grub.cfg</code></strong> ，以便更新启动菜单。<br>不推荐直接编辑 <strong><em>/boot/grub/grub.cfg</em></strong>，因为上述命令会覆盖这个文件，不便于自定义菜单的管理。<br>这样就可以直接跳转到 <em>bootmgr</em>，让它去启动 Windows。  </p>
+<h1 id="0x03-BCD-寻思"><a href="#0x03-BCD-寻思" class="headerlink" title="0x03 BCD 寻思"></a>0x03 BCD 寻思</h1><p>BCD 是Windows Vista 之后使用的一种启动管理器。有个非常蛋疼的问题就在于，BCD 并不支持 EXT4 分区格式，所以没有办法读到 GRUB。查阅了相关资料，给出的解决办法就是，将 <strong><em>/boot</em></strong> 分区格式化成 FAT32 的文件系统。难道我还得再折腾一次文件系统？直觉告诉我一定还有其他的办法。<br>既然 BCD 没办法直接读 EXT4 分区里面的东西，我们可以曲线救国。BCD 里面提供了一种实模式启动的方式，允许读取一个包含了启动代码的文件。所以一种解决办法就是 <strong>BCD → MBR → VBR → Bootloader</strong>。由于 GPT 磁盘的第一个扇区被划分成了 Protective MBR，用于兼容 BIOS，所以在 Linux 使用：<br><strong><code>sudo dd if=/dev/sdb of=/mnt/reserved/grub.bin bs=512 count=1</code></strong><br>可以将第二块硬盘的第一扇区里面的启动代码导出到一个文件，然后使用 BCD 加载这个文件就可以启动 GRUB了。<br>果真如此？<br>事实是，这种方法可行，但是并不适用我的情况，因为这是建立在 Windows 和 Linux 安装在同一块硬盘上的情形。<em>grub.bin</em> 并不能够跨分区寻找 VBR。难道只能作罢？肯定不可能，不然就没有这篇文章了。<br>查阅了若干文档之后，得知 GRUB 提供了一个 叫做 <em>lnxboot.img</em> 文件，可以将 GRUB 启动阶段模拟成一个可以启动的 Linux 内核，然后挂载 <em>core.img</em> 里面必要的模块，从而顺利启动 GRUB。那么将之前的思路修改成 <strong>BCD → VBR → Bootloader</strong> 就行了，即既然 MBR 不能跨分区以及识别 GPT，那么我们就换成一个可以胜任的不就行了。  </p>
+<h1 id="0x04-制作启动镜像"><a href="#0x04-制作启动镜像" class="headerlink" title="0x04 制作启动镜像"></a>0x04 制作启动镜像</h1><p>进入 Arch Linux。虽然在 <strong><em>/boot/grub/i386-pc/</em></strong> 目录下有一个用于启动的 <em>core.img</em> 文件，这个文件里面指定的模块路径是相对路径，使用它启动依然会显示错误，需要指定绝对路径以保证万无一失。那么我们就来手动生成一个，顺便集成一些我们需要的模块。<br>注意，启动镜像稍后会被放在 Windows 的启动分区下面（BCD 的启动分区），所以还需要知道模块所在分区的位置。在 GRUB 中表示磁盘的方式有所不同，如 <em>(hd0,msdos1)</em> 表示第一块磁盘，使用 MBR 分区表，第一个分区； <em>(hd1,gpt2)</em>  表示第二块磁盘，使用 GPT分区表，第二个分区。括号不可省，磁盘和分区的起始数字不一样。</p>
+<p>使用  <code>grub-probe</code> 来获取 <strong><em>/boot</em></strong> 分区信息。这个例子得到的是 <em>hd1,gpt2</em>：<br><strong><code>sudo grub-probe --target=bios_hints /boot</code></strong>  </p>
+<p>生成 <em>core.img</em>：<br><strong><code>sudo grub-mkimage --output=/tmp/core.img --prefix=\(hd1,gpt2\)/grub --format=i386-pc biosdisk part_msdos part_gpt ext2</code></strong><br>注意像我这样 <strong><em>/boot</em></strong> 单独分区，prefix 就不需要写成 <strong><em>\(hd1,gpt2\)/boot/grub</em></strong>，毕竟已经在 <strong><em>/boot</em></strong> 里面了嘛。默认没有 GPT 支持，所以还需要添加 GPT 模块。</p>
+<p>生成启动镜像：<br>按照 GRUB 的帮助文档，<em>lnxboot.img</em> 需要放在 <em>core.img</em> 之前，由 <em>lnxboot.img</em> 来加载 <em>core.img</em>。所幸 BCD 可以一次读取大于一个扇区（512B）的内容，所以将这两个文件合并一下即可：<br><strong><code>sudo cat /usr/lib/grub/i386-pc/lnxboot.img /tmp/core.img &gt; /tmp/grub4bcd.img</code></strong>  </p>
+<p>然后将 <em>grub4bcd.img</em> 放到 Windows 启动分区根目录下面就可以了。注意内核默认只能以只读模式挂载 NFTS 文件系统，需要安装扩展包才能读写：<br><strong><code>sudo pacman -S ntfs-3g</code></strong><br>然后挂载（安装了上述扩展包之后甚至不用指定参数）：<br><strong><code>sudo mount /dev/sda1 /mnt/reserved</code></strong>  </p>
+<p>现在就可以顺利地将启动镜像复制到 Windows 启动分区下面了。</p>
+<h1 id="0x05-在-BCD-中添加引导菜单"><a href="#0x05-在-BCD-中添加引导菜单" class="headerlink" title="0x05 在 BCD 中添加引导菜单"></a>0x05 在 BCD 中添加引导菜单</h1><p>重启进入 Windows 10。以管理员权限打开命令行。  </p>
+<p>添加入口：<br><strong><code>bcdedit /create /d &quot;Switch to GRUB&quot; /application bootsector</code></strong><br>会返回一串 UUID，复制下来。之后 UUID 的地方我用 <strong>{ID}</strong> 表示，用刚才得到的替换即可。  </p>
+<p>设置启动分区：<br><strong><code>bcdedit /set {ID} device boot</code></strong>  </p>
+<p>设置启动文件：<br><strong><code>Bcdedit /set {ID} path /grub4bcd.img</code></strong>  </p>
+<p>将入口添加进启动菜单：<br><strong><code>bcdedit /displayorder {ID} /addlast</code></strong>  </p>
+<p>关闭 Metro 启动菜单（不关闭的话切换时会重启，建议关闭）：<br><strong><code>bcdedit /set {default} bootmenupolicy legacy</code></strong></p>
+<p>最后关闭 Windows 10 的 Hybrid 开机功能，否则可能会导致 Windows 丢失数据：<br><strong><code>powercfg /h off</code></strong>  </p>
+<h1 id="0x06-后记"><a href="#0x06-后记" class="headerlink" title="0x06 后记"></a>0x06 后记</h1><p>现在终于可以愉快地切换两个引导菜单了。其实使用 GRUB 来管理两个系统是较为简单的办法。<br>更为简单的办法是，先装 Windows 然后装 Ubuntu，后者会自动搞定这些麻烦事。╮(╯_╰)╭  </p>
+<h1 id="0x07-参考资料"><a href="#0x07-参考资料" class="headerlink" title="0x07 参考资料"></a>0x07 参考资料</h1><p><em><a href="https://www.gnu.org/software/grub/manual/grub.html#Images" target="_blank" rel="external">https://www.gnu.org/software/grub/manual/grub.html#Images</a></em><br><em><a href="http://askubuntu.com/questions/180033/how-to-add-different-drive-ubuntu-to-bcd-manually" target="_blank" rel="external">http://askubuntu.com/questions/180033/how-to-add-different-drive-ubuntu-to-bcd-manually</a></em><br><em><a href="https://wiki.archlinux.org/index.php/Talk:Dual_boot_with_Windows" target="_blank" rel="external">https://wiki.archlinux.org/index.php/Talk:Dual_boot_with_Windows</a></em><br><em><a href="https://wiki.archlinux.org/index.php/Dual_boot_with_Windows" target="_blank" rel="external">https://wiki.archlinux.org/index.php/Dual_boot_with_Windows</a></em>  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://peromage.github.io/20170405/Windows-Linux-Dual-Systems-Boot/" data-id="cj16stakf0000bsfaqhkpsblm" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多系统/">多系统</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/引导/">引导</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Catégories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Fixit/">Fixit</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多系统/">多系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/引导/">引导</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/多系统/" style="font-size: 10px;">多系统</a> <a href="/tags/引导/" style="font-size: 10px;">引导</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/20170405/Windows-Linux-Dual-Systems-Boot/">Windows + Linux 双系统引导手记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Gouya<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
