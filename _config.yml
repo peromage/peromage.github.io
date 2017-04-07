@@ -3,20 +3,22 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Doghouse
-subtitle:
-description:
+title: Gouya's Blog
+subtitle: 人丑就要多读书
+description: 据说这个是描述
 author: Gouya
 language:
 - zh-cn
 - en
 timezone:
+keywords: 
+email: peromage@outlook.com
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://peromage.github.io/
 root: /
-permalink: :year:month:day/:title/
+permalink: :year/:month:day/:title/
 permalink_defaults:
 
 # Directory
