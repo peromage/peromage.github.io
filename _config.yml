@@ -67,7 +67,9 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+## hexo-theme-indigo: https://github.com/yscoder/hexo-theme-indigo
+#theme: landscape
+theme: indigo
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -76,3 +78,36 @@ deploy:
   repo: https://github.com/peromage/peromage.github.io.git
   branch: master
   message: Site updated {{ now('YYYY-MM-DD HH:mm:ss') }}
+
+########### indigo configuration begiin ##################
+# Feed
+## https://github.com/hexojs/hexo-generator-feed
+feed:
+  type: atom
+  path: atom.xml
+  limit: 0
+
+# jsonContent
+## 为了节约资源，可以对 jsonContent 插件生成的数据字段进行配置，减少数据文件大小。
+## https://github.com/alexbruno/hexo-generator-json-content
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: true
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: false
+    tags: true
+
+
+    ########### indigo configuration end ##################

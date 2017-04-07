@@ -7,9 +7,10 @@
 #    text: About       菜单显示的文字，如果省略即默认与图标一致，首字母会转大写
 #    url: /about       链接，绝对或相对路径，必须。
 #    target: _blank    是否跳出，省略则在当前页面打开
+# 图标选择： http://fontawesome.io/icons/
 menu:
   home:
-    text: 主页
+    text: Home
     url: /
   archives:
     url: /archives
@@ -19,26 +20,23 @@ menu:
     text: Categories
     url: /categories
   github:
-    url: https://github.com/yscoder
+    url: https://github.com/peromage
     target: _blank
-  weibo:
-    url: http://www.weibo.com/ysweb
-    target: _blank
-  link:
-    text: 测试
-    url: /custom
+  user-circle:
+    text: About
+    url: /about
 
 rss: /atom.xml
 
 # 你的头像url
-avatar: /img/avatar.jpg
+avatar: /img/avatar.png
 # 头像背景图
-brand: /img/brand.jpg
+brand: /img/avatar_background.jpg
 # favicon
 favicon: /favicon.ico
 
 # email
-email: 634206017@qq.com
+email: peromage@outlook.com
 
 # 设置 Android L Chrome 浏览器状态栏颜色
 color: '#3F51B5'
@@ -51,7 +49,7 @@ categories_title: Categories
 # 文章截断
 excerpt_render: false
 excerpt_length: 200
-excerpt_link: 阅读全文...
+excerpt_link: More...
 mathjax: false
 archive_yearly: true
 
@@ -62,10 +60,10 @@ show_last_updated: true
 share: true
 
 # 是否开启打赏，关闭 reward: false
-reward:
-  title: 谢谢大爷~
-  wechat: /img/wechat.jpg     #微信，关闭设为 false
-  alipay: /img/alipay.jpg     #支付宝，关闭设为 false
+# reward: 
+#   title: 谢谢大爷~
+#   wechat: /img/wechat.jpg     #微信，关闭设为 false
+#   alipay: /img/alipay.jpg     #支付宝，关闭设为 false
 
 # 是否开启搜索
 search: true
@@ -79,7 +77,7 @@ toc:
   list_number: true  # 是否显示数字排序
 
 # 文章页版权声明内容，hexo中所有变量及辅助函数等均可调用，具体请查阅 hexo.io
-copyright: 这里写留言或版权声明：<a href="<%- url_for(page.path).replace(/index\.html$/, '') %>" target="_blank" rel="external"><%- url.replace(/index\.html$/, '') %></a>
+copyright: 转载请注明出处：<a href="<%- url_for(page.path).replace(/index\.html$/, '') %>" target="_blank" rel="external"><%- url.replace(/index\.html$/, '') %></a>
 
 # 站长统计，如要开启，输入CNZZ站点id，如 cnzz: 1255152447
 cnzz: false
@@ -101,7 +99,7 @@ less:
     - source/css/style.less
 
 # 是否开启多说评论，填写你在多说创建的站点二级域名
-duoshuo: ysblog
+duoshuo: false
 # 是否开启多说评论计数（该服务不稳定）
 duoshuo_count: false
 # 使用 disqus 时关闭多说评论
@@ -116,20 +114,20 @@ uyan_uid: false
 canonical: false
 
 # 版权起始年份
-since_year: 2015
+since_year: 2017
 
 # 用户页面中作者相关的描述性文字，如不需要设为 false
-about: 用户页面中作者相关的描述性文字，如不需要设为 false
+about: 让我想想这里该写啥。
 
 # “不蒜子”访问量统计，详见 http://ibruce.info/2015/04/04/busuanzi/
-visit_counter:
-  site_uv: 站点总访客数：
-  site_pv: 站点总访问量：
+# visit_counter: 
+#   site_uv: 站点总访客数：
+#   site_pv: 站点总访问量：
 
 # 动态定义title
-title_change:
-  normal: (つェ⊂)咦!又好了!
-  leave: 死鬼去哪里了！
+# title_change: 
+#   normal: (つェ⊂)咦!又好了!
+#   leave: 死鬼去哪里了！
 
 # 设置为 true 发布后将使用 unpkg cdn
-cdn: true
+cdn: false
