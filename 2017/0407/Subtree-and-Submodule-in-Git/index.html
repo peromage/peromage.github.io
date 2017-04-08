@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Git 中的 Subtree 和 Submodule | Gouya&#39;s Blog | 人丑就要多读书</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Git,Subtree,Submodule,Teamwork">
+    <meta name="description" content="因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。   为什么有这样的需求版本库嵌套很好理解，就是在一个 Git 仓库里面包含了其他的 Git 仓库。通常有这样的需求往往涉及到协同开发。比如这里有一个插件单独的 Git 仓库姑且叫“Plugin”。现在我创建了一个自己的项目，其中需要用到这个“Plugin”插件。通常比较笨的办法就是把插件库源码拖下来，复制到自己的项目里。">
+<meta name="keywords" content="Git,Subtree,Submodule,Teamwork">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 中的 Subtree 和 Submodule">
+<meta property="og:url" content="https://peromage.github.io/2017/0407/Subtree-and-Submodule-in-Git/index.html">
+<meta property="og:site_name" content="Gouya's Blog">
+<meta property="og:description" content="因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。   为什么有这样的需求版本库嵌套很好理解，就是在一个 Git 仓库里面包含了其他的 Git 仓库。通常有这样的需求往往涉及到协同开发。比如这里有一个插件单独的 Git 仓库姑且叫“Plugin”。现在我创建了一个自己的项目，其中需要用到这个“Plugin”插件。通常比较笨的办法就是把插件库源码拖下来，复制到自己的项目里。">
+<meta property="og:updated_time" content="2017-04-08T00:53:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git 中的 Subtree 和 Submodule">
+<meta name="twitter:description" content="因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。   为什么有这样的需求版本库嵌套很好理解，就是在一个 Git 仓库里面包含了其他的 Git 仓库。通常有这样的需求往往涉及到协同开发。比如这里有一个插件单独的 Git 仓库姑且叫“Plugin”。现在我创建了一个自己的项目，其中需要用到这个“Plugin”插件。通常比较笨的办法就是把插件库源码拖下来，复制到自己的项目里。">
+    
+        <link rel="alternative" href="/atom.xml" title="Gouya&#39;s Blog" type="application/atom+xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.5.2">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/avatar_background.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Gouya</h5>
+          <a href="mailto:peromage@outlook.com" title="peromage@outlook.com" class="mail">peromage@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/peromage" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user-circle"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Git 中的 Subtree 和 Submodule</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Git 中的 Subtree 和 Submodule</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-08T00:53:53.000Z" itemprop="datePublished" class="page-time">
+  2017-04-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Git/">Git</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#为什么有这样的需求"><span class="post-toc-number">1.</span> <span class="post-toc-text">为什么有这样的需求</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Submodule"><span class="post-toc-number">2.</span> <span class="post-toc-text">Submodule</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#添加子模块"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">添加子模块</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#修改子模块"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">修改子模块</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#更新子模块"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">更新子模块</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#克隆项目"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">克隆项目</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#删除子模块"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">删除子模块</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#子模块的坑"><span class="post-toc-number">2.6.</span> <span class="post-toc-text">子模块的坑</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#提交的坑"><span class="post-toc-number">2.6.1.</span> <span class="post-toc-text">提交的坑</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#初始化的坑"><span class="post-toc-number">2.6.2.</span> <span class="post-toc-text">初始化的坑</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Subtree"><span class="post-toc-number">3.</span> <span class="post-toc-text">Subtree</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#添加子项目"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">添加子项目</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#修改子项目"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">修改子项目</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#更新子项目"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">更新子项目</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#删除子项目"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">删除子项目</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Submodule-vs-Subtree"><span class="post-toc-number">4.</span> <span class="post-toc-text">Submodule vs. Subtree</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-Subtree-and-Submodule-in-Git"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Git 中的 Subtree 和 Submodule</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017年04月07日 20:53" datetime="2017-04-08T00:53:53.000Z"  itemprop="datePublished">2017-04-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Git/">Git</a></li></ul>
+
+
+
+            
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。  </p>
+<h1 id="为什么有这样的需求"><a href="#为什么有这样的需求" class="headerlink" title="为什么有这样的需求"></a>为什么有这样的需求</h1><p>版本库嵌套很好理解，就是在一个 Git 仓库里面包含了其他的 Git 仓库。通常有这样的需求往往涉及到协同开发。比如这里有一个插件单独的 Git 仓库姑且叫“Plugin”。现在我创建了一个自己的项目，其中需要用到这个“Plugin”插件。通常比较笨的办法就是把插件库源码拖下来，复制到自己的项目里。但是这样当插件库更新的时候，插件源码更新往往比较麻烦。而且如果在使用的过程中修改了插件的源码，也不便于插件单独的版本控制，更别说为插件库贡献代码了。但如果插件单独以 Git 仓库存在于我的项目目录中，以上的问题就解决了。  </p>
+<p>在 Git 里面提供了两种方式实现上述需求，那就是 Subtree 和 Submodule。  </p>
+<h1 id="Submodule"><a href="#Submodule" class="headerlink" title="Submodule"></a>Submodule</h1><p>Submodule 是 Git 里面最早提供的一种方法。顾名思义“子模块”。  </p>
+<h2 id="添加子模块"><a href="#添加子模块" class="headerlink" title="添加子模块"></a>添加子模块</h2><p>执行<br><code>git submodule add &lt;repo&gt; &lt;module_path&gt;</code>  </p>
+<p>此时运行 <code>git status</code> 可以看到子模块对应的文件夹和一个叫做 <em>.gitmodules</em> 文件被添加进了暂存区。其中<em>.gitmodules</em>是用于记录子模块相关信息的。之后主项目里面的操作照常提交就可以了。  </p>
+<h2 id="修改子模块"><a href="#修改子模块" class="headerlink" title="修改子模块"></a>修改子模块</h2><p>但如果在开发的途中修改了子模块的代码，需要单独到子模块对应的根目录里面进行子模块单独的提交操作。在主项目里面虽然可以看到子模块有变更，但是无法看到具体的更改操作，而是将其看作一个模块整体。一旦子模块产生了新的提交，主项目里面可以看到子模块的 HEAD 变化，从而主项目也应当产生一个新的提交以记录对应关系。<br>换句话说，主项目就是靠着记录子模块 HEAD 值来判断依赖的。<strong>子模块的代码最后将不会进入主项目的版本库里面（只有 HEAD 值）</strong>  </p>
+<p>现在子模块有了新的提交，为了将服务器上的代码更新，我们只需要进入子模块对应的更目录执行 push 操作就可以了。  </p>
+<h2 id="更新子模块"><a href="#更新子模块" class="headerlink" title="更新子模块"></a>更新子模块</h2><p>此时子模块上游有了新的代码，我们需要将其整合到当前的项目中。有两种方法。 </p>
+<p>在主项目根目录下运行<br><code>git submodule foreach git pull</code>  </p>
+<p>或者切换到子模块的根目录下面<br><code>git pull</code></p>
+<h2 id="克隆项目"><a href="#克隆项目" class="headerlink" title="克隆项目"></a>克隆项目</h2><p>克隆主项目的时候子模块并不会拉取到本地，如果进入对应的目录会发现是空的。<br>此时应当<br><code>git submodule init</code><br>保持最新<br><code>git submodule update</code>  </p>
+<p>或者可以直接一条命令搞定<br><code>git clone --recursive &lt;repo&gt;</code></p>
+<h2 id="删除子模块"><a href="#删除子模块" class="headerlink" title="删除子模块"></a>删除子模块</h2><p>Git 中没有提供直接删除的命令，需要手动完成删除操作。  </p>
+<p>反向初始化子模块<br><code>git submodule deinit --force &lt;module_path&gt;</code><br>或者直接删掉 <em>.git/config</em> 里相关信息  </p>
+<p>移除子模块<br><code>git rm &lt;module_path&gt;</code>  </p>
+<p>如果暂存区还有<br><code>git rm --cached &lt;module_path&gt;</code>  </p>
+<h2 id="子模块的坑"><a href="#子模块的坑" class="headerlink" title="子模块的坑"></a>子模块的坑</h2><h3 id="提交的坑"><a href="#提交的坑" class="headerlink" title="提交的坑"></a>提交的坑</h3><p>假设有 A B 两个人同时在开发一个项目，这个项目里面也包含了一个子模块。此时 A 修改了业务代码，同时修改了一个子模块里面的一个 bug 。A 将这次修改提交，主项目的提交里面指向了子模块新的 HEAD1 ，然后把主项目的版本库 push 到了服务器，但是没有 push 子模块。B 此时 pull 了主项目，然后 update 子模块，被告知找不到子模块的 HEAD1 。因为指向 HEAD1 的提交还在 A 本地机器上。<br>这就是子模块提交的坑。在多个模块存在的时候操作非常繁琐。  </p>
+<h3 id="初始化的坑"><a href="#初始化的坑" class="headerlink" title="初始化的坑"></a>初始化的坑</h3><p>在执行 <code>git submodule init</code>， <code>git submodule update</code> 之后，此时修改子模块可能出现 HEAD 处于游离状态的的提示。如果不注意极有可能出现丢失提交的可能。<br>解决办法，在以上两条命令之后执行一次检出<br><code>git checkout &lt;branch&gt;</code>  </p>
+<h1 id="Subtree"><a href="#Subtree" class="headerlink" title="Subtree"></a>Subtree</h1><h2 id="添加子项目"><a href="#添加子项目" class="headerlink" title="添加子项目"></a>添加子项目</h2><p>首先添加子项目对应的远程服务器<br><code>git remote add &lt;subrepo_name&gt; &lt;subrepo_remote&gt;</code>  </p>
+<p>拉取一下<br><code>git fetch &lt;subrepo_name&gt;</code>  </p>
+<p>添加子项目到父项目里面<br><code>git subtree add --squash --prefix=&lt;subrepo_path&gt; &lt;subrepo_name&gt; &lt;branch&gt;</code><br>参数 <em>–squash</em> 作用在于合并子项目所有提交为一个，并 merge 到父项目的历史中，这样只会出现两个提交记录，避免子项目的提交历史污染父项目。更多讨论可以看<a href="http://www.fwolf.com/blog/post/246" target="_blank" rel="external"><strong>这里</strong></a>。  </p>
+<h2 id="修改子项目"><a href="#修改子项目" class="headerlink" title="修改子项目"></a>修改子项目</h2><p>添加完毕之后照常修改提交各种操作，父项目能够跟踪子项目里面的所有变更。子项目被当做一个正常的子文件夹处理。  </p>
+<p>如果现在修改了子项目里的一个 bug 并且想要反馈给上游，可以这样操作<br><code>git subtree push --prefix=&lt;subrepo_path&gt; &lt;subrepo_name&gt; &lt;bug_fixed&gt;</code><br>这个操作可以将父项目里所有涉及子项目修改的提交检出。这样在远程仓库里面会出现一个叫做 <em>bug_fixed</em> 的分支。</p>
+<p>或者也可以这样操作<br><code>git subtree split --prefix=&lt;subrepo_path&gt; --branch &lt;new_branch_name&gt;</code><br>这个操作跟上面一样将父项目里所有涉及子项目修改的提交检出，并且把子项目的根文件夹设为整个项目的根文件夹，然后检出为父项目的一个新的分支。  </p>
+<p>然后推送给上游<br><code>git push &lt;subrepo_remote&gt; &lt;new_branch_name&gt;:&lt;bug_fixed&gt;</code>  </p>
+<p>之后删除对应本地分支就可以了。  </p>
+<h2 id="更新子项目"><a href="#更新子项目" class="headerlink" title="更新子项目"></a>更新子项目</h2><p>拉取非常方便<br><code>git subtree pull --prefix=&lt;subrepo_path&gt; &lt;subrepo_name&gt; &lt;branch&gt;</code>  </p>
+<h2 id="删除子项目"><a href="#删除子项目" class="headerlink" title="删除子项目"></a>删除子项目</h2><p>因为子项目在父项目里面就是被当做一个普通的文件夹处理的，所以直接移除文件夹并提交就可以了。  </p>
+<h1 id="Submodule-vs-Subtree"><a href="#Submodule-vs-Subtree" class="headerlink" title="Submodule vs. Subtree"></a>Submodule vs. Subtree</h1><p>Git 官方推荐使用新的 Subtree ，事实证明的确比 Submodule 方便不少。Subtree 不会产生额外的文件，而且子项目的代码包含在父项目里面，不会出现前面提到的坑的问题。具体应用上的对比可以参考<a href="https://gist.github.com/kvnsmth/4688345" target="_blank" rel="external"><strong>这篇文章</strong></a>。Subtree 对于代码迭代较快的项目尤为适合。</p>
+<p>但也不是说 Submodule 一无是处， Submodule 在我感觉最大的意义在于可以隔离子项目的业务代码，并且记录严格的依赖关系。对于一些子模块更新较慢的项目还是比较适合的。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-04-08T00:53:53.000Z" itemprop="dateUpdated">2017年4月7日 20:53</time>
+</span><br>
+
+
+        转载请注明出处：<a href="/2017/0407/Subtree-and-Submodule-in-Git/" target="_blank" rel="external">https://peromage.github.io/2017/0407/Subtree-and-Submodule-in-Git/</a>
+    </div>
+    <footer>
+        <a href="https://peromage.github.io">
+            <img src="/img/avatar.png" alt="Gouya">
+            Gouya
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Submodule/">Submodule</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Subtree/">Subtree</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Teamwork/">Teamwork</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peromage.github.io/2017/0407/Subtree-and-Submodule-in-Git/&title=《Git 中的 Subtree 和 Submodule》 — Gouya's Blog&pic=https://peromage.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peromage.github.io/2017/0407/Subtree-and-Submodule-in-Git/&title=《Git 中的 Subtree 和 Submodule》 — Gouya's Blog&source=据说这个是描述" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peromage.github.io/2017/0407/Subtree-and-Submodule-in-Git/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git 中的 Subtree 和 Submodule》 — Gouya's Blog&url=https://peromage.github.io/2017/0407/Subtree-and-Submodule-in-Git/&via=https://peromage.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peromage.github.io/2017/0407/Subtree-and-Submodule-in-Git/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/0405/Windows-Linux-Dual-Systems-Boot/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Windows + Linux 双系统引导手记</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            <span>狗牙的个人博客</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Gouya's Blog &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://peromage.github.io/2017/0407/Subtree-and-Submodule-in-Git/&title=《Git 中的 Subtree 和 Submodule》 — Gouya's Blog&pic=https://peromage.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://peromage.github.io/2017/0407/Subtree-and-Submodule-in-Git/&title=《Git 中的 Subtree 和 Submodule》 — Gouya's Blog&source=据说这个是描述" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://peromage.github.io/2017/0407/Subtree-and-Submodule-in-Git/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git 中的 Subtree 和 Submodule》 — Gouya's Blog&url=https://peromage.github.io/2017/0407/Subtree-and-Submodule-in-Git/&via=https://peromage.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://peromage.github.io/2017/0407/Subtree-and-Submodule-in-Git/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACp0lEQVR42u3ay25iQQwFwPz/T2ekWY2UAY5fkEX1CgG6dHnRbWx/fcXr++/69/Wj9fP7W+/8/HRt4eHh4bW2nm/30adJCB59+nxXvRDj4eHhXfOSy+D55vKffP7kKvWFBQ8PD++jvMlBX93oJBB4eHh4v4f3aItJQSE59LeuEDw8PLz38CZHf/J+VDg4SN/x8PDwLni9BthnX5/39/Dw8PBaXfXeStLo3qBAeSd4eHh4B7x8K9UEOkmIc/akEIyHh4d3x6s+rjqSlT+tWup9cang4eHhHfB6Dyq0oMYp9RyPh4eHt8VLDuj8O9WSa7O4kIcSDw8P74C3VW6oJt/5c3ZTczw8PLw5b16GSI7pZGBr6zn/6e/h4eHhrfKep7bVxLragZr8YiHEeHh4eKu8pGzaGwVIRrKqZdnR0AAeHh7eAa+atlYbWtXy60L5GA8PD++AV0155yOq8wR6rZiLh4eH1+L1Ut5egl6lzhtpeHh4eNe8Xkk3T7V7l0G1WIyHh4d3zase+lVqDt66lppIPDw8vJiXWJOroteg6g0EJKHBw8PDu+bNj+BqIbg6slCG7d4weHh4eA96681SaXwB5BdDEpTCb+Hh4eEd8PIEN09teyWGXoijEODh4eG9kVctLsxbYnmCXmiD4eHh4R3wJg37KrgXykno8fDw8HZ51eHR3ihAr4mVl4Bf1Krx8PDwDniTZDffdK8xNlp4eHh4q7zv4kpCkJRx8yLsqCGHh4eHd8CbXB75cMBWQXbUAMPDw8Nb5W397c+LEXkzLAnKi/EsPDw8vDNefhlUh6vyJtlWzeGremvh4eHhvYWXHNwL7avxN/Hw8PA+y6uOTG0NDeQwPDw8vHfyJoA81a4WFBaGDPDw8PAOeFsNsPnwwdalgoeHh3fG+wOo9btgiRQRygAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.5.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.5.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
