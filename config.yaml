@@ -1,8 +1,8 @@
-baseurl: https://example.com
+baseurl: https://peromage.github.io
 languageCode: en-us
 theme: hugo-theme-stack
 paginate: 5
-title: Example Site
+title: Peromage's Blog
 
 # Change it to your Disqus shortname before using
 disqusShortname: hugo-theme-stack
@@ -26,7 +26,7 @@ params:
     favicon:
 
     footer:
-        since: 2020
+        since: 2021
         customText:
 
     dateFormat:
@@ -35,10 +35,10 @@ params:
 
     sidebar:
         emoji: 🍥
-        subtitle: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        subtitle: I'm curious!
         avatar:
-            local: true
-            src: img/avatar.png
+            local: false
+            src: https://github.com/peromage.png
 
     article:
         math: false
@@ -48,7 +48,7 @@ params:
             default: Licensed under CC BY-NC-SA 4.0
 
     comments:
-        enabled: true
+        enabled: false
         provider: disqus
 
         utterances:
