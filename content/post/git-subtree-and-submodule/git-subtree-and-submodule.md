@@ -3,8 +3,10 @@ title: Git 中的 Subtree 和 Submodule
 comments: true
 date: 2017-04-07 20:53:53
 updated: 2017-04-07 20:53:53
-categories: Git
-tags: [Git, Subtree, Submodule, Teamwork]
+categories: TechNotes
+tags: 
+    - git
+    - 中文
 ---
 
 因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。  

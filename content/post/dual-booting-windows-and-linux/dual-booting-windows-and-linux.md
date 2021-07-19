@@ -3,8 +3,10 @@ title: Windows + Linux 双系统引导手记
 comments: true
 date: 2017-04-05 19:26:41
 updated: 2017-04-05 19:26:41
-categories: Fixit
-tags: ["多系统", "引导", "Windows", "Linux"]
+categories: TechNotes
+tags: 
+    - 多系统引导
+    - 中文
 ---
 
 # 0x00 情况简述
