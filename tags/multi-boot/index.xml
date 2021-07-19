@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>multi-boot on Peromage&#39;s Blog</title>
+    <link>https://peromage.github.io/tags/multi-boot/</link>
+    <description>Recent content in multi-boot on Peromage&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 09 Jul 2021 16:40:31 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/multi-boot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dual-booting Windows VHD and Native Linux on a BIOS&#43;GPT PC</title>
+      <link>https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</link>
+      <pubDate>Fri, 09 Jul 2021 16:40:31 +0000</pubDate>
+      
+      <guid>https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</guid>
+      <description>Background Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.
+Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage.</description>
+    </item>
+    
+  </channel>
+</rss>
