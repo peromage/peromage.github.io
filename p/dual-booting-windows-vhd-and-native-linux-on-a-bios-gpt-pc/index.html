@@ -1,105 +1,50 @@
-<!DOCTYPE html>
-<html lang="en-us">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Background Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.
-Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage.'><title>Dual-booting Windows VHD and Native Linux on a BIOS&#43;GPT PC</title>
-
-<link rel='canonical' href='https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/'>
-
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Dual-booting Windows VHD and Native Linux on a BIOS&#43;GPT PC'>
-<meta property='og:description' content='Background Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.
-Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage.'>
-<meta property='og:url' content='https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/'>
-<meta property='og:site_name' content='Peromage&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='multi-boot' /><meta property='article:published_time' content='2021-07-09T16:40:31&#43;00:00'/><meta property='article:modified_time' content='2021-07-09T16:40:31&#43;00:00'/>
-<meta name="twitter:title" content="Dual-booting Windows VHD and Native Linux on a BIOS&#43;GPT PC">
-<meta name="twitter:description" content="Background Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.
+<!doctype html><html lang=en-us>
+<head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Background Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.
+Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage."><title>Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC</title>
+<link rel=canonical href=https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/>
+<link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC">
+<meta property="og:description" content="Background Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.
 Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage.">
-    </head>
-    <body class="
-    article-page has-toc
-">
-    <script>
-        (function() {
-            const colorSchemeKey = 'StackColorScheme';
-            if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
-            }
-        })();
-    </script><script>
-    (function() {
-        const colorSchemeKey = 'StackColorScheme';
-        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
-        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-
-        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
-            
-
-            document.documentElement.dataset.scheme = 'dark';
-        } else {
-            document.documentElement.dataset.scheme = 'light';
-        }
-    })();
-</script>
-<div class="container main-container flex 
-    
-        extended
-    
-">
-    
-        <div id="article-toolbar">
-            <a href="https://peromage.github.io" class="back-home">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="15 6 9 12 15 18" />
-</svg>
-
-
-
-                <span>Back</span>
-            </a>
-        </div>
-    
+<meta property="og:url" content="https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/">
+<meta property="og:site_name" content="Peromage's Blog">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="multi-boot"><meta property="article:published_time" content="2021-07-09T16:40:31+00:00"><meta property="article:modified_time" content="2021-07-09T16:40:31+00:00">
+<meta name=twitter:title content="Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC">
+<meta name=twitter:description content="Background Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.
+Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage.">
+</head>
+<body class="article-page has-toc">
+<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
+<div class="container main-container flex
+extended">
+<div id=article-toolbar>
+<a href=https://peromage.github.io class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg>
+<span>Back</span>
+</a>
+</div>
 <main class="main full-width">
-    <article class="main-article">
-    <header class="article-header">
-
-    <div class="article-details">
-    
-    <header class="article-category">
-        
-            <a href="/categories/technotes/" >
-                TechNotes
-            </a>
-        
-    </header>
-    
-
-    <h2 class="article-title">
-        <a href="/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/">Dual-booting Windows VHD and Native Linux on a BIOS&#43;GPT PC</a>
-    </h2>
-
-    <footer class="article-time">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <time class="article-time--published">Jul 09, 2021</time>
-    </footer></div>
+<article class=main-article>
+<header class=article-header>
+<div class=article-details>
+<header class=article-category>
+<a href=/categories/technotes/>
+TechNotes
+</a>
 </header>
-
-    <section class="article-content">
-    <h1 id="background">Background</h1>
+<h2 class=article-title>
+<a href=/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/>Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC</a>
+</h2>
+<footer class=article-time><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--published>Jul 09, 2021</time>
+</footer></div>
+</header>
+<section class=article-content>
+<h1 id=background>Background</h1>
 <p>Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.</p>
 <p>Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage. Also you are able to create differencing disks which are pretty much like snapshots.</p>
 <p>For this new configuration, my plan is to use <em>BIOS + GPT disk table + Native Linux + Native Windows booting from VHD + GRUB as the bootloader</em>.</p>
-<h1 id="partitioning">Partitioning</h1>
-<p>To make GPT works with BIOS. It is required to have a small partition <a class="link" href="https://wiki.archlinux.org/title/GRUB"  target="_blank" rel="noopener"
-    >flagged</a> with <code>EF02</code>.</p>
+<h1 id=partitioning>Partitioning</h1>
+<p>To make GPT works with BIOS. It is required to have a small partition <a class=link href=https://wiki.archlinux.org/title/GRUB target=_blank rel=noopener>flagged</a> with <code>EF02</code>.</p>
 <p>The partition scheme looks like this:</p>
 <pre><code>Device         Start        End   Sectors   Size Type
 /dev/sda1         34       2047      2014  1007K BIOS boot
@@ -107,86 +52,83 @@ Starting from Windows 7, Windows supports boots from a VHD file which makes it s
 /dev/sda3    1026048  206546943 205520896    98G Linux filesystem
 /dev/sda4  206546944  835692543 629145600   300G Linux filesystem
 /dev/sda5  835692544 1465149134 629456591 300.1G Microsoft basic data
-</code></pre><h1 id="installing-linux">Installing Linux</h1>
+</code></pre><h1 id=installing-linux>Installing Linux</h1>
 <p>Any Linux distro would work. I chose Manjaro KDE this time because I found that the Pop OS made my laptop really hot sometimes (Yeah KDE is prettier).</p>
-<p>This part should be easy. The GRUB files is going into that EFI partition. For details, check <a class="link" href="https://wiki.archlinux.org/title/GRUB"  target="_blank" rel="noopener"
-    >GRUB wiki</a>.</p>
-<h1 id="preparing-to-install-windows">Preparing to Install Windows</h1>
+<p>This part should be easy. The GRUB files is going into that EFI partition. For details, check <a class=link href=https://wiki.archlinux.org/title/GRUB target=_blank rel=noopener>GRUB wiki</a>.</p>
+<h1 id=preparing-to-install-windows>Preparing to Install Windows</h1>
 <p>I&rsquo;m not going to use the standard Windwos installer since I want to install it into a VHD file. To make it work we need a Windows PE environment.</p>
-<h2 id="preparing-images">Preparing Images</h2>
+<h2 id=preparing-images>Preparing Images</h2>
 <p>Any Windows PE (Windows 7 and above) would work. The PE ISO image is going to <code>/boot/wepe.iso</code>.</p>
 <p>Also a Windows ISO image is needed. For example a Windows 7 ISO named <code>windows7.iso</code> will be put in the Windows data partition.</p>
-<h2 id="adding-windows-pe-to-grub">Adding Windows PE to GRUB</h2>
+<h2 id=adding-windows-pe-to-grub>Adding Windows PE to GRUB</h2>
 <p>Boot into Linux. Download Windows PE ISO file and move it to the EFI partition (EXT4 partitions might be problematic).</p>
 <p>To load this ISO image, <code>memdisk</code> tool from <code>syslinux</code> is required. Steps as below on Arch based distro:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Installing syslinux</span>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=c1># Installing syslinux</span>
 $ sudo pacman -S syslinux
 
-<span class="c1"># Copying `memdisk` to the boot partition</span>
+<span class=c1># Copying `memdisk` to the boot partition</span>
 $ sudo cp /usr/lib/syslinux/bios/memdisk /boot/memdisk
 
-<span class="c1"># Adding Windows PE entry to GRUB. 1DB1-9C31 is the boot partition&#39;s UUID</span>
-$ sudo cat <span class="s">&lt;&lt;EOF &gt;&gt;/etc/grub.d/40_custom
-</span><span class="s">menuentry &#34;WePE x64&#34; {
-</span><span class="s">    search --set=root --no-floppy --fs-uuid 1DB1-9C31
-</span><span class="s">    linux16 /memdisk iso ro
-</span><span class="s">    initrd16 /wepe.iso
-</span><span class="s">}
-</span><span class="s">EOF</span>
+<span class=c1># Adding Windows PE entry to GRUB. 1DB1-9C31 is the boot partition&#39;s UUID</span>
+$ sudo cat <span class=s>&lt;&lt;EOF &gt;&gt;/etc/grub.d/40_custom
+</span><span class=s>menuentry &#34;WePE x64&#34; {
+</span><span class=s>    search --set=root --no-floppy --fs-uuid 1DB1-9C31
+</span><span class=s>    linux16 /memdisk iso ro
+</span><span class=s>    initrd16 /wepe.iso
+</span><span class=s>}
+</span><span class=s>EOF</span>
 
-<span class="c1"># Updating GRUB entries</span>
+<span class=c1># Updating GRUB entries</span>
 $ sudo grub-mkconfig -o /boot/grub/grub.cfg
-</code></pre></div><h1 id="installing-windows-to-a-vhd-file">Installing Windows to a VHD File</h1>
+</code></pre></div><h1 id=installing-windows-to-a-vhd-file>Installing Windows to a VHD File</h1>
 <p>After adding Windows PE to the bootloader entries, it is time to switch the working environment.</p>
 <p>Restart the PC, then keep pression <code>shift</code> key until the GRUB menu shows up. Now navigate to the Windows PE entry and get in there.</p>
-<h2 id="creating-a-vhd-file-for-windows">Creating a VHD File for Windows</h2>
+<h2 id=creating-a-vhd-file-for-windows>Creating a VHD File for Windows</h2>
 <p>To create a VHD file, open a command line window and enter <code>diskpart</code></p>
-<div class="highlight"><pre class="chroma"><code class="language-cmd" data-lang="cmd"># Create a VHD file assuming the NTFS data partition is assigned with D:
-DISKPART<span class="p">&gt;</span> create vdisk file=d:\windows7.vhd maximum=64000 type=fixed
-DISKPART<span class="p">&gt;</span> select vdisk file=d:\windows7.vhd
-DISKPART<span class="p">&gt;</span> attach vdisk
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-cmd data-lang=cmd># Create a VHD file assuming the NTFS data partition is assigned with D:
+DISKPART<span class=p>&gt;</span> create vdisk file=d:\windows7.vhd maximum=64000 type=fixed
+DISKPART<span class=p>&gt;</span> select vdisk file=d:\windows7.vhd
+DISKPART<span class=p>&gt;</span> attach vdisk
 
 # Disk table type doesn&#39;t matter but using MBR for better compatibility
-DISKPART<span class="p">&gt;</span> convert mbr
+DISKPART<span class=p>&gt;</span> convert mbr
 
 # Create the system partition and assign it with C:
-DISKPART<span class="p">&gt;</span> create partition primary
-DISKPART<span class="p">&gt;</span> format fs=ntfs quick
-DISKPART<span class="p">&gt;</span> assign letter=c
-DISKPART<span class="p">&gt;</span> exit 
+DISKPART<span class=p>&gt;</span> create partition primary
+DISKPART<span class=p>&gt;</span> format fs=ntfs quick
+DISKPART<span class=p>&gt;</span> assign letter=c
+DISKPART<span class=p>&gt;</span> exit 
 </code></pre></div><p>Now the Windows image can be dumped into this VHD file.</p>
-<h2 id="extracting-windows-image">Extracting Windows Image</h2>
+<h2 id=extracting-windows-image>Extracting Windows Image</h2>
 <p>Mount the Windows ISO image to <code>E:</code> volume and open a command line window</p>
-<div class="highlight"><pre class="chroma"><code class="language-cmd" data-lang="cmd"># Get the image index. For example the desired version&#39;s index is 1
-<span class="p">&gt;</span> dism /get-wiminfo /wimfile=e:\sources\install.wim
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-cmd data-lang=cmd># Get the image index. For example the desired version&#39;s index is 1
+<span class=p>&gt;</span> dism /get-wiminfo /wimfile=e:\sources\install.wim
 
 # Extract the image. Where E: is the Windows ISO and C: is the VHD file
-<span class="p">&gt;</span> dism /apply-image /imagefile:e:\sources\install.wim /index:1 /applydir:c:\
-</code></pre></div><h1 id="fixing-the-windows-bootloader">Fixing the Windows Bootloader</h1>
+<span class=p>&gt;</span> dism /apply-image /imagefile:e:\sources\install.wim /index:1 /applydir:c:\
+</code></pre></div><h1 id=fixing-the-windows-bootloader>Fixing the Windows Bootloader</h1>
 <p>Stay in Windows PE. Don&rsquo;t restart the PC. We still need to fix the bootloader for Windows.</p>
 <p>Normally Windows cannot be booted with a GPT+MBR setup. And also loading the whole Windows VHD file through <code>memdisk</code> is not possible because it&rsquo;s too large to load into memory. To fix the boot issue a bridge is needed between Windows and GRUB.</p>
-<p>Luckily <a class="link" href="http://reboot.pro/index.php?showtopic=19516&amp;page=2&amp;#entry184489"  target="_blank" rel="noopener"
-    >a small VHD image</a> can still be loaded by <code>memdisk</code>.</p>
-<p>The idea is: GRUB -&gt; MS Bootmgr VHD -&gt; Windows VHD</p>
-<h2 id="creating-a-dedicated-bootloader-image-for-windows">Creating a Dedicated Bootloader Image for Windows</h2>
+<p>Luckily <a class=link href="http://reboot.pro/index.php?showtopic=19516&page=2&#entry184489" target=_blank rel=noopener>a small VHD image</a> can still be loaded by <code>memdisk</code>.</p>
+<p>The idea is: GRUB -> MS Bootmgr VHD -> Windows VHD</p>
+<h2 id=creating-a-dedicated-bootloader-image-for-windows>Creating a Dedicated Bootloader Image for Windows</h2>
 <p>It is same with the process creating a VHD file for Windows system but this time it is a smaller file (32 MB).</p>
-<div class="highlight"><pre class="chroma"><code class="language-cmd" data-lang="cmd"># Create a small bootmgr VHD file in the data partition
-DISKPART<span class="p">&gt;</span> create vdisk file=d:\bootmgr.vhd maximum=32 type=fixed
-DISKPART<span class="p">&gt;</span> select vdisk file=d:\bootmgr.vhd
-DISKPART<span class="p">&gt;</span> attach vdisk
-DISKPART<span class="p">&gt;</span> convert mbr
-DISKPART<span class="p">&gt;</span> create partition primary
-DISKPART<span class="p">&gt;</span> format fs=ntfs quick
-DISKPART<span class="p">&gt;</span> assign letter=f
-DISKPART<span class="p">&gt;</span> exit 
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-cmd data-lang=cmd># Create a small bootmgr VHD file in the data partition
+DISKPART<span class=p>&gt;</span> create vdisk file=d:\bootmgr.vhd maximum=32 type=fixed
+DISKPART<span class=p>&gt;</span> select vdisk file=d:\bootmgr.vhd
+DISKPART<span class=p>&gt;</span> attach vdisk
+DISKPART<span class=p>&gt;</span> convert mbr
+DISKPART<span class=p>&gt;</span> create partition primary
+DISKPART<span class=p>&gt;</span> format fs=ntfs quick
+DISKPART<span class=p>&gt;</span> assign letter=f
+DISKPART<span class=p>&gt;</span> exit 
 </code></pre></div><p>Now the <code>bootmgr</code> VHD is mounted at F:. Then write the boot record and create boot configuration files.</p>
-<div class="highlight"><pre class="chroma"><code class="language-cmd" data-lang="cmd"><span class="p">&gt;</span> bootsect /nt60 f: /mbr
-<span class="p">&gt;</span> bcdboot c:\Windows /l en-us /s f: /f bios
-</code></pre></div><h2 id="fixing-the-bcd-entry">Fixing the BCD Entry</h2>
-<p>At this point it should be working according to the <a class="link" href="https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/boot-to-vhd--native-boot--add-a-virtual-hard-disk-to-the-boot-menu"  target="_blank" rel="noopener"
-    >Microsoft&rsquo;s document</a>. In fact it is not.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-cmd data-lang=cmd><span class=p>&gt;</span> bootsect /nt60 f: /mbr
+<span class=p>&gt;</span> bcdboot c:\Windows /l en-us /s f: /f bios
+</code></pre></div><h2 id=fixing-the-bcd-entry>Fixing the BCD Entry</h2>
+<p>At this point it should be working according to the <a class=link href=https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/boot-to-vhd--native-boot--add-a-virtual-hard-disk-to-the-boot-menu target=_blank rel=noopener>Microsoft&rsquo;s document</a>. In fact it is not.</p>
 <p>Let&rsquo;s check the BCD entries, in a command window:</p>
-<div class="highlight"><pre class="chroma"><code class="language-cmd" data-lang="cmd"><span class="p">&gt;</span> bcdedit /store f:\Boot\BCD /enum
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-cmd data-lang=cmd><span class=p>&gt;</span> bcdedit /store f:\Boot\BCD /enum
 
 Windows Boot Manager
 --------------------
@@ -205,7 +147,7 @@ Windows Boot Loader
 -------------------
 identifier              {default}
 device                  partition=C:
-<span class="k">path</span>                    \Windows\system32\winload.exe
+<span class=k>path</span>                    \Windows\system32\winload.exe
 description             Windows 7
 locale                  en-us
 inherit                 {bootloadersettings}
@@ -214,13 +156,12 @@ systemroot              \Windows
 resumeobject            {fcd67427-e033-11eb-8826-cdf90e3873d0}
 nx                      OptIn
 detecthal               Yes
-</code></pre></div><p>The <code>device</code> and <code>osdevice</code> seems to be right but once the Windows VHD is unmounted it becomes <code>unknown</code>. According to this <a class="link" href="http://www.mistyprojects.co.uk/documents/BCDEdit/files/device.htm"  target="_blank" rel="noopener"
-    >BCDEdit notes</a>, BCD entry records the partition&rsquo;s information such as UUID to find the correct partition during bootup. In this case the partition can&rsquo;t be found until the VHD file is mounted. But this VHD file is not mounted automatically.</p>
+</code></pre></div><p>The <code>device</code> and <code>osdevice</code> seems to be right but once the Windows VHD is unmounted it becomes <code>unknown</code>. According to this <a class=link href=http://www.mistyprojects.co.uk/documents/BCDEdit/files/device.htm target=_blank rel=noopener>BCDEdit notes</a>, BCD entry records the partition&rsquo;s information such as UUID to find the correct partition during bootup. In this case the partition can&rsquo;t be found until the VHD file is mounted. But this VHD file is not mounted automatically.</p>
 <p>Thus we need to correct this and let <code>Bootmgr</code> locate the VHD file properly.</p>
 <p>In a command line window:</p>
-<div class="highlight"><pre class="chroma"><code class="language-cmd" data-lang="cmd"># The identifier must match the one which is showing above
-<span class="p">&gt;</span> bcdedit /store C:\Boot\BCD /set {default} device vhd=[D:]\windows7.vhd
-<span class="p">&gt;</span> bcdedit /store C:\Boot\BCD /set {default} osdevice vhd=[D:]\windows7.vhd
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-cmd data-lang=cmd># The identifier must match the one which is showing above
+<span class=p>&gt;</span> bcdedit /store C:\Boot\BCD /set {default} device vhd=[D:]\windows7.vhd
+<span class=p>&gt;</span> bcdedit /store C:\Boot\BCD /set {default} osdevice vhd=[D:]\windows7.vhd
 </code></pre></div><p>If we check the BCD entry again it doesn&rsquo;t change. But if we unmount the Windows VHD it will become:</p>
 <pre><code>&gt; bcdedit /store f:\Boot\BCD /enum
 
@@ -251,279 +192,155 @@ resumeobject            {fcd67427-e033-11eb-8826-cdf90e3873d0}
 nx                      OptIn
 detecthal               Yes
 </code></pre><p>The volume letter doesn&rsquo;t matter, it changes dynamically. Now <code>bootmgr</code> is able to locate the VHD file correctly.</p>
-<h1 id="adding-windows-to-grub">Adding Windows to GRUB</h1>
+<h1 id=adding-windows-to-grub>Adding Windows to GRUB</h1>
 <p>Restart PC and get into Linux.</p>
 <p>Modify the GRUB config file to load <code>bootmgr</code></p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Adding Windows (bootmgr) entry to GRUB. 1DB1-9C31 is the boot partition&#39;s UUID</span>
-$ sudo cat <span class="s">&lt;&lt;EOF &gt;&gt;/etc/grub.d/40_custom
-</span><span class="s">menuentry &#34;Windows 7&#34; {
-</span><span class="s">    search --set=root --no-floppy --fs-uuid 1DB1-9C31
-</span><span class="s">    linux16 /memdisk harddisk
-</span><span class="s">    initrd16 /bootmgr.vhd
-</span><span class="s">}
-</span><span class="s">EOF</span>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=c1># Adding Windows (bootmgr) entry to GRUB. 1DB1-9C31 is the boot partition&#39;s UUID</span>
+$ sudo cat <span class=s>&lt;&lt;EOF &gt;&gt;/etc/grub.d/40_custom
+</span><span class=s>menuentry &#34;Windows 7&#34; {
+</span><span class=s>    search --set=root --no-floppy --fs-uuid 1DB1-9C31
+</span><span class=s>    linux16 /memdisk harddisk
+</span><span class=s>    initrd16 /bootmgr.vhd
+</span><span class=s>}
+</span><span class=s>EOF</span>
 
-<span class="c1"># Updating GRUB entries</span>
+<span class=c1># Updating GRUB entries</span>
 $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 </code></pre></div><p>Now we can restart PC. Keep pressing <code>shift</code> on bootup to go to the GRUB menu. Select Windows entry to boot Windows.</p>
-<h1 id="fixing-windows-initialization-error">Fixing Windows Initialization Error</h1>
+<h1 id=fixing-windows-initialization-error>Fixing Windows Initialization Error</h1>
 <p>During the first time bootup, Windows might have an error showing <em>Windows could not complete the installation. To install Windows on this computer, restart the installation</em>.</p>
-<p>To <a class="link" href="https://www.howisolve.com/windows-could-not-complete-the-installation-solved/"  target="_blank" rel="noopener"
-    >solve</a> this error:</p>
+<p>To <a class=link href=https://www.howisolve.com/windows-could-not-complete-the-installation-solved/ target=_blank rel=noopener>solve</a> this error:</p>
 <ol>
 <li>Press <code>SHIFT + F10</code> to bring up the command prompt.</li>
 <li>Execute <code>C:\windows\system32\oobe\msoobe</code>.</li>
 <li>Wait for a while and the setup window will show up.</li>
 <li>Complete the setup and restart.</li>
 </ol>
-<h1 id="creating-a-differencing-disk">Creating a Differencing Disk</h1>
+<h1 id=creating-a-differencing-disk>Creating a Differencing Disk</h1>
 <p>A differencing disk can be used for quick recoveries.</p>
 <p>To create it, restart into the Windows PE environment. In a command line window:</p>
-<div class="highlight"><pre class="chroma"><code class="language-cmd" data-lang="cmd"># Use the original VHD as base
-<span class="p">&gt;</span> move d:\windows7.vhd d:\windows7_base.vhd
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-cmd data-lang=cmd># Use the original VHD as base
+<span class=p>&gt;</span> move d:\windows7.vhd d:\windows7_base.vhd
 
 # Create a differencing disk based on the original one
 # The name of the new differencing disk has to be the name that was recorded in the BCD
-<span class="p">&gt;</span> diskpart
-DISKPART<span class="p">&gt;</span> creat vdisk file=d:\windows7.vhd parent=d:\windows7_base.vhd
+<span class=p>&gt;</span> diskpart
+DISKPART<span class=p>&gt;</span> creat vdisk file=d:\windows7.vhd parent=d:\windows7_base.vhd
 </code></pre></div><p>Then all changes made in the future will go into the differencing disk. If system goes wrong one day, simply deleting the the differencing disk and creating a new one would quickly recover from the crysis.</p>
 <p><strong>NOTE: After creating the differencing disk, the base VHD is not supposed to be modified.</strong></p>
-<h1 id="references">References</h1>
+<h1 id=references>References</h1>
 <ul>
-<li><a class="link" href="https://wiki.archlinux.org/title/GRUB"  target="_blank" rel="noopener"
-    >GRUB wiki</a></li>
-<li><a class="link" href="https://wzyboy.im/post/1049.html"  target="_blank" rel="noopener"
-    >BIOS + GPT + GRUB + Linux + Windows 折腾笔记</a></li>
-<li><a class="link" href="https://rimo.site/2017/02/08/install-win7-into-vhd/"  target="_blank" rel="noopener"
-    >在 VHD 中安装 Windows 7</a></li>
-<li><a class="link" href="http://reboot.pro/index.php?showtopic=19516&amp;page=2&amp;#entry184489"  target="_blank" rel="noopener"
-    >Hack Bootmgr to boot Windows in BIOS to GPT</a></li>
-<li><a class="link" href="https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/boot-to-vhd--native-boot--add-a-virtual-hard-disk-to-the-boot-menu"  target="_blank" rel="noopener"
-    >Boot to a virtual hard disk: Add a VHDX or VHD to the boot menu</a></li>
-<li><a class="link" href="http://www.mistyprojects.co.uk/documents/BCDEdit/files/device.htm"  target="_blank" rel="noopener"
-    >BCDEdit notes</a></li>
-<li><a class="link" href="https://www.howisolve.com/windows-could-not-complete-the-installation-solved/"  target="_blank" rel="noopener"
-    >100% Solved:Windows could not complete the installation</a></li>
+<li><a class=link href=https://wiki.archlinux.org/title/GRUB target=_blank rel=noopener>GRUB wiki</a></li>
+<li><a class=link href=https://wzyboy.im/post/1049.html target=_blank rel=noopener>BIOS + GPT + GRUB + Linux + Windows 折腾笔记</a></li>
+<li><a class=link href=https://rimo.site/2017/02/08/install-win7-into-vhd/ target=_blank rel=noopener>在 VHD 中安装 Windows 7</a></li>
+<li><a class=link href="http://reboot.pro/index.php?showtopic=19516&page=2&#entry184489" target=_blank rel=noopener>Hack Bootmgr to boot Windows in BIOS to GPT</a></li>
+<li><a class=link href=https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/boot-to-vhd--native-boot--add-a-virtual-hard-disk-to-the-boot-menu target=_blank rel=noopener>Boot to a virtual hard disk: Add a VHDX or VHD to the boot menu</a></li>
+<li><a class=link href=http://www.mistyprojects.co.uk/documents/BCDEdit/files/device.htm target=_blank rel=noopener>BCDEdit notes</a></li>
+<li><a class=link href=https://www.howisolve.com/windows-could-not-complete-the-installation-solved/ target=_blank rel=noopener>100% Solved:Windows could not complete the installation</a></li>
 </ul>
-
 </section>
-
-
-    <footer class="article-footer">
-    
-    <section class="article-tags">
-        
-            <a href="/tags/multi-boot/">multi-boot</a>
-        
-    </section>
-
-
-    
-    <section class="article-copyright">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
-</svg>
-
-
-
-        <span>Licensed under CC BY-NC-SA 4.0</span>
-    </section>
-    </footer>
-
-    
-</article>
-
-    <aside class="related-contents--wrapper">
-    
-    
-        <h2 class="section-title">Related contents</h2>
-        <div class="related-contents">
-            <div class="flex article-list--tile">
-                
-                    
-<article class="">
-    <a href="/p/git-%E4%B8%AD%E7%9A%84-subtree-%E5%92%8C-submodule/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Git 中的 Subtree 和 Submodule</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/p/windows-linux-%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Windows &#43; Linux 双系统引导手记</h2>
-        </div>
-    </a>
-</article>
-                
-            </div>
-        </div>
-    
-</aside>
-
-     
-     
-        
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
-        
-        2021 Peromage&#39;s Blog
-    </section>
-    
-    <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.5.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
-    </section>
+<footer class=article-footer>
+<section class=article-tags>
+<a href=/tags/multi-boot/>multi-boot</a>
+</section>
+<section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span>
+</section>
 </footer>
-
-    
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    
-    <div class="pswp__bg"></div>
-
-    
-    <div class="pswp__scroll-wrap">
-
-        
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                
-                
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer="true"
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer="true"
-                >
-            </script><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
-            ><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
-            >
-
-            </main>
-    
-        <aside class="sidebar right-sidebar sticky">
-            <section class="widget archives">
-                <div class="widget-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-                </div>
-                <h2 class="widget-title section-title">Table of contents</h2>
-                
-                <div class="widget--toc">
-                    <nav id="TableOfContents">
-  <ol>
-    <li><a href="#preparing-images">Preparing Images</a></li>
-    <li><a href="#adding-windows-pe-to-grub">Adding Windows PE to GRUB</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#creating-a-vhd-file-for-windows">Creating a VHD File for Windows</a></li>
-    <li><a href="#extracting-windows-image">Extracting Windows Image</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#creating-a-dedicated-bootloader-image-for-windows">Creating a Dedicated Bootloader Image for Windows</a></li>
-    <li><a href="#fixing-the-bcd-entry">Fixing the BCD Entry</a></li>
-  </ol>
+</article>
+<aside class=related-contents--wrapper>
+<h2 class=section-title>Related contents</h2>
+<div class=related-contents>
+<div class="flex article-list--tile">
+<article>
+<a href=/p/git-%E4%B8%AD%E7%9A%84-subtree-%E5%92%8C-submodule/>
+<div class=article-details>
+<h2 class=article-title>Git 中的 Subtree 和 Submodule</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/p/windows-linux-%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/>
+<div class=article-details>
+<h2 class=article-title>Windows + Linux 双系统引导手记</h2>
+</div>
+</a>
+</article>
+</div>
+</div>
+</aside>
+<footer class=site-footer>
+<section class=copyright>
+&copy;
+2021 Peromage's Blog
+</section>
+<section class=powerby>
+Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
+Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=2.5.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a>
+</section>
+</footer>
+<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
+<div class=pswp__bg></div>
+<div class=pswp__scroll-wrap>
+<div class=pswp__container>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class=pswp__top-bar>
+<div class=pswp__counter></div>
+<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class=pswp__preloader>
+<div class=pswp__preloader__icn>
+<div class=pswp__preloader__cut>
+<div class=pswp__preloader__donut></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class=pswp__share-tooltip></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+</button>
+<div class=pswp__caption>
+<div class=pswp__caption__center></div>
+</div>
+</div>
+</div>
+</div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous>
+</main>
+<aside class="sidebar right-sidebar sticky">
+<section class="widget archives">
+<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
+</div>
+<h2 class="widget-title section-title">Table of contents</h2>
+<div class=widget--toc>
+<nav id=TableOfContents>
+<ol>
+<li><a href=#preparing-images>Preparing Images</a></li>
+<li><a href=#adding-windows-pe-to-grub>Adding Windows PE to GRUB</a></li>
+</ol>
+<ol>
+<li><a href=#creating-a-vhd-file-for-windows>Creating a VHD File for Windows</a></li>
+<li><a href=#extracting-windows-image>Extracting Windows Image</a></li>
+</ol>
+<ol>
+<li><a href=#creating-a-dedicated-bootloader-image-for-windows>Creating a Dedicated Bootloader Image for Windows</a></li>
+<li><a href=#fixing-the-bcd-entry>Fixing the BCD Entry</a></li>
+</ol>
 </nav>
-                </div>
-            </section>
-        </aside>
-    
-
-        </div>
-        <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
-                defer="false"
-                >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
-<script>
-    (function () {
-        const customFont = document.createElement('link');
-        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
-
-        customFont.type = "text/css";
-        customFont.rel = "stylesheet";
-
-        document.head.appendChild(customFont);
-    }());
-</script>
-
-    </body>
+</div>
+</section>
+</aside>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous defer></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
+</body>
 </html>
