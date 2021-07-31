@@ -1,5 +1,5 @@
 ---
-title: About Me
+title: About
 description: Life is about programming and adventuring
 date: '2021-07-31'
 aliases:
@@ -29,3 +29,7 @@ I wish you have a wonderful life.
 # Contact
 
 peromage(at)outlook.com
+
+[My GitHub][github]
+
+[github]: https://github.com/peromage
