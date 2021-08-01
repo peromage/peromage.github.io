@@ -1,4 +1,4 @@
-# GitHub Page Development
-Project for self blog development
+# Peromage's Blog Source
+This is the development branch of my blog.
 
-*[My blog](https://peromage.github.io/)*
+If you are interested in it please visit my blog from [here](https://peromage.github.io).
