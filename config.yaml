@@ -34,8 +34,8 @@ params:
         lastUpdated: Jan 02, 2006 15:04 MST
 
     sidebar:
-        emoji: 🌟
-        subtitle: Nothing. Really.
+        emoji: 💤
+        subtitle: Executing phaseshift
         avatar:
             local: false
             src: https://github.com/peromage.png
