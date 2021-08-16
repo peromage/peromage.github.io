@@ -1,7 +1,7 @@
 ---
 title: About
-description: Life is about programming and adventuring
-date: '2021-07-31'
+description: May the sapphire star lights your way✨
+date: '2021-08-15'
 aliases:
   - about-us
   - about-hugo
@@ -16,13 +16,13 @@ menu:
 
 # Me
 
-I'm currently working as a developer for one of the well-known automotive companies.
+I'm currently working as a C++ developer for one of the well-known automotive companies.
 
-The reason why I chose to become a programmer is simply for the fun of it. Yes, the man who is driven by his curiosity.
+I like programming simply for the fun of it like Saitama sensei, but the only difference is I have much more hair than he does 😏.
 
-I believe life is full of adventures. I'll keep chasing for new challenges.
+A little OCD which annoys me a lot sometimes.
 
-Words from one of my favorite video games, for you traveler, as a gift, "May the sapphire star lights your way✨".
+Life is beautiful and I'm enthusiastic about it.
 
 I wish you have a wonderful life.
 
