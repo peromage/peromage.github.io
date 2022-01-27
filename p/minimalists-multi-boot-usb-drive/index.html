@@ -94,6 +94,8 @@ APPEND archisobasedir=arch archisolabel=ARCH_202201 copytoram
 <p>Then add the following content to <code>(data)/boot.cfg</code>. When copying the <code>initrd</code> parameters, don&rsquo;t forget to remove commas.</p>
 <pre><code class=language-config data-lang=config>menuentry &quot;Archiso 202201 RAM&quot; {
     search --set=root --file /boot.cfg
+    loopback loop /images/archlinux-2022.01.01-x86_64.iso
+    set root=(loop)
     linux /arch/boot/x86_64/vmlinuz-linux archisobasedir=arch archisolabel=ARCH_202201 copytoram
     initrd /arch/boot/intel-ucode.img /arch/boot/amd-ucode.img /arch/boot/x86_64/initramfs-linux.img
 }
