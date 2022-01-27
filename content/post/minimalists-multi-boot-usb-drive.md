@@ -1,0 +1,200 @@
+---
+title: Minimalist's Multi-boot USB Drive
+date: 2022-01-26 20:34:18
+categories: TechNotes
+tags:
+    - multi-boot
+---
+
+# Story
+
+Recently I've realized a fact that I always have needs to keep a multi-boot USB in my pocket for either Linux or Windows installation. There are a lot tools out there already but I don't really like them. At least, I mean, they are too flashy to me. A beautiful boot menu seems not to be attractive. What I need is just a simple and practical maybe a little ugly boot device. It should be minimalist. More importantly, it has to be easy to setup with the tools on the system already and maintainable. No funky scripts.
+
+# Old Solution - Clunky
+
+I've been using this solution for a very long time. Setup is pretty straight forward.
+
+The partition scheme used on the USB drive is like (GPT):
+
+```
+/dev/sda1    - 100 GB. NTFS. Data partition
+/dev/sda2    - 512 MB. FAT. EFI partition
+/dev/sda3    - 1 MB. No filesystem. BIOS boot partition used by GRUB
+/dev/sda4    - 8 GB. NTFS. Windows ISO files
+/dev/sda5    - 2 GB. FAT. Arch Linux ISO files
+```
+
+So the idea is having a big data partition at the front for better access, then installing GRUB files on the second EFI partition with both EFI and BIOS support (Implemented by the third BIOS boot partition. The partition order doesn't matter). Finally, create dedicated partitions to contain the extracted files from installation ISOs.
+
+When the USB drive is plugged in, I can use grub command line to chainload the EFI file that is located in the ISO partition, or the VBR if it's booted with legacy mode.
+
+Well, it's usable but I still feel that it is too much for a small USB drive - too many partitions. If I plug the drive in for just data exchange, there would be a a bunch of partitions mounted and the notification is quite annoying. So I started thinking that there must be a simpler way to do it.
+
+# New Solution - Much Better
+
+## Partitioning
+
+The goal is simplicity so the new partition scheme is like this:
+
+```
+/dev/sda1    - 100 GB. NTFS. Data partition
+/dev/sda2    - 512 MB. FAT. EFI partition
+/dev/sda3    - 1 MB. No filesystem. BIOS boot partition used by GRUB (Optional)
+```
+
+The third BIOS boot partition is not really necessary since most of computers nowadays are using UEFI. If you really need the legacy compatibility, you can create one. I'll keep it for now.
+
+## Installing GRUB
+
+Typical GRUB insallation but install for both EFI and BIOS.
+
+```console
+# mount /dev/sda2 /mnt
+# grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/mnt --removable
+# grub-install --target=i386-pc --boot-directory=/mnt /dev/sda
+```
+
+Don't forget to create a GRUB menu config file. Otherwise GRUB will boot into its command line interface (If you know what you're doing). It's a good idea to put a editable config file in the data partition since it will be the most used partition. However, GRUB reads the file in the EFI partition by default: `(esp)/grub/grub.cfg`. We can tell GRUB to read out custom config file after that.
+
+```grub
+# (esp)/grub/grub.cfg
+
+search --set=root --file /boot.cfg
+configfile /boot.cfg
+```
+
+Thus we are done with the EFI partition. All the menu configuration will go into `boot.cfg` in the data partition.
+
+## Linux Installer
+
+Most of modern Linux distros support booting from a loop device. That is to say, we don't have to extract the content of ISO files. Using GRUB `loopback` command can easily mount a ISO and boot from there. But chainloading the EFI or VBF is not possible. Based on the [GRUB manual][grub-manual]:
+
+> GRUB is able to read from an image (be it one of CD or HDD) stored on any of its accessible storages (refer to see loopback command). However the OS itself should be able to find its root. This usually involves running a userspace program running before the real root is discovered.
+
+EFI bootloader usually will fail to find the root device by this method. However, we can manually load the kernel and ramdisk in which we can specify the root device by ourselves.
+
+### Load Linux ISO
+
+I'm using Arch Linux here for example.
+
+1. Put the ISO file to `(data)/images/archlinux-2022.01.01-x86_64.iso`.
+2. Mount ISO. We need to find the kernel loading parameters.
+3. In the file `(arch)/syslinux/archiso_sys-linux.cfg` we would see
+
+```config
+# Copy to RAM boot option
+LABEL arch64ram
+TEXT HELP
+Boot the Arch Linux install medium on BIOS with Copy-to-RAM option
+It allows you to install Arch Linux or perform system maintenance.
+ENDTEXT
+MENU LABEL Arch Linux install medium (x86_64, BIOS, Copy to RAM)
+LINUX /arch/boot/x86_64/vmlinuz-linux
+INITRD /arch/boot/intel-ucode.img,/arch/boot/amd-ucode.img,/arch/boot/x86_64/initramfs-linux.img
+APPEND archisobasedir=arch archisolabel=ARCH_202201 copytoram
+```
+
+This is a `syslinux` config file. Parameters after `APPEND` are the ones that we're looking for.
+
+Then add the following content to `(data)/boot.cfg`. When copying the `initrd` parameters, don't forget to remove commas.
+
+```config
+menuentry "Archiso 202201 RAM" {
+    search --set=root --file /boot.cfg
+    loopback loop /images/archlinux-2022.01.01-x86_64.iso
+    set root=(loop)
+    linux /arch/boot/x86_64/vmlinuz-linux archisobasedir=arch archisolabel=ARCH_202201 copytoram
+    initrd /arch/boot/intel-ucode.img /arch/boot/amd-ucode.img /arch/boot/x86_64/initramfs-linux.img
+}
+```
+
+Then the Linux installer is done. If we need more distros, the process is similar.
+
+## Windows Installer
+
+I prefer to use NTFS as my data partition's file system because it works on both Linux and Windows, and supports big files. Also I usually just keep one copy of Windows installer so for Windows, I can simply dump the ISO content to the data partition's root. I don't mind the extra a few folders there. Plus some of them can be safely deleted. Then chainloading from GRUB is possible.
+
+In `(data)/boot.cfg`
+
+```config
+menuentry "Windows 10 Installer" {
+    search --set=root --file /boot.cfg
+    chainloader /efi/boot/bootx64.efi
+}
+```
+
+## Windows PE
+
+Alternatively, I can directly boot from a small WinPE image and use `dism` command to extract `install.wim` to the target without accepting the annoying Windows partition scheme (You know what I'm talking about).
+
+To create a PE image we need a Windows environment and a CMD window with admin privilege.
+
+Create a virtual disk to contain PE files. Assigned with volume letter `P:\`.
+
+```console
+> diskpart
+DISKPART> create vdisk file=c:\winpe.vhd maximum=2000 type=fixed
+DISKPART> select vdisk file=c:\winpe.vhd
+DISKPART> attach vdisk
+DISKPART> convert mbr
+DISKPART> create partition primary
+DISKPART> format fs=ntfs quick
+DISKPART> assign letter=p
+DISKPART> exit
+```
+
+Then mount the Windows installer ISO. Assuming the assigned volume is `G:\`.
+
+```console
+dism /apply-image /imagefile:g:\sources\boot.wim /index:1 /applydir:p:\
+dism /image:p:\ /set-targetpath:x:\
+dism /image:p:\ /set-inputlocale:en-us
+dism /image:p:\ /set-userlocale:en-us
+```
+
+Assign EFI partition with volume letter `E:\`.
+
+Before creating the bootloader for Windows PE, we need to backup our GRUB EFI file (Windows PE bootloader will overwrite it). Rename `E:\EFI` to `E:\EFI-grub`.
+
+Create Windows PE bootloader.
+
+```console
+> bcdboot p:\Windows /l en-us /s e: /f uefi
+```
+
+Then merge both `E:\EFI` and `E:\EFI-grub`. If it prompts overwriting `E:\EFI\Boot\bootx64.efi`, confirm with yes.
+
+Then add following content to `(data)/boot.cfg`.
+
+```config
+menuentry "Windows PE" {
+    search --set=root --file /boot.cfg
+    chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+}
+```
+
+## Loading Any ISO
+
+Some ISO is capable to be loaded directly into memory. The size of the ISO file is critical. Generally it should not exceed the physical memory. This can be done by `memdisk` from `syslinux`.
+
+Copy the `memdisk` into the EFI partition.
+
+```console
+# cp /usr/lib/syslinux/bios/memdisk (esp)/memdisk
+```
+
+Then put the following content to `(data)/boot.cfg`. For example, loading a Windows PE ISO.
+
+```config
+menuentry "Windows PE ISO" {
+    search --set=root --file /boot.cfg
+    linux16 memdisk iso ro
+    initrd16 /images/winpe.iso
+}
+```
+
+# The End
+
+Finally I'm very satisfied with this new USB drive. Yay!
+
+[grub-manual]: https://www.gnu.org/software/grub/manual/grub/grub.html#Loopback-booting
