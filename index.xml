@@ -97,6 +97,16 @@ dism /image:p:\ /set-userlocale:en-us
 search --set=root --file /boot.cfg
 chainloader /EFI/Microsoft/Boot/bootmgfw.efi
 }
+&lt;/code>&lt;/pre>&lt;h2 id="loading-any-iso">Loading Any ISO&lt;/h2>
+&lt;p>Some ISO is capable to be loaded directly into memory. The size of the ISO file is critical. Generally it should not exceed the physical memory. This can be done by &lt;code>memdisk&lt;/code> from &lt;code>syslinux&lt;/code>.&lt;/p>
+&lt;p>Copy the &lt;code>memdisk&lt;/code> into the EFI partition.&lt;/p>
+&lt;pre>&lt;code class="language-console" data-lang="console"># cp /usr/lib/syslinux/bios/memdisk (esp)/memdisk
+&lt;/code>&lt;/pre>&lt;p>Then put the following content to &lt;code>(data)/boot.cfg&lt;/code>. For example, loading a Windows PE ISO.&lt;/p>
+&lt;pre>&lt;code class="language-config" data-lang="config">menuentry &amp;quot;Windows PE ISO&amp;quot; {
+search --set=root --file /boot.cfg
+linux16 memdisk iso ro
+initrd16 /images/winpe.iso
+}
 &lt;/code>&lt;/pre>&lt;h1 id="the-end">The End&lt;/h1>
 &lt;p>Finally I&amp;rsquo;m very satisfied with this new USB drive. Yay!&lt;/p></description></item><item><title>Moving From Vim to Emacs</title><link>https://peromage.github.io/p/moving-from-vim-to-emacs/</link><pubDate>Sat, 14 Aug 2021 10:29:09 -0400</pubDate><guid>https://peromage.github.io/p/moving-from-vim-to-emacs/</guid><description>&lt;p>YouTube has been pushing me a lot Emacs related contents. This is weird since mostly I watch Vim videos only. But probably this is also a great opportunity to try Emacs again.&lt;/p>
 &lt;p>I have tried Emacs half year ago. I looked a lot Elisp programming fundamentals and tried a few Emacs configurations from others including Doom Emacs. However, it didn&amp;rsquo;t last long since I found that I didn&amp;rsquo;t have enough time to configure this Emacs setup as good as the &lt;a class="link" href="https://github.com/peromage/rice.vim" target="_blank" rel="noopener"

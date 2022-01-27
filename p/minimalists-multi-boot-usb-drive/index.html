@@ -135,6 +135,16 @@ dism /image:p:\ /set-userlocale:en-us
     search --set=root --file /boot.cfg
     chainloader /EFI/Microsoft/Boot/bootmgfw.efi
 }
+</code></pre><h2 id=loading-any-iso>Loading Any ISO</h2>
+<p>Some ISO is capable to be loaded directly into memory. The size of the ISO file is critical. Generally it should not exceed the physical memory. This can be done by <code>memdisk</code> from <code>syslinux</code>.</p>
+<p>Copy the <code>memdisk</code> into the EFI partition.</p>
+<pre><code class=language-console data-lang=console># cp /usr/lib/syslinux/bios/memdisk (esp)/memdisk
+</code></pre><p>Then put the following content to <code>(data)/boot.cfg</code>. For example, loading a Windows PE ISO.</p>
+<pre><code class=language-config data-lang=config>menuentry &quot;Windows PE ISO&quot; {
+    search --set=root --file /boot.cfg
+    linux16 memdisk iso ro
+    initrd16 /images/winpe.iso
+}
 </code></pre><h1 id=the-end>The End</h1>
 <p>Finally I&rsquo;m very satisfied with this new USB drive. Yay!</p>
 </section>
@@ -240,6 +250,7 @@ Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=
 </li>
 <li><a href=#windows-installer>Windows Installer</a></li>
 <li><a href=#windows-pe>Windows PE</a></li>
+<li><a href=#loading-any-iso>Loading Any ISO</a></li>
 </ol>
 </nav>
 </div>
