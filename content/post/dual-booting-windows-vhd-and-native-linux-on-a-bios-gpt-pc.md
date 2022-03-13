@@ -1,9 +1,10 @@
 ---
 title: Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC
 date: 2021-07-09 16:40:31
-categories: TechNotes
+Updated: 2021-07-09 16:40:31
+categories: Tech
 tags: 
-    - multi-boot
+    - Multi-boot
 ---
 
 # Background

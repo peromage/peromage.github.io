@@ -2,9 +2,10 @@
 title: SSH Over GPG Agent
 date: 2022-03-13 00:02:12
 updated: 2022-03-13 00:02:12
-categories: QuickNotes
+categories: Tech
 tags: 
-    - setup
+    - Setup
+    - Quick Notes
 ---
 
 This is a quick note of `gpg-agent` setup for SSH.

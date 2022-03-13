@@ -2,9 +2,10 @@
 title: Shadowsocks Quick Setup
 date: 2022-03-13 00:03:36
 updated: 2022-03-13 00:03:36
-categories: QuickNotes
+categories: Tech
 tags: 
-    - setup
+    - Setup
+    - Quick Notes
 ---
 
 This note is written for my personal convenience.

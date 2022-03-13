@@ -1,7 +1,7 @@
 ---
 title: "Moving From Vim to Emacs"
 date: 2021-08-14T10:29:09-04:00
-draft: false
+Updated: 2021-08-14T10:29:09-04:00
 categories: Thoughts
 tags:
     - Vim

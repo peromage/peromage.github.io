@@ -1,11 +1,10 @@
 ---
 title: Git 中的 Subtree 和 Submodule
-comments: true
 date: 2017-04-07 20:53:53
 updated: 2017-04-07 20:53:53
-categories: TechNotes
+categories: Tech
 tags: 
-    - git
+    - Git
     - 中文
 ---
 

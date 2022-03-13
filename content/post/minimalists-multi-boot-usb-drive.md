@@ -1,9 +1,11 @@
 ---
 title: Minimalist's Multi-boot USB Drive
 date: 2022-01-26 20:34:18
-categories: TechNotes
+updated: 2022-01-26 20:34:18
+categories: Tech
 tags:
-    - multi-boot
+    - Multi-boot
+    - USB
 ---
 
 # Story

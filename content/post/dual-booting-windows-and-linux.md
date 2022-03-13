@@ -1,12 +1,12 @@
 ---
 title: Windows + Linux 双系统引导手记
-comments: true
 date: 2017-04-05 19:26:41
 updated: 2017-04-05 19:26:41
-categories: TechNotes
+categories: Tech
 tags: 
     - 多系统引导
     - 中文
+    - Multi-boot
 ---
 
 # 0x00 情况简述
