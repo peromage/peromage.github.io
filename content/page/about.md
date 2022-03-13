@@ -16,6 +16,8 @@ menu:
 
 # Me
 
+Hi there. I'm Fang.
+
 I'm currently a C++ developer with one of the well-known automotive companies.
 
 I have hair. A lot.
