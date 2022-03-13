@@ -1,4 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Skag Den</title><link>https://peromage.github.io/</link><description>Recent content on Skag Den</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Mar 2022 00:03:36 +0000</lastBuildDate><atom:link href="https://peromage.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Shadowsocks Quick Setup</title><link>https://peromage.github.io/p/shadowsocks-quick-setup/</link><pubDate>Sun, 13 Mar 2022 00:03:36 +0000</pubDate><guid>https://peromage.github.io/p/shadowsocks-quick-setup/</guid><description>&lt;p>This note is written for my personal convenience.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Skag Den</title><link>https://peromage.github.io/</link><description>Recent content on Skag Den</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Mar 2022 00:12:57 +0000</lastBuildDate><atom:link href="https://peromage.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Fix Metadata of Google Photo Takeout</title><link>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</link><pubDate>Sun, 13 Mar 2022 00:12:57 +0000</pubDate><guid>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</guid><description>&lt;p>Google Photo sucks.&lt;/p>
+&lt;p>When exporting photos from Google Photo, a bunch of JSON files come with your photos. Those JSON files contain metadata which is supposed to be stored with your photo files. If you simple import those photo files into another photo manager you will most likely not get a chronological view. Obviously, Google does on purpose so that you will not leave it easily.
+However, there is a workaround that is able to merge those metadata into your photos.&lt;/p>
+&lt;ol>
+&lt;li>Get &lt;code>exiftool&lt;/code>: &lt;a class="link" href="https://github.com/exiftool/exiftool" target="_blank" rel="noopener"
+>https://github.com/exiftool/exiftool&lt;/a>&lt;/li>
+&lt;li>Export your Google Photos and extract the downloaded compressed files into a folder&lt;/li>
+&lt;li>Save the following content to &lt;code>fix-args.txt&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;pre>&lt;code># Usage: exiftool -@ fix-args.txt &amp;lt;takeout_dir&amp;gt;
+-r
+-d
+%s
+-tagsFromFile
+%d/%F.json
+-ext *
+--ext json
+-overwrite_original
+-progress
+-GPSAltitude&amp;lt;GeoDataAltitude
+-GPSLatitude&amp;lt;GeoDataLatitude
+-GPSLongitude&amp;lt;GeoDataLongitude
+-DateTimeOriginal&amp;lt;PhotoTakenTimeTimestamp
+-ModifyDate&amp;lt;PhotoLastModifiedTimeTimestamp
+-CreateDate&amp;lt;CreationTimeTimestamp
+-GPSAltitudeRef&amp;lt;GeoDataAltitude
+-GPSLatitudeRef&amp;lt;GeoDataLatitude
+-GPSLongitudeRef&amp;lt;GeoDataLongitude
+&lt;/code>&lt;/pre>&lt;ol start="4">
+&lt;li>Execute &lt;code>exiftool -@ fix-args.txt &amp;lt;takeout_dir&amp;gt;&lt;/code>&lt;/li>
+&lt;li>Delete JSON files and import your photos to somewhere else&lt;/li>
+&lt;/ol>
+&lt;p>This argument file contains the fields that are meaningful to me. If you need to merge additional fields you can append them to the last. For details, check the man page of &lt;code>exiftool&lt;/code>.&lt;/p></description></item><item><title>Shadowsocks Quick Setup</title><link>https://peromage.github.io/p/shadowsocks-quick-setup/</link><pubDate>Sun, 13 Mar 2022 00:03:36 +0000</pubDate><guid>https://peromage.github.io/p/shadowsocks-quick-setup/</guid><description>&lt;p>This note is written for my personal convenience.&lt;/p>
 &lt;h1 id="server-setup">Server Setup&lt;/h1>
 &lt;h2 id="installation">Installation&lt;/h2>
 &lt;pre>&lt;code>$ sudo pacman -S shadowsocks-libev

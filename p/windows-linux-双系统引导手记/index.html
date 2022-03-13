@@ -16,7 +16,7 @@ BIOS 启动分区 1MB 足以，我只是考虑到后续扩展问题。之后在�
 0x01 有啥好折腾的？ 双系统安装好以后相安无事，BIOS 默认从主位固态硬盘启动。也就是说开机不进行任何操作的话，默认进入的是 Windows 10。只有在开机的时候使用 BIOS 的 Fast Boot 功能，选择从第二块硬盘启动才能进入 Arch Linux。换句话说两个系统彼此都是透明的。 但是作为一个强迫症和完美主义者，万一我想进入 Linux，但是开机的时候错过了，岂不是要重启一次才行？或者万一我又反悔想进入 Windows 又要重启一次？这怎么能忍，所以才有了这次的折腾……">
 <meta property="og:url" content="https://peromage.github.io/p/windows-linux-%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/">
 <meta property="og:site_name" content="Skag Den">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="多系统引导"><meta property="article:tag" content="中文"><meta property="article:published_time" content="2017-04-05T19:26:41+00:00"><meta property="article:modified_time" content="2017-04-05T19:26:41+00:00">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="多系统引导"><meta property="article:tag" content="中文"><meta property="article:tag" content="Multi-boot"><meta property="article:published_time" content="2017-04-05T19:26:41+00:00"><meta property="article:modified_time" content="2017-04-05T19:26:41+00:00">
 <meta name=twitter:title content="Windows + Linux 双系统引导手记">
 <meta name=twitter:description content="0x00 情况简述 由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。
 这台电脑的基本情况是这样的，64GB 固态硬盘 + 720GB 机械硬盘（实际可用空间有折损，这里为了表示方便），Windows 10 已经安装到了固态硬盘上。由于主板较老，只能支持 BIOS。巨硬又说过 Windows 只能支持 BIOS + MBR，所以第一块主位（Master）上的固态硬盘就只能采用 MBR 分区表，分成了两个区，500MB 用作启动分区，剩下的部分全部划给了系统分区。
@@ -74,8 +74,8 @@ on-phone--column extended">
 <header class=article-header>
 <div class=article-details>
 <header class=article-category>
-<a href=/categories/technotes/>
-TechNotes
+<a href=/categories/tech/>
+Tech
 </a>
 </header>
 <h2 class=article-title>
@@ -170,6 +170,7 @@ BIOS 启动分区 1MB 足以，我只是考虑到后续扩展问题。之后在�
 <section class=article-tags>
 <a href=/tags/%E5%A4%9A%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC/>多系统引导</a>
 <a href=/tags/%E4%B8%AD%E6%96%87/>中文</a>
+<a href=/tags/multi-boot/>Multi-boot</a>
 </section>
 <section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
 <span>Licensed under CC BY-NC-SA 4.0</span>
@@ -181,13 +182,6 @@ BIOS 启动分区 1MB 足以，我只是考虑到后续扩展问题。之后在�
 <div class=related-contents>
 <div class="flex article-list--tile">
 <article>
-<a href=/p/git-%E4%B8%AD%E7%9A%84-subtree-%E5%92%8C-submodule/>
-<div class=article-details>
-<h2 class=article-title>Git 中的 Subtree 和 Submodule</h2>
-</div>
-</a>
-</article>
-<article>
 <a href=/p/minimalists-multi-boot-usb-drive/>
 <div class=article-details>
 <h2 class=article-title>Minimalist's Multi-boot USB Drive</h2>
@@ -198,6 +192,27 @@ BIOS 启动分区 1MB 足以，我只是考虑到后续扩展问题。之后在�
 <a href=/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/>
 <div class=article-details>
 <h2 class=article-title>Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/p/git-%E4%B8%AD%E7%9A%84-subtree-%E5%92%8C-submodule/>
+<div class=article-details>
+<h2 class=article-title>Git 中的 Subtree 和 Submodule</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/p/fix-metadata-of-google-photo-takeout/>
+<div class=article-details>
+<h2 class=article-title>Fix Metadata of Google Photo Takeout</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/p/shadowsocks-quick-setup/>
+<div class=article-details>
+<h2 class=article-title>Shadowsocks Quick Setup</h2>
 </div>
 </a>
 </article>
