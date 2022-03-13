@@ -1,4 +1,102 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Fang</title><link>https://peromage.github.io/</link><description>Recent content on Fang</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Mar 2022 00:12:57 +0000</lastBuildDate><atom:link href="https://peromage.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Fix Metadata of Google Photo Takeout</title><link>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</link><pubDate>Sun, 13 Mar 2022 00:12:57 +0000</pubDate><guid>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</guid><description>&lt;p>Google Photo sucks.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Fang</title><link>https://peromage.github.io/</link><description>Recent content on Fang</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Mar 2022 17:47:25 +0000</lastBuildDate><atom:link href="https://peromage.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Setup A Gaming VM</title><link>https://peromage.github.io/p/setup-a-gaming-vm/</link><pubDate>Sun, 13 Mar 2022 17:47:25 +0000</pubDate><guid>https://peromage.github.io/p/setup-a-gaming-vm/</guid><description>&lt;h1 id="before-starting">Before starting&lt;/h1>
+&lt;p>First thing first. The reason why I prefer a gaming Windows VM rather than a native Windows box is becuase I found that most of time my works can be done on Linux. There is no reason to run a huge spyware all the time. Besides Windows is getting worse and worse. I can feel that the PC is much slower on Windowss. So it&amp;rsquo;s time to ditch it as well as get rid of tons of spyware.&lt;/p>
+&lt;p>In this post, I&amp;rsquo;m not going to explain everything because the ArchWiki is already clear enough. This is quick guide for the setup.&lt;/p>
+&lt;h1 id="get-started">Get started&lt;/h1>
+&lt;h2 id="identify-your-pc-is-qualified">Identify your PC is qualified&lt;/h2>
+&lt;p>To get high graphic performance, your CPU and motherboard must support &lt;code>VT-d&lt;/code> and &lt;code>IOMMU&lt;/code> respectively.&lt;/p>
+&lt;p>If not, you can stop here and choose the traditional way to dual-boot Linux and Windows.&lt;/p>
+&lt;p>NOTE: you can check [PCI passthrough via OVMF&lt;a class="link" href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF" target="_blank" rel="noopener"
+>ArchWiki OVMF&lt;/a> prerequisite section for more information.&lt;/p>
+&lt;h2 id="install-qemu">Install QEMU&lt;/h2>
+&lt;p>I wrote a script to handle this automatically so just run &lt;a class="link" href="https://github.com/peromage/rice/blob/master/scripts/install-qemu.sh" target="_blank" rel="noopener"
+>this script&lt;/a> before hands.&lt;/p>
+&lt;p>NOTE: I&amp;rsquo;m using Arch Linux.&lt;/p>
+&lt;h2 id="identify-discrete-graphic-card">Identify discrete graphic card&lt;/h2>
+&lt;p>In a terminal:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ lspci -nnk
+01:00.0 VGA compatible controller &lt;span class="o">[&lt;/span>0300&lt;span class="o">]&lt;/span>: NVIDIA Corporation GM204 &lt;span class="o">[&lt;/span>GeForce GTX 970&lt;span class="o">]&lt;/span> &lt;span class="o">[&lt;/span>10de:13c2&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>rev a1&lt;span class="o">)&lt;/span>
+Subsystem: Gigabyte Technology Co., Ltd Device &lt;span class="o">[&lt;/span>1458:367a&lt;span class="o">]&lt;/span>
+Kernel driver in use: nouveau
+Kernel modules: nouveau
+01:00.1 Audio device &lt;span class="o">[&lt;/span>0403&lt;span class="o">]&lt;/span>: NVIDIA Corporation GM204 High Definition Audio Controller &lt;span class="o">[&lt;/span>10de:0fbb&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>rev a1&lt;span class="o">)&lt;/span>
+Subsystem: Gigabyte Technology Co., Ltd Device &lt;span class="o">[&lt;/span>1458:367a&lt;span class="o">]&lt;/span>
+Kernel driver in use: snd_hda_intel
+Kernel modules: snd_hda_intel
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Take a note of the device IDs. In this example I have a Nvidia GTX970 graphic card along with a audio controller. They belong to the same group (domain) you have to take them all.&lt;/p>
+&lt;p>In this case I got &lt;code>1458:367a&lt;/code> and &lt;code>1458:367a&lt;/code>. These are the PCI devices that will be passed through to the VM. Other PCI devices can be passed too.&lt;/p>
+&lt;h2 id="modify-kernel-parameter">Modify kernel parameter&lt;/h2>
+&lt;p>Then we&amp;rsquo;re going to turn IOMMU on and prevent host Linux loading PCI devices that we want to pass-through to the VM.&lt;/p>
+&lt;p>The kernel parameter passing could be different depending on the bootloader you use. In this example, I use &lt;code>grub&lt;/code>.&lt;/p>
+&lt;p>Open &lt;code>/etc/default/grub&lt;/code> with your favorite text editor. You have to add &lt;code>intel_iommu=on&lt;/code> to the kernel parameter along with &lt;code>vfio-pci.ids=10de:13c2,10de:0fbb&lt;/code> which contains the device IDs you got from the previous step.&lt;/p>
+&lt;pre>&lt;code># /etc/default/grub
+# Change this line
+GRUB_CMDLINE_LINUX_DEFAULT=&amp;quot;loglevel=3 quiet&amp;quot;
+# To
+GRUB_CMDLINE_LINUX_DEFAULT=&amp;quot;loglevel=3 quiet intel_iommu=on vfio-pci.ids=10de:13c2,10de:0fbb&amp;quot;
+&lt;/code>&lt;/pre>&lt;p>Then update the bootloader config file.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The most tricky part is done. Restart the PC now.&lt;/p>
+&lt;p>NOTE: You can check &lt;code>dmesg&lt;/code> after reboot to verify IOMMU is turned on successfully.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ sudo dmesg &lt;span class="p">|&lt;/span> grep -i -e DMAR -e IOMMU
+&lt;span class="o">[&lt;/span> 0.000000&lt;span class="o">]&lt;/span> ACPI: DMAR 0x00000000BDCB1CB0 0000B8 &lt;span class="o">(&lt;/span>v01 INTEL BDW &lt;span class="m">00000001&lt;/span> INTL 00000001&lt;span class="o">)&lt;/span>
+&lt;span class="o">[&lt;/span> 0.000000&lt;span class="o">]&lt;/span> Intel-IOMMU: enabled
+&lt;span class="o">[&lt;/span> 0.028879&lt;span class="o">]&lt;/span> dmar: IOMMU 0: reg_base_addr fed90000 ver 1:0 cap c0000020660462 ecap f0101a
+&lt;span class="o">[&lt;/span> 0.028883&lt;span class="o">]&lt;/span> dmar: IOMMU 1: reg_base_addr fed91000 ver 1:0 cap d2008c20660462 ecap f010da
+&lt;span class="o">[&lt;/span> 0.028950&lt;span class="o">]&lt;/span> IOAPIC id &lt;span class="m">8&lt;/span> under DRHD base 0xfed91000 IOMMU &lt;span class="m">1&lt;/span>
+&lt;span class="o">[&lt;/span> 0.536212&lt;span class="o">]&lt;/span> DMAR: No ATSR found
+&lt;span class="o">[&lt;/span> 0.536229&lt;span class="o">]&lt;/span> IOMMU &lt;span class="m">0&lt;/span> 0xfed90000: using Queued invalidation
+&lt;span class="o">[&lt;/span> 0.536230&lt;span class="o">]&lt;/span> IOMMU &lt;span class="m">1&lt;/span> 0xfed91000: using Queued invalidation
+&lt;span class="o">[&lt;/span> 0.536231&lt;span class="o">]&lt;/span> IOMMU: Setting RMRR:
+&lt;span class="o">[&lt;/span> 0.536241&lt;span class="o">]&lt;/span> IOMMU: Setting identity map &lt;span class="k">for&lt;/span> device 0000:00:02.0 &lt;span class="o">[&lt;/span>0xbf000000 - 0xcf1fffff&lt;span class="o">]&lt;/span>
+&lt;span class="o">[&lt;/span> 0.537490&lt;span class="o">]&lt;/span> IOMMU: Setting identity map &lt;span class="k">for&lt;/span> device 0000:00:14.0 &lt;span class="o">[&lt;/span>0xbdea8000 - 0xbdeb6fff&lt;span class="o">]&lt;/span>
+&lt;span class="o">[&lt;/span> 0.537512&lt;span class="o">]&lt;/span> IOMMU: Setting identity map &lt;span class="k">for&lt;/span> device 0000:00:1a.0 &lt;span class="o">[&lt;/span>0xbdea8000 - 0xbdeb6fff&lt;span class="o">]&lt;/span>
+&lt;span class="o">[&lt;/span> 0.537530&lt;span class="o">]&lt;/span> IOMMU: Setting identity map &lt;span class="k">for&lt;/span> device 0000:00:1d.0 &lt;span class="o">[&lt;/span>0xbdea8000 - 0xbdeb6fff&lt;span class="o">]&lt;/span>
+&lt;span class="o">[&lt;/span> 0.537543&lt;span class="o">]&lt;/span> IOMMU: Prepare 0-16MiB unity mapping &lt;span class="k">for&lt;/span> LPC
+&lt;span class="o">[&lt;/span> 0.537549&lt;span class="o">]&lt;/span> IOMMU: Setting identity map &lt;span class="k">for&lt;/span> device 0000:00:1f.0 &lt;span class="o">[&lt;/span>0x0 - 0xffffff&lt;span class="o">]&lt;/span>
+&lt;span class="o">[&lt;/span> 2.182790&lt;span class="o">]&lt;/span> &lt;span class="o">[&lt;/span>drm&lt;span class="o">]&lt;/span> DMAR active, disabling use of stolen memory
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="install-the-vm">Install the VM&lt;/h2>
+&lt;p>Open virt-manager GUI and follow the guide to setup.&lt;/p>
+&lt;p>Some settings should be tweaked specifically:&lt;/p>
+&lt;ul>
+&lt;li>Overview: Change &lt;em>Firmware&lt;/em> to &lt;code>UEFI&lt;/code>&lt;/li>
+&lt;li>CPUs:
+&lt;ul>
+&lt;li>Change &lt;em>vCPU allocation&lt;/em> to the maximal host CPUs. In this case, it&amp;rsquo;s &lt;code>8&lt;/code>&lt;/li>
+&lt;li>Unselect &lt;em>Copy host CPU configuration&lt;/em> and change &lt;em>Model&lt;/em> to &lt;code>host-passthrough&lt;/code>&lt;/li>
+&lt;li>Select &lt;em>Manually set CPU topology&lt;/em>. Change &lt;em>Sockets&lt;/em> to &lt;code>1&lt;/code>, &lt;em>Cores&lt;/em> to &lt;code>4&lt;/code>, &lt;em>Threads&lt;/em> to &lt;code>2&lt;/code> (Physical core &lt;code>4&lt;/code> * threads for each core &lt;code>2&lt;/code>)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Disk: Change &lt;em>Disk bus&lt;/em> to &lt;code>VirtIO&lt;/code>&lt;/li>
+&lt;li>Display Spice: You don&amp;rsquo;t really need it so remove it&lt;/li>
+&lt;li>Video: Change to None&lt;/li>
+&lt;li>PCI: Add your discrete graphic card as well as anything with it (audio controller etc.)&lt;/li>
+&lt;li>USB: Mouse, keyboards, game controllers etc.&lt;/li>
+&lt;/ul>
+&lt;p>After saving the settins, the installation should start but don&amp;rsquo;t install Windows yet. Instead, force power if off. Open VM settings in XML view, add following content to prevent Nvidia driver installer discovering the VM environment.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="nt">&amp;lt;features&amp;gt;&lt;/span>
+...
+&lt;span class="nt">&amp;lt;hyperv&amp;gt;&lt;/span>
+...
+&lt;span class="nt">&amp;lt;vendor_id&lt;/span> &lt;span class="na">state=&lt;/span>&lt;span class="s">&amp;#39;on&amp;#39;&lt;/span> &lt;span class="na">value=&lt;/span>&lt;span class="s">&amp;#39;1234567890ab&amp;#39;&lt;/span>&lt;span class="nt">/&amp;gt;&lt;/span>
+...
+&lt;span class="nt">&amp;lt;/hyperv&amp;gt;&lt;/span>
+...
+&lt;span class="nt">&amp;lt;kvm&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;hidden&lt;/span> &lt;span class="na">state=&lt;/span>&lt;span class="s">&amp;#39;on&amp;#39;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;span class="nt">&amp;lt;/kvm&amp;gt;&lt;/span>
+...
+&lt;span class="nt">&amp;lt;/features&amp;gt;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Alternatively, this has the same effect.&lt;/p>
+&lt;p>NOTE: &lt;code>win11&lt;/code> is the VM name you&amp;rsquo;ve just created.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ sudo virshpatcher --error43 --vender-id 1234567890ab win11
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="install-virtio-drivers">Install virtio drivers&lt;/h2>
+&lt;p>In the Windows VM, download the &lt;a class="link" href="https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md" target="_blank" rel="noopener"
+>virtio&lt;/a> driver and install it.&lt;/p>
+&lt;p>NOTE: Check &lt;a class="link" href="https://wiki.archlinux.org/title/QEMU" target="_blank" rel="noopener"
+>ArchWiki QEMU&lt;/a> for more info&lt;/p>
+&lt;h1 id="post-installation">Post installation&lt;/h1>
+&lt;p>If you don&amp;rsquo;t want to switch monitors you can try &lt;a class="link" href="https://looking-glass.io/" target="_blank" rel="noopener"
+>Looking Glass&lt;/a> which allows you redirect VM display output to a emulated monitor.&lt;/p></description></item><item><title>Fix Metadata of Google Photo Takeout</title><link>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</link><pubDate>Sun, 13 Mar 2022 00:12:57 +0000</pubDate><guid>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</guid><description>&lt;p>Google Photo sucks.&lt;/p>
 &lt;p>When exporting photos from Google Photo, a bunch of JSON files come with your photos. Those JSON files contain metadata which is supposed to be stored with your photo files. If you simple import those photo files into another photo manager you will most likely not get a chronological view. Obviously, Google does on purpose so that you will not leave it easily.
 However, there is a workaround that is able to merge those metadata into your photos.&lt;/p>
 &lt;ol>
