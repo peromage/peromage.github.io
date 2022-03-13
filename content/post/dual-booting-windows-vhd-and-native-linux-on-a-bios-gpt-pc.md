@@ -196,7 +196,7 @@ In a command line window:
 
 If we check the BCD entry again it doesn't change. But if we unmount the Windows VHD it will become:
 
-```
+```cmd
 > bcdedit /store f:\Boot\BCD /enum
 
 Windows Boot Manager

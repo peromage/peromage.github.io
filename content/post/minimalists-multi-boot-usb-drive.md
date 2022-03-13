@@ -50,7 +50,7 @@ The third BIOS boot partition is not really necessary since most of computers no
 
 Typical GRUB insallation but install for both EFI and BIOS.
 
-```console
+```bash
 # mount /dev/sda2 /mnt
 # grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/mnt --removable
 # grub-install --target=i386-pc --boot-directory=/mnt /dev/sda
@@ -58,7 +58,7 @@ Typical GRUB insallation but install for both EFI and BIOS.
 
 Don't forget to create a GRUB menu config file. Otherwise GRUB will boot into its command line interface (If you know what you're doing). It's a good idea to put a editable config file in the data partition since it will be the most used partition. However, GRUB reads the file in the EFI partition by default: `(esp)/grub/grub.cfg`. We can tell GRUB to read out custom config file after that.
 
-```grub
+```
 # (esp)/grub/grub.cfg
 
 search --set=root --file /boot.cfg
@@ -83,7 +83,7 @@ I'm using Arch Linux here for example.
 2. Mount ISO. We need to find the kernel loading parameters.
 3. In the file `(arch)/syslinux/archiso_sys-linux.cfg` we would see
 
-```config
+```
 # Copy to RAM boot option
 LABEL arch64ram
 TEXT HELP
@@ -100,7 +100,7 @@ This is a `syslinux` config file. Parameters after `APPEND` are the ones that we
 
 Then add the following content to `(data)/boot.cfg`. When copying the `initrd` parameters, don't forget to remove commas.
 
-```config
+```
 menuentry "Archiso 202201 RAM" {
     search --set=root --file /boot.cfg
     loopback loop /images/archlinux-2022.01.01-x86_64.iso
@@ -118,7 +118,7 @@ I prefer to use NTFS as my data partition's file system because it works on both
 
 In `(data)/boot.cfg`
 
-```config
+```
 menuentry "Windows 10 Installer" {
     search --set=root --file /boot.cfg
     chainloader /efi/boot/bootx64.efi
@@ -133,7 +133,7 @@ To create a PE image we need a Windows environment and a CMD window with admin p
 
 Create a virtual disk to contain PE files. Assigned with volume letter `P:\`.
 
-```console
+```cmd
 > diskpart
 DISKPART> create vdisk file=c:\winpe.vhd maximum=2000 type=fixed
 DISKPART> select vdisk file=c:\winpe.vhd
@@ -147,11 +147,11 @@ DISKPART> exit
 
 Then mount the Windows installer ISO. Assuming the assigned volume is `G:\`.
 
-```console
-dism /apply-image /imagefile:g:\sources\boot.wim /index:1 /applydir:p:\
-dism /image:p:\ /set-targetpath:x:\
-dism /image:p:\ /set-inputlocale:en-us
-dism /image:p:\ /set-userlocale:en-us
+```cmd
+> dism /apply-image /imagefile:g:\sources\boot.wim /index:1 /applydir:p:\
+> dism /image:p:\ /set-targetpath:x:\
+> dism /image:p:\ /set-inputlocale:en-us
+> dism /image:p:\ /set-userlocale:en-us
 ```
 
 Assign EFI partition with volume letter `E:\`.
@@ -160,7 +160,7 @@ Before creating the bootloader for Windows PE, we need to backup our GRUB EFI fi
 
 Create Windows PE bootloader.
 
-```console
+```cmd
 > bcdboot p:\Windows /l en-us /s e: /f uefi
 ```
 
@@ -168,7 +168,7 @@ Then merge both `E:\EFI` and `E:\EFI-grub`. If it prompts overwriting `E:\EFI\Bo
 
 Then add following content to `(data)/boot.cfg`.
 
-```config
+```
 menuentry "Windows PE" {
     search --set=root --file /boot.cfg
     chainloader /EFI/Microsoft/Boot/bootmgfw.efi
@@ -181,13 +181,13 @@ Some ISO is capable to be loaded directly into memory. The size of the ISO file 
 
 Copy the `memdisk` into the EFI partition.
 
-```console
+```
 # cp /usr/lib/syslinux/bios/memdisk (esp)/memdisk
 ```
 
 Then put the following content to `(data)/boot.cfg`. For example, loading a Windows PE ISO.
 
-```config
+```
 menuentry "Windows PE ISO" {
     search --set=root --file /boot.cfg
     linux16 memdisk iso ro

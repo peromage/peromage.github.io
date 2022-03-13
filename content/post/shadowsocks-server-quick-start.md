@@ -14,7 +14,7 @@ This note is written for my personal convenience.
 
 ## Installation
 
-```
+```bash
 $ sudo pacman -S shadowsocks-libev
 ```
 
