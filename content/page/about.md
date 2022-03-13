@@ -16,19 +16,21 @@ menu:
 
 # Me
 
-I'm currently working as a C++ developer for one of the well-known automotive companies.
+I'm currently a C++ developer with one of the well-known automotive companies.
 
-I like programming simply for the fun of it like Saitama sensei, but the only difference is I have much more hair than he does 😏.
+I have hair. A lot.
 
-A little OCD which annoys me a lot sometimes.
+OCD.
 
-Life is beautiful and I'm enthusiastic about it.
+Emacser as well as Vimmer.
 
-I wish you have a wonderful life.
+Never stop coding.
+
+Lastly, happy wife happy life.
 
 # Contact
 
-peromage(at)outlook.com
+fang(at)elfang.com
 
 [My GitHub][github]
 

@@ -2,7 +2,7 @@ baseurl: https://peromage.github.io
 languageCode: en-us
 theme: hugo-theme-stack
 paginate: 5
-title: Skag Den
+title: Fang\'s Grunt
 
 # Change it to your Disqus shortname before using
 disqusShortname: hugo-theme-stack
@@ -35,7 +35,7 @@ params:
 
     sidebar:
         emoji: 💤
-        subtitle: Executing phaseshift
+        subtitle: Just a normal dude
         avatar:
             local: false
             src: https://github.com/peromage.png
