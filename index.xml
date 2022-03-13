@@ -1,4 +1,61 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Skag Den</title><link>https://peromage.github.io/</link><description>Recent content on Skag Den</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Mar 2022 00:12:57 +0000</lastBuildDate><atom:link href="https://peromage.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Fix Metadata of Google Photo Takeout</title><link>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</link><pubDate>Sun, 13 Mar 2022 00:12:57 +0000</pubDate><guid>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</guid><description>&lt;p>Google Photo sucks.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Skag Den</title><link>https://peromage.github.io/</link><description>Recent content on Skag Den</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Mar 2022 00:26:07 +0000</lastBuildDate><atom:link href="https://peromage.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Test Code Block</title><link>https://peromage.github.io/p/test-code-block/</link><pubDate>Sun, 13 Mar 2022 00:26:07 +0000</pubDate><guid>https://peromage.github.io/p/test-code-block/</guid><description>&lt;p>console&lt;/p>
+&lt;pre>&lt;code class="language-console" data-lang="console"># comment
+# mount /dev/sda2 /mnt
+# grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/mnt --removable
+# grub-install --target=i386-pc --boot-directory=/mnt /dev/sda
+# comment
+$ mount /dev/sda2 /mnt
+$ grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/mnt --removable
+$ grub-install --target=i386-pc --boot-directory=/mnt /dev/sda
+# Adding Windows (bootmgr) entry to GRUB. 1DB1-9C31 is the boot partition's UUID
+$ sudo cat &amp;lt;&amp;lt;EOF &amp;gt;&amp;gt;/etc/grub.d/40_custom
+menuentry &amp;quot;Windows 7&amp;quot; {
+search --set=root --no-floppy --fs-uuid 1DB1-9C31
+linux16 /memdisk harddisk
+initrd16 /bootmgr.vhd
+}
+EOF
+# Updating GRUB entries
+$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/code>&lt;/pre>&lt;p>shell&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="c1"># comment&lt;/span>
+&lt;span class="c1"># mount /dev/sda2 /mnt&lt;/span>
+&lt;span class="c1"># grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/mnt --removable&lt;/span>
+&lt;span class="c1"># grub-install --target=i386-pc --boot-directory=/mnt /dev/sda&lt;/span>
+&lt;span class="c1"># comment&lt;/span>
+$ mount /dev/sda2 /mnt
+$ grub-install --target&lt;span class="o">=&lt;/span>x86_64-efi --efi-directory&lt;span class="o">=&lt;/span>/mnt --boot-directory&lt;span class="o">=&lt;/span>/mnt --removable
+$ grub-install --target&lt;span class="o">=&lt;/span>i386-pc --boot-directory&lt;span class="o">=&lt;/span>/mnt /dev/sda
+&lt;span class="c1"># Adding Windows (bootmgr) entry to GRUB. 1DB1-9C31 is the boot partition&amp;#39;s UUID&lt;/span>
+$ sudo cat &lt;span class="s">&amp;lt;&amp;lt;EOF &amp;gt;&amp;gt;/etc/grub.d/40_custom
+&lt;/span>&lt;span class="s">menuentry &amp;#34;Windows 7&amp;#34; {
+&lt;/span>&lt;span class="s"> search --set=root --no-floppy --fs-uuid 1DB1-9C31
+&lt;/span>&lt;span class="s"> linux16 /memdisk harddisk
+&lt;/span>&lt;span class="s"> initrd16 /bootmgr.vhd
+&lt;/span>&lt;span class="s">}
+&lt;/span>&lt;span class="s">EOF&lt;/span>
+&lt;span class="c1"># Updating GRUB entries&lt;/span>
+$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>bash&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1"># comment&lt;/span>
+&lt;span class="c1"># mount /dev/sda2 /mnt&lt;/span>
+&lt;span class="c1"># grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/mnt --removable&lt;/span>
+&lt;span class="c1"># grub-install --target=i386-pc --boot-directory=/mnt /dev/sda&lt;/span>
+&lt;span class="c1"># comment&lt;/span>
+$ mount /dev/sda2 /mnt
+$ grub-install --target&lt;span class="o">=&lt;/span>x86_64-efi --efi-directory&lt;span class="o">=&lt;/span>/mnt --boot-directory&lt;span class="o">=&lt;/span>/mnt --removable
+$ grub-install --target&lt;span class="o">=&lt;/span>i386-pc --boot-directory&lt;span class="o">=&lt;/span>/mnt /dev/sda
+&lt;span class="c1"># Adding Windows (bootmgr) entry to GRUB. 1DB1-9C31 is the boot partition&amp;#39;s UUID&lt;/span>
+$ sudo cat &lt;span class="s">&amp;lt;&amp;lt;EOF &amp;gt;&amp;gt;/etc/grub.d/40_custom
+&lt;/span>&lt;span class="s">menuentry &amp;#34;Windows 7&amp;#34; {
+&lt;/span>&lt;span class="s"> search --set=root --no-floppy --fs-uuid 1DB1-9C31
+&lt;/span>&lt;span class="s"> linux16 /memdisk harddisk
+&lt;/span>&lt;span class="s"> initrd16 /bootmgr.vhd
+&lt;/span>&lt;span class="s">}
+&lt;/span>&lt;span class="s">EOF&lt;/span>
+&lt;span class="c1"># Updating GRUB entries&lt;/span>
+$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Fix Metadata of Google Photo Takeout</title><link>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</link><pubDate>Sun, 13 Mar 2022 00:12:57 +0000</pubDate><guid>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</guid><description>&lt;p>Google Photo sucks.&lt;/p>
 &lt;p>When exporting photos from Google Photo, a bunch of JSON files come with your photos. Those JSON files contain metadata which is supposed to be stored with your photo files. If you simple import those photo files into another photo manager you will most likely not get a chronological view. Obviously, Google does on purpose so that you will not leave it easily.
 However, there is a workaround that is able to merge those metadata into your photos.&lt;/p>
 &lt;ol>
