@@ -163,7 +163,7 @@ detecthal               Yes
 <span class=p>&gt;</span> bcdedit /store C:\Boot\BCD /set {default} device vhd=[D:]\windows7.vhd
 <span class=p>&gt;</span> bcdedit /store C:\Boot\BCD /set {default} osdevice vhd=[D:]\windows7.vhd
 </code></pre></div><p>If we check the BCD entry again it doesn&rsquo;t change. But if we unmount the Windows VHD it will become:</p>
-<pre><code>&gt; bcdedit /store f:\Boot\BCD /enum
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-cmd data-lang=cmd><span class=p>&gt;</span> bcdedit /store f:\Boot\BCD /enum
 
 Windows Boot Manager
 --------------------
@@ -182,7 +182,7 @@ Windows Boot Loader
 -------------------
 identifier              {default}
 device                  vhd=[C:]\windows7.vhd
-path                    \Windows\system32\winload.exe
+<span class=k>path</span>                    \Windows\system32\winload.exe
 description             Windows 7
 locale                  en-us
 inherit                 {bootloadersettings}
@@ -191,7 +191,7 @@ systemroot              \Windows
 resumeobject            {fcd67427-e033-11eb-8826-cdf90e3873d0}
 nx                      OptIn
 detecthal               Yes
-</code></pre><p>The volume letter doesn&rsquo;t matter, it changes dynamically. Now <code>bootmgr</code> is able to locate the VHD file correctly.</p>
+</code></pre></div><p>The volume letter doesn&rsquo;t matter, it changes dynamically. Now <code>bootmgr</code> is able to locate the VHD file correctly.</p>
 <h1 id=adding-windows-to-grub>Adding Windows to GRUB</h1>
 <p>Restart PC and get into Linux.</p>
 <p>Modify the GRUB config file to load <code>bootmgr</code></p>

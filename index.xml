@@ -1,61 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Skag Den</title><link>https://peromage.github.io/</link><description>Recent content on Skag Den</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Mar 2022 00:26:07 +0000</lastBuildDate><atom:link href="https://peromage.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Test Code Block</title><link>https://peromage.github.io/p/test-code-block/</link><pubDate>Sun, 13 Mar 2022 00:26:07 +0000</pubDate><guid>https://peromage.github.io/p/test-code-block/</guid><description>&lt;p>console&lt;/p>
-&lt;pre>&lt;code class="language-console" data-lang="console"># comment
-# mount /dev/sda2 /mnt
-# grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/mnt --removable
-# grub-install --target=i386-pc --boot-directory=/mnt /dev/sda
-# comment
-$ mount /dev/sda2 /mnt
-$ grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/mnt --removable
-$ grub-install --target=i386-pc --boot-directory=/mnt /dev/sda
-# Adding Windows (bootmgr) entry to GRUB. 1DB1-9C31 is the boot partition's UUID
-$ sudo cat &amp;lt;&amp;lt;EOF &amp;gt;&amp;gt;/etc/grub.d/40_custom
-menuentry &amp;quot;Windows 7&amp;quot; {
-search --set=root --no-floppy --fs-uuid 1DB1-9C31
-linux16 /memdisk harddisk
-initrd16 /bootmgr.vhd
-}
-EOF
-# Updating GRUB entries
-$ sudo grub-mkconfig -o /boot/grub/grub.cfg
-&lt;/code>&lt;/pre>&lt;p>shell&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="c1"># comment&lt;/span>
-&lt;span class="c1"># mount /dev/sda2 /mnt&lt;/span>
-&lt;span class="c1"># grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/mnt --removable&lt;/span>
-&lt;span class="c1"># grub-install --target=i386-pc --boot-directory=/mnt /dev/sda&lt;/span>
-&lt;span class="c1"># comment&lt;/span>
-$ mount /dev/sda2 /mnt
-$ grub-install --target&lt;span class="o">=&lt;/span>x86_64-efi --efi-directory&lt;span class="o">=&lt;/span>/mnt --boot-directory&lt;span class="o">=&lt;/span>/mnt --removable
-$ grub-install --target&lt;span class="o">=&lt;/span>i386-pc --boot-directory&lt;span class="o">=&lt;/span>/mnt /dev/sda
-&lt;span class="c1"># Adding Windows (bootmgr) entry to GRUB. 1DB1-9C31 is the boot partition&amp;#39;s UUID&lt;/span>
-$ sudo cat &lt;span class="s">&amp;lt;&amp;lt;EOF &amp;gt;&amp;gt;/etc/grub.d/40_custom
-&lt;/span>&lt;span class="s">menuentry &amp;#34;Windows 7&amp;#34; {
-&lt;/span>&lt;span class="s"> search --set=root --no-floppy --fs-uuid 1DB1-9C31
-&lt;/span>&lt;span class="s"> linux16 /memdisk harddisk
-&lt;/span>&lt;span class="s"> initrd16 /bootmgr.vhd
-&lt;/span>&lt;span class="s">}
-&lt;/span>&lt;span class="s">EOF&lt;/span>
-&lt;span class="c1"># Updating GRUB entries&lt;/span>
-$ sudo grub-mkconfig -o /boot/grub/grub.cfg
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>bash&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1"># comment&lt;/span>
-&lt;span class="c1"># mount /dev/sda2 /mnt&lt;/span>
-&lt;span class="c1"># grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/mnt --removable&lt;/span>
-&lt;span class="c1"># grub-install --target=i386-pc --boot-directory=/mnt /dev/sda&lt;/span>
-&lt;span class="c1"># comment&lt;/span>
-$ mount /dev/sda2 /mnt
-$ grub-install --target&lt;span class="o">=&lt;/span>x86_64-efi --efi-directory&lt;span class="o">=&lt;/span>/mnt --boot-directory&lt;span class="o">=&lt;/span>/mnt --removable
-$ grub-install --target&lt;span class="o">=&lt;/span>i386-pc --boot-directory&lt;span class="o">=&lt;/span>/mnt /dev/sda
-&lt;span class="c1"># Adding Windows (bootmgr) entry to GRUB. 1DB1-9C31 is the boot partition&amp;#39;s UUID&lt;/span>
-$ sudo cat &lt;span class="s">&amp;lt;&amp;lt;EOF &amp;gt;&amp;gt;/etc/grub.d/40_custom
-&lt;/span>&lt;span class="s">menuentry &amp;#34;Windows 7&amp;#34; {
-&lt;/span>&lt;span class="s"> search --set=root --no-floppy --fs-uuid 1DB1-9C31
-&lt;/span>&lt;span class="s"> linux16 /memdisk harddisk
-&lt;/span>&lt;span class="s"> initrd16 /bootmgr.vhd
-&lt;/span>&lt;span class="s">}
-&lt;/span>&lt;span class="s">EOF&lt;/span>
-&lt;span class="c1"># Updating GRUB entries&lt;/span>
-$ sudo grub-mkconfig -o /boot/grub/grub.cfg
-&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Fix Metadata of Google Photo Takeout</title><link>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</link><pubDate>Sun, 13 Mar 2022 00:12:57 +0000</pubDate><guid>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</guid><description>&lt;p>Google Photo sucks.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Skag Den</title><link>https://peromage.github.io/</link><description>Recent content on Skag Den</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Mar 2022 00:12:57 +0000</lastBuildDate><atom:link href="https://peromage.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Fix Metadata of Google Photo Takeout</title><link>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</link><pubDate>Sun, 13 Mar 2022 00:12:57 +0000</pubDate><guid>https://peromage.github.io/p/fix-metadata-of-google-photo-takeout/</guid><description>&lt;p>Google Photo sucks.&lt;/p>
 &lt;p>When exporting photos from Google Photo, a bunch of JSON files come with your photos. Those JSON files contain metadata which is supposed to be stored with your photo files. If you simple import those photo files into another photo manager you will most likely not get a chronological view. Obviously, Google does on purpose so that you will not leave it easily.
 However, there is a workaround that is able to merge those metadata into your photos.&lt;/p>
 &lt;ol>
@@ -90,8 +33,8 @@ However, there is a workaround that is able to merge those metadata into your ph
 &lt;p>This argument file contains the fields that are meaningful to me. If you need to merge additional fields you can append them to the last. For details, check the man page of &lt;code>exiftool&lt;/code>.&lt;/p></description></item><item><title>Shadowsocks Quick Setup</title><link>https://peromage.github.io/p/shadowsocks-quick-setup/</link><pubDate>Sun, 13 Mar 2022 00:03:36 +0000</pubDate><guid>https://peromage.github.io/p/shadowsocks-quick-setup/</guid><description>&lt;p>This note is written for my personal convenience.&lt;/p>
 &lt;h1 id="server-setup">Server Setup&lt;/h1>
 &lt;h2 id="installation">Installation&lt;/h2>
-&lt;pre>&lt;code>$ sudo pacman -S shadowsocks-libev
-&lt;/code>&lt;/pre>&lt;h2 id="shadowsocks-server-configuration">Shadowsocks Server Configuration&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">$ sudo pacman -S shadowsocks-libev
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="shadowsocks-server-configuration">Shadowsocks Server Configuration&lt;/h2>
 &lt;p>Config file is located at &lt;code>/etc/shadowsocks/myserver.json&lt;/code>.&lt;/p>
 &lt;p>On FreeBSD it is &lt;code>/usr/local/etc/shadowsocks/myserver.json&lt;/code>&lt;/p>
 &lt;p>The file name can vary.&lt;/p>
@@ -185,11 +128,11 @@ gpg-connect-agent updatestartuptty /bye &amp;gt; /dev/null
 &lt;/code>&lt;/pre>&lt;p>The third BIOS boot partition is not really necessary since most of computers nowadays are using UEFI. If you really need the legacy compatibility, you can create one. I&amp;rsquo;ll keep it for now.&lt;/p>
 &lt;h2 id="installing-grub">Installing GRUB&lt;/h2>
 &lt;p>Typical GRUB insallation but install for both EFI and BIOS.&lt;/p>
-&lt;pre>&lt;code class="language-console" data-lang="console"># mount /dev/sda2 /mnt
-# grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/mnt --removable
-# grub-install --target=i386-pc --boot-directory=/mnt /dev/sda
-&lt;/code>&lt;/pre>&lt;p>Don&amp;rsquo;t forget to create a GRUB menu config file. Otherwise GRUB will boot into its command line interface (If you know what you&amp;rsquo;re doing). It&amp;rsquo;s a good idea to put a editable config file in the data partition since it will be the most used partition. However, GRUB reads the file in the EFI partition by default: &lt;code>(esp)/grub/grub.cfg&lt;/code>. We can tell GRUB to read out custom config file after that.&lt;/p>
-&lt;pre>&lt;code class="language-grub" data-lang="grub"># (esp)/grub/grub.cfg
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="c1"># mount /dev/sda2 /mnt&lt;/span>
+&lt;span class="c1"># grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/mnt --removable&lt;/span>
+&lt;span class="c1"># grub-install --target=i386-pc --boot-directory=/mnt /dev/sda&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Don&amp;rsquo;t forget to create a GRUB menu config file. Otherwise GRUB will boot into its command line interface (If you know what you&amp;rsquo;re doing). It&amp;rsquo;s a good idea to put a editable config file in the data partition since it will be the most used partition. However, GRUB reads the file in the EFI partition by default: &lt;code>(esp)/grub/grub.cfg&lt;/code>. We can tell GRUB to read out custom config file after that.&lt;/p>
+&lt;pre>&lt;code># (esp)/grub/grub.cfg
 search --set=root --file /boot.cfg
 configfile /boot.cfg
 &lt;/code>&lt;/pre>&lt;p>Thus we are done with the EFI partition. All the menu configuration will go into &lt;code>boot.cfg&lt;/code> in the data partition.&lt;/p>
@@ -207,7 +150,7 @@ configfile /boot.cfg
 &lt;li>Mount ISO. We need to find the kernel loading parameters.&lt;/li>
 &lt;li>In the file &lt;code>(arch)/syslinux/archiso_sys-linux.cfg&lt;/code> we would see&lt;/li>
 &lt;/ol>
-&lt;pre>&lt;code class="language-config" data-lang="config"># Copy to RAM boot option
+&lt;pre>&lt;code># Copy to RAM boot option
 LABEL arch64ram
 TEXT HELP
 Boot the Arch Linux install medium on BIOS with Copy-to-RAM option
@@ -219,7 +162,7 @@ INITRD /arch/boot/intel-ucode.img,/arch/boot/amd-ucode.img,/arch/boot/x86_64/ini
 APPEND archisobasedir=arch archisolabel=ARCH_202201 copytoram
 &lt;/code>&lt;/pre>&lt;p>This is a &lt;code>syslinux&lt;/code> config file. Parameters after &lt;code>APPEND&lt;/code> are the ones that we&amp;rsquo;re looking for.&lt;/p>
 &lt;p>Then add the following content to &lt;code>(data)/boot.cfg&lt;/code>. When copying the &lt;code>initrd&lt;/code> parameters, don&amp;rsquo;t forget to remove commas.&lt;/p>
-&lt;pre>&lt;code class="language-config" data-lang="config">menuentry &amp;quot;Archiso 202201 RAM&amp;quot; {
+&lt;pre>&lt;code>menuentry &amp;quot;Archiso 202201 RAM&amp;quot; {
 search --set=root --file /boot.cfg
 loopback loop /images/archlinux-2022.01.01-x86_64.iso
 set root=(loop)
@@ -230,7 +173,7 @@ initrd /arch/boot/intel-ucode.img /arch/boot/amd-ucode.img /arch/boot/x86_64/ini
 &lt;h2 id="windows-installer">Windows Installer&lt;/h2>
 &lt;p>I prefer to use NTFS as my data partition&amp;rsquo;s file system because it works on both Linux and Windows, and supports big files. Also I usually just keep one copy of Windows installer so for Windows, I can simply dump the ISO content to the data partition&amp;rsquo;s root. I don&amp;rsquo;t mind the extra a few folders there. Plus some of them can be safely deleted. Then chainloading from GRUB is possible.&lt;/p>
 &lt;p>In &lt;code>(data)/boot.cfg&lt;/code>&lt;/p>
-&lt;pre>&lt;code class="language-config" data-lang="config">menuentry &amp;quot;Windows 10 Installer&amp;quot; {
+&lt;pre>&lt;code>menuentry &amp;quot;Windows 10 Installer&amp;quot; {
 search --set=root --file /boot.cfg
 chainloader /efi/boot/bootx64.efi
 }
@@ -238,36 +181,36 @@ chainloader /efi/boot/bootx64.efi
 &lt;p>Alternatively, I can directly boot from a small WinPE image and use &lt;code>dism&lt;/code> command to extract &lt;code>install.wim&lt;/code> to the target without accepting the annoying Windows partition scheme (You know what I&amp;rsquo;m talking about).&lt;/p>
 &lt;p>To create a PE image we need a Windows environment and a CMD window with admin privilege.&lt;/p>
 &lt;p>Create a virtual disk to contain PE files. Assigned with volume letter &lt;code>P:\&lt;/code>.&lt;/p>
-&lt;pre>&lt;code class="language-console" data-lang="console">&amp;gt; diskpart
-DISKPART&amp;gt; create vdisk file=c:\winpe.vhd maximum=2000 type=fixed
-DISKPART&amp;gt; select vdisk file=c:\winpe.vhd
-DISKPART&amp;gt; attach vdisk
-DISKPART&amp;gt; convert mbr
-DISKPART&amp;gt; create partition primary
-DISKPART&amp;gt; format fs=ntfs quick
-DISKPART&amp;gt; assign letter=p
-DISKPART&amp;gt; exit
-&lt;/code>&lt;/pre>&lt;p>Then mount the Windows installer ISO. Assuming the assigned volume is &lt;code>G:\&lt;/code>.&lt;/p>
-&lt;pre>&lt;code class="language-console" data-lang="console">dism /apply-image /imagefile:g:\sources\boot.wim /index:1 /applydir:p:\
-dism /image:p:\ /set-targetpath:x:\
-dism /image:p:\ /set-inputlocale:en-us
-dism /image:p:\ /set-userlocale:en-us
-&lt;/code>&lt;/pre>&lt;p>Assign EFI partition with volume letter &lt;code>E:\&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-cmd" data-lang="cmd">&lt;span class="p">&amp;gt;&lt;/span> diskpart
+DISKPART&lt;span class="p">&amp;gt;&lt;/span> create vdisk file=c:\winpe.vhd maximum=2000 type=fixed
+DISKPART&lt;span class="p">&amp;gt;&lt;/span> select vdisk file=c:\winpe.vhd
+DISKPART&lt;span class="p">&amp;gt;&lt;/span> attach vdisk
+DISKPART&lt;span class="p">&amp;gt;&lt;/span> convert mbr
+DISKPART&lt;span class="p">&amp;gt;&lt;/span> create partition primary
+DISKPART&lt;span class="p">&amp;gt;&lt;/span> format fs=ntfs quick
+DISKPART&lt;span class="p">&amp;gt;&lt;/span> assign letter=p
+DISKPART&lt;span class="p">&amp;gt;&lt;/span> exit
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then mount the Windows installer ISO. Assuming the assigned volume is &lt;code>G:\&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-cmd" data-lang="cmd">&lt;span class="p">&amp;gt;&lt;/span> dism /apply-image /imagefile:g:\sources\boot.wim /index:1 /applydir:p:\
+&lt;span class="p">&amp;gt;&lt;/span> dism /image:p:\ /set-targetpath:x:\
+&lt;span class="p">&amp;gt;&lt;/span> dism /image:p:\ /set-inputlocale:en-us
+&lt;span class="p">&amp;gt;&lt;/span> dism /image:p:\ /set-userlocale:en-us
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Assign EFI partition with volume letter &lt;code>E:\&lt;/code>.&lt;/p>
 &lt;p>Before creating the bootloader for Windows PE, we need to backup our GRUB EFI file (Windows PE bootloader will overwrite it). Rename &lt;code>E:\EFI&lt;/code> to &lt;code>E:\EFI-grub&lt;/code>.&lt;/p>
 &lt;p>Create Windows PE bootloader.&lt;/p>
-&lt;pre>&lt;code class="language-console" data-lang="console">&amp;gt; bcdboot p:\Windows /l en-us /s e: /f uefi
-&lt;/code>&lt;/pre>&lt;p>Then merge both &lt;code>E:\EFI&lt;/code> and &lt;code>E:\EFI-grub&lt;/code>. If it prompts overwriting &lt;code>E:\EFI\Boot\bootx64.efi&lt;/code>, confirm with yes.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-cmd" data-lang="cmd">&lt;span class="p">&amp;gt;&lt;/span> bcdboot p:\Windows /l en-us /s e: /f uefi
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then merge both &lt;code>E:\EFI&lt;/code> and &lt;code>E:\EFI-grub&lt;/code>. If it prompts overwriting &lt;code>E:\EFI\Boot\bootx64.efi&lt;/code>, confirm with yes.&lt;/p>
 &lt;p>Then add following content to &lt;code>(data)/boot.cfg&lt;/code>.&lt;/p>
-&lt;pre>&lt;code class="language-config" data-lang="config">menuentry &amp;quot;Windows PE&amp;quot; {
+&lt;pre>&lt;code>menuentry &amp;quot;Windows PE&amp;quot; {
 search --set=root --file /boot.cfg
 chainloader /EFI/Microsoft/Boot/bootmgfw.efi
 }
 &lt;/code>&lt;/pre>&lt;h2 id="loading-any-iso">Loading Any ISO&lt;/h2>
 &lt;p>Some ISO is capable to be loaded directly into memory. The size of the ISO file is critical. Generally it should not exceed the physical memory. This can be done by &lt;code>memdisk&lt;/code> from &lt;code>syslinux&lt;/code>.&lt;/p>
 &lt;p>Copy the &lt;code>memdisk&lt;/code> into the EFI partition.&lt;/p>
-&lt;pre>&lt;code class="language-console" data-lang="console"># cp /usr/lib/syslinux/bios/memdisk (esp)/memdisk
+&lt;pre>&lt;code># cp /usr/lib/syslinux/bios/memdisk (esp)/memdisk
 &lt;/code>&lt;/pre>&lt;p>Then put the following content to &lt;code>(data)/boot.cfg&lt;/code>. For example, loading a Windows PE ISO.&lt;/p>
-&lt;pre>&lt;code class="language-config" data-lang="config">menuentry &amp;quot;Windows PE ISO&amp;quot; {
+&lt;pre>&lt;code>menuentry &amp;quot;Windows PE ISO&amp;quot; {
 search --set=root --file /boot.cfg
 linux16 memdisk iso ro
 initrd16 /images/winpe.iso
@@ -411,7 +354,7 @@ detecthal Yes
 &lt;span class="p">&amp;gt;&lt;/span> bcdedit /store C:\Boot\BCD /set {default} device vhd=[D:]\windows7.vhd
 &lt;span class="p">&amp;gt;&lt;/span> bcdedit /store C:\Boot\BCD /set {default} osdevice vhd=[D:]\windows7.vhd
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>If we check the BCD entry again it doesn&amp;rsquo;t change. But if we unmount the Windows VHD it will become:&lt;/p>
-&lt;pre>&lt;code>&amp;gt; bcdedit /store f:\Boot\BCD /enum
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-cmd" data-lang="cmd">&lt;span class="p">&amp;gt;&lt;/span> bcdedit /store f:\Boot\BCD /enum
 Windows Boot Manager
 --------------------
 identifier {bootmgr}
@@ -428,7 +371,7 @@ Windows Boot Loader
 -------------------
 identifier {default}
 device vhd=[C:]\windows7.vhd
-path \Windows\system32\winload.exe
+&lt;span class="k">path&lt;/span> \Windows\system32\winload.exe
 description Windows 7
 locale en-us
 inherit {bootloadersettings}
@@ -437,7 +380,7 @@ systemroot \Windows
 resumeobject {fcd67427-e033-11eb-8826-cdf90e3873d0}
 nx OptIn
 detecthal Yes
-&lt;/code>&lt;/pre>&lt;p>The volume letter doesn&amp;rsquo;t matter, it changes dynamically. Now &lt;code>bootmgr&lt;/code> is able to locate the VHD file correctly.&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The volume letter doesn&amp;rsquo;t matter, it changes dynamically. Now &lt;code>bootmgr&lt;/code> is able to locate the VHD file correctly.&lt;/p>
 &lt;h1 id="adding-windows-to-grub">Adding Windows to GRUB&lt;/h1>
 &lt;p>Restart PC and get into Linux.&lt;/p>
 &lt;p>Modify the GRUB config file to load &lt;code>bootmgr&lt;/code>&lt;/p>
