@@ -1,5 +1,5 @@
 ---
-title: [C++] Initialize std::array at Compile Time
+title: '[C++] Initialize std::array at Compile Time'
 date: 2022-03-16 10:25:05
 updated: 2022-03-16 10:25:05
 categories: Coding
@@ -46,6 +46,10 @@ for (auto& i : array) {
 # Generating code by templates
 
 We can use recursive deduction of templates to generate our code. There is a limit that you can only do 1024 times of recursion but in my case it's enough.
+
+The idea is to count the size to zero and use variadic argument to increase the number of arguments on each recursion. Finally the size of the array will be passed to the bottom and the variadic argument gets expanded.
+
+It's a pretty simple trick.
 
 ```c++
 template<std::size_t N, std::size_t M, typename T, typename... U>
