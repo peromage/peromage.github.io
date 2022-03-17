@@ -12,9 +12,13 @@ tags:
 
 # Before starting
 
-First thing first. The reason why I prefer a gaming Windows VM rather than a native Windows box is becuase I found that most of time my works can be done on Linux. There is no reason to run a huge spyware all the time. Besides Windows is getting worse and worse. I can feel that the PC is much slower on Windowss. So it's time to ditch it as well as get rid of tons of spyware.
+First thing first. I've been rarely using Windows over years except for working and gaming. Linux community grows fast and there are a lot alternatives available. On the contrary, Windows gets crapy every year (Office 365 is still good IMO) so there is no reason to run this huge spyware all the time.
 
-In this post, I'm not going to explain everything because the ArchWiki is already clear enough. This is quick guide for the setup.
+Modern PCs are strong enough to run a VM. Besides most of PCs have both integrated and descret graphic cards. This setup is perfect for gaming VM which requires PCI passthrough.
+
+In this post, I'm not going to explain everything because the ArchWiki is clear enough already. This is just a quick guide for the setup.
+
+NOTE: Avoid Intel K series CPUs which usually don't have integrated graphic card.
 
 # Get started
 
