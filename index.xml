@@ -38,8 +38,10 @@
 &lt;span class="c1">// array1 results in int equivalent: {999, 999, 999, 999, 999}
 &lt;/span>&lt;span class="c1">// array2 results in int equivalent: {999, 999, 999, 999, 999, ...}
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Setup A Gaming VM</title><link>https://peromage.github.io/p/setup-a-gaming-vm/</link><pubDate>Sun, 13 Mar 2022 17:47:25 +0000</pubDate><guid>https://peromage.github.io/p/setup-a-gaming-vm/</guid><description>&lt;h1 id="before-starting">Before starting&lt;/h1>
-&lt;p>First thing first. The reason why I prefer a gaming Windows VM rather than a native Windows box is becuase I found that most of time my works can be done on Linux. There is no reason to run a huge spyware all the time. Besides Windows is getting worse and worse. I can feel that the PC is much slower on Windowss. So it&amp;rsquo;s time to ditch it as well as get rid of tons of spyware.&lt;/p>
-&lt;p>In this post, I&amp;rsquo;m not going to explain everything because the ArchWiki is already clear enough. This is quick guide for the setup.&lt;/p>
+&lt;p>First thing first. I&amp;rsquo;ve been rarely using Windows over years except for working and gaming. Linux community grows fast and there are a lot alternatives available. On the contrary, Windows gets crapy every year (Office 365 is still good IMO) so there is no reason to run this huge spyware all the time.&lt;/p>
+&lt;p>Modern PCs are strong enough to run a VM. Besides most of PCs have both integrated and descret graphic cards. This setup is perfect for gaming VM which requires PCI passthrough.&lt;/p>
+&lt;p>In this post, I&amp;rsquo;m not going to explain everything because the ArchWiki is clear enough already. This is just a quick guide for the setup.&lt;/p>
+&lt;p>NOTE: Avoid Intel K series CPUs which usually don&amp;rsquo;t have integrated graphic card.&lt;/p>
 &lt;h1 id="get-started">Get started&lt;/h1>
 &lt;h2 id="identify-your-pc-is-qualified">Identify your PC is qualified&lt;/h2>
 &lt;p>To get high graphic performance, your CPU and motherboard must support &lt;code>VT-d&lt;/code> and &lt;code>IOMMU&lt;/code> respectively.&lt;/p>

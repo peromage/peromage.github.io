@@ -1,14 +1,17 @@
 <!doctype html><html lang=en-us>
 <head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Before starting First thing first. The reason why I prefer a gaming Windows VM rather than a native Windows box is becuase I found that most of time my works can be done on Linux. There is no reason to run a huge spyware all the time. Besides Windows is getting worse and worse. I can feel that the PC is much slower on Windowss. So it&amp;rsquo;s time to ditch it as well as get rid of tons of spyware."><title>Setup A Gaming VM</title>
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Before starting First thing first. I&amp;rsquo;ve been rarely using Windows over years except for working and gaming. Linux community grows fast and there are a lot alternatives available. On the contrary, Windows gets crapy every year (Office 365 is still good IMO) so there is no reason to run this huge spyware all the time.
+Modern PCs are strong enough to run a VM. Besides most of PCs have both integrated and descret graphic cards."><title>Setup A Gaming VM</title>
 <link rel=canonical href=https://peromage.github.io/p/setup-a-gaming-vm/>
 <link rel=stylesheet href=/scss/style.min.css><meta property="og:title" content="Setup A Gaming VM">
-<meta property="og:description" content="Before starting First thing first. The reason why I prefer a gaming Windows VM rather than a native Windows box is becuase I found that most of time my works can be done on Linux. There is no reason to run a huge spyware all the time. Besides Windows is getting worse and worse. I can feel that the PC is much slower on Windowss. So it&amp;rsquo;s time to ditch it as well as get rid of tons of spyware.">
+<meta property="og:description" content="Before starting First thing first. I&amp;rsquo;ve been rarely using Windows over years except for working and gaming. Linux community grows fast and there are a lot alternatives available. On the contrary, Windows gets crapy every year (Office 365 is still good IMO) so there is no reason to run this huge spyware all the time.
+Modern PCs are strong enough to run a VM. Besides most of PCs have both integrated and descret graphic cards.">
 <meta property="og:url" content="https://peromage.github.io/p/setup-a-gaming-vm/">
 <meta property="og:site_name" content="Fang">
 <meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Gaming"><meta property="article:tag" content="KVM"><meta property="article:tag" content="QEMU"><meta property="article:tag" content="GPU Passthrough"><meta property="article:published_time" content="2022-03-13T17:47:25+00:00"><meta property="article:modified_time" content="2022-03-13T17:47:25+00:00">
 <meta name=twitter:title content="Setup A Gaming VM">
-<meta name=twitter:description content="Before starting First thing first. The reason why I prefer a gaming Windows VM rather than a native Windows box is becuase I found that most of time my works can be done on Linux. There is no reason to run a huge spyware all the time. Besides Windows is getting worse and worse. I can feel that the PC is much slower on Windowss. So it&amp;rsquo;s time to ditch it as well as get rid of tons of spyware.">
+<meta name=twitter:description content="Before starting First thing first. I&amp;rsquo;ve been rarely using Windows over years except for working and gaming. Linux community grows fast and there are a lot alternatives available. On the contrary, Windows gets crapy every year (Office 365 is still good IMO) so there is no reason to run this huge spyware all the time.
+Modern PCs are strong enough to run a VM. Besides most of PCs have both integrated and descret graphic cards.">
 </head>
 <body class="article-page has-toc">
 <script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
@@ -37,8 +40,10 @@ Tech
 </header>
 <section class=article-content>
 <h1 id=before-starting>Before starting</h1>
-<p>First thing first. The reason why I prefer a gaming Windows VM rather than a native Windows box is becuase I found that most of time my works can be done on Linux. There is no reason to run a huge spyware all the time. Besides Windows is getting worse and worse. I can feel that the PC is much slower on Windowss. So it&rsquo;s time to ditch it as well as get rid of tons of spyware.</p>
-<p>In this post, I&rsquo;m not going to explain everything because the ArchWiki is already clear enough. This is quick guide for the setup.</p>
+<p>First thing first. I&rsquo;ve been rarely using Windows over years except for working and gaming. Linux community grows fast and there are a lot alternatives available. On the contrary, Windows gets crapy every year (Office 365 is still good IMO) so there is no reason to run this huge spyware all the time.</p>
+<p>Modern PCs are strong enough to run a VM. Besides most of PCs have both integrated and descret graphic cards. This setup is perfect for gaming VM which requires PCI passthrough.</p>
+<p>In this post, I&rsquo;m not going to explain everything because the ArchWiki is clear enough already. This is just a quick guide for the setup.</p>
+<p>NOTE: Avoid Intel K series CPUs which usually don&rsquo;t have integrated graphic card.</p>
 <h1 id=get-started>Get started</h1>
 <h2 id=identify-your-pc-is-qualified>Identify your PC is qualified</h2>
 <p>To get high graphic performance, your CPU and motherboard must support <code>VT-d</code> and <code>IOMMU</code> respectively.</p>
