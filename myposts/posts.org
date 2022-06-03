@@ -1,13 +1,12 @@
 #+hugo_base_dir: ../
-#+hugo_section: ./
-
+#+hugo_section: blog
 #+hugo_weight: auto
 #+hugo_auto_set_lastmod: t
 
 * Coding                                                            :@coding:
 ** Initialize std::array at Compile Time              :cpp:meta_programming:
 :PROPERTIES:
-:EXPORT_FILE_NAME:
+:EXPORT_FILE_NAME: initialize-std-array-at-compile-time
 :EXPORT_DATE: 2022-03-16
 :END:
 *** Background
@@ -77,7 +76,7 @@ constexpr auto array2 = ARR<100, Foo_t>::arr;
 * Tech                                                                :@tech:
 ** Windows + Linux 双系统引导手记               :多系统引导:中文:multi_boot:
 :PROPERTIES:
-:EXPORT_FILE_NAME:
+:EXPORT_FILE_NAME: Windows-Linux双系统引导手记
 :EXPORT_DATE: 2017-04-05
 :END:
 *** 0x00 情况简述
@@ -250,7 +249,7 @@ $ sudo mount /dev/sda1 /mnt/reserved
 
 ** Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC   :multi_boot:
 :PROPERTIES:
-:EXPORT_FILE_NAME:
+:EXPORT_FILE_NAME: dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc
 :EXPORT_DATE: 2021-07-09
 :END:
 *** Background
@@ -527,7 +526,7 @@ Then all changes made in the future will go into the differencing disk. If syste
 
 ** Git 中的 Subtree 和 Submodule                                  :git:中文:
 :PROPERTIES:
-:EXPORT_FILE_NAME:
+:EXPORT_FILE_NAME: Git中的Subtree和Submodule
 :EXPORT_DATE: 2017-04-07
 :END:
 因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。
@@ -696,7 +695,7 @@ Git 官方推荐使用新的 Subtree ，事实证明的确比 Submodule 方便�
 
 ** Fix Metadata in Google Photo Takeout                       :google_photo:
 :PROPERTIES:
-:EXPORT_FILE_NAME:
+:EXPORT_FILE_NAME: fix-metadata-in-google-photo-takeout
 :EXPORT_DATE: 2022-03-13
 :END:
 Google Photo sucks.
@@ -744,7 +743,7 @@ This argument file contains the fields that are meaningful to me. If you need to
 
 ** Minimalist's Multi-boot USB Drive                            :multi_boot:
 :PROPERTIES:
-:EXPORT_FILE_NAME:
+:EXPORT_FILE_NAME: minimalists-multi-boot-usb-drive
 :EXPORT_DATE: 2022-01-26
 :END:
 *** Story
@@ -932,7 +931,7 @@ Finally I'm very satisfied with this new USB drive. Yay!
 
 ** Setup A Gaming VM                       :gaming:kvm:qemu:gpu_passthrough:
 :PROPERTIES:
-:EXPORT_FILE_NAME:
+:EXPORT_FILE_NAME: setup-a-gaming-vm
 :EXPORT_DATE: 2022-03-13
 :END:
 *** Before starting
@@ -1084,7 +1083,7 @@ If you don't want to switch monitors you can try [[https://looking-glass.io/][Lo
 
 ** Shadowsocks Quick Setup                               :shadowsocks:proxy:
 :PROPERTIES:
-:EXPORT_FILE_NAME:
+:EXPORT_FILE_NAME: shadowsocks-quick-setup
 :EXPORT_DATE: 2022-03-13
 :END:
 This note is written for my personal convenience.
@@ -1170,7 +1169,7 @@ console.log(ss_url);
 
 ** SSH Over GPG Agent                                              :ssh:gpg:
 :PROPERTIES:
-:EXPORT_FILE_NAME:
+:EXPORT_FILE_NAME: ssh-over-gpg-agent
 :EXPORT_DATE: 2022-03-13
 :END:
 This is a quick note of =gpg-agent= setup for SSH.
@@ -1216,7 +1215,7 @@ $ gpg --export-ssh-key <uid/fingerprint>
 * Grumble                                                          :@grumble:
 ** Moving From Vim to Emacs                          :vim:emacs:text_editor:
 :PROPERTIES:
-:EXPORT_FILE_NAME:
+:EXPORT_FILE_NAME: moving-from-vim-to-emacs
 :EXPORT_DATE: 2021-08-14
 :END:
 YouTube has been pushing me a lot Emacs related contents. This is weird since mostly I watch Vim videos only. But probably this is also a great opportunity to try Emacs again.
