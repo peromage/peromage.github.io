@@ -1,7 +1,60 @@
+#+author: Fang Deng
+#+startup: show2levels
 #+hugo_base_dir: ../
 #+hugo_section: blog
 #+hugo_weight: auto
 #+hugo_auto_set_lastmod: t
+
+* Info Pages
+:PROPERTIES:
+:EXPORT_HUGO_SECTION: page
+:END:
+** About
+:PROPERTIES:
+:EXPORT_FILE_NAME: about
+:EXPORT_DATE: 2022-06-05
+:EXPORT_HUGO_MENU: :menu main :weight -90 :pre user
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug about
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :description May the sapphire star lights your way✨
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :license CC BY-NC-ND
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :aliases '(contact me)
+:END:
+*** About Me
+Hi there. This is Fang.
+
+I'm currently a C++ developer working with one of the well-known automotive companies.
+
+I have hair. A lot.
+
+Emacser. Former Vimmer.
+
+Oh most importantly, happy wife happy life. :)
+
+*** Find Me
+Email: fang(at)saffyyre.com
+Github: https://github.com/peromage
+
+** Archives
+:PROPERTIES:
+:EXPORT_FILE_NAME: archives
+:EXPORT_DATE: 2022-06-05
+:EXPORT_HUGO_MENU: :menu main :weight -70 :pre archives
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug archives
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :layout archives
+:END:
+
+** Search
+:PROPERTIES:
+:EXPORT_FILE_NAME: search
+:EXPORT_DATE: 2022-06-05
+:EXPORT_HUGO_MENU: :menu main :weight -60 :pre search
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug search
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :layout search
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :outputs '(html json)
+:END:
+
+
+
 
 * Coding                                                            :@coding:
 ** Initialize std::array at Compile Time              :cpp:meta_programming:

@@ -20,7 +20,7 @@ permalinks:
 
 params:
     mainSections:
-        - post
+        - blog
     featuredImageField: image
     rssFullContent: true
     favicon:
