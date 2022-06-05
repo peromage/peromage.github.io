@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>git on Fang</title><link>https://peromage.github.io/tags/git/</link><description>Recent content in git on Fang</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 07 Apr 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>Git 中的 Subtree 和 Submodule</title><link>https://peromage.github.io/blog/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</link><pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate><guid>https://peromage.github.io/blog/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</guid><description>&lt;p>因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>git on Fang's Blog</title><link>https://peromage.github.io/tags/git/</link><description>Recent content in git on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 07 Apr 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>Git 中的 Subtree 和 Submodule</title><link>https://peromage.github.io/blog/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</link><pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate><guid>https://peromage.github.io/blog/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</guid><description>&lt;p>因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。&lt;/p>
 &lt;h2 id="为什么有这样的需求">为什么有这样的需求&lt;/h2>
 &lt;p>版本库嵌套很好理解，就是在一个 Git 仓库里面包含了其他的 Git 仓库。通常有这样的需求往往涉及到协同开发。比如这里有一个插件单独的 Git 仓库姑且叫“Plugin”。现在我创建了一个自己的项目，其中需要用到这个“Plugin”插件。通常比较笨的办法就是把插件库源码拖下来，复制到自己的项目里。但是这样当插件库更新的时候，插件源码更新往往比较麻烦。而且如果在使用的过程中修改了插件的源码，也不便于插件单独的版本控制，更别说为插件库贡献代码了。但如果插件单独以 Git 仓库存在于我的项目目录中，以上的问题就解决了。&lt;/p>
 &lt;p>在 Git 里面提供了两种方式实现上述需求，那就是 Subtree 和 Submodule。&lt;/p>
@@ -6,8 +6,15 @@
 &lt;p>Submodule 是 Git 里面最早提供的一种方法。顾名思义“子模块”。&lt;/p>
 &lt;h3 id="添加子模块">添加子模块&lt;/h3>
 &lt;p>执行&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule add &amp;lt;repo&amp;gt; &amp;lt;module_path&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>此时运行 &lt;code>git status&lt;/code> 可以看到子模块对应的文件夹和一个叫做 &lt;code>.gitmodules&lt;/code> 文件被添加进了暂存区。其中 &lt;code>.gitmodules&lt;/code> 是用于记录子模块相关信息的。之后主项目里面的操作照常提交就可以了。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule add &amp;lt;repo&amp;gt; &amp;lt;module_path&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>此时运行 &lt;code>git status&lt;/code> 可以看到子模块对应的文件夹和一个叫做 &lt;code>.gitmodules&lt;/code> 文件被添加进了暂存区。其中 &lt;code>.gitmodules&lt;/code> 是用于记录子模块相关信息的。之后主项目里面的操作照常提交就可以了。&lt;/p>
 &lt;h3 id="修改子模块">修改子模块&lt;/h3>
 &lt;p>但如果在开发的途中修改了子模块的代码，需要单独到子模块对应的根目录里面进行子模块单独的提交操作。在主项目里面虽然可以看到子模块有变更，但是无法看到具体的更改操作，而是将其看作一个模块整体。一旦子模块产生了新的提交，主项目里面可以看到子模块的 HEAD 变化，从而主项目也应当产生一个新的提交以记录对应关系。
 换句话说，主项目就是靠着记录子模块 HEAD 值来判断依赖的。子模块的代码最后将不会进入主项目的版本库里面（只有 HEAD 值）。&lt;/p>
@@ -15,59 +22,171 @@
 &lt;h3 id="更新子模块">更新子模块&lt;/h3>
 &lt;p>此时子模块上游有了新的代码，我们需要将其整合到当前的项目中。有两种方法。&lt;/p>
 &lt;p>在主项目根目录下运行&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule foreach git pull
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>或者切换到子模块的根目录下面&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git pull
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="克隆项目">克隆项目&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule foreach git pull
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>或者切换到子模块的根目录下面&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git pull
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="克隆项目">克隆项目&lt;/h3>
 &lt;p>克隆主项目的时候子模块并不会拉取到本地，如果进入对应的目录会发现是空的。
 此时应当&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule init
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>保持最新&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule update
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>或者可以直接一条命令搞定&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git clone --recursive &amp;lt;repo&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="删除子模块">删除子模块&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule init
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>保持最新&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule update
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>或者可以直接一条命令搞定&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git clone --recursive &amp;lt;repo&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="删除子模块">删除子模块&lt;/h3>
 &lt;p>Git 中没有提供直接删除的命令，需要手动完成删除操作。&lt;/p>
 &lt;p>反向初始化子模块&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule deinit --force &amp;lt;module_path&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>或者直接删掉 &lt;code>.git/config&lt;/code> 里相关信息&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule deinit --force &amp;lt;module_path&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>或者直接删掉 &lt;code>.git/config&lt;/code> 里相关信息&lt;/p>
 &lt;p>移除子模块&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git rm &amp;lt;module_path&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果暂存区还有&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git rm --cached &amp;lt;module_path&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="子模块的坑">子模块的坑&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git rm &amp;lt;module_path&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果暂存区还有&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git rm --cached &amp;lt;module_path&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="子模块的坑">子模块的坑&lt;/h3>
 &lt;h4 id="提交的坑">提交的坑&lt;/h4>
 &lt;p>假设有 A B 两个人同时在开发一个项目，这个项目里面也包含了一个子模块。此时 A 修改了业务代码，同时修改了一个子模块里面的一个 bug 。A 将这次修改提交，主项目的提交里面指向了子模块新的 HEAD1 ，然后把主项目的版本库 push 到了服务器，但是没有 push 子模块。B 此时 pull 了主项目，然后 update 子模块，被告知找不到子模块的 HEAD1 。因为指向 HEAD1 的提交还在 A 本地机器上。
 这就是子模块提交的坑。在多个模块存在的时候操作非常繁琐。&lt;/p>
 &lt;h4 id="初始化的坑">初始化的坑&lt;/h4>
 &lt;p>在执行 &lt;code>git submodule init&lt;/code> ， &lt;code>git submodule update&lt;/code> 之后，此时修改子模块可能出现 HEAD 处于游离状态的的提示。如果不注意极有可能出现丢失提交的可能。
 解决办法，在以上两条命令之后执行一次检出&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git checkout &amp;lt;branch&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="subtree">Subtree&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git checkout &amp;lt;branch&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="subtree">Subtree&lt;/h2>
 &lt;h3 id="添加子项目">添加子项目&lt;/h3>
 &lt;p>首先添加子项目对应的远程服务器&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git remote add &amp;lt;subrepo_name&amp;gt; &amp;lt;subrepo_remote&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>拉取一下&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git fetch &amp;lt;subrepo_name&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>添加子项目到父项目里面&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git subtree add --squash --prefix&lt;span class="o">=&lt;/span>&amp;lt;subrepo_path&amp;gt; &amp;lt;subrepo_name&amp;gt; &amp;lt;branch&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>参数 &lt;code>--squash&lt;/code> 作用在于合并子项目所有提交为一个，并 merge 到父项目的历史中，这样只会出现两个提交记录，避免子项目的提交历史污染父项目。更多讨论可以看&lt;a class="link" href="http://www.fwolf.com/blog/post/246" target="_blank" rel="noopener"
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git remote add &amp;lt;subrepo_name&amp;gt; &amp;lt;subrepo_remote&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>拉取一下&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git fetch &amp;lt;subrepo_name&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>添加子项目到父项目里面&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git subtree add --squash --prefix&lt;span class="o">=&lt;/span>&amp;lt;subrepo_path&amp;gt; &amp;lt;subrepo_name&amp;gt; &amp;lt;branch&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>参数 &lt;code>--squash&lt;/code> 作用在于合并子项目所有提交为一个，并 merge 到父项目的历史中，这样只会出现两个提交记录，避免子项目的提交历史污染父项目。更多讨论可以看&lt;a class="link" href="http://www.fwolf.com/blog/post/246" target="_blank" rel="noopener"
 >这里&lt;/a>。&lt;/p>
 &lt;h3 id="修改子项目">修改子项目&lt;/h3>
 &lt;p>添加完毕之后照常修改提交各种操作，父项目能够跟踪子项目里面的所有变更。子项目被当做一个正常的子文件夹处理。&lt;/p>
 &lt;p>如果现在修改了子项目里的一个 bug 并且想要反馈给上游，可以这样操作&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git subtree push --prefix&lt;span class="o">=&lt;/span>&amp;lt;subrepo_path&amp;gt; &amp;lt;subrepo_name&amp;gt; &amp;lt;bug_fixed&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这个操作可以将父项目里所有涉及子项目修改的提交检出。这样在远程仓库里面会出现一个叫做 &lt;em>bug_fixed&lt;/em> 的分支。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git subtree push --prefix&lt;span class="o">=&lt;/span>&amp;lt;subrepo_path&amp;gt; &amp;lt;subrepo_name&amp;gt; &amp;lt;bug_fixed&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这个操作可以将父项目里所有涉及子项目修改的提交检出。这样在远程仓库里面会出现一个叫做 &lt;em>bug_fixed&lt;/em> 的分支。&lt;/p>
 &lt;p>或者也可以这样操作&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git subtree split --prefix&lt;span class="o">=&lt;/span>&amp;lt;subrepo_path&amp;gt; --branch &amp;lt;new_branch_name&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这个操作跟上面一样将父项目里所有涉及子项目修改的提交检出，并且把子项目的根文件夹设为整个项目的根文件夹，然后检出为父项目的一个新的分支。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git subtree split --prefix&lt;span class="o">=&lt;/span>&amp;lt;subrepo_path&amp;gt; --branch &amp;lt;new_branch_name&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这个操作跟上面一样将父项目里所有涉及子项目修改的提交检出，并且把子项目的根文件夹设为整个项目的根文件夹，然后检出为父项目的一个新的分支。&lt;/p>
 &lt;p>然后推送给上游&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git push &amp;lt;subrepo_remote&amp;gt; &amp;lt;new_branch_name&amp;gt;:&amp;lt;bug_fixed&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>之后删除对应本地分支就可以了。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git push &amp;lt;subrepo_remote&amp;gt; &amp;lt;new_branch_name&amp;gt;:&amp;lt;bug_fixed&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>之后删除对应本地分支就可以了。&lt;/p>
 &lt;h3 id="更新子项目">更新子项目&lt;/h3>
 &lt;p>拉取非常方便&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git subtree pull --prefix&lt;span class="o">=&lt;/span>&amp;lt;subrepo_path&amp;gt; &amp;lt;subrepo_name&amp;gt; &amp;lt;branch&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="删除子项目">删除子项目&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git subtree pull --prefix&lt;span class="o">=&lt;/span>&amp;lt;subrepo_path&amp;gt; &amp;lt;subrepo_name&amp;gt; &amp;lt;branch&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="删除子项目">删除子项目&lt;/h3>
 &lt;p>因为子项目在父项目里面就是被当做一个普通的文件夹处理的，所以直接移除文件夹并提交就可以了。&lt;/p>
 &lt;h2 id="submodule-vs-dot-subtree">Submodule vs. Subtree&lt;/h2>
 &lt;p>Git 官方推荐使用新的 Subtree ，事实证明的确比 Submodule 方便不少。Subtree 不会产生额外的文件，而且子项目的代码包含在父项目里面，不会出现前面提到的坑的问题。具体应用上的对比可以参考&lt;a class="link" href="https://gist.github.com/kvnsmth/4688345" target="_blank" rel="noopener"
