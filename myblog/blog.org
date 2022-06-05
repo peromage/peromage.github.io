@@ -18,7 +18,7 @@
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :aliases '(contact me)
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :toc false
 :END:
-*** About Me
+*** Me
 Hi there. This is Fang.
 
 I'm currently a C++ developer working with one of the well-known automotive companies.
@@ -29,8 +29,9 @@ Emacser. Former Vimmer.
 
 Oh most importantly, happy wife happy life. :)
 
-*** Find Me
+*** Contact
 Email: fang(at)saffyyre.com
+
 Github: https://github.com/peromage
 
 ** Archives
