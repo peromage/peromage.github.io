@@ -11,7 +11,7 @@ if [ -d content ]; then
     rm -rf content
 fi
 
-emacs -Q -nw --batch --eval \
+emacs -nw --batch --eval \
       '(progn
          (package-initialize)
          (add-to-list (quote package-archives) (quote ("melpa" . "https://melpa.org/packages/")))
