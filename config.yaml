@@ -2,7 +2,7 @@ baseurl: https://peromage.github.io
 languageCode: en-us
 theme: hugo-theme-stack
 paginate: 5
-title: Fang
+title: Fang's Blog
 
 # Change it to your Disqus shortname before using
 disqusShortname: hugo-theme-stack
@@ -35,7 +35,7 @@ params:
 
     sidebar:
         emoji: 💤
-        subtitle: Just a normal dude
+        subtitle: A normal dude
         avatar:
             local: false
             src: https://github.com/peromage.png
@@ -86,16 +86,19 @@ params:
                 admin: Admin
 
     widgets:
-        enabled:
-            - search
-            - archives
-            - tag-cloud
-
-        archives:
-            limit: 5
-
-        tagCloud:
-            limit: 10
+        homepage:
+            - type: search
+            - type: archives
+              params:
+                  limit: 5
+            - type: categories
+              params:
+                  limit: 10
+            - type: tag-cloud
+              params:
+                  limit: 10
+        page:
+            - type: toc
 
     opengraph:
         twitter:
@@ -128,12 +131,14 @@ params:
 ### See https://docs.stack.jimmycai.com/configuration/custom-menu
 ### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
 menu:
-    main:
-        - identifier: home
-          name: Home
-          url: /
-          weight: -100
-          pre: home
+    main: []
+
+    social:
+        - identifier: github
+          name: GitHub
+          url: https://github.com/peromage
+          params:
+              icon: brand-github
 
 related:
     includeNewer: true
@@ -147,9 +152,19 @@ related:
           weight: 200
 
 markup:
+    goldmark:
+        renderer:
+            ## Set to true if you have HTML content inside Markdown
+            unsafe: false
     tableOfContents:
         endLevel: 4
         ordered: true
         startLevel: 2
     highlight:
         noClasses: false
+        codeFences: true
+        guessSyntax: true
+        lineNoStart: 1
+        lineNos: true
+        lineNumbersInTable: true
+        tabWidth: 4
