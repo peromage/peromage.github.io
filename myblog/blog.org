@@ -53,9 +53,6 @@ Github: https://github.com/peromage
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :outputs '(html json)
 :END:
 
-
-
-
 * Coding                                                            :@coding:
 ** Initialize std::array at Compile Time              :cpp:meta_programming:
 :PROPERTIES:
