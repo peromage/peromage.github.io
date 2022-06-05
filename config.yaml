@@ -34,8 +34,8 @@ params:
         lastUpdated: Jan 02, 2006 15:04 MST
 
     sidebar:
-        emoji: 💤
-        subtitle: A normal dude
+        emoji:
+        subtitle: May the sapphire star lights your way✨
         avatar:
             local: false
             src: https://github.com/peromage.png
@@ -131,7 +131,38 @@ params:
 ### See https://docs.stack.jimmycai.com/configuration/custom-menu
 ### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
 menu:
-    main: []
+    main:
+      - identifier: home
+        name: Home
+        url: /
+        weight: -100
+        params:
+          icon: home
+          newTab: false
+
+      - identifier: archives
+        name: Archives
+        url: /archives
+        weight: -90
+        params:
+          icon: archives
+          newTab: false
+
+      - identifier: about
+        name : About
+        url: /about
+        weight: -80
+        params:
+          icon: user
+          newTab: false
+
+      - identifier: search
+        name : Search
+        url: /search
+        weight: -70
+        params:
+          icon: search
+          newTab: false
 
     social:
         - identifier: github
