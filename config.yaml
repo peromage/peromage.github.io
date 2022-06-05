@@ -43,6 +43,7 @@ params:
     article:
         math: false
         toc: true
+        readingTime: false
         license:
             enabled: true
             default: Licensed under CC BY-NC 4.0
