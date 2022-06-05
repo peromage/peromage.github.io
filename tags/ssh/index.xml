@@ -1,2 +1,33 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ssh on Fang</title><link>https://peromage.github.io/tags/ssh/</link><description>Recent content in ssh on Fang</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/ssh/index.xml" rel="self" type="application/rss+xml"/><item><title>SSH Over GPG Agent</title><link>https://peromage.github.io/blog/ssh-over-gpg-agent/</link><pubDate>Sun, 13 Mar 2022 00:00:00 +0000</pubDate><guid>https://peromage.github.io/blog/ssh-over-gpg-agent/</guid><description>This is a quick note of gpg-agent setup for SSH.
-Quick Setup Import your GPG authentication key. Enable SSH support for gpg-agent. $ echo enable-ssh-support &amp;gt;&amp;gt; $HOME/.gnupg/gpg-agent.conf Get the authentication keygrip. $ gpg -k --with-keygrip Add the authentication key to the keychain (replace KEYGRIP with the value obtained from the previous step) $ echo KEYGRIP &amp;gt;&amp;gt; $HOME/.gnupg/sshcontrol Add the following init code to .bashrc unset SSH_AGENT_PID export SSH_AUTH_SOCK=&amp;#34;$(gpgconf --list-dirs agent-ssh-socket)&amp;#34; export GPG_TTY=&amp;#34;$(tty)&amp;#34; gpg-connect-agent updatestartuptty /bye &amp;gt; /dev/null Kill any running ssh-agent and gpg-agent, and then open a new Bash session.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ssh on Fang</title><link>https://peromage.github.io/tags/ssh/</link><description>Recent content in ssh on Fang</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/ssh/index.xml" rel="self" type="application/rss+xml"/><item><title>SSH Over GPG Agent</title><link>https://peromage.github.io/blog/ssh-over-gpg-agent/</link><pubDate>Sun, 13 Mar 2022 00:00:00 +0000</pubDate><guid>https://peromage.github.io/blog/ssh-over-gpg-agent/</guid><description>&lt;p>This is a quick note of &lt;code>gpg-agent&lt;/code> setup for SSH.&lt;/p>
+&lt;h2 id="quick-setup">Quick Setup&lt;/h2>
+&lt;ol>
+&lt;li>Import your GPG authentication key.&lt;/li>
+&lt;li>Enable SSH support for &lt;code>gpg-agent&lt;/code>.&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">echo&lt;/span> enable-ssh-support &amp;gt;&amp;gt; &lt;span class="nv">$HOME&lt;/span>/.gnupg/gpg-agent.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
+&lt;li>Get the authentication keygrip.&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ gpg -k --with-keygrip
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
+&lt;li>Add the authentication key to the keychain (replace &lt;code>KEYGRIP&lt;/code> with the value obtained from the previous step)&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">echo&lt;/span> KEYGRIP &amp;gt;&amp;gt; &lt;span class="nv">$HOME&lt;/span>/.gnupg/sshcontrol
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
+&lt;li>Add the following init code to &lt;code>.bashrc&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">unset&lt;/span> SSH_AGENT_PID
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">SSH_AUTH_SOCK&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>gpgconf --list-dirs agent-ssh-socket&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">GPG_TTY&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>tty&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gpg-connect-agent updatestartuptty /bye &amp;gt; /dev/null
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
+&lt;li>Kill any running &lt;code>ssh-agent&lt;/code> and &lt;code>gpg-agent&lt;/code>, and then open a new Bash session.&lt;/li>
+&lt;/ol>
+&lt;h2 id="misc">Misc&lt;/h2>
+&lt;h3 id="export-ssh-public-keys">Export SSH Public Keys&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ gpg --export-ssh-key &amp;lt;uid/fingerprint&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
