@@ -7,21 +7,39 @@ on:
   pull_request:
 
 jobs:
-  deploy:
-    runs-on: ubuntu-20.04
+  deploy_hugo_site_with_org:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        emacs_version:
+          - 28.1
+
+    runs-on: ${{ matrix.os }}
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Setup Emacs
+        uses: purcell/setup-emacs@master
         with:
-          submodules: true  # Fetch Hugo themes (true OR recursive)
-          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+          version: ${{ matrix.emacs_version }}
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.86.0'
+          hugo-version: 'latest'
           extended: true
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: master
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Export Org
+        run: ./org-export.sh
 
       - name: Build
         run: hugo --minify
