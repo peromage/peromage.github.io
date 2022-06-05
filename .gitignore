@@ -29,7 +29,11 @@ themes/
 node_modules/
 resources/
 
+# Content will be generated from org files
+content/
+
 .DS_Store
 Thumbs.db
 db.json
 *.log
+.hugo_build.lock
