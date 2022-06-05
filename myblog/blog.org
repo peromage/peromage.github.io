@@ -1,5 +1,6 @@
 #+author: Fang Deng
 #+startup: show2levels
+#+seq_todo: TODO(t) | DONE(d!)
 #+hugo_base_dir: ../
 #+hugo_section: blog
 #+hugo_weight: auto
