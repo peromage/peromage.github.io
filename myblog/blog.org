@@ -1,5 +1,7 @@
 #+author: Fang Deng
 #+startup: show2levels
+#+startup: logdone
+#+startup: logdrawer
 #+seq_todo: TODO(t) | DONE(d!)
 #+hugo_base_dir: ../
 #+hugo_section: blog
