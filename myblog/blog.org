@@ -1332,6 +1332,36 @@ gpg-connect-agent updatestartuptty /bye > /dev/null
 $ gpg --export-ssh-key <uid/fingerprint>
 #+end_src
 
+** Use Git Worktree to Work with Multiple Checkout at the Same Time    :git:
+:PROPERTIES:
+:EXPORT_FILE_NAME: use-git-worktree-to-work-with-multiple-checkout-at-the-same-time
+:EXPORT_DATE: 2022-06-06
+:END:
+*** Troubles
+When working with a complicated project where you have to compare different history versions side by side, it soon becomes frustrating frequently checking out refs.
+
+The old stupid way is to clone multiple repos and checkout to the specific revisions.  When the project is big this might be a trouble because you're basically duplicating files.
+
+*** Savior
+Git provides a convenience sub-command =worktree= to checkout a specific ref in another directory without duplicating files.
+
+**** Add a New Checkout
+
+#+begin_src shell
+$ git worktree add ../foo-ref-1 <ref>
+#+end_src
+
+Of course you can add as many checkouts as you want.
+
+**** Remove a Checkout
+When the checkout is no longer needed, it can be deleted from this command.
+
+#+begin_src shell
+$ git worktree remove --force ../foo-ref-1
+#+end_src
+
+If there are uncommitted changes git will prevent you from deleting the directory.  In this case =--force= flag is needed.
+
 * Grumble                                                          :@grumble:
 ** Moving From Vim to Emacs                          :vim:emacs:text_editor:
 :PROPERTIES:
