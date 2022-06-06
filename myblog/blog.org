@@ -1,8 +1,9 @@
 #+author: Fang Deng
 #+startup: show2levels
-#+startup: logdone
+#+startup: nologdone
 #+startup: logdrawer
-#+seq_todo: TODO(t) | DONE(d!)
+#+seq_todo: DRAFT(d) | PUBLISHED(p!)
+#+options: d:t
 #+hugo_base_dir: ../
 #+hugo_section: blog
 #+hugo_auto_set_lastmod: t
