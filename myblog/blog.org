@@ -69,19 +69,20 @@ Github: https://github.com/peromage
 :EXPORT_FILE_NAME: use-org-mode-to-manage-my-blog
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-06-06 Mon 16:12]
 - State "PUBLISHED"  from "DRAFT"      [2022-06-05 Sun 23:54]
 - State "CREATED"    from              [2022-06-05 Sun 23:00]
 :END:
 I've been using Emacs since last year but until recent I started using =org-mode= seriously.  After spending a couple of days reading and watching all kinds of org tutorial as well as using it for documentation, I realized that people who invented this must geniuses.
 
-Org document seems similar with markdown: they are text markup format.  However, Org provides far more capabilities to store metadata and greater editing experience together with Emacs' =org-mode=.
+Org document seems similar with Markdown: they are text markup format.  However, Org provides far more capabilities to store metadata and greater editing experience together with Emacs' =org-mode=.
 
 *** Motivation
-I used to use markdown to write my blog articles and use /Hugo/ to generate static files.
+I used to use Markdown to write my blog articles and use /Hugo/ to generate static files.
 
 The workflow is pretty much like:
 
-1. Create a new markdown with header by either snippet template from text editor or Hugo command.
+1. Create a new Markdown with header by either snippet template from text editor or Hugo command.
 2. Write the article.
 3. Set last modified time upon finished.
 4. Commit and push then let GitHub CI to generate static files automatically.
@@ -92,26 +93,82 @@ It looks typical but later on I found it was really frustrating to manage my art
 2. Tags and categories were set in the header each file.  It's difficult check existing tags and categories and make them consistent in the new articles.  For example, I always forgot whether a tag or category was capitalized or dash separated.
 3. Painful to browse.
 
-Because of those troubles I gradually lost interests writing articles until I found =org-mode=. So I started planning to manage my articles with it.
+Because of those troubles I gradually lost interests writing articles until I found =org-mode=.  So I started planning to manage my articles with it.
 
 *** Choose the Right Way
-By checking Hugo's documents, I found that it supports Org backend with [[https://github.com/niklasfasching/go-org][go-org]].  However it seems like just another markdown method but in Org syntax.  Apparently it doesn't use the full Org capabilities.
+By checking Hugo's documents, I found that it supports Org backend with [[https://github.com/niklasfasching/go-org][go-org]].  However it seems like just another Markdown method but in Org syntax.  Apparently it doesn't use the full Org capabilities.
 
-Later I found [[https://ox-hugo.scripter.co/][ox-hugo]] which is an Org backend in Emacs used for Org file export.  The idea is to write articles in Org syntax with metadata and whatever you like to do in =org-mode= and then export to markdown files through =ox-hugo=.  Finally feed the markdown files to the Hugo engine.  The killer feature is that it supports exporting from subtrees, which means you can manage all my articles in one file categorize them with ease (by the first level outline).  And since all the articles are in the same visible file, they can be refiled and move around with =org-mode= key bindings.  Also all tags are visible and can be applied very easily.  It gives you a lot flexibility to manage the articles in this way.
+Later I found [[https://ox-hugo.scripter.co/][ox-hugo]] which is an Org backend in Emacs used for Org file export.  The idea is to write articles in Org syntax with metadata and whatever you like to do in =org-mode= and then export to Markdown files through =ox-hugo=.  Finally feed the Markdown files to the Hugo engine.  The killer feature is that it supports exporting from subtrees, which means you can manage all my articles in one file categorize them with ease (by the first level outline).  And since all the articles are in the same visible file, they can be refiled and move around with =org-mode= key bindings.  Also all tags are visible and can be applied very easily.  It gives you a lot flexibility to manage the articles in this way.
 
 At the time when this article is read, it's been written in =org-mode= already.  I even use the same file to manage other pages of my blog like about, archives and search pages.  You can checkout my original Org file [[https://github.com/peromage/peromage.github.io/blob/master/myblog/blog.org][here]] to figure out how they are defined.
 
 *** Update CI to Build Static Files on Pushing
-Since all the articles are managed by the Org file there is no point to keep the old markdown files.  I need to make GitHub CI export the Org file for me so I don't have to do it locally.
+Since all the articles are managed by the Org file there is no point to keep the old Markdown files.  I need to make GitHub CI export the Org file for me so I don't have to do it locally.
 
-The problem is to setup Emacs on the job runner.  Luckily there are people doing this already by providing a GitHub [[https://github.com/marketplace/actions/set-up-emacs][action]].  Then the rest problem is to export.
+The problem is to setup Emacs on the job runner.  Luckily there are people doing this already by providing a GitHub [[https://github.com/marketplace/actions/set-up-emacs][action]].  Thanks Steve Purcell and the people who worked on this!
 
-I wrote a [[https://github.com/peromage/peromage.github.io/blob/master/org-export.sh][shell script]] and put it to the blog repo root so the job runner can execute it when Emacs is ready.
+Now with the Emacs setup ready, one problem left is to export from Org files to Markdown.  The idea is pretty straight forward: install =ox-hugo= from MELPA and export through it.  A simple shell command should do the job.
 
-The idea is simple: install =ox-hugo= from MELPA and use it to export the Org file.  After that, just same with the typical Hugo [[https://github.com/peromage/peromage.github.io/blob/master/.github/workflows/gh-pages.yml][workflow]].
+#+begin_src shell
+emacs -nw --batch --eval \
+      '(progn
+         (package-initialize)
+         (add-to-list (quote package-archives) (quote ("melpa" . "https://melpa.org/packages/")))
+         (package-refresh-contents)
+         (package-install (quote ox-hugo))
+         (find-file "myblog/blog.org")
+         (org-hugo-export-wim-to-md :all))'
+#+end_src
 
-*** A Little Glitch
-By doing this workflow all the files are always generated so their last modified date are changed every time.  To solve this, either add a =:LOGBOOK:= or =EXPORT_HUGO_LASTMOD= property to the subtree. Further more simply use /TODO/ and /DONE/ workflow since it generates =:LOGBOOK:= automatically.  =ox-hugo= has a clear [[https://ox-hugo.scripter.co/doc/org-meta-data-to-hugo-front-matter/#front-matter-precedence][explanation]] about how it picks up those date information.  But in my case, I don't really bother it so I stay as it is.
+After that, feed the generated Markdown files to Hugo engine.  No difference from the typical Hugo [[https://gohugo.io/hosting-and-deployment/hosting-on-github/][workflow]].
+
+See here for my [[https://github.com/peromage/peromage.github.io/blob/master/org-export.sh][job runner script]] and [[https://github.com/peromage/peromage.github.io/blob/master/.github/workflows/gh-pages.yml][workflow configuration]].
+
+*** Fix the Last Modified Date
+By doing this workflow all the files are always generated so their last modified date are constantly changed (with =#+hugo_auto_set_lastmod: t= in the header).  =ox-hugo= seems not to have a proper solution to calculate the diff between changes (could be hard though).  The best way to solve this is to add either a =:LOGBOOK:= or a =EXPORT_HUGO_LASTMOD= property to the subtree.  Or even simpler to use /TODO/ and /DONE/ workflow since it generates =:LOGBOOK:= automatically.  When any one of them specified =ox-hugo= will the value from it [[https://ox-hugo.scripter.co/doc/dates/#last-modified][instead of generating a new date]].
+
+Since manually changing the modification time in =EXPORT_HUGO_LASTMOD= sucks and it's the same solution back in the Markdown style, this time I decided to use "Org" way to fix this problem.  By looking at the document, =:LOGBOOK:= has [[https://ox-hugo.scripter.co/doc/org-meta-data-to-hugo-front-matter/#front-matter-precedence][the highest priority]] among other options and also has a synergy with todo workflow.  That's cool.  I can treat my article writing like any other tasks.
+
+But I don't quite like the default keywords /TODO/ and /DONE/ since they doesn't sound semantic to the articles.  So I added a header to my blog Org file: =#+seq_todo: DRAFT(d) | PUBLISHED(p!)=.
+
+Then I found another problem that whenever I change the state from /DRAFT/ to /PUBLISHED/ there is always a =CLOSED= time property added to the article.  This is because I have =(setq org-log-done 'time)= in my Emacs configuration file.  It duplicates =:LOGBOOK:= since it has already logged the transition time and I don't want to change my Emacs configuration specific for this file.  So I added another header to my blog Org file: =#+startup: nologdone= and also make sure the state transition records are always put into the drawer: =#+startup: logdrawer=.
+
+Okay now I should be able to start a new article with /DRAFT/ prefix and then use ~C-c C-t~ to change it to /PUBLISHED/ whenever I'm done writing.  However things are still not going as I expected.  Remember the [[https://ox-hugo.scripter.co/doc/org-meta-data-to-hugo-front-matter/#front-matter-precedence][date precedence]] page?  The first transition to /PUBLISHED/ state record is recognized as the creation date.  Only the second or later records to /PUBLISHED/ state will be read as the last modified date.  That's dumb.  To fix this, I added a new todo item and now it's like: =#+seq_todo: DRAFT(d) | CREATED(c!) PUBLISHED(p!)=.
+
+Now my blog header is like:
+
+#+begin_src text
+#+author: Fang Deng
+#+startup: show2levels
+#+startup: nologdone
+#+startup: logdrawer
+#+seq_todo: DRAFT(d) | CREATED(c!) PUBLISHED(p!)
+#+options: d:t
+#+hugo_base_dir: ../
+#+hugo_section: blog
+#+hugo_auto_set_lastmod: t
+#+end_src
+
+Don't forget the =#+options: d:t=.  =ox-hugo= will not export =:LOGBOOK:= without it.
+
+Finally a sweet snippet file to save my life.
+
+#+begin_src snippet
+# -*- mode: snippet -*-
+# name: Hugo new article
+# key: hugonew
+# --
+,** DRAFT ${1:TITLE}
+:PROPERTIES:
+:EXPORT_FILE_NAME: ${1:$(replace-regexp-in-string "[^A-Za-z0-9._-]" "" (replace-regexp-in-string " " "-" (downcase yas-text)))}
+:END:
+:LOGBOOK:
+- State "CREATED"    from              [`(string-trim (format-time-string (cdr org-time-stamp-formats)) "<" ">")`]
+:END:
+$0
+#+end_src
+
+Now a new article will come with its creation time.  Whenever the article is done, ~C-c C-t~ to mark it /PUBLISHED/ which will be the last modified time.  If the article is modified in the future, simply ~C-c C-t~ again to add another /PUBLISHED/ state and the last modified time will be refreshed on export.  Now I have a neat log book to record my changes.  No more manually editing suckers!
 
 ** PUBLISHED Autoloading in Emacs                        :emacs:autoloading:
 :PROPERTIES:
@@ -1440,7 +1497,7 @@ After watching a bunch of Emacs videos I decided to pick it up this time, with v
 - No third party dependencies like Node.js and Python. The two major plugs that I'm using in Vim are [[https://github.com/neoclide/coc.nvim][Coc]] and [[https://github.com/Yggdroot/LeaderF][Leaderf]]. They require Node.js and Python to work. Since Elisp is power enough, Emacs can handle this easily by itself.
 - Server-client architecture. I can even replace Tmux with Emacs now. NeoVim has the similar concept but it cannot match what Emacs has.
 - Graphical interface in X mode. This makes Emacs be able to display rich contents.
-- Org mode. It looks great to organize to-do list and take notes without switching to other applications.
+- Org mode. It looks great to organize todo list and take notes without switching to other applications.
 - Evil mode. No need to worry about missing Vim's features.
 - Magit. Looks way better and nicer than fugitive.
 - Elisp. Elisp is fun 😉.
