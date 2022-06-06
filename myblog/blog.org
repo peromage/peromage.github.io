@@ -61,7 +61,7 @@ Github: https://github.com/peromage
 :END:
 
 * Emacs                                                              :@emacs:
-** PUBLISHED Use Org Mode to Manage My Blog                  :emacs:org:markdown:hugo:
+** PUBLISHED Use Org Mode to Manage My Blog        :emacs:org:markdown:hugo:
 :PROPERTIES:
 :EXPORT_FILE_NAME: use-org-mode-to-manage-my-blog
 :END:
@@ -109,7 +109,7 @@ The idea is simple: install =ox-hugo= from MELPA and use it to export the Org fi
 *** A Little Glitch
 By doing this workflow all the files are always generated so their last modified date are changed every time.  To solve this, either add a =:LOGBOOK:= or =EXPORT_HUGO_LASTMOD= property to the subtree. Further more simply use /TODO/ and /DONE/ workflow since it generates =:LOGBOOK:= automatically.  =ox-hugo= has a clear [[https://ox-hugo.scripter.co/doc/org-meta-data-to-hugo-front-matter/#front-matter-precedence][explanation]] about how it picks up those date information.  But in my case, I don't really bother it so I stay as it is.
 
-** PUBLISHED Autoloading in Emacs
+** PUBLISHED Autoloading in Emacs                        :emacs:autoloading:
 :PROPERTIES:
 :EXPORT_FILE_NAME: autoloading-in-emacs
 :END:
@@ -1073,7 +1073,7 @@ menuentry "Windows PE ISO" {
 *** The End
 Finally I'm very satisfied with this new USB drive. Yay!
 
-** PUBLISHED Setup A Gaming VM                       :gaming:kvm:qemu:gpu_passthrough:
+** PUBLISHED Setup A Gaming VM             :gaming:kvm:qemu:gpu_passthrough:
 :PROPERTIES:
 :EXPORT_FILE_NAME: setup-a-gaming-vm
 :END:
@@ -1227,7 +1227,7 @@ If you don't want to switch monitors you can try [[https://looking-glass.io/][Lo
 [[https://looking-glass.io/][Looking Glass]]
 [[https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md][Virtio driver]]
 
-** PUBLISHED Shadowsocks Quick Setup                               :shadowsocks:proxy:
+** PUBLISHED Shadowsocks Quick Setup                     :shadowsocks:proxy:
 :PROPERTIES:
 :EXPORT_FILE_NAME: shadowsocks-quick-setup
 :END:
@@ -1315,7 +1315,7 @@ let ss_url = "ss://" + btoa(`${config_json['method']}:${config_json['password']}
 console.log(ss_url);
 #+end_src
 
-** PUBLISHED SSH Over GPG Agent                                              :ssh:gpg:
+** PUBLISHED SSH Over GPG Agent                                    :ssh:gpg:
 :PROPERTIES:
 :EXPORT_FILE_NAME: ssh-over-gpg-agent
 :END:
@@ -1362,7 +1362,7 @@ gpg-connect-agent updatestartuptty /bye > /dev/null
 $ gpg --export-ssh-key <uid/fingerprint>
 #+end_src
 
-** PUBLISHED Use Git Worktree to Work with Multiple Checkout at the Same Time    :git:
+** PUBLISHED Use Git Worktree to Work with Multiple Checkout at the Same Time :git:
 :PROPERTIES:
 :EXPORT_FILE_NAME: use-git-worktree-to-work-with-multiple-checkout-at-the-same-time
 :END:
