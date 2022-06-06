@@ -12,14 +12,16 @@
 :PROPERTIES:
 :EXPORT_HUGO_SECTION: page
 :END:
-** About
+** PUBLISHED About
 :PROPERTIES:
 :EXPORT_FILE_NAME: about
-:EXPORT_DATE: 2022-06-05
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug about
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :license CC BY-NC-ND 4.0
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :aliases '(contact me)
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :toc false
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
 :END:
 *** Me
 Hi there. This is Fang.
@@ -37,28 +39,34 @@ Email: fang(at)saffyyre.com
 
 Github: https://github.com/peromage
 
-** Archives
+** PUBLISHED Archives
 :PROPERTIES:
 :EXPORT_FILE_NAME: archives
-:EXPORT_DATE: 2022-06-05
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug archives
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :layout archives
 :END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
+:END:
 
-** Search
+** PUBLISHED Search
 :PROPERTIES:
 :EXPORT_FILE_NAME: search
-:EXPORT_DATE: 2022-06-05
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug search
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :layout search
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :outputs '(html json)
 :END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
+:END:
 
 * Emacs                                                              :@emacs:
-** Use Org Mode to Manage My Blog                  :emacs:org:markdown:hugo:
+** PUBLISHED Use Org Mode to Manage My Blog                  :emacs:org:markdown:hugo:
 :PROPERTIES:
 :EXPORT_FILE_NAME: use-org-mode-to-manage-my-blog
-:EXPORT_DATE: 2022-06-05
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-06-05 Sun 23:54]
 :END:
 I've been using Emacs since last year but until recent I started using =org-mode= seriously.  After spending a couple of days reading and watching all kinds of org tutorial as well as using it for documentation, I realized that people who invented this must geniuses.
 
@@ -101,10 +109,12 @@ The idea is simple: install =ox-hugo= from MELPA and use it to export the Org fi
 *** A Little Glitch
 By doing this workflow all the files are always generated so their last modified date are changed every time.  To solve this, either add a =:LOGBOOK:= or =EXPORT_HUGO_LASTMOD= property to the subtree. Further more simply use /TODO/ and /DONE/ workflow since it generates =:LOGBOOK:= automatically.  =ox-hugo= has a clear [[https://ox-hugo.scripter.co/doc/org-meta-data-to-hugo-front-matter/#front-matter-precedence][explanation]] about how it picks up those date information.  But in my case, I don't really bother it so I stay as it is.
 
-** Autoloading in Emacs
+** PUBLISHED Autoloading in Emacs
 :PROPERTIES:
 :EXPORT_FILE_NAME: autoloading-in-emacs
-:EXPORT_DATE: 2022-06-05
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-06-06 Mon 00:22]
 :END:
 Autoloading is a neat feature in Emacs.  It speeds up Emacs by lazy load the files.  But it could be a little confusing if you're switching from Vim.
 
@@ -126,10 +136,12 @@ Alternative way is to use =package-install-from-buffer= to install the library f
 https://emacs.stackexchange.com/questions/8023/how-to-use-autoload
 
 * Coding                                                            :@coding:
-** Initialize std::array at Compile Time              :cpp:meta_programming:
+** PUBLISHED Initialize std::array at Compile Time    :cpp:meta_programming:
 :PROPERTIES:
 :EXPORT_FILE_NAME: initialize-std-array-at-compile-time
-:EXPORT_DATE: 2022-03-16
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-03-16 Wed 10:25]
 :END:
 *** Background
 I've been working on optimization for some C++ code recently. One of the part is to initialize some data at compile time. Consider we have a C style enum definition:
@@ -196,10 +208,12 @@ constexpr auto array2 = ARR<100, Foo_t>::arr;
 #+end_src
 
 * Tech                                                                :@tech:
-** Windows + Linux 双系统引导手记               :多系统引导:中文:multi_boot:
+** PUBLISHED Windows + Linux 双系统引导手记     :多系统引导:中文:multi_boot:
 :PROPERTIES:
 :EXPORT_FILE_NAME: Windows-Linux双系统引导手记
-:EXPORT_DATE: 2017-04-05
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2017-04-05 Wed 19:26]
 :END:
 *** 0x00 情况简述
 由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。
@@ -369,10 +383,12 @@ $ sudo mount /dev/sda1 /mnt/reserved
 [[https://wiki.archlinux.org/index.php/Talk:Dual_boot_with_Windows]]
 [[https://wiki.archlinux.org/index.php/Dual_boot_with_Windows]]
 
-** Git 中的 Subtree 和 Submodule                                  :git:中文:
+** PUBLISHED Git 中的 Subtree 和 Submodule                        :git:中文:
 :PROPERTIES:
 :EXPORT_FILE_NAME: Git中的Subtree和Submodule
-:EXPORT_DATE: 2017-04-07
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2017-04-07 Fri 20:53]
 :END:
 因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。
 
@@ -538,10 +554,12 @@ Git 官方推荐使用新的 Subtree ，事实证明的确比 Submodule 方便�
 [[https://gist.github.com/kvnsmth/4688345][subtree_usage]]
 [[http://www.fwolf.com/blog/post/246][subtree_squash]]
 
-** Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC   :multi_boot:
+** PUBLISHED Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC :multi_boot:
 :PROPERTIES:
 :EXPORT_FILE_NAME: dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc
-:EXPORT_DATE: 2021-07-09
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2021-07-09 Fri 16:40]
 :END:
 *** Background
 Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.
@@ -815,10 +833,12 @@ Then all changes made in the future will go into the differencing disk. If syste
 [[http://www.mistyprojects.co.uk/documents/BCDEdit/files/device.htm][BCDEdit notes]]
 [[https://www.howisolve.com/windows-could-not-complete-the-installation-solved/][100% Solved:Windows could not complete the installation]]
 
-** Fix Metadata in Google Photo Takeout                       :google_photo:
+** PUBLISHED Fix Metadata in Google Photo Takeout             :google_photo:
 :PROPERTIES:
 :EXPORT_FILE_NAME: fix-metadata-in-google-photo-takeout
-:EXPORT_DATE: 2022-03-13
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-03-13 Sun 00:12]
 :END:
 Google Photo sucks.
 
@@ -863,10 +883,12 @@ $ exiftool -@ fix-args.txt <takeout_dir>
 
 This argument file contains the fields that are meaningful to me. If you need to merge additional fields you can append them to the last. For details, check the man page of =exiftool=.
 
-** Minimalist's Multi-boot USB Drive                            :multi_boot:
+** PUBLISHED Minimalist's Multi-boot USB Drive                  :multi_boot:
 :PROPERTIES:
 :EXPORT_FILE_NAME: minimalists-multi-boot-usb-drive
-:EXPORT_DATE: 2022-01-26
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-01-26 Wed 20:34]
 :END:
 *** Story
 Recently I've realized a fact that I always have needs to keep a multi-boot USB in my pocket for either Linux or Windows installation. There are a lot tools out there already but I don't really like them. At least, I mean, they are too flashy to me. A beautiful boot menu seems not to be attractive. What I need is just a simple and practical maybe a little ugly boot device. It should be minimalist. More importantly, it has to be easy to setup with the tools on the system already and maintainable. No funky scripts.
@@ -1051,10 +1073,12 @@ menuentry "Windows PE ISO" {
 *** The End
 Finally I'm very satisfied with this new USB drive. Yay!
 
-** Setup A Gaming VM                       :gaming:kvm:qemu:gpu_passthrough:
+** PUBLISHED Setup A Gaming VM                       :gaming:kvm:qemu:gpu_passthrough:
 :PROPERTIES:
 :EXPORT_FILE_NAME: setup-a-gaming-vm
-:EXPORT_DATE: 2022-03-13
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-03-13 Sun 17:47]
 :END:
 *** Before starting
 First thing first. I've been rarely using Windows over years except for working and gaming. Linux community grows fast and there are a lot alternatives available. On the contrary, Windows gets crapy every year (Office 365 is still good IMO) so there is no reason to run this huge spyware all the time.
@@ -1203,10 +1227,12 @@ If you don't want to switch monitors you can try [[https://looking-glass.io/][Lo
 [[https://looking-glass.io/][Looking Glass]]
 [[https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md][Virtio driver]]
 
-** Shadowsocks Quick Setup                               :shadowsocks:proxy:
+** PUBLISHED Shadowsocks Quick Setup                               :shadowsocks:proxy:
 :PROPERTIES:
 :EXPORT_FILE_NAME: shadowsocks-quick-setup
-:EXPORT_DATE: 2022-03-13
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-03-13 Sun 00:03]
 :END:
 This note is written for my personal convenience.
 
@@ -1289,10 +1315,12 @@ let ss_url = "ss://" + btoa(`${config_json['method']}:${config_json['password']}
 console.log(ss_url);
 #+end_src
 
-** SSH Over GPG Agent                                              :ssh:gpg:
+** PUBLISHED SSH Over GPG Agent                                              :ssh:gpg:
 :PROPERTIES:
 :EXPORT_FILE_NAME: ssh-over-gpg-agent
-:EXPORT_DATE: 2022-03-13
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-03-13 Sun 00:02]
 :END:
 This is a quick note of =gpg-agent= setup for SSH.
 
@@ -1334,10 +1362,12 @@ gpg-connect-agent updatestartuptty /bye > /dev/null
 $ gpg --export-ssh-key <uid/fingerprint>
 #+end_src
 
-** Use Git Worktree to Work with Multiple Checkout at the Same Time    :git:
+** PUBLISHED Use Git Worktree to Work with Multiple Checkout at the Same Time    :git:
 :PROPERTIES:
 :EXPORT_FILE_NAME: use-git-worktree-to-work-with-multiple-checkout-at-the-same-time
-:EXPORT_DATE: 2022-06-06
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-06-06 Mon 00:41]
 :END:
 *** Troubles
 When working with a complicated project where you have to compare different history versions side by side, it soon becomes frustrating frequently checking out refs.
@@ -1365,10 +1395,12 @@ $ git worktree remove --force ../foo-ref-1
 If there are uncommitted changes git will prevent you from deleting the directory.  In this case =--force= flag is needed.
 
 * Grumble                                                          :@grumble:
-** Moving From Vim to Emacs                          :vim:emacs:text_editor:
+** PUBLISHED Moving From Vim to Emacs                :vim:emacs:text_editor:
 :PROPERTIES:
 :EXPORT_FILE_NAME: moving-from-vim-to-emacs
-:EXPORT_DATE: 2021-08-14
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2021-08-14 Sat 10:29]
 :END:
 YouTube has been pushing me a lot Emacs related contents. This is weird since mostly I watch Vim videos only. But probably this is also a great opportunity to try Emacs again.
 
