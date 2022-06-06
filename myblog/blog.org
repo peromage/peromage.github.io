@@ -22,6 +22,7 @@
 :END:
 :LOGBOOK:
 - State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
+- State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
 *** Me
 Hi there. This is Fang.
@@ -47,6 +48,7 @@ Github: https://github.com/peromage
 :END:
 :LOGBOOK:
 - State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
+- State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
 
 ** PUBLISHED Search
@@ -58,6 +60,7 @@ Github: https://github.com/peromage
 :END:
 :LOGBOOK:
 - State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
+- State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
 
 * Emacs                                                              :@emacs:
@@ -67,6 +70,7 @@ Github: https://github.com/peromage
 :END:
 :LOGBOOK:
 - State "PUBLISHED"  from "DRAFT"      [2022-06-05 Sun 23:54]
+- State "CREATED"    from              [2022-06-05 Sun 23:00]
 :END:
 I've been using Emacs since last year but until recent I started using =org-mode= seriously.  After spending a couple of days reading and watching all kinds of org tutorial as well as using it for documentation, I realized that people who invented this must geniuses.
 
@@ -115,6 +119,7 @@ By doing this workflow all the files are always generated so their last modified
 :END:
 :LOGBOOK:
 - State "PUBLISHED"  from "DRAFT"      [2022-06-06 Mon 00:22]
+- State "CREATED"    from              [2022-06-06 Mon 00:00]
 :END:
 Autoloading is a neat feature in Emacs.  It speeds up Emacs by lazy load the files.  But it could be a little confusing if you're switching from Vim.
 
@@ -141,7 +146,9 @@ https://emacs.stackexchange.com/questions/8023/how-to-use-autoload
 :EXPORT_FILE_NAME: initialize-std-array-at-compile-time
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-06-04 Sat 18:55]
 - State "PUBLISHED"  from "DRAFT"      [2022-03-16 Wed 10:25]
+- State "CREATED"    from              [2022-03-16 Wed 10:25]
 :END:
 *** Background
 I've been working on optimization for some C++ code recently. One of the part is to initialize some data at compile time. Consider we have a C style enum definition:
@@ -213,7 +220,9 @@ constexpr auto array2 = ARR<100, Foo_t>::arr;
 :EXPORT_FILE_NAME: Windows-Linux双系统引导手记
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-06-04 Sat 18:55]
 - State "PUBLISHED"  from "DRAFT"      [2017-04-05 Wed 19:26]
+- State "CREATED"    from              [2017-04-05 Wed 19:26]
 :END:
 *** 0x00 情况简述
 由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。
@@ -388,7 +397,9 @@ $ sudo mount /dev/sda1 /mnt/reserved
 :EXPORT_FILE_NAME: Git中的Subtree和Submodule
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-06-04 Sat 18:55]
 - State "PUBLISHED"  from "DRAFT"      [2017-04-07 Fri 20:53]
+- State "CREATED"    from              [2017-04-07 Fri 20:53]
 :END:
 因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。
 
@@ -559,7 +570,9 @@ Git 官方推荐使用新的 Subtree ，事实证明的确比 Submodule 方便�
 :EXPORT_FILE_NAME: dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-06-04 Sat 18:55]
 - State "PUBLISHED"  from "DRAFT"      [2021-07-09 Fri 16:40]
+- State "CREATED"    from              [2021-07-09 Fri 16:40]
 :END:
 *** Background
 Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.
@@ -838,7 +851,9 @@ Then all changes made in the future will go into the differencing disk. If syste
 :EXPORT_FILE_NAME: fix-metadata-in-google-photo-takeout
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-06-04 Sat 18:55]
 - State "PUBLISHED"  from "DRAFT"      [2022-03-13 Sun 00:12]
+- State "CREATED"    from              [2022-03-13 Sun 00:12]
 :END:
 Google Photo sucks.
 
@@ -888,7 +903,9 @@ This argument file contains the fields that are meaningful to me. If you need to
 :EXPORT_FILE_NAME: minimalists-multi-boot-usb-drive
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-06-04 Sat 18:55]
 - State "PUBLISHED"  from "DRAFT"      [2022-01-26 Wed 20:34]
+- State "CREATED"    from              [2022-01-26 Wed 20:34]
 :END:
 *** Story
 Recently I've realized a fact that I always have needs to keep a multi-boot USB in my pocket for either Linux or Windows installation. There are a lot tools out there already but I don't really like them. At least, I mean, they are too flashy to me. A beautiful boot menu seems not to be attractive. What I need is just a simple and practical maybe a little ugly boot device. It should be minimalist. More importantly, it has to be easy to setup with the tools on the system already and maintainable. No funky scripts.
@@ -1078,7 +1095,9 @@ Finally I'm very satisfied with this new USB drive. Yay!
 :EXPORT_FILE_NAME: setup-a-gaming-vm
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-06-04 Sat 18:55]
 - State "PUBLISHED"  from "DRAFT"      [2022-03-13 Sun 17:47]
+- State "CREATED"    from              [2022-03-13 Sun 17:47]
 :END:
 *** Before starting
 First thing first. I've been rarely using Windows over years except for working and gaming. Linux community grows fast and there are a lot alternatives available. On the contrary, Windows gets crapy every year (Office 365 is still good IMO) so there is no reason to run this huge spyware all the time.
@@ -1232,7 +1251,9 @@ If you don't want to switch monitors you can try [[https://looking-glass.io/][Lo
 :EXPORT_FILE_NAME: shadowsocks-quick-setup
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-06-04 Sat 18:55]
 - State "PUBLISHED"  from "DRAFT"      [2022-03-13 Sun 00:03]
+- State "CREATED"    from              [2022-03-13 Sun 00:03]
 :END:
 This note is written for my personal convenience.
 
@@ -1320,7 +1341,9 @@ console.log(ss_url);
 :EXPORT_FILE_NAME: ssh-over-gpg-agent
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-06-04 Sat 18:55]
 - State "PUBLISHED"  from "DRAFT"      [2022-03-13 Sun 00:02]
+- State "CREATED"    from              [2022-03-13 Sun 00:02]
 :END:
 This is a quick note of =gpg-agent= setup for SSH.
 
@@ -1368,6 +1391,7 @@ $ gpg --export-ssh-key <uid/fingerprint>
 :END:
 :LOGBOOK:
 - State "PUBLISHED"  from "DRAFT"      [2022-06-06 Mon 00:41]
+- State "CREATED"    from              [2022-06-06 Mon 00:30]
 :END:
 *** Troubles
 When working with a complicated project where you have to compare different history versions side by side, it soon becomes frustrating frequently checking out refs.
@@ -1400,7 +1424,9 @@ If there are uncommitted changes git will prevent you from deleting the director
 :EXPORT_FILE_NAME: moving-from-vim-to-emacs
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-06-04 Sat 18:55]
 - State "PUBLISHED"  from "DRAFT"      [2021-08-14 Sat 10:29]
+- State "CREATED"    from              [2021-08-14 Sat 10:29]
 :END:
 YouTube has been pushing me a lot Emacs related contents. This is weird since mostly I watch Vim videos only. But probably this is also a great opportunity to try Emacs again.
 
