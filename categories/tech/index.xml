@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>tech on Fang's Blog</title><link>https://peromage.github.io/categories/tech/</link><description>Recent content in tech on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 13 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml"/><item><title>Windows + Linux 双系统引导手记</title><link>https://peromage.github.io/blog/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</link><pubDate>Wed, 05 Apr 2017 00:00:00 +0000</pubDate><guid>https://peromage.github.io/blog/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</guid><description>&lt;h2 id="0x00-情况简述">0x00 情况简述&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>tech on Fang's Blog</title><link>https://peromage.github.io/categories/tech/</link><description>Recent content in tech on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 06 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml"/><item><title>Windows + Linux 双系统引导手记</title><link>https://peromage.github.io/blog/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</link><pubDate>Wed, 05 Apr 2017 00:00:00 +0000</pubDate><guid>https://peromage.github.io/blog/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</guid><description>&lt;h2 id="0x00-情况简述">0x00 情况简述&lt;/h2>
 &lt;p>由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。
 这台电脑的基本情况是这样的，64GB 固态硬盘 + 720GB 机械硬盘（实际可用空间有折损，这里为了表示方便），Windows 10 已经安装到了固态硬盘上。由于主板较老，只能支持 BIOS。巨硬又说过 Windows 只能支持 BIOS + MBR，所以第一块主位（Master）上的固态硬盘就只能采用 MBR 分区表，分成了两个区，500MB 用作启动分区，剩下的部分全部划给了系统分区。
 但是 Linux 表示没有巨硬这种尿性，所以为什么不使用更先进的 GPT 分区表？因此从位（Slave）上的机械硬盘被我分成了这个样子：&lt;/p>
@@ -1654,4 +1654,29 @@ However, there is a workaround that is able to merge those metadata into your ph
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ gpg --export-ssh-key &amp;lt;uid/fingerprint&amp;gt;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item></channel></rss>
+&lt;/div></description></item><item><title>Use Git Worktree to Work with Multiple Checkout at the Same Time</title><link>https://peromage.github.io/blog/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</link><pubDate>Mon, 06 Jun 2022 00:00:00 +0000</pubDate><guid>https://peromage.github.io/blog/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</guid><description>&lt;h2 id="troubles">Troubles&lt;/h2>
+&lt;p>When working with a complicated project where you have to compare different history versions side by side, it soon becomes frustrating frequently checking out refs.&lt;/p>
+&lt;p>The old stupid way is to clone multiple repos and checkout to the specific revisions. When the project is big this might be a trouble because you&amp;rsquo;re basically duplicating files.&lt;/p>
+&lt;h2 id="savior">Savior&lt;/h2>
+&lt;p>Git provides a convenience sub-command &lt;code>worktree&lt;/code> to checkout a specific ref in another directory without duplicating files.&lt;/p>
+&lt;h3 id="add-a-new-checkout">Add a New Checkout&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git worktree add ../foo-ref-1 &amp;lt;ref&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Of course you can add as many checkouts as you want.&lt;/p>
+&lt;h3 id="remove-a-checkout">Remove a Checkout&lt;/h3>
+&lt;p>When the checkout is no longer needed, it can be deleted from this command.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git worktree remove --force ../foo-ref-1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If there are uncommitted changes git will prevent you from deleting the directory. In this case &lt;code>--force&lt;/code> flag is needed.&lt;/p></description></item></channel></rss>

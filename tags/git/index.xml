@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>git on Fang's Blog</title><link>https://peromage.github.io/tags/git/</link><description>Recent content in git on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 07 Apr 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>Git 中的 Subtree 和 Submodule</title><link>https://peromage.github.io/blog/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</link><pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate><guid>https://peromage.github.io/blog/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</guid><description>&lt;p>因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>git on Fang's Blog</title><link>https://peromage.github.io/tags/git/</link><description>Recent content in git on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 06 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>Git 中的 Subtree 和 Submodule</title><link>https://peromage.github.io/blog/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</link><pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate><guid>https://peromage.github.io/blog/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</guid><description>&lt;p>因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。&lt;/p>
 &lt;h2 id="为什么有这样的需求">为什么有这样的需求&lt;/h2>
 &lt;p>版本库嵌套很好理解，就是在一个 Git 仓库里面包含了其他的 Git 仓库。通常有这样的需求往往涉及到协同开发。比如这里有一个插件单独的 Git 仓库姑且叫“Plugin”。现在我创建了一个自己的项目，其中需要用到这个“Plugin”插件。通常比较笨的办法就是把插件库源码拖下来，复制到自己的项目里。但是这样当插件库更新的时候，插件源码更新往往比较麻烦。而且如果在使用的过程中修改了插件的源码，也不便于插件单独的版本控制，更别说为插件库贡献代码了。但如果插件单独以 Git 仓库存在于我的项目目录中，以上的问题就解决了。&lt;/p>
 &lt;p>在 Git 里面提供了两种方式实现上述需求，那就是 Subtree 和 Submodule。&lt;/p>
@@ -196,4 +196,29 @@
 &lt;p>&lt;a class="link" href="https://gist.github.com/kvnsmth/4688345" target="_blank" rel="noopener"
 >subtree_usage&lt;/a>
 &lt;a class="link" href="http://www.fwolf.com/blog/post/246" target="_blank" rel="noopener"
->subtree_squash&lt;/a>&lt;/p></description></item></channel></rss>
+>subtree_squash&lt;/a>&lt;/p></description></item><item><title>Use Git Worktree to Work with Multiple Checkout at the Same Time</title><link>https://peromage.github.io/blog/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</link><pubDate>Mon, 06 Jun 2022 00:00:00 +0000</pubDate><guid>https://peromage.github.io/blog/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</guid><description>&lt;h2 id="troubles">Troubles&lt;/h2>
+&lt;p>When working with a complicated project where you have to compare different history versions side by side, it soon becomes frustrating frequently checking out refs.&lt;/p>
+&lt;p>The old stupid way is to clone multiple repos and checkout to the specific revisions. When the project is big this might be a trouble because you&amp;rsquo;re basically duplicating files.&lt;/p>
+&lt;h2 id="savior">Savior&lt;/h2>
+&lt;p>Git provides a convenience sub-command &lt;code>worktree&lt;/code> to checkout a specific ref in another directory without duplicating files.&lt;/p>
+&lt;h3 id="add-a-new-checkout">Add a New Checkout&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git worktree add ../foo-ref-1 &amp;lt;ref&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Of course you can add as many checkouts as you want.&lt;/p>
+&lt;h3 id="remove-a-checkout">Remove a Checkout&lt;/h3>
+&lt;p>When the checkout is no longer needed, it can be deleted from this command.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git worktree remove --force ../foo-ref-1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If there are uncommitted changes git will prevent you from deleting the directory. In this case &lt;code>--force&lt;/code> flag is needed.&lt;/p></description></item></channel></rss>
