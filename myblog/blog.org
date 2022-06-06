@@ -25,15 +25,15 @@
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
 *** Me
-Hi there. This is Fang.
+Hi there.  This is Fang.
 
 I'm currently a C++ developer working with one of the well-known automotive companies.
 
-I have hair. A lot.
+I have hair.  A lot.
 
-Emacser. Former Vimmer.
+Emacser.  Former Vimmer.
 
-Oh most importantly, happy wife happy life. :)
+Oh most importantly, happy wife happy life.  :)
 
 *** Contact
 Email: fang(at)saffyyre.com
@@ -208,7 +208,7 @@ https://emacs.stackexchange.com/questions/8023/how-to-use-autoload
 - State "CREATED"    from              [2022-03-16 Wed 10:25]
 :END:
 *** Background
-I've been working on optimization for some C++ code recently. One of the part is to initialize some data at compile time. Consider we have a C style enum definition:
+I've been working on optimization for some C++ code recently.  One of the part is to initialize some data at compile time.  Consider we have a C style enum definition:
 
 #+begin_src c++
 typedef enum Foo {
@@ -218,7 +218,7 @@ typedef enum Foo {
 } Foo_t;
 #+end_src
 
-We want to have an array of the enum with undefined initial values =999= because by default initialization the values would be =0='s. However, =std::array= can only be initialized by initializer list, which is said:
+We want to have an array of the enum with undefined initial values =999= because by default initialization the values would be =0='s.  However, =std::array= can only be initialized by initializer list, which is said:
 
 #+begin_src c++
 // Partial initialization
@@ -242,9 +242,9 @@ for (auto& i : array) {
 #+end_src
 
 *** Generating code by templates
-We can use recursive deduction of templates to generate our code. There is a limit that you can only do 1024 times of recursion but in my case it's enough.
+We can use recursive deduction of templates to generate our code.  There is a limit that you can only do 1024 times of recursion but in my case it's enough.
 
-The idea is to count the size to zero and use variadic argument to increase the number of arguments on each recursion. Finally the size of the array will be passed to the bottom and the variadic argument gets expanded.
+The idea is to count the size to zero and use variadic argument to increase the number of arguments on each recursion.  Finally the size of the array will be passed to the bottom and the variadic argument gets expanded.
 
 It's a pretty simple trick.
 
@@ -632,14 +632,14 @@ Git 官方推荐使用新的 Subtree ，事实证明的确比 Submodule 方便�
 - State "CREATED"    from              [2021-07-09 Fri 16:40]
 :END:
 *** Background
-Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.
+Previously I wrote a post for this dual-boot scenario.  It is a little outdated.  In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition.  However, sometimes it is still needed.  That is why I started thinking to improve this setup even further.
 
-Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage. Also you are able to create differencing disks which are pretty much like snapshots.
+Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage.  Also you are able to create differencing disks which are pretty much like snapshots.
 
 For this new configuration, my plan is to use BIOS + GPT disk table + Native Linux + Native Windows booting from VHD + GRUB as the bootloader.
 
 *** Partitioning
-To make GPT works with BIOS. It is required to have a small partition [[https://wiki.archlinux.org/title/GRUB][flagged]] with =EF02=.
+To make GPT works with BIOS.  It is required to have a small partition [[https://wiki.archlinux.org/title/GRUB][flagged]] with =EF02=.
 
 The partition scheme looks like this:
 
@@ -652,22 +652,22 @@ The partition scheme looks like this:
 | /dev/sda5 | 835692544 | 1465149134 | 629456591 | 300.1G | Microsoft Basic Data |
 
 *** Installing Linux
-Any Linux distro would work. I chose Manjaro KDE this time because I found that the Pop OS made my laptop really hot sometimes (Yeah KDE is prettier).
+Any Linux distro would work.  I chose Manjaro KDE this time because I found that the Pop OS made my laptop really hot sometimes (Yeah KDE is prettier).
 
-This part should be easy. The GRUB files is going into that EFI partition. For details, check [[https://wiki.archlinux.org/title/GRUB][GRUB wiki]].
+This part should be easy.  The GRUB files is going into that EFI partition.  For details, check [[https://wiki.archlinux.org/title/GRUB][GRUB wiki]].
 
 *** Preparing to Install Windows
-I'm not going to use the standard Windwos installer since I want to install it into a VHD file. To make it work we need a Windows PE environment.
+I'm not going to use the standard Windwos installer since I want to install it into a VHD file.  To make it work we need a Windows PE environment.
 
 **** Preparing Images
-Any Windows PE (Windows 7 and above) would work. The PE ISO image is going to =/boot/wepe.iso=.
+Any Windows PE (Windows 7 and above) would work.  The PE ISO image is going to =/boot/wepe.iso=.
 
-Also a Windows ISO image is needed. For example a Windows 7 ISO named =windows7.iso= will be put in the Windows data partition.
+Also a Windows ISO image is needed.  For example a Windows 7 ISO named =windows7.iso= will be put in the Windows data partition.
 
 **** Adding Windows PE to GRUB
-Boot into Linux. Download Windows PE ISO file and move it to the EFI partition (EXT4 partitions might be problematic).
+Boot into Linux.  Download Windows PE ISO file and move it to the EFI partition (EXT4 partitions might be problematic).
 
-To load this ISO image, =memdisk= tool from =syslinux= is required. Steps as below on Arch based distro:
+To load this ISO image, =memdisk= tool from =syslinux= is required.  Steps as below on Arch based distro:
 
 #+begin_src shell
 # Installing syslinux
@@ -676,7 +676,7 @@ $ sudo pacman -S syslinux
 # Copying memdisk to the boot partition
 $ sudo cp /usr/lib/syslinux/bios/memdisk /boot/memdisk
 
-# Adding Windows PE entry to GRUB. 1DB1-9C31 is the boot partition's UUID
+# Adding Windows PE entry to GRUB.  1DB1-9C31 is the boot partition's UUID
 $ sudo cat <<EOF >>/etc/grub.d/40_custom
 menuentry "WePE x64" {
     search --set=root --no-floppy --fs-uuid 1DB1-9C31
@@ -692,7 +692,7 @@ $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 *** Installing Windows to a VHD File
 After adding Windows PE to the bootloader entries, it is time to switch the working environment.
 
-Restart the PC, then keep pression =shift= key until the GRUB menu shows up. Now navigate to the Windows PE entry and get in there.
+Restart the PC, then keep pression =shift= key until the GRUB menu shows up.  Now navigate to the Windows PE entry and get in there.
 
 **** Creating a VHD File for Windows
 To create a VHD file, open a command line window and enter =diskpart=
@@ -719,17 +719,17 @@ Now the Windows image can be dumped into this VHD file.
 Mount the Windows ISO image to =E:= volume and open a command line window
 
 #+begin_src shell
-# Get the image index. For example the desired version's index is 1
+# Get the image index.  For example the desired version's index is 1
 > dism /get-wiminfo /wimfile=e:\sources\install.wim
 
-# Extract the image. Where E: is the Windows ISO and C: is the VHD file
+# Extract the image.  Where E: is the Windows ISO and C: is the VHD file
 > dism /apply-image /imagefile:e:\sources\install.wim /index:1 /applydir:c:\
 #+end_src
 
 *** Fixing the Windows Bootloader
-Stay in Windows PE. Don't restart the PC. We still need to fix the bootloader for Windows.
+Stay in Windows PE.  Don't restart the PC.  We still need to fix the bootloader for Windows.
 
-Normally Windows cannot be booted with a GPT+MBR setup. And also loading the whole Windows VHD file through =memdisk= is not possible because it's too large to load into memory. To fix the boot issue a bridge is needed between Windows and GRUB.
+Normally Windows cannot be booted with a GPT+MBR setup.  And also loading the whole Windows VHD file through =memdisk= is not possible because it's too large to load into memory.  To fix the boot issue a bridge is needed between Windows and GRUB.
 
 Luckily [[http://reboot.pro/index.php?showtopic=19516&page=2&#entry184489][a small VHD image]] can still be loaded by =memdisk=.
 
@@ -750,7 +750,7 @@ DISKPART> assign letter=f
 DISKPART> exit
 #+end_src
 
-Now the =bootmgr= VHD is mounted at =F:=. Then write the boot record and create boot configuration files.
+Now the =bootmgr= VHD is mounted at =F:=.  Then write the boot record and create boot configuration files.
 
 #+begin_src shell
 > bootsect /nt60 f: /mbr
@@ -758,7 +758,7 @@ Now the =bootmgr= VHD is mounted at =F:=. Then write the boot record and create 
 #+end_src
 
 **** Fixing the BCD Entry
-At this point it should be working according to the [[https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/boot-to-vhd--native-boot--add-a-virtual-hard-disk-to-the-boot-menu][Microsoft's document]]. In fact it is not.
+At this point it should be working according to the [[https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/boot-to-vhd--native-boot--add-a-virtual-hard-disk-to-the-boot-menu][Microsoft's document]].  In fact it is not.
 
 Let's check the BCD entries, in a command window:
 
@@ -793,7 +793,7 @@ nx                      OptIn
 detecthal               Yes
 #+end_src
 
-The =device= and =osdevice= seems to be right but once the Windows VHD is unmounted it becomes =unknown=. According to this [[http://www.mistyprojects.co.uk/documents/BCDEdit/files/device.htm][BCDEdit notes]], BCD entry records the partition's information such as UUID to find the correct partition during bootup. In this case the partition can't be found until the VHD file is mounted. But this VHD file is not mounted automatically.
+The =device= and =osdevice= seems to be right but once the Windows VHD is unmounted it becomes =unknown=.  According to this [[http://www.mistyprojects.co.uk/documents/BCDEdit/files/device.htm][BCDEdit notes]], BCD entry records the partition's information such as UUID to find the correct partition during bootup.  In this case the partition can't be found until the VHD file is mounted.  But this VHD file is not mounted automatically.
 
 Thus we need to correct this and let =Bootmgr= locate the VHD file properly.
 
@@ -805,7 +805,7 @@ In a command line window:
 > bcdedit /store C:\Boot\BCD /set {default} osdevice vhd=[D:]\windows7.vhd
 #+end_src
 
-If we check the BCD entry again it doesn't change. But if we unmount the Windows VHD it will become:
+If we check the BCD entry again it doesn't change.  But if we unmount the Windows VHD it will become:
 
 #+begin_src shell
 > bcdedit /store f:\Boot\BCD /enum
@@ -838,7 +838,7 @@ nx                      OptIn
 detecthal               Yes
 #+end_src
 
-The volume letter doesn't matter, it changes dynamically. Now =bootmgr= is able to locate the VHD file correctly.
+The volume letter doesn't matter, it changes dynamically.  Now =bootmgr= is able to locate the VHD file correctly.
 
 *** Adding Windows to GRUB
 Restart PC and get into Linux.
@@ -846,7 +846,7 @@ Restart PC and get into Linux.
 Modify the GRUB config file to load =bootmgr=
 
 #+begin_src shell
-# Adding Windows (bootmgr) entry to GRUB. 1DB1-9C31 is the boot partition's UUID
+# Adding Windows (bootmgr) entry to GRUB.  1DB1-9C31 is the boot partition's UUID
 $ sudo cat <<EOF >>/etc/grub.d/40_custom
 menuentry "Windows 7" {
     search --set=root --no-floppy --fs-uuid 1DB1-9C31
@@ -859,13 +859,13 @@ EOF
 $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 #+end_src
 
-Now we can restart PC. Keep pressing =shift= on bootup to go to the GRUB menu. Select Windows entry to boot Windows.
+Now we can restart PC.  Keep pressing =shift= on bootup to go to the GRUB menu.  Select Windows entry to boot Windows.
 
 *** Fixing Windows Initialization Error
 During the first time bootup, Windows might have an error showing
 
 #+begin_example
-Windows could not complete the installation. To install Windows on this computer, restart the installation.
+Windows could not complete the installation.  To install Windows on this computer, restart the installation.
 #+end_example
 
 To [[https://www.howisolve.com/windows-could-not-complete-the-installation-solved/][solve]] this error:
@@ -878,7 +878,7 @@ To [[https://www.howisolve.com/windows-could-not-complete-the-installation-solve
 *** Creating a Differencing Disk
 A differencing disk can be used for quick recoveries.
 
-To create it, restart into the Windows PE environment. In a command line window:
+To create it, restart into the Windows PE environment.  In a command line window:
 
 #+begin_src shell
 # Use the original VHD as base
@@ -890,7 +890,7 @@ To create it, restart into the Windows PE environment. In a command line window:
 DISKPART> creat vdisk file=d:\windows7.vhd parent=d:\windows7_base.vhd
 #+end_src
 
-Then all changes made in the future will go into the differencing disk. If system goes wrong one day, simply deleting the the differencing disk and creating a new one would quickly recover from the crysis.
+Then all changes made in the future will go into the differencing disk.  If system goes wrong one day, simply deleting the the differencing disk and creating a new one would quickly recover from the crysis.
 
 *NOTE: After creating the differencing disk, the base VHD is not supposed to be modified.*
 
@@ -915,7 +915,7 @@ Then all changes made in the future will go into the differencing disk. If syste
 Google Photo sucks.
 
 *** Troubles
-When exporting photos from Google Photo, a bunch of JSON files come with your photos. Those JSON files contain metadata which is supposed to be stored with your photo files. If you simple import those photo files into another photo manager you will most likely not get a chronological view. Obviously, Google does on purpose so that you will not leave it easily.
+When exporting photos from Google Photo, a bunch of JSON files come with your photos.  Those JSON files contain metadata which is supposed to be stored with your photo files.  If you simple import those photo files into another photo manager you will most likely not get a chronological view.  Obviously, Google does on purpose so that you will not leave it easily.
 However, there is a workaround that is able to merge those metadata into your photos.
 
 *** Restore the Metadate
@@ -953,7 +953,7 @@ $ exiftool -@ fix-args.txt <takeout_dir>
 
 5. Delete JSON files and import your photos to somewhere else
 
-This argument file contains the fields that are meaningful to me. If you need to merge additional fields you can append them to the last. For details, check the man page of =exiftool=.
+This argument file contains the fields that are meaningful to me.  If you need to merge additional fields you can append them to the last.  For details, check the man page of =exiftool=.
 
 ** PUBLISHED Minimalist's Multi-boot USB Drive                  :multi_boot:
 :PROPERTIES:
@@ -965,10 +965,10 @@ This argument file contains the fields that are meaningful to me. If you need to
 - State "CREATED"    from              [2022-01-26 Wed 20:34]
 :END:
 *** Story
-Recently I've realized a fact that I always have needs to keep a multi-boot USB in my pocket for either Linux or Windows installation. There are a lot tools out there already but I don't really like them. At least, I mean, they are too flashy to me. A beautiful boot menu seems not to be attractive. What I need is just a simple and practical maybe a little ugly boot device. It should be minimalist. More importantly, it has to be easy to setup with the tools on the system already and maintainable. No funky scripts.
+Recently I've realized a fact that I always have needs to keep a multi-boot USB in my pocket for either Linux or Windows installation.  There are a lot tools out there already but I don't really like them.  At least, I mean, they are too flashy to me.  A beautiful boot menu seems not to be attractive.  What I need is just a simple and practical maybe a little ugly boot device.  It should be minimalist.  More importantly, it has to be easy to setup with the tools on the system already and maintainable.  No funky scripts.
 
 *** Old Solution - Clunky
-I've been using this solution for a very long time. Setup is pretty straight forward.
+I've been using this solution for a very long time.  Setup is pretty straight forward.
 
 The partition scheme used on the USB drive is like (GPT):
 
@@ -980,11 +980,11 @@ The partition scheme used on the USB drive is like (GPT):
 | /dev/sda4 | 8 GB   | NTFS          | Windows ISO files                |
 | /dev/sda5 | 2 GB   | FAT           | Arch Linux ISO files             |
 
-So the idea is having a big data partition at the front for better access, then installing GRUB files on the second EFI partition with both EFI and BIOS support (Implemented by the third BIOS boot partition. The partition order doesn't matter). Finally, create dedicated partitions to contain the extracted files from installation ISOs.
+So the idea is having a big data partition at the front for better access, then installing GRUB files on the second EFI partition with both EFI and BIOS support (Implemented by the third BIOS boot partition.  The partition order doesn't matter).  Finally, create dedicated partitions to contain the extracted files from installation ISOs.
 
 When the USB drive is plugged in, I can use grub command line to chainload the EFI file that is located in the ISO partition, or the VBR if it's booted with legacy mode.
 
-Well, it's usable but I still feel that it is too much for a small USB drive - too many partitions. If I plug the drive in for just data exchange, there would be a a bunch of partitions mounted and the notification is quite annoying. So I started thinking that there must be a simpler way to do it.
+Well, it's usable but I still feel that it is too much for a small USB drive - too many partitions.  If I plug the drive in for just data exchange, there would be a a bunch of partitions mounted and the notification is quite annoying.  So I started thinking that there must be a simpler way to do it.
 
 *** New Solution - Much Better
 **** Partitioning
@@ -996,7 +996,7 @@ The goal is simplicity so the new partition scheme is like this:
 | /dev/sda2 | 512 MB | FAT           | EFI partition                               |
 | /dev/sda3 | 1 MB   | No filesystem | BIOS boot partition used by GRUB (Optional) |
 
-The third BIOS boot partition is not really necessary since most of computers nowadays are using UEFI. If you really need the legacy compatibility, you can create one. I'll keep it for now.
+The third BIOS boot partition is not really necessary since most of computers nowadays are using UEFI.  If you really need the legacy compatibility, you can create one.  I'll keep it for now.
 
 **** Installing GRUB
 Typical GRUB insallation but install for both EFI and BIOS.
@@ -1007,7 +1007,7 @@ $ sudo grub-install --target=x86_64-efi --efi-directory=/mnt --boot-directory=/m
 $ sudo grub-install --target=i386-pc --boot-directory=/mnt /dev/sda
 #+end_src
 
-Don't forget to create a GRUB menu config file. Otherwise GRUB will boot into its command line interface (If you know what you're doing). It's a good idea to put a editable config file in the data partition since it will be the most used partition. However, GRUB reads the file in the EFI partition by default: =(esp)/grub/grub.cfg=. We can tell GRUB to read out custom config file after that.
+Don't forget to create a GRUB menu config file.  Otherwise GRUB will boot into its command line interface (If you know what you're doing).  It's a good idea to put a editable config file in the data partition since it will be the most used partition.  However, GRUB reads the file in the EFI partition by default: =(esp)/grub/grub.cfg=.  We can tell GRUB to read out custom config file after that.
 
 
 #+begin_src conf
@@ -1017,22 +1017,22 @@ search --set=root --file /boot.cfg
 configfile /boot.cfg
 #+end_src
 
-Thus we are done with the EFI partition. All the menu configuration will go into =boot.cfg= in the data partition.
+Thus we are done with the EFI partition.  All the menu configuration will go into =boot.cfg= in the data partition.
 
 **** Linux Installer
-Most of modern Linux distros support booting from a loop device. That is to say, we don't have to extract the content of ISO files. Using GRUB =loopback= command can easily mount a ISO and boot from there. But chainloading the EFI or VBF is not possible. Based on the [[https://www.gnu.org/software/grub/manual/grub/grub.html#Loopback-booting][GRUB manual]]:
+Most of modern Linux distros support booting from a loop device.  That is to say, we don't have to extract the content of ISO files.  Using GRUB =loopback= command can easily mount a ISO and boot from there.  But chainloading the EFI or VBF is not possible.  Based on the [[https://www.gnu.org/software/grub/manual/grub/grub.html#Loopback-booting][GRUB manual]]:
 
 #+begin_quote
-GRUB is able to read from an image (be it one of CD or HDD) stored on any of its accessible storages (refer to see loopback command). However the OS itself should be able to find its root. This usually involves running a userspace program running before the real root is discovered.
+GRUB is able to read from an image (be it one of CD or HDD) stored on any of its accessible storages (refer to see loopback command).  However the OS itself should be able to find its root.  This usually involves running a userspace program running before the real root is discovered.
 #+end_quote
 
-EFI bootloader usually will fail to find the root device by this method. However, we can manually load the kernel and ramdisk in which we can specify the root device by ourselves.
+EFI bootloader usually will fail to find the root device by this method.  However, we can manually load the kernel and ramdisk in which we can specify the root device by ourselves.
 
 ***** Load Linux ISO
 I'm using Arch Linux here for example.
 
 1. Put the ISO file to =(data)/images/archlinux-2022.01.01-x86_64.iso=.
-2. Mount ISO. We need to find the kernel loading parameters.
+2. Mount ISO.  We need to find the kernel loading parameters.
 3. In the file =(arch)/syslinux/archiso_sys-linux.cfg= we would see
 
 #+begin_src conf
@@ -1048,9 +1048,9 @@ INITRD /arch/boot/intel-ucode.img,/arch/boot/amd-ucode.img,/arch/boot/x86_64/ini
 APPEND archisobasedir=arch archisolabel=ARCH_202201 copytoram
 #+end_src
 
-This is a =syslinux= config file. Parameters after =APPEND= are the ones that we're looking for.
+This is a =syslinux= config file.  Parameters after =APPEND= are the ones that we're looking for.
 
-Then add the following content to =(data)/boot.cfg=. When copying the =initrd= parameters, don't forget to remove commas.
+Then add the following content to =(data)/boot.cfg=.  When copying the =initrd= parameters, don't forget to remove commas.
 
 #+begin_src conf
 menuentry "Archiso 202201 RAM" {
@@ -1062,10 +1062,10 @@ menuentry "Archiso 202201 RAM" {
 }
 #+end_src
 
-Then the Linux installer is done. If we need more distros, the process is similar.
+Then the Linux installer is done.  If we need more distros, the process is similar.
 
 **** Windows Installer
-I prefer to use NTFS as my data partition's file system because it works on both Linux and Windows, and supports big files. Also I usually just keep one copy of Windows installer so for Windows, I can simply dump the ISO content to the data partition's root. I don't mind the extra a few folders there. Plus some of them can be safely deleted. Then chainloading from GRUB is possible.
+I prefer to use NTFS as my data partition's file system because it works on both Linux and Windows, and supports big files.  Also I usually just keep one copy of Windows installer so for Windows, I can simply dump the ISO content to the data partition's root.  I don't mind the extra a few folders there.  Plus some of them can be safely deleted.  Then chainloading from GRUB is possible.
 
 In =(data)/boot.cfg=
 
@@ -1081,7 +1081,7 @@ Alternatively, I can directly boot from a small WinPE image and use =dism= comma
 
 To create a PE image we need a Windows environment and a CMD window with admin privilege.
 
-Create a virtual disk to contain PE files. Assigned with volume letter =P:\=.
+Create a virtual disk to contain PE files.  Assigned with volume letter =P:\=.
 
 #+begin_src shell
 > diskpart
@@ -1095,7 +1095,7 @@ DISKPART> assign letter=p
 DISKPART> exit
 #+end_src
 
-Then mount the Windows installer ISO. Assuming the assigned volume is =G:\=.
+Then mount the Windows installer ISO.  Assuming the assigned volume is =G:\=.
 
 #+begin_src shell
 > dism /apply-image /imagefile:g:\sources\boot.wim /index:1 /applydir:p:\
@@ -1106,7 +1106,7 @@ Then mount the Windows installer ISO. Assuming the assigned volume is =G:\=.
 
 Assign EFI partition with volume letter =E:\=.
 
-Before creating the bootloader for Windows PE, we need to backup our GRUB EFI file (Windows PE bootloader will overwrite it). Rename =E:\EFI= to =E:\EFI-grub=.
+Before creating the bootloader for Windows PE, we need to backup our GRUB EFI file (Windows PE bootloader will overwrite it).  Rename =E:\EFI= to =E:\EFI-grub=.
 
 Create Windows PE bootloader.
 
@@ -1114,7 +1114,7 @@ Create Windows PE bootloader.
 > bcdboot p:\Windows /l en-us /s e: /f uefi
 #+end_src
 
-Then merge both =E:\EFI= and =E:\EFI-grub=. If it prompts overwriting =E:\EFI\Boot\bootx64.efi=, confirm with yes.
+Then merge both =E:\EFI= and =E:\EFI-grub=.  If it prompts overwriting =E:\EFI\Boot\bootx64.efi=, confirm with yes.
 
 Then add following content to =(data)/boot.cfg=.
 
@@ -1126,7 +1126,7 @@ menuentry "Windows PE" {
 #+end_src
 
 **** Loading Any ISO
-Some ISO is capable to be loaded directly into memory. The size of the ISO file is critical. Generally it should not exceed the physical memory. This can be done by =memdisk= from =syslinux=.
+Some ISO is capable to be loaded directly into memory.  The size of the ISO file is critical.  Generally it should not exceed the physical memory.  This can be done by =memdisk= from =syslinux=.
 
 Copy the =memdisk= into the EFI partition.
 
@@ -1134,7 +1134,7 @@ Copy the =memdisk= into the EFI partition.
 $ sudo cp /usr/lib/syslinux/bios/memdisk (esp)/memdisk
 #+end_src
 
-Then put the following content to =(data)/boot.cfg=. For example, loading a Windows PE ISO.
+Then put the following content to =(data)/boot.cfg=.  For example, loading a Windows PE ISO.
 
 #+begin_src conf
 menuentry "Windows PE ISO" {
@@ -1145,7 +1145,7 @@ menuentry "Windows PE ISO" {
 #+end_src
 
 *** The End
-Finally I'm very satisfied with this new USB drive. Yay!
+Finally I'm very satisfied with this new USB drive.  Yay!
 
 ** PUBLISHED Setup A Gaming VM             :gaming:kvm:qemu:gpu_passthrough:
 :PROPERTIES:
@@ -1157,11 +1157,11 @@ Finally I'm very satisfied with this new USB drive. Yay!
 - State "CREATED"    from              [2022-03-13 Sun 17:47]
 :END:
 *** Before starting
-First thing first. I've been rarely using Windows over years except for working and gaming. Linux community grows fast and there are a lot alternatives available. On the contrary, Windows gets crapy every year (Office 365 is still good IMO) so there is no reason to run this huge spyware all the time.
+First thing first.  I've been rarely using Windows over years except for working and gaming.  Linux community grows fast and there are a lot alternatives available.  On the contrary, Windows gets crapy every year (Office 365 is still good IMO) so there is no reason to run this huge spyware all the time.
 
-Modern PCs are strong enough to run a VM. Besides most of PCs have both integrated and descret graphic cards. This setup is perfect for gaming VM which requires PCI passthrough.
+Modern PCs are strong enough to run a VM.  Besides most of PCs have both integrated and descret graphic cards.  This setup is perfect for gaming VM which requires PCI passthrough.
 
-In this post, I'm not going to explain everything because the ArchWiki is clear enough already. This is just a quick guide for the setup.
+In this post, I'm not going to explain everything because the ArchWiki is clear enough already.  This is just a quick guide for the setup.
 
 NOTE: Avoid Intel K series CPUs which usually don't have integrated graphic card.
 
@@ -1194,16 +1194,16 @@ $ lspci -nnk
     Kernel modules: snd_hda_intel
 #+end_src
 
-Take a note of the device IDs. In this example I have a Nvidia GTX970 graphic card along with a audio controller. They belong to the same group (domain) you have to take them all.
+Take a note of the device IDs.  In this example I have a Nvidia GTX970 graphic card along with a audio controller.  They belong to the same group (domain) you have to take them all.
 
-In this case I got =1458:367a= and =1458:367a=. These are the PCI devices that will be passed through to the VM. Other PCI devices can be passed too.
+In this case I got =1458:367a= and =1458:367a=.  These are the PCI devices that will be passed through to the VM.  Other PCI devices can be passed too.
 
 **** Modify kernel parameter
 Then we're going to turn IOMMU on and prevent host Linux loading PCI devices that we want to pass-through to the VM.
 
-The kernel parameter passing could be different depending on the bootloader you use. In this example, I use =grub=.
+The kernel parameter passing could be different depending on the bootloader you use.  In this example, I use =grub=.
 
-Open =/etc/default/grub= with your favorite text editor. You have to add =intel_iommu=on= to the kernel parameter along with =vfio-pci.ids=10de:13c2,10de:0fbb= which contains the device IDs you got from the previous step.
+Open =/etc/default/grub= with your favorite text editor.  You have to add =intel_iommu=on= to the kernel parameter along with =vfio-pci.ids=10de:13c2,10de:0fbb= which contains the device IDs you got from the previous step.
 
 #+begin_src conf
 # /etc/default/grub
@@ -1221,7 +1221,7 @@ Then update the bootloader config file.
 $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 #+end_src
 
-The most tricky part is done. Restart the PC now.
+The most tricky part is done.  Restart the PC now.
 
 NOTE: You can check =dmesg= after reboot to verify IOMMU is turned on successfully.
 
@@ -1253,16 +1253,16 @@ Some settings should be tweaked specifically:
 
 - Overview: Change /Firmware/ to =UEFI=
 - CPUs:
-  - Change /vCPU allocation/ to the maximal host CPUs. In this case, it's =8=
+  - Change /vCPU allocation/ to the maximal host CPUs.  In this case, it's =8=
   - Unselect /Copy host CPU configuration/ and change /Model/ to =host-passthrough=
-  - Select /Manually set CPU topology/. Change /Sockets/ to =1=, /Cores/ to =4=, /Threads/ to =2= (Physical core =4= * threads for each core =2=)
+  - Select /Manually set CPU topology/.  Change /Sockets/ to =1=, /Cores/ to =4=, /Threads/ to =2= (Physical core =4= * threads for each core =2=)
 - Disk: Change /Disk bus/ to =VirtIO=
 - Display Spice: You don't really need it so remove it
 - Video: Change to None
 - PCI: Add your discrete graphic card as well as anything with it (audio controller etc.)
 - USB: Mouse, keyboards, game controllers etc.
 
-After saving the settins, the installation should start but don't install Windows yet. Instead, force power if off. Open VM settings in XML view, add following content to prevent Nvidia driver installer discovering the VM environment.
+After saving the settins, the installation should start but don't install Windows yet.  Instead, force power if off.  Open VM settings in XML view, add following content to prevent Nvidia driver installer discovering the VM environment.
 
 #+begin_src xml
 <features>
@@ -1316,7 +1316,7 @@ This note is written for my personal convenience.
 
 *** Server Setup
 **** Installation
-Use system package manager to install =shadowsocks-libev=. In this case, for Arch Linux it is =pacman=.
+Use system package manager to install =shadowsocks-libev=.  In this case, for Arch Linux it is =pacman=.
 
 There is also a Python package which can be installed by =pip= but it seems not to be maintained for a long time.
 
@@ -1325,7 +1325,7 @@ $ sudo pacman -S shadowsocks-libev
 #+end_src
 
 **** Shadowsocks Server Configuration
-Config file is located at =/etc/shadowsocks/myserver.json=. On FreeBSD it is =/usr/local/etc/shadowsocks/myserver.json=
+Config file is located at =/etc/shadowsocks/myserver.json=.  On FreeBSD it is =/usr/local/etc/shadowsocks/myserver.json=
 
 The file name can vary.
 
@@ -1485,24 +1485,24 @@ If there are uncommitted changes git will prevent you from deleting the director
 - State "PUBLISHED"  from "DRAFT"      [2021-08-14 Sat 10:29]
 - State "CREATED"    from              [2021-08-14 Sat 10:29]
 :END:
-YouTube has been pushing me a lot Emacs related contents. This is weird since mostly I watch Vim videos only. But probably this is also a great opportunity to try Emacs again.
+YouTube has been pushing me a lot Emacs related contents.  This is weird since mostly I watch Vim videos only.  But probably this is also a great opportunity to try Emacs again.
 
-I have tried Emacs half year ago. I looked a lot Elisp programming fundamentals and tried a few Emacs configurations from others including Doom Emacs. However, it didn't last long since I found that I didn't have enough time to configure this Emacs setup as good as the [[https://github.com/peromage/rice.vim][Vim setup]] that I was using. Also using other's configurations makes things complicated for me. They have too many packages included and I don't know what they are.
+I have tried Emacs half year ago.  I looked a lot Elisp programming fundamentals and tried a few Emacs configurations from others including Doom Emacs.  However, it didn't last long since I found that I didn't have enough time to configure this Emacs setup as good as the [[https://github.com/peromage/rice.vim][Vim setup]] that I was using.  Also using other's configurations makes things complicated for me.  They have too many packages included and I don't know what they are.
 
-After watching a bunch of Emacs videos I decided to pick it up this time, with vanilla Emacs starting from scratch. The reason why I make my mind this time is because I found Emacs can perfectly and elegantly solve some problems that pain my ass:
+After watching a bunch of Emacs videos I decided to pick it up this time, with vanilla Emacs starting from scratch.  The reason why I make my mind this time is because I found Emacs can perfectly and elegantly solve some problems that pain my ass:
 
 - More convenient package management.
 - High quality packages.
 - Easier file management in shell environment within the editor (Dired)
-- No third party dependencies like Node.js and Python. The two major plugs that I'm using in Vim are [[https://github.com/neoclide/coc.nvim][Coc]] and [[https://github.com/Yggdroot/LeaderF][Leaderf]]. They require Node.js and Python to work. Since Elisp is power enough, Emacs can handle this easily by itself.
-- Server-client architecture. I can even replace Tmux with Emacs now. NeoVim has the similar concept but it cannot match what Emacs has.
-- Graphical interface in X mode. This makes Emacs be able to display rich contents.
-- Org mode. It looks great to organize todo list and take notes without switching to other applications.
-- Evil mode. No need to worry about missing Vim's features.
-- Magit. Looks way better and nicer than fugitive.
-- Elisp. Elisp is fun 😉.
+- No third party dependencies like Node.js and Python.  The two major plugs that I'm using in Vim are [[https://github.com/neoclide/coc.nvim][Coc]] and [[https://github.com/Yggdroot/LeaderF][Leaderf]].  They require Node.js and Python to work.  Since Elisp is power enough, Emacs can handle this easily by itself.
+- Server-client architecture.  I can even replace Tmux with Emacs now.  NeoVim has the similar concept but it cannot match what Emacs has.
+- Graphical interface in X mode.  This makes Emacs be able to display rich contents.
+- Org mode.  It looks great to organize todo list and take notes without switching to other applications.
+- Evil mode.  No need to worry about missing Vim's features.
+- Magit.  Looks way better and nicer than fugitive.
+- Elisp.  Elisp is fun 😉.
 
-The migration is going slowly. Right now my main setup is still Vim + Tmux. There is a little curve learning from vanilla edition of Emacs, but It's not a big deal compared with the first time when I started learning Vim 🙂.
+The migration is going slowly.  Right now my main setup is still Vim + Tmux.  There is a little curve learning from vanilla edition of Emacs, but It's not a big deal compared with the first time when I started learning Vim 🙂.
 
-In the end, dont't give me wrong. Vim and Emacs both are great text editor. For me, Vim is more like a spirit, a concept. Once you've learned its high-efficiency key maps, you can use it everywhere. Even though I switch to Emacs I still use Vim mode together with Emacs' powerful extendability. Why not?
+In the end, dont't give me wrong.  Vim and Emacs both are great text editor.  For me, Vim is more like a spirit, a concept.  Once you've learned its high-efficiency key maps, you can use it everywhere.  Even though I switch to Emacs I still use Vim mode together with Emacs' powerful extendability.  Why not?
 
