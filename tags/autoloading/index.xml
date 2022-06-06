@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>autoloading on Fang's Blog</title><link>https://peromage.github.io/tags/autoloading/</link><description>Recent content in autoloading on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 06 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/autoloading/index.xml" rel="self" type="application/rss+xml"/><item><title>Autoloading in Emacs</title><link>https://peromage.github.io/blog/autoloading-in-emacs/</link><pubDate>Mon, 06 Jun 2022 00:00:00 +0000</pubDate><guid>https://peromage.github.io/blog/autoloading-in-emacs/</guid><description>&lt;p>Autoloading is a neat feature in Emacs. It speeds up Emacs by lazy load the files. But it could be a little confusing if you&amp;rsquo;re switching from Vim.&lt;/p>
+&lt;h2 id="myth-not-working-as-expected">Myth - Not Working as Expected&lt;/h2>
+&lt;p>If you have used Vim you know in Vim you can put your library files to the load path variable and Vim autoloads them whenever one of the functions/variables is used. Initially I thought this is the same in Emacs but with a little effort to put the magic autoload comments before the function/variable definition. It turned out I was wrong. When I called my functions Emacs could not find them until I explicitly require them. This is obviously not my intention.&lt;/p>
+&lt;h2 id="make-it-work">Make It Work&lt;/h2>
+&lt;p>After carefully reading the document, I got that the magic autoload comment is just a &lt;a class="link" href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Autoload.html#index-autoloadp" target="_blank" rel="noopener"
+>autoload cookie&lt;/a> that guides Emacs to generate the real autoload code. In one word, I have to define the function/variable autoload definition anyways. But with the cookies it simplifies the process.&lt;/p>
+&lt;ol>
+&lt;li>Add magic comment &lt;code>;;;###autoload&lt;/code> before the desired function/variable definition.&lt;/li>
+&lt;li>&lt;code>M-x&lt;/code> &lt;code>update-file-autoloads&lt;/code> command on the library file which contains the definitions that need to be autoloaded. Store that generated autoload definition file with a different name.&lt;/li>
+&lt;li>Require that autoload definition file in the &lt;code>init.el&lt;/code>.&lt;/li>
+&lt;/ol>
+&lt;p>That&amp;rsquo;s the process to autoload the custom library. The downside is the &lt;code>update-file-autoloads&lt;/code> command has to be called every time the library file is updated.&lt;/p>
+&lt;p>Alternative way is to use &lt;code>package-install-from-buffer&lt;/code> to install the library file as a package. &lt;code>package.el&lt;/code> does the dirty work for you, takes care of autoload definition generation and loading automatically.&lt;/p>
+&lt;h2 id="reference">Reference&lt;/h2>
+&lt;p>&lt;a class="link" href="https://emacs.stackexchange.com/questions/8023/how-to-use-autoload" target="_blank" rel="noopener"
+>https://emacs.stackexchange.com/questions/8023/how-to-use-autoload&lt;/a>&lt;/p></description></item></channel></rss>
