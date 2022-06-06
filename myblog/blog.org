@@ -2,7 +2,7 @@
 #+startup: show2levels
 #+startup: nologdone
 #+startup: logdrawer
-#+seq_todo: DRAFT(d) | PUBLISHED(p!)
+#+seq_todo: DRAFT(d) | CREATED(c!) PUBLISHED(p!)
 #+options: d:t
 #+hugo_base_dir: ../
 #+hugo_section: blog
