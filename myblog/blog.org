@@ -3,7 +3,6 @@
 #+seq_todo: TODO(t) | DONE(d!)
 #+hugo_base_dir: ../
 #+hugo_section: blog
-#+hugo_weight: auto
 #+hugo_auto_set_lastmod: t
 
 * Info Pages
