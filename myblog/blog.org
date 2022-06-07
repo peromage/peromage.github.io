@@ -83,9 +83,9 @@ Github: https://github.com/peromage
 - State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
-你好 旅行者 欢迎来到我的博客
+你好，旅行者。欢迎来到我的博客。
 
-我的博客分成中文和英文 目前更新以英文为主 如需阅读更多请移步英文站点
+我的博客分成中文和英文，但目前更新以英文为主。如需阅读更多请移步英文站点。
 
 Kira~ ✨
 
