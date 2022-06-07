@@ -4,18 +4,67 @@ theme: hugo-theme-stack
 paginate: 5
 title: Fang's Blog
 
-# Change it to your Disqus shortname before using
+## Change it to your Disqus shortname before using
 disqusShortname: hugo-theme-stack
 
-# GA Tracking ID
+## GA Tracking ID
 googleAnalytics:
 
-# Theme i18n support
-# Available values: en, fr, id, ja, ko, pt-br, zh-cn, es, de, nl
+## Multilingual
+languages:
+    en:
+        languageName: English
+        weight: -100
+
+    zh-cn:
+        languageName: 中文
+        title: 狗窝
+        weight: -90
+        contentDir: content/lang-cn
+        params:
+            sidebar:
+                avatar:
+                    local: false
+                    src: https://github.com/peromage.png
+        menu:
+            main:
+                - identifier: home
+                  name: 主页
+                  url: /
+                  weight: -100
+                  params:
+                      icon: home
+                      newTab: false
+
+                - identifier: archives
+                  name: 归档
+                  url: /archives
+                  weight: -90
+                  params:
+                      icon: archives
+                      newTab: false
+
+                - identifier: about
+                  name : 关于
+                  url: /about
+                  weight: -80
+                  params:
+                      icon: user
+                      newTab: false
+
+                - identifier: search
+                  name : 搜索
+                  url: /search
+                  weight: -70
+                  params:
+                      icon: search
+                      newTab: false
+
 DefaultContentLanguage: en
+defaultContentLanguageInSubdir: false
 
 permalinks:
-    post: /p/:slug/
+    blog: /p/:slug/
     page: /:slug/
 
 params:
@@ -70,7 +119,7 @@ params:
             clientSecret:
             autoCreateIssue: false
 
-        # Waline client configuration see: https://waline.js.org/en/reference/client.html
+        ## Waline client configuration see: https://waline.js.org/en/reference/client.html
         waline:
             serverURL:
             lang:
@@ -103,10 +152,9 @@ params:
 
     opengraph:
         twitter:
-            # Your Twitter username
+            ## Your Twitter username
             site:
-
-            # Available values: summary, summary_large_image
+            ## Available values: summary, summary_large_image
             card: summary_large_image
 
     defaultImage:
@@ -116,10 +164,8 @@ params:
             src:
 
     colorScheme:
-        # Display toggle
         toggle: true
-
-        # Available values: auto, light, dark
+        ## Available values: auto, light, dark
         default: auto
 
     imageProcessing:
@@ -128,42 +174,40 @@ params:
         content:
             enabled: true
 
-### Custom menu
-### See https://docs.stack.jimmycai.com/configuration/custom-menu
-### To remove about, archive and search page menu item, remove `menu` field from their FrontMatter
+## See https://docs.stack.jimmycai.com/configuration/custom-menu
 menu:
     main:
-      - identifier: home
-        name: Home
-        url: /
-        weight: -100
-        params:
-          icon: home
-          newTab: false
+        - identifier: home
+          name: Home
+          url: /
+          weight: -100
+          params:
+              icon: home
+              newTab: false
 
-      - identifier: archives
-        name: Archives
-        url: /archives
-        weight: -90
-        params:
-          icon: archives
-          newTab: false
+        - identifier: archives
+          name: Archives
+          url: /archives
+          weight: -90
+          params:
+              icon: archives
+              newTab: false
 
-      - identifier: about
-        name : About
-        url: /about
-        weight: -80
-        params:
-          icon: user
-          newTab: false
+        - identifier: about
+          name : About
+          url: /about
+          weight: -80
+          params:
+              icon: user
+              newTab: false
 
-      - identifier: search
-        name : Search
-        url: /search
-        weight: -70
-        params:
-          icon: search
-          newTab: false
+        - identifier: search
+          name : Search
+          url: /search
+          weight: -70
+          params:
+              icon: search
+              newTab: false
 
     social:
         - identifier: github
