@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on Fang's Blog</title><link>https://peromage.github.io/blog/</link><description>Recent content in Blogs on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 06 Jun 2022 00:30:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Use Git Worktree to Work with Multiple Checkout at the Same Time</title><link>https://peromage.github.io/blog/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</link><pubDate>Mon, 06 Jun 2022 00:30:00 +0000</pubDate><guid>https://peromage.github.io/blog/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</guid><description>&lt;h2 id="troubles">Troubles&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on Fang's Blog</title><link>https://peromage.github.io/blog/</link><description>Recent content in Blogs on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 06 Jun 2022 00:30:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Use Git Worktree to Work with Multiple Checkout at the Same Time</title><link>https://peromage.github.io/p/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</link><pubDate>Mon, 06 Jun 2022 00:30:00 +0000</pubDate><guid>https://peromage.github.io/p/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</guid><description>&lt;h2 id="troubles">Troubles&lt;/h2>
 &lt;p>When working with a complicated project where you have to compare different history versions side by side, it soon becomes frustrating frequently checking out refs.&lt;/p>
 &lt;p>The old stupid way is to clone multiple repos and checkout to the specific revisions. When the project is big this might be a trouble because you&amp;rsquo;re basically duplicating files.&lt;/p>
 &lt;h2 id="savior">Savior&lt;/h2>
@@ -23,7 +23,7 @@
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git worktree remove --force ../foo-ref-1
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>If there are uncommitted changes git will prevent you from deleting the directory. In this case &lt;code>--force&lt;/code> flag is needed.&lt;/p></description></item><item><title>Autoloading in Emacs</title><link>https://peromage.github.io/blog/autoloading-in-emacs/</link><pubDate>Mon, 06 Jun 2022 00:00:00 +0000</pubDate><guid>https://peromage.github.io/blog/autoloading-in-emacs/</guid><description>&lt;p>Autoloading is a neat feature in Emacs. It speeds up Emacs by lazy load the files. But it could be a little confusing if you&amp;rsquo;re switching from Vim.&lt;/p>
+&lt;/div>&lt;p>If there are uncommitted changes git will prevent you from deleting the directory. In this case &lt;code>--force&lt;/code> flag is needed.&lt;/p></description></item><item><title>Autoloading in Emacs</title><link>https://peromage.github.io/p/autoloading-in-emacs/</link><pubDate>Mon, 06 Jun 2022 00:00:00 +0000</pubDate><guid>https://peromage.github.io/p/autoloading-in-emacs/</guid><description>&lt;p>Autoloading is a neat feature in Emacs. It speeds up Emacs by lazy load the files. But it could be a little confusing if you&amp;rsquo;re switching from Vim.&lt;/p>
 &lt;h2 id="myth-not-working-as-expected">Myth - Not Working as Expected&lt;/h2>
 &lt;p>If you have used Vim you know in Vim you can put your library files to the load path variable and Vim autoloads them whenever one of the functions/variables is used. Initially I thought this is the same in Emacs but with a little effort to put the magic autoload comments before the function/variable definition. It turned out I was wrong. When I called my functions Emacs could not find them until I explicitly require them. This is obviously not my intention.&lt;/p>
 &lt;h2 id="make-it-work">Make It Work&lt;/h2>
@@ -38,7 +38,7 @@
 &lt;p>Alternative way is to use &lt;code>package-install-from-buffer&lt;/code> to install the library file as a package. &lt;code>package.el&lt;/code> does the dirty work for you, takes care of autoload definition generation and loading automatically.&lt;/p>
 &lt;h2 id="reference">Reference&lt;/h2>
 &lt;p>&lt;a class="link" href="https://emacs.stackexchange.com/questions/8023/how-to-use-autoload" target="_blank" rel="noopener"
->https://emacs.stackexchange.com/questions/8023/how-to-use-autoload&lt;/a>&lt;/p></description></item><item><title>Use Org Mode to Manage My Blog</title><link>https://peromage.github.io/blog/use-org-mode-to-manage-my-blog/</link><pubDate>Sun, 05 Jun 2022 23:00:00 +0000</pubDate><guid>https://peromage.github.io/blog/use-org-mode-to-manage-my-blog/</guid><description>&lt;p>I&amp;rsquo;ve been using Emacs since last year but until recent I started using &lt;code>org-mode&lt;/code> seriously. After spending a couple of days reading and watching all kinds of org tutorial as well as using it for documentation, I realized that people who invented this must geniuses.&lt;/p>
+>https://emacs.stackexchange.com/questions/8023/how-to-use-autoload&lt;/a>&lt;/p></description></item><item><title>Use Org Mode to Manage My Blog</title><link>https://peromage.github.io/p/use-org-mode-to-manage-my-blog/</link><pubDate>Sun, 05 Jun 2022 23:00:00 +0000</pubDate><guid>https://peromage.github.io/p/use-org-mode-to-manage-my-blog/</guid><description>&lt;p>I&amp;rsquo;ve been using Emacs since last year but until recent I started using &lt;code>org-mode&lt;/code> seriously. After spending a couple of days reading and watching all kinds of org tutorial as well as using it for documentation, I realized that people who invented this must geniuses.&lt;/p>
 &lt;p>Org document seems similar with Markdown: they are text markup format. However, Org provides far more capabilities to store metadata and greater editing experience together with Emacs&amp;rsquo; &lt;code>org-mode&lt;/code>.&lt;/p>
 &lt;h2 id="motivation">Motivation&lt;/h2>
 &lt;p>I used to use Markdown to write my blog articles and use &lt;em>Hugo&lt;/em> to generate static files.&lt;/p>
@@ -161,7 +161,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$0
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>Now a new article will come with its creation time. Whenever the article is done, &lt;code>C-c C-t&lt;/code> to mark it &lt;em>PUBLISHED&lt;/em> which will be the last modified time. If the article is modified in the future, simply &lt;code>C-c C-t&lt;/code> again to add another &lt;em>PUBLISHED&lt;/em> state and the last modified time will be refreshed on export. Now I have a neat log book to record my changes. No more manually editing suckers!&lt;/p></description></item><item><title>Initialize std::array at Compile Time</title><link>https://peromage.github.io/blog/initialize-std-array-at-compile-time/</link><pubDate>Wed, 16 Mar 2022 10:25:00 +0000</pubDate><guid>https://peromage.github.io/blog/initialize-std-array-at-compile-time/</guid><description>&lt;h2 id="background">Background&lt;/h2>
+&lt;/div>&lt;p>Now a new article will come with its creation time. Whenever the article is done, &lt;code>C-c C-t&lt;/code> to mark it &lt;em>PUBLISHED&lt;/em> which will be the last modified time. If the article is modified in the future, simply &lt;code>C-c C-t&lt;/code> again to add another &lt;em>PUBLISHED&lt;/em> state and the last modified time will be refreshed on export. Now I have a neat log book to record my changes. No more manually editing suckers!&lt;/p></description></item><item><title>Initialize std::array at Compile Time</title><link>https://peromage.github.io/p/initialize-stdarray-at-compile-time/</link><pubDate>Wed, 16 Mar 2022 10:25:00 +0000</pubDate><guid>https://peromage.github.io/p/initialize-stdarray-at-compile-time/</guid><description>&lt;h2 id="background">Background&lt;/h2>
 &lt;p>I&amp;rsquo;ve been working on optimization for some C++ code recently. One of the part is to initialize some data at compile time. Consider we have a C style enum definition:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -266,7 +266,7 @@
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// array2 results in int equivalent: {999, 999, 999, 999, 999, ...}
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>Setup A Gaming VM</title><link>https://peromage.github.io/blog/setup-a-gaming-vm/</link><pubDate>Sun, 13 Mar 2022 17:47:00 +0000</pubDate><guid>https://peromage.github.io/blog/setup-a-gaming-vm/</guid><description>&lt;h2 id="before-starting">Before starting&lt;/h2>
+&lt;/div></description></item><item><title>Setup A Gaming VM</title><link>https://peromage.github.io/p/setup-a-gaming-vm/</link><pubDate>Sun, 13 Mar 2022 17:47:00 +0000</pubDate><guid>https://peromage.github.io/p/setup-a-gaming-vm/</guid><description>&lt;h2 id="before-starting">Before starting&lt;/h2>
 &lt;p>First thing first. I&amp;rsquo;ve been rarely using Windows over years except for working and gaming. Linux community grows fast and there are a lot alternatives available. On the contrary, Windows gets crapy every year (Office 365 is still good IMO) so there is no reason to run this huge spyware all the time.&lt;/p>
 &lt;p>Modern PCs are strong enough to run a VM. Besides most of PCs have both integrated and descret graphic cards. This setup is perfect for gaming VM which requires PCI passthrough.&lt;/p>
 &lt;p>In this post, I&amp;rsquo;m not going to explain everything because the ArchWiki is clear enough already. This is just a quick guide for the setup.&lt;/p>
@@ -467,7 +467,7 @@
 &lt;a class="link" href="https://looking-glass.io/" target="_blank" rel="noopener"
 >Looking Glass&lt;/a>
 &lt;a class="link" href="https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md" target="_blank" rel="noopener"
->Virtio driver&lt;/a>&lt;/p></description></item><item><title>Fix Metadata in Google Photo Takeout</title><link>https://peromage.github.io/blog/fix-metadata-in-google-photo-takeout/</link><pubDate>Sun, 13 Mar 2022 00:12:00 +0000</pubDate><guid>https://peromage.github.io/blog/fix-metadata-in-google-photo-takeout/</guid><description>&lt;p>Google Photo sucks.&lt;/p>
+>Virtio driver&lt;/a>&lt;/p></description></item><item><title>Fix Metadata in Google Photo Takeout</title><link>https://peromage.github.io/p/fix-metadata-in-google-photo-takeout/</link><pubDate>Sun, 13 Mar 2022 00:12:00 +0000</pubDate><guid>https://peromage.github.io/p/fix-metadata-in-google-photo-takeout/</guid><description>&lt;p>Google Photo sucks.&lt;/p>
 &lt;h2 id="troubles">Troubles&lt;/h2>
 &lt;p>When exporting photos from Google Photo, a bunch of JSON files come with your photos. Those JSON files contain metadata which is supposed to be stored with your photo files. If you simple import those photo files into another photo manager you will most likely not get a chronological view. Obviously, Google does on purpose so that you will not leave it easily.
 However, there is a workaround that is able to merge those metadata into your photos.&lt;/p>
@@ -538,7 +538,7 @@ However, there is a workaround that is able to merge those metadata into your ph
 &lt;/div>&lt;ol>
 &lt;li>Delete JSON files and import your photos to somewhere else&lt;/li>
 &lt;/ol>
-&lt;p>This argument file contains the fields that are meaningful to me. If you need to merge additional fields you can append them to the last. For details, check the man page of &lt;code>exiftool&lt;/code>.&lt;/p></description></item><item><title>Shadowsocks Quick Setup</title><link>https://peromage.github.io/blog/shadowsocks-quick-setup/</link><pubDate>Sun, 13 Mar 2022 00:03:00 +0000</pubDate><guid>https://peromage.github.io/blog/shadowsocks-quick-setup/</guid><description>&lt;p>This note is written for my personal convenience.&lt;/p>
+&lt;p>This argument file contains the fields that are meaningful to me. If you need to merge additional fields you can append them to the last. For details, check the man page of &lt;code>exiftool&lt;/code>.&lt;/p></description></item><item><title>Shadowsocks Quick Setup</title><link>https://peromage.github.io/p/shadowsocks-quick-setup/</link><pubDate>Sun, 13 Mar 2022 00:03:00 +0000</pubDate><guid>https://peromage.github.io/p/shadowsocks-quick-setup/</guid><description>&lt;p>This note is written for my personal convenience.&lt;/p>
 &lt;h2 id="server-setup">Server Setup&lt;/h2>
 &lt;h3 id="installation">Installation&lt;/h3>
 &lt;p>Use system package manager to install &lt;code>shadowsocks-libev&lt;/code>. In this case, for Arch Linux it is &lt;code>pacman&lt;/code>.&lt;/p>
@@ -660,7 +660,7 @@ However, there is a workaround that is able to merge those metadata into your ph
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">ss_url&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>SSH Over GPG Agent</title><link>https://peromage.github.io/blog/ssh-over-gpg-agent/</link><pubDate>Sun, 13 Mar 2022 00:02:00 +0000</pubDate><guid>https://peromage.github.io/blog/ssh-over-gpg-agent/</guid><description>&lt;p>This is a quick note of &lt;code>gpg-agent&lt;/code> setup for SSH.&lt;/p>
+&lt;/div></description></item><item><title>SSH Over GPG Agent</title><link>https://peromage.github.io/p/ssh-over-gpg-agent/</link><pubDate>Sun, 13 Mar 2022 00:02:00 +0000</pubDate><guid>https://peromage.github.io/p/ssh-over-gpg-agent/</guid><description>&lt;p>This is a quick note of &lt;code>gpg-agent&lt;/code> setup for SSH.&lt;/p>
 &lt;h2 id="quick-setup">Quick Setup&lt;/h2>
 &lt;ol>
 &lt;li>Import your GPG authentication key.&lt;/li>
@@ -730,7 +730,7 @@ However, there is a workaround that is able to merge those metadata into your ph
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ gpg --export-ssh-key &amp;lt;uid/fingerprint&amp;gt;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>Minimalist's Multi-boot USB Drive</title><link>https://peromage.github.io/blog/minimalists-multi-boot-usb-drive/</link><pubDate>Wed, 26 Jan 2022 20:34:00 +0000</pubDate><guid>https://peromage.github.io/blog/minimalists-multi-boot-usb-drive/</guid><description>&lt;h2 id="story">Story&lt;/h2>
+&lt;/div></description></item><item><title>Minimalist's Multi-boot USB Drive</title><link>https://peromage.github.io/p/minimalists-multi-boot-usb-drive/</link><pubDate>Wed, 26 Jan 2022 20:34:00 +0000</pubDate><guid>https://peromage.github.io/p/minimalists-multi-boot-usb-drive/</guid><description>&lt;h2 id="story">Story&lt;/h2>
 &lt;p>Recently I&amp;rsquo;ve realized a fact that I always have needs to keep a multi-boot USB in my pocket for either Linux or Windows installation. There are a lot tools out there already but I don&amp;rsquo;t really like them. At least, I mean, they are too flashy to me. A beautiful boot menu seems not to be attractive. What I need is just a simple and practical maybe a little ugly boot device. It should be minimalist. More importantly, it has to be easy to setup with the tools on the system already and maintainable. No funky scripts.&lt;/p>
 &lt;h2 id="old-solution-clunky">Old Solution - Clunky&lt;/h2>
 &lt;p>I&amp;rsquo;ve been using this solution for a very long time. Setup is pretty straight forward.&lt;/p>
@@ -1024,7 +1024,7 @@ However, there is a workaround that is able to merge those metadata into your ph
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h2 id="the-end">The End&lt;/h2>
-&lt;p>Finally I&amp;rsquo;m very satisfied with this new USB drive. Yay!&lt;/p></description></item><item><title>Moving From Vim to Emacs</title><link>https://peromage.github.io/blog/moving-from-vim-to-emacs/</link><pubDate>Sat, 14 Aug 2021 10:29:00 +0000</pubDate><guid>https://peromage.github.io/blog/moving-from-vim-to-emacs/</guid><description>&lt;p>YouTube has been pushing me a lot Emacs related contents. This is weird since mostly I watch Vim videos only. But probably this is also a great opportunity to try Emacs again.&lt;/p>
+&lt;p>Finally I&amp;rsquo;m very satisfied with this new USB drive. Yay!&lt;/p></description></item><item><title>Moving From Vim to Emacs</title><link>https://peromage.github.io/p/moving-from-vim-to-emacs/</link><pubDate>Sat, 14 Aug 2021 10:29:00 +0000</pubDate><guid>https://peromage.github.io/p/moving-from-vim-to-emacs/</guid><description>&lt;p>YouTube has been pushing me a lot Emacs related contents. This is weird since mostly I watch Vim videos only. But probably this is also a great opportunity to try Emacs again.&lt;/p>
 &lt;p>I have tried Emacs half year ago. I looked a lot Elisp programming fundamentals and tried a few Emacs configurations from others including Doom Emacs. However, it didn&amp;rsquo;t last long since I found that I didn&amp;rsquo;t have enough time to configure this Emacs setup as good as the &lt;a class="link" href="https://github.com/peromage/rice.vim" target="_blank" rel="noopener"
 >Vim setup&lt;/a> that I was using. Also using other&amp;rsquo;s configurations makes things complicated for me. They have too many packages included and I don&amp;rsquo;t know what they are.&lt;/p>
 &lt;p>After watching a bunch of Emacs videos I decided to pick it up this time, with vanilla Emacs starting from scratch. The reason why I make my mind this time is because I found Emacs can perfectly and elegantly solve some problems that pain my ass:&lt;/p>
@@ -1043,7 +1043,7 @@ However, there is a workaround that is able to merge those metadata into your ph
 &lt;li>Elisp. Elisp is fun 😉.&lt;/li>
 &lt;/ul>
 &lt;p>The migration is going slowly. Right now my main setup is still Vim + Tmux. There is a little curve learning from vanilla edition of Emacs, but It&amp;rsquo;s not a big deal compared with the first time when I started learning Vim 🙂.&lt;/p>
-&lt;p>In the end, dont&amp;rsquo;t give me wrong. Vim and Emacs both are great text editor. For me, Vim is more like a spirit, a concept. Once you&amp;rsquo;ve learned its high-efficiency key maps, you can use it everywhere. Even though I switch to Emacs I still use Vim mode together with Emacs&amp;rsquo; powerful extendability. Why not?&lt;/p></description></item><item><title>Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC</title><link>https://peromage.github.io/blog/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</link><pubDate>Fri, 09 Jul 2021 16:40:00 +0000</pubDate><guid>https://peromage.github.io/blog/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</guid><description>&lt;h2 id="background">Background&lt;/h2>
+&lt;p>In the end, dont&amp;rsquo;t give me wrong. Vim and Emacs both are great text editor. For me, Vim is more like a spirit, a concept. Once you&amp;rsquo;ve learned its high-efficiency key maps, you can use it everywhere. Even though I switch to Emacs I still use Vim mode together with Emacs&amp;rsquo; powerful extendability. Why not?&lt;/p></description></item><item><title>Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC</title><link>https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</link><pubDate>Fri, 09 Jul 2021 16:40:00 +0000</pubDate><guid>https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</guid><description>&lt;h2 id="background">Background&lt;/h2>
 &lt;p>Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.&lt;/p>
 &lt;p>Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage. Also you are able to create differencing disks which are pretty much like snapshots.&lt;/p>
 &lt;p>For this new configuration, my plan is to use BIOS + GPT disk table + Native Linux + Native Windows booting from VHD + GRUB as the bootloader.&lt;/p>
@@ -1491,454 +1491,4 @@ However, there is a workaround that is able to merge those metadata into your ph
 &lt;a class="link" href="http://www.mistyprojects.co.uk/documents/BCDEdit/files/device.htm" target="_blank" rel="noopener"
 >BCDEdit notes&lt;/a>
 &lt;a class="link" href="https://www.howisolve.com/windows-could-not-complete-the-installation-solved/" target="_blank" rel="noopener"
->100% Solved:Windows could not complete the installation&lt;/a>&lt;/p></description></item><item><title>Git 中的 Subtree 和 Submodule</title><link>https://peromage.github.io/blog/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</link><pubDate>Fri, 07 Apr 2017 20:53:00 +0000</pubDate><guid>https://peromage.github.io/blog/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</guid><description>&lt;p>因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。&lt;/p>
-&lt;h2 id="为什么有这样的需求">为什么有这样的需求&lt;/h2>
-&lt;p>版本库嵌套很好理解，就是在一个 Git 仓库里面包含了其他的 Git 仓库。通常有这样的需求往往涉及到协同开发。比如这里有一个插件单独的 Git 仓库姑且叫“Plugin”。现在我创建了一个自己的项目，其中需要用到这个“Plugin”插件。通常比较笨的办法就是把插件库源码拖下来，复制到自己的项目里。但是这样当插件库更新的时候，插件源码更新往往比较麻烦。而且如果在使用的过程中修改了插件的源码，也不便于插件单独的版本控制，更别说为插件库贡献代码了。但如果插件单独以 Git 仓库存在于我的项目目录中，以上的问题就解决了。&lt;/p>
-&lt;p>在 Git 里面提供了两种方式实现上述需求，那就是 Subtree 和 Submodule。&lt;/p>
-&lt;h2 id="submodule">Submodule&lt;/h2>
-&lt;p>Submodule 是 Git 里面最早提供的一种方法。顾名思义“子模块”。&lt;/p>
-&lt;h3 id="添加子模块">添加子模块&lt;/h3>
-&lt;p>执行&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule add &amp;lt;repo&amp;gt; &amp;lt;module_path&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>此时运行 &lt;code>git status&lt;/code> 可以看到子模块对应的文件夹和一个叫做 &lt;code>.gitmodules&lt;/code> 文件被添加进了暂存区。其中 &lt;code>.gitmodules&lt;/code> 是用于记录子模块相关信息的。之后主项目里面的操作照常提交就可以了。&lt;/p>
-&lt;h3 id="修改子模块">修改子模块&lt;/h3>
-&lt;p>但如果在开发的途中修改了子模块的代码，需要单独到子模块对应的根目录里面进行子模块单独的提交操作。在主项目里面虽然可以看到子模块有变更，但是无法看到具体的更改操作，而是将其看作一个模块整体。一旦子模块产生了新的提交，主项目里面可以看到子模块的 HEAD 变化，从而主项目也应当产生一个新的提交以记录对应关系。
-换句话说，主项目就是靠着记录子模块 HEAD 值来判断依赖的。子模块的代码最后将不会进入主项目的版本库里面（只有 HEAD 值）。&lt;/p>
-&lt;p>现在子模块有了新的提交，为了将服务器上的代码更新，我们只需要进入子模块对应的更目录执行 push 操作就可以了。&lt;/p>
-&lt;h3 id="更新子模块">更新子模块&lt;/h3>
-&lt;p>此时子模块上游有了新的代码，我们需要将其整合到当前的项目中。有两种方法。&lt;/p>
-&lt;p>在主项目根目录下运行&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule foreach git pull
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>或者切换到子模块的根目录下面&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git pull
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="克隆项目">克隆项目&lt;/h3>
-&lt;p>克隆主项目的时候子模块并不会拉取到本地，如果进入对应的目录会发现是空的。
-此时应当&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule init
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>保持最新&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule update
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>或者可以直接一条命令搞定&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git clone --recursive &amp;lt;repo&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="删除子模块">删除子模块&lt;/h3>
-&lt;p>Git 中没有提供直接删除的命令，需要手动完成删除操作。&lt;/p>
-&lt;p>反向初始化子模块&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git submodule deinit --force &amp;lt;module_path&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>或者直接删掉 &lt;code>.git/config&lt;/code> 里相关信息&lt;/p>
-&lt;p>移除子模块&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git rm &amp;lt;module_path&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>如果暂存区还有&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git rm --cached &amp;lt;module_path&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="子模块的坑">子模块的坑&lt;/h3>
-&lt;h4 id="提交的坑">提交的坑&lt;/h4>
-&lt;p>假设有 A B 两个人同时在开发一个项目，这个项目里面也包含了一个子模块。此时 A 修改了业务代码，同时修改了一个子模块里面的一个 bug 。A 将这次修改提交，主项目的提交里面指向了子模块新的 HEAD1 ，然后把主项目的版本库 push 到了服务器，但是没有 push 子模块。B 此时 pull 了主项目，然后 update 子模块，被告知找不到子模块的 HEAD1 。因为指向 HEAD1 的提交还在 A 本地机器上。
-这就是子模块提交的坑。在多个模块存在的时候操作非常繁琐。&lt;/p>
-&lt;h4 id="初始化的坑">初始化的坑&lt;/h4>
-&lt;p>在执行 &lt;code>git submodule init&lt;/code> ， &lt;code>git submodule update&lt;/code> 之后，此时修改子模块可能出现 HEAD 处于游离状态的的提示。如果不注意极有可能出现丢失提交的可能。
-解决办法，在以上两条命令之后执行一次检出&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git checkout &amp;lt;branch&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="subtree">Subtree&lt;/h2>
-&lt;h3 id="添加子项目">添加子项目&lt;/h3>
-&lt;p>首先添加子项目对应的远程服务器&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git remote add &amp;lt;subrepo_name&amp;gt; &amp;lt;subrepo_remote&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>拉取一下&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git fetch &amp;lt;subrepo_name&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>添加子项目到父项目里面&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git subtree add --squash --prefix&lt;span class="o">=&lt;/span>&amp;lt;subrepo_path&amp;gt; &amp;lt;subrepo_name&amp;gt; &amp;lt;branch&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>参数 &lt;code>--squash&lt;/code> 作用在于合并子项目所有提交为一个，并 merge 到父项目的历史中，这样只会出现两个提交记录，避免子项目的提交历史污染父项目。更多讨论可以看&lt;a class="link" href="http://www.fwolf.com/blog/post/246" target="_blank" rel="noopener"
->这里&lt;/a>。&lt;/p>
-&lt;h3 id="修改子项目">修改子项目&lt;/h3>
-&lt;p>添加完毕之后照常修改提交各种操作，父项目能够跟踪子项目里面的所有变更。子项目被当做一个正常的子文件夹处理。&lt;/p>
-&lt;p>如果现在修改了子项目里的一个 bug 并且想要反馈给上游，可以这样操作&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git subtree push --prefix&lt;span class="o">=&lt;/span>&amp;lt;subrepo_path&amp;gt; &amp;lt;subrepo_name&amp;gt; &amp;lt;bug_fixed&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>这个操作可以将父项目里所有涉及子项目修改的提交检出。这样在远程仓库里面会出现一个叫做 &lt;em>bug_fixed&lt;/em> 的分支。&lt;/p>
-&lt;p>或者也可以这样操作&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git subtree split --prefix&lt;span class="o">=&lt;/span>&amp;lt;subrepo_path&amp;gt; --branch &amp;lt;new_branch_name&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>这个操作跟上面一样将父项目里所有涉及子项目修改的提交检出，并且把子项目的根文件夹设为整个项目的根文件夹，然后检出为父项目的一个新的分支。&lt;/p>
-&lt;p>然后推送给上游&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git push &amp;lt;subrepo_remote&amp;gt; &amp;lt;new_branch_name&amp;gt;:&amp;lt;bug_fixed&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>之后删除对应本地分支就可以了。&lt;/p>
-&lt;h3 id="更新子项目">更新子项目&lt;/h3>
-&lt;p>拉取非常方便&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ git subtree pull --prefix&lt;span class="o">=&lt;/span>&amp;lt;subrepo_path&amp;gt; &amp;lt;subrepo_name&amp;gt; &amp;lt;branch&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="删除子项目">删除子项目&lt;/h3>
-&lt;p>因为子项目在父项目里面就是被当做一个普通的文件夹处理的，所以直接移除文件夹并提交就可以了。&lt;/p>
-&lt;h2 id="submodule-vs-dot-subtree">Submodule vs. Subtree&lt;/h2>
-&lt;p>Git 官方推荐使用新的 Subtree ，事实证明的确比 Submodule 方便不少。Subtree 不会产生额外的文件，而且子项目的代码包含在父项目里面，不会出现前面提到的坑的问题。具体应用上的对比可以参考&lt;a class="link" href="https://gist.github.com/kvnsmth/4688345" target="_blank" rel="noopener"
->这篇文章&lt;/a>。Subtree 对于代码迭代较快的项目尤为适合。&lt;/p>
-&lt;p>但也不是说 Submodule 一无是处， Submodule 在我感觉最大的意义在于可以隔离子项目的业务代码，并且记录严格的依赖关系。对于一些子模块更新较慢的项目还是比较适合的。&lt;/p>
-&lt;h2 id="参考">参考&lt;/h2>
-&lt;p>&lt;a class="link" href="https://gist.github.com/kvnsmth/4688345" target="_blank" rel="noopener"
->subtree_usage&lt;/a>
-&lt;a class="link" href="http://www.fwolf.com/blog/post/246" target="_blank" rel="noopener"
->subtree_squash&lt;/a>&lt;/p></description></item><item><title>Windows + Linux 双系统引导手记</title><link>https://peromage.github.io/blog/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</link><pubDate>Wed, 05 Apr 2017 19:26:00 +0000</pubDate><guid>https://peromage.github.io/blog/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</guid><description>&lt;h2 id="0x00-情况简述">0x00 情况简述&lt;/h2>
-&lt;p>由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。
-这台电脑的基本情况是这样的，64GB 固态硬盘 + 720GB 机械硬盘（实际可用空间有折损，这里为了表示方便），Windows 10 已经安装到了固态硬盘上。由于主板较老，只能支持 BIOS。巨硬又说过 Windows 只能支持 BIOS + MBR，所以第一块主位（Master）上的固态硬盘就只能采用 MBR 分区表，分成了两个区，500MB 用作启动分区，剩下的部分全部划给了系统分区。
-但是 Linux 表示没有巨硬这种尿性，所以为什么不使用更先进的 GPT 分区表？因此从位（Slave）上的机械硬盘被我分成了这个样子：&lt;/p>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th>大小&lt;/th>
-&lt;th>挂载点&lt;/th>
-&lt;th>文件系统&lt;/th>
-&lt;th>备注&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td>10 MB&lt;/td>
-&lt;td>None&lt;/td>
-&lt;td>No File System&lt;/td>
-&lt;td>BIOS 启动分区&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>500 MB&lt;/td>
-&lt;td>/boot&lt;/td>
-&lt;td>EXT4&lt;/td>
-&lt;td>引导&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>100 GB&lt;/td>
-&lt;td>/&lt;/td>
-&lt;td>EXT4&lt;/td>
-&lt;td>系统&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>199.5GB&lt;/td>
-&lt;td>/home&lt;/td>
-&lt;td>EXT4&lt;/td>
-&lt;td>用户&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>420 GB&lt;/td>
-&lt;td>None&lt;/td>
-&lt;td>NTFS&lt;/td>
-&lt;td>Windows 数据&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;p>BIOS 启动分区 1MB 足以，我只是考虑到后续扩展问题。之后在第二块硬盘上安装了 Arch Linux。&lt;/p>
-&lt;h2 id="0x01-有啥好折腾的">0x01 有啥好折腾的？&lt;/h2>
-&lt;p>双系统安装好以后相安无事，BIOS 默认从主位固态硬盘启动。也就是说开机不进行任何操作的话，默认进入的是 Windows 10。只有在开机的时候使用 BIOS 的 Fast Boot 功能，选择从第二块硬盘启动才能进入 Arch Linux。换句话说两个系统彼此都是透明的。
-但是作为一个强迫症和完美主义者，万一我想进入 Linux，但是开机的时候错过了，岂不是要重启一次才行？或者万一我又反悔想进入 Windows 又要重启一次？这怎么能忍，所以才有了这次的折腾……&lt;/p>
-&lt;h2 id="0x02-在-grub-中添加引导菜单">0x02 在 GRUB 中添加引导菜单&lt;/h2>
-&lt;p>对于 GRUB （注：这里所说的 GRUB 指的是 GRUB 2 而不是 GRUB Legacy） 引导的 Linux 来说，切换到 Windows 的 &lt;code>bootmgr&lt;/code> 是一件很容易的事情，最新版的 GRUB 可以直接启动 &lt;code>bootmgr&lt;/code> 而不需要之前的 chainloading 模式。
-进入 Arch Linux，以 root 权限编辑 &lt;code>/etc/grub.d/40_custom&lt;/code> ，加入以下菜单：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;span class="lnt">8
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">menuentry &amp;#34;Switch to Microsoft Boot Manager&amp;#34; {&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">insmod part_msdos&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">insmod ntfs&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">insmod search_fs_uuid&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">insmod ntldr&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">search --fs-uuid --set&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">root 69B235F6749E84CE
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> ntldr /bootmgr
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> }&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>&lt;code>insmod&lt;/code> 是用于加载必要的模块以便 GRUB 识别并正确启动 Windows。值得注意的是， &lt;code>search&lt;/code> 一行指定的 UUID 与 Linux 下 &lt;code>lsblk -f&lt;/code> 看到的 UUID 是不一样的，需要使用&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ sudo grub-probe --target&lt;span class="o">=&lt;/span>fs_uuid -d /dev/sda1
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>来获取 GRUB 下对应的分区 UUID。这个例子中，Windows 启动分区是 &lt;code>sda1&lt;/code> 。UUID 是唯一的，勿照搬。&lt;/p>
-&lt;p>当然也可以使用传统的 chainloading 模式：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">menuentry &amp;#34;Switch to Microsoft Boot Manager&amp;#34; {&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">insmod part_msdos&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">insmod ntfs&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">insmod search_fs_uuid&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">search --fs-uuid --set&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">root 69B235F6749E84CE
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> chainloader +1
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> }&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>保存以后，执行&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ sudo grub-mkconfig -o /boot/grub/grub.cfg
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>以便更新启动菜单。&lt;/p>
-&lt;p>不推荐直接编辑 &lt;code>/boot/grub/grub.cfg&lt;/code> ，因为上述命令会覆盖这个文件，不便于自定义菜单的管理。
-这样就可以直接跳转到 &lt;code>bootmgr&lt;/code> ，让它去启动 Windows。&lt;/p>
-&lt;h2 id="0x03-bcd-寻思">0x03 BCD 寻思&lt;/h2>
-&lt;p>BCD 是Windows Vista 之后使用的一种启动管理器。有个非常蛋疼的问题就在于，BCD 并不支持 EXT4 分区格式，所以没有办法读到 GRUB。查阅了相关资料，给出的解决办法就是，将 &lt;code>/boot&lt;/code> 分区格式化成 FAT32 的文件系统。难道我还得再折腾一次文件系统？直觉告诉我一定还有其他的办法。
-既然 BCD 没办法直接读 EXT4 分区里面的东西，我们可以曲线救国。BCD 里面提供了一种实模式启动的方式，允许读取一个包含了启动代码的文件。所以一种解决办法就是 &lt;code>BCD → MBR → VBR → Bootloader&lt;/code> 。由于 GPT 磁盘的第一个扇区被划分成了 Protective MBR，用于兼容 BIOS，所以在 Linux 使用：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ sudo dd &lt;span class="k">if&lt;/span>&lt;span class="o">=&lt;/span>/dev/sdb &lt;span class="nv">of&lt;/span>&lt;span class="o">=&lt;/span>/mnt/reserved/grub.bin &lt;span class="nv">bs&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">512&lt;/span> &lt;span class="nv">count&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>可以将第二块硬盘的第一扇区里面的启动代码导出到一个文件，然后使用 BCD 加载这个文件就可以启动 GRUB了。
-果真如此？
-事实是，这种方法可行，但是并不适用我的情况，因为这是建立在 Windows 和 Linux 安装在同一块硬盘上的情形。 &lt;code>grub.bin&lt;/code> 并不能够跨分区寻找 VBR。难道只能作罢？肯定不可能，不然就没有这篇文章了。
-查阅了若干文档之后，得知 GRUB 提供了一个 叫做 &lt;code>lnxboot.img&lt;/code> 文件，可以将 GRUB 启动阶段模拟成一个可以启动的 Linux 内核，然后挂载 &lt;code>core.img&lt;/code> 里面必要的模块，从而顺利启动 GRUB。那么将之前的思路修改成 &lt;code>BCD → VBR → Bootloader&lt;/code> 就行了，即既然 MBR 不能跨分区以及识别 GPT，那么我们就换成一个可以胜任的不就行了。&lt;/p>
-&lt;h2 id="0x04-制作启动镜像">0x04 制作启动镜像&lt;/h2>
-&lt;p>进入 Arch Linux。虽然在 &lt;code>/boot/grub/i386-pc/&lt;/code> 目录下有一个用于启动的 &lt;code>core.img&lt;/code> 文件，这个文件里面指定的模块路径是相对路径，使用它启动依然会显示错误，需要指定绝对路径以保证万无一失。那么我们就来手动生成一个，顺便集成一些我们需要的模块。
-注意，启动镜像稍后会被放在 Windows 的启动分区下面（BCD 的启动分区），所以还需要知道模块所在分区的位置。在 GRUB 中表示磁盘的方式有所不同，如 &lt;code>(hd0,msdos1)&lt;/code> 表示第一块磁盘，使用 MBR 分区表，第一个分区。 &lt;code>(hd1,gpt2)&lt;/code> 表示第二块磁盘，使用 GPT分区表，第二个分区。括号不可省，磁盘和分区的起始数字不一样。&lt;/p>
-&lt;p>使用 &lt;code>grub-probe&lt;/code> 来获取 &lt;code>/boot&lt;/code> 分区信息。这个例子得到的是 &lt;code>hd1,gpt2&lt;/code> ：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ sudo grub-probe --target&lt;span class="o">=&lt;/span>bios_hints /boot
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>生成 &lt;code>core.img&lt;/code> ：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ sudo grub-mkimage --output&lt;span class="o">=&lt;/span>/tmp/core.img --prefix&lt;span class="o">=&lt;/span>&lt;span class="se">\(&lt;/span>hd1,gpt2&lt;span class="se">\)&lt;/span>/grub --format&lt;span class="o">=&lt;/span>i386-pc biosdisk part_msdos part_gpt ext2
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>注意像我这样 &lt;code>/boot&lt;/code> 单独分区，prefix 就不需要写成 &lt;code>\\(hd1,gpt2\\)/boot/grub&lt;/code> ，毕竟已经在 &lt;code>/boot&lt;/code> 里面了嘛。默认没有 GPT 支持，所以还需要添加 GPT 模块。&lt;/p>
-&lt;p>生成启动镜像：
-按照 GRUB 的帮助文档， &lt;code>lnxboot.img&lt;/code> 需要放在 &lt;code>core.img&lt;/code> 之前，由 &lt;code>lnxboot.img&lt;/code> 来加载 &lt;code>core.img&lt;/code> 。所幸 BCD 可以一次读取大于一个扇区（512B）的内容，所以将这两个文件合并一下即可：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ sudo cat /usr/lib/grub/i386-pc/lnxboot.img /tmp/core.img &amp;gt; /tmp/grub4bcd.img
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>然后将 &lt;code>grub4bcd.img&lt;/code> 放到 Windows 启动分区根目录下面就可以了。注意内核默认只能以只读模式挂载 NFTS 文件系统，需要安装扩展包才能读写：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ sudo pacman -S ntfs-3g
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>然后挂载（安装了上述扩展包之后甚至不用指定参数）：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ sudo mount /dev/sda1 /mnt/reserved
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>现在就可以顺利地将启动镜像复制到 Windows 启动分区下面了。&lt;/p>
-&lt;h2 id="0x05-在-bcd-中添加引导菜单">0x05 在 BCD 中添加引导菜单&lt;/h2>
-&lt;p>重启进入 Windows 10。以管理员权限打开命令行。&lt;/p>
-&lt;p>添加入口：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&amp;gt; bcdedit /create /d &lt;span class="s2">&amp;#34;Switch to GRUB&amp;#34;&lt;/span> /application bootsector
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>会返回一串 UUID，复制下来。之后 UUID 的地方我用 &lt;code>{ID}&lt;/code> 表示，用刚才得到的替换即可。&lt;/p>
-&lt;p>设置启动分区：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&amp;gt; bcdedit /set &lt;span class="o">{&lt;/span>ID&lt;span class="o">}&lt;/span> device boot
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>设置启动文件：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&amp;gt; bcdedit /set &lt;span class="o">{&lt;/span>ID&lt;span class="o">}&lt;/span> path /grub4bcd.img
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>将入口添加进启动菜单：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&amp;gt; bcdedit /displayorder &lt;span class="o">{&lt;/span>ID&lt;span class="o">}&lt;/span> /addlast
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>关闭 Metro 启动菜单（不关闭的话切换时会重启，建议关闭）：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&amp;gt; bcdedit /set &lt;span class="o">{&lt;/span>default&lt;span class="o">}&lt;/span> bootmenupolicy legacy
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>最后关闭 Windows 10 的 Hybrid 开机功能，否则可能会导致 Windows 丢失数据：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&amp;gt; powercfg /h off
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="0x06-后记">0x06 后记&lt;/h2>
-&lt;p>现在终于可以愉快地切换两个引导菜单了。其实使用 GRUB 来管理两个系统是较为简单的办法。
-更为简单的办法是，先装 Windows 然后装 Ubuntu，后者会自动搞定这些麻烦事。╮(╯_╰)╭&lt;/p>
-&lt;h2 id="0x07-参考资料">0x07 参考资料&lt;/h2>
-&lt;p>&lt;a class="link" href="https://www.gnu.org/software/grub/manual/grub.html#Images" target="_blank" rel="noopener"
->https://www.gnu.org/software/grub/manual/grub.html#Images&lt;/a>
-&lt;a class="link" href="http://askubuntu.com/questions/180033/how-to-add-different-drive-ubuntu-to-bcd-manually" target="_blank" rel="noopener"
->http://askubuntu.com/questions/180033/how-to-add-different-drive-ubuntu-to-bcd-manually&lt;/a>
-&lt;a class="link" href="https://wiki.archlinux.org/index.php/Talk:Dual_boot_with_Windows" target="_blank" rel="noopener"
->https://wiki.archlinux.org/index.php/Talk:Dual_boot_with_Windows&lt;/a>
-&lt;a class="link" href="https://wiki.archlinux.org/index.php/Dual_boot_with_Windows" target="_blank" rel="noopener"
->https://wiki.archlinux.org/index.php/Dual_boot_with_Windows&lt;/a>&lt;/p></description></item></channel></rss>
+>100% Solved:Windows could not complete the installation&lt;/a>&lt;/p></description></item></channel></rss>

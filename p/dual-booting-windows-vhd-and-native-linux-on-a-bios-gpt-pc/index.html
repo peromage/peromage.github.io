@@ -1,0 +1,266 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Background Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.
+Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage."><title>Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC</title><link rel=canonical href=https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/><link rel=stylesheet href=/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css><meta property="og:title" content="Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC"><meta property="og:description" content="Background Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.
+Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage."><meta property="og:url" content="https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/"><meta property="og:site_name" content="Fang's Blog"><meta property="og:type" content="article"><meta property="article:section" content="Blog"><meta property="article:tag" content="multi-boot"><meta property="article:published_time" content="2021-07-09T16:40:00+00:00"><meta property="article:modified_time" content="2022-06-04T18:55:00+00:00"><meta name=twitter:title content="Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC"><meta name=twitter:description content="Background Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.
+Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage."></head><body class=article-page><script>(function(){const e='StackColorScheme';localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t='StackColorScheme',e=localStorage.getItem(t),n=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;e=='dark'||e==='auto'&&n?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=https://github.com/peromage.png width=300 height=300 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>Fang's Blog</a></h1><h2 class=site-description>May the sapphire star lights your way✨</h2></div></header><ol class=social-menu><li><a href=https://github.com/peromage target=_blank title=GitHub><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/archives><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/about><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About</span></a></li><li><a href=/search><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><div class=menu-bottom-section><li id=i18n-switch><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg><select name=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://peromage.github.io/ selected>English</option><option value=https://peromage.github.io/zh-cn/>中文</option></select></li><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/tech/>tech</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/>Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Jul 09, 2021</time></div></footer></div></header><section class=article-content><h2 id=background>Background</h2><p>Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.</p><p>Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage. Also you are able to create differencing disks which are pretty much like snapshots.</p><p>For this new configuration, my plan is to use BIOS + GPT disk table + Native Linux + Native Windows booting from VHD + GRUB as the bootloader.</p><h2 id=partitioning>Partitioning</h2><p>To make GPT works with BIOS. It is required to have a small partition <a class=link href=https://wiki.archlinux.org/title/GRUB target=_blank rel=noopener>flagged</a> with <code>EF02</code>.</p><p>The partition scheme looks like this:</p><div class=table-wrapper><table><thead><tr><th>Device</th><th>Start</th><th>End</th><th>Sectors</th><th>Size</th><th>Type</th></tr></thead><tbody><tr><td>/dev/sda1</td><td>34</td><td>2047</td><td>2014</td><td>1007K</td><td>BIOS Boot</td></tr><tr><td>/dev/sda2</td><td>2048</td><td>1026047</td><td>1024000</td><td>500M</td><td>EFI System</td></tr><tr><td>/dev/sda3</td><td>1026048</td><td>206546943</td><td>205520896</td><td>98G</td><td>Linux Filesystem</td></tr><tr><td>/dev/sda4</td><td>206546944</td><td>835692543</td><td>629145600</td><td>300G</td><td>Linux Filesystem</td></tr><tr><td>/dev/sda5</td><td>835692544</td><td>1465149134</td><td>629456591</td><td>300.1G</td><td>Microsoft Basic Data</td></tr></tbody></table></div><h2 id=installing-linux>Installing Linux</h2><p>Any Linux distro would work. I chose Manjaro KDE this time because I found that the Pop OS made my laptop really hot sometimes (Yeah KDE is prettier).</p><p>This part should be easy. The GRUB files is going into that EFI partition. For details, check <a class=link href=https://wiki.archlinux.org/title/GRUB target=_blank rel=noopener>GRUB wiki</a>.</p><h2 id=preparing-to-install-windows>Preparing to Install Windows</h2><p>I&rsquo;m not going to use the standard Windwos installer since I want to install it into a VHD file. To make it work we need a Windows PE environment.</p><h3 id=preparing-images>Preparing Images</h3><p>Any Windows PE (Windows 7 and above) would work. The PE ISO image is going to <code>/boot/wepe.iso</code>.</p><p>Also a Windows ISO image is needed. For example a Windows 7 ISO named <code>windows7.iso</code> will be put in the Windows data partition.</p><h3 id=adding-windows-pe-to-grub>Adding Windows PE to GRUB</h3><p>Boot into Linux. Download Windows PE ISO file and move it to the EFI partition (EXT4 partitions might be problematic).</p><p>To load this ISO image, <code>memdisk</code> tool from <code>syslinux</code> is required. Steps as below on Arch based distro:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># Installing syslinux</span>
+</span></span><span class=line><span class=cl>$ sudo pacman -S syslinux
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copying memdisk to the boot partition</span>
+</span></span><span class=line><span class=cl>$ sudo cp /usr/lib/syslinux/bios/memdisk /boot/memdisk
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Adding Windows PE entry to GRUB.  1DB1-9C31 is the boot partition&#39;s UUID</span>
+</span></span><span class=line><span class=cl>$ sudo cat <span class=s>&lt;&lt;EOF &gt;&gt;/etc/grub.d/40_custom
+</span></span></span><span class=line><span class=cl><span class=s>menuentry &#34;WePE x64&#34; {
+</span></span></span><span class=line><span class=cl><span class=s>    search --set=root --no-floppy --fs-uuid 1DB1-9C31
+</span></span></span><span class=line><span class=cl><span class=s>    linux16 /memdisk iso ro
+</span></span></span><span class=line><span class=cl><span class=s>    initrd16 /wepe.iso
+</span></span></span><span class=line><span class=cl><span class=s>}
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Updating GRUB entries</span>
+</span></span><span class=line><span class=cl>$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+</span></span></code></pre></td></tr></table></div></div><h2 id=installing-windows-to-a-vhd-file>Installing Windows to a VHD File</h2><p>After adding Windows PE to the bootloader entries, it is time to switch the working environment.</p><p>Restart the PC, then keep pression <code>shift</code> key until the GRUB menu shows up. Now navigate to the Windows PE entry and get in there.</p><h3 id=creating-a-vhd-file-for-windows>Creating a VHD File for Windows</h3><p>To create a VHD file, open a command line window and enter <code>diskpart</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># Create a VHD file assuming the NTFS data partition is assigned with D:</span>
+</span></span><span class=line><span class=cl>DISKPART&gt; create vdisk <span class=nv>file</span><span class=o>=</span>d:<span class=se>\w</span>indows7.vhd <span class=nv>maximum</span><span class=o>=</span><span class=m>64000</span> <span class=nv>type</span><span class=o>=</span>fixed
+</span></span><span class=line><span class=cl>DISKPART&gt; <span class=k>select</span> vdisk <span class=nv>file</span><span class=o>=</span>d:<span class=se>\w</span>indows7.vhd
+</span></span><span class=line><span class=cl>DISKPART&gt; attach vdisk
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Disk table type doesn&#39;t matter but using MBR for better compatibility</span>
+</span></span><span class=line><span class=cl>DISKPART&gt; convert mbr
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Create the system partition and assign it with C:</span>
+</span></span><span class=line><span class=cl>DISKPART&gt; create partition primary
+</span></span><span class=line><span class=cl>DISKPART&gt; format <span class=nv>fs</span><span class=o>=</span>ntfs quick
+</span></span><span class=line><span class=cl>DISKPART&gt; assign <span class=nv>letter</span><span class=o>=</span>c
+</span></span><span class=line><span class=cl>DISKPART&gt; <span class=nb>exit</span>
+</span></span></code></pre></td></tr></table></div></div><p>Now the Windows image can be dumped into this VHD file.</p><h3 id=extracting-windows-image>Extracting Windows Image</h3><p>Mount the Windows ISO image to <code>E:</code> volume and open a command line window</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># Get the image index.  For example the desired version&#39;s index is 1</span>
+</span></span><span class=line><span class=cl>&gt; dism /get-wiminfo /wimfile<span class=o>=</span>e:<span class=se>\s</span>ources<span class=se>\i</span>nstall.wim
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Extract the image.  Where E: is the Windows ISO and C: is the VHD file</span>
+</span></span><span class=line><span class=cl>&gt; dism /apply-image /imagefile:e:<span class=se>\s</span>ources<span class=se>\i</span>nstall.wim /index:1 /applydir:c:<span class=se>\
+</span></span></span></code></pre></td></tr></table></div></div><h2 id=fixing-the-windows-bootloader>Fixing the Windows Bootloader</h2><p>Stay in Windows PE. Don&rsquo;t restart the PC. We still need to fix the bootloader for Windows.</p><p>Normally Windows cannot be booted with a GPT+MBR setup. And also loading the whole Windows VHD file through <code>memdisk</code> is not possible because it&rsquo;s too large to load into memory. To fix the boot issue a bridge is needed between Windows and GRUB.</p><p>Luckily <a class=link href="http://reboot.pro/index.php?showtopic=19516&page=2&#entry184489" target=_blank rel=noopener>a small VHD image</a> can still be loaded by <code>memdisk</code>.</p><p>The idea is: GRUB -> MS Bootmgr VHD -> Windows VHD</p><h3 id=creating-a-dedicated-bootloader-image-for-windows>Creating a Dedicated Bootloader Image for Windows</h3><p>It is same with the process creating a VHD file for Windows system but this time it is a smaller file (32 MB).</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># Create a small bootmgr VHD file in the data partition</span>
+</span></span><span class=line><span class=cl>DISKPART&gt; create vdisk <span class=nv>file</span><span class=o>=</span>d:<span class=se>\b</span>ootmgr.vhd <span class=nv>maximum</span><span class=o>=</span><span class=m>32</span> <span class=nv>type</span><span class=o>=</span>fixed
+</span></span><span class=line><span class=cl>DISKPART&gt; <span class=k>select</span> vdisk <span class=nv>file</span><span class=o>=</span>d:<span class=se>\b</span>ootmgr.vhd
+</span></span><span class=line><span class=cl>DISKPART&gt; attach vdisk
+</span></span><span class=line><span class=cl>DISKPART&gt; convert mbr
+</span></span><span class=line><span class=cl>DISKPART&gt; create partition primary
+</span></span><span class=line><span class=cl>DISKPART&gt; format <span class=nv>fs</span><span class=o>=</span>ntfs quick
+</span></span><span class=line><span class=cl>DISKPART&gt; assign <span class=nv>letter</span><span class=o>=</span>f
+</span></span><span class=line><span class=cl>DISKPART&gt; <span class=nb>exit</span>
+</span></span></code></pre></td></tr></table></div></div><p>Now the <code>bootmgr</code> VHD is mounted at <code>F:</code>. Then write the boot record and create boot configuration files.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>&gt; bootsect /nt60 f: /mbr
+</span></span><span class=line><span class=cl>&gt; bcdboot c:<span class=se>\W</span>indows /l en-us /s f: /f bios
+</span></span></code></pre></td></tr></table></div></div><h3 id=fixing-the-bcd-entry>Fixing the BCD Entry</h3><p>At this point it should be working according to the <a class=link href=https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/boot-to-vhd--native-boot--add-a-virtual-hard-disk-to-the-boot-menu target=_blank rel=noopener>Microsoft&rsquo;s document</a>. In fact it is not.</p><p>Let&rsquo;s check the BCD entries, in a command window:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>&gt; bcdedit /store f:<span class=se>\B</span>oot<span class=se>\B</span>CD /enum
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Windows Boot Manager
+</span></span><span class=line><span class=cl>--------------------
+</span></span><span class=line><span class=cl>identifier              <span class=o>{</span>bootmgr<span class=o>}</span>
+</span></span><span class=line><span class=cl>device                  <span class=nv>partition</span><span class=o>=</span>F:
+</span></span><span class=line><span class=cl>description             Windows Boot Manager
+</span></span><span class=line><span class=cl>locale                  en-us
+</span></span><span class=line><span class=cl>inherit                 <span class=o>{</span>globalsettings<span class=o>}</span>
+</span></span><span class=line><span class=cl>default                 <span class=o>{</span>default<span class=o>}</span>
+</span></span><span class=line><span class=cl>resumeobject            <span class=o>{</span>fcd67427-e033-11eb-8826-cdf90e3873d0<span class=o>}</span>
+</span></span><span class=line><span class=cl>displayorder            <span class=o>{</span>default<span class=o>}</span>
+</span></span><span class=line><span class=cl>toolsdisplayorder       <span class=o>{</span>memdiag<span class=o>}</span>
+</span></span><span class=line><span class=cl>timeout                 <span class=m>30</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Windows Boot Loader
+</span></span><span class=line><span class=cl>-------------------
+</span></span><span class=line><span class=cl>identifier              <span class=o>{</span>default<span class=o>}</span>
+</span></span><span class=line><span class=cl>device                  <span class=nv>partition</span><span class=o>=</span>C:
+</span></span><span class=line><span class=cl>path                    <span class=se>\W</span>indows<span class=se>\s</span>ystem32<span class=se>\w</span>inload.exe
+</span></span><span class=line><span class=cl>description             Windows <span class=m>7</span>
+</span></span><span class=line><span class=cl>locale                  en-us
+</span></span><span class=line><span class=cl>inherit                 <span class=o>{</span>bootloadersettings<span class=o>}</span>
+</span></span><span class=line><span class=cl>osdevice                <span class=nv>partition</span><span class=o>=</span>C:
+</span></span><span class=line><span class=cl>systemroot              <span class=se>\W</span>indows
+</span></span><span class=line><span class=cl>resumeobject            <span class=o>{</span>fcd67427-e033-11eb-8826-cdf90e3873d0<span class=o>}</span>
+</span></span><span class=line><span class=cl>nx                      OptIn
+</span></span><span class=line><span class=cl>detecthal               Yes
+</span></span></code></pre></td></tr></table></div></div><p>The <code>device</code> and <code>osdevice</code> seems to be right but once the Windows VHD is unmounted it becomes <code>unknown</code>. According to this <a class=link href=http://www.mistyprojects.co.uk/documents/BCDEdit/files/device.htm target=_blank rel=noopener>BCDEdit notes</a>, BCD entry records the partition&rsquo;s information such as UUID to find the correct partition during bootup. In this case the partition can&rsquo;t be found until the VHD file is mounted. But this VHD file is not mounted automatically.</p><p>Thus we need to correct this and let <code>Bootmgr</code> locate the VHD file properly.</p><p>In a command line window:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># The identifier must match the one which is showing above</span>
+</span></span><span class=line><span class=cl>&gt; bcdedit /store C:<span class=se>\B</span>oot<span class=se>\B</span>CD /set <span class=o>{</span>default<span class=o>}</span> device <span class=nv>vhd</span><span class=o>=[</span>D:<span class=o>]</span><span class=se>\w</span>indows7.vhd
+</span></span><span class=line><span class=cl>&gt; bcdedit /store C:<span class=se>\B</span>oot<span class=se>\B</span>CD /set <span class=o>{</span>default<span class=o>}</span> osdevice <span class=nv>vhd</span><span class=o>=[</span>D:<span class=o>]</span><span class=se>\w</span>indows7.vhd
+</span></span></code></pre></td></tr></table></div></div><p>If we check the BCD entry again it doesn&rsquo;t change. But if we unmount the Windows VHD it will become:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>&gt; bcdedit /store f:<span class=se>\B</span>oot<span class=se>\B</span>CD /enum
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Windows Boot Manager
+</span></span><span class=line><span class=cl>--------------------
+</span></span><span class=line><span class=cl>identifier              <span class=o>{</span>bootmgr<span class=o>}</span>
+</span></span><span class=line><span class=cl>device                  <span class=nv>partition</span><span class=o>=</span>E:
+</span></span><span class=line><span class=cl>description             Windows Boot Manager
+</span></span><span class=line><span class=cl>locale                  en-us
+</span></span><span class=line><span class=cl>inherit                 <span class=o>{</span>globalsettings<span class=o>}</span>
+</span></span><span class=line><span class=cl>default                 <span class=o>{</span>default<span class=o>}</span>
+</span></span><span class=line><span class=cl>resumeobject            <span class=o>{</span>fcd67427-e033-11eb-8826-cdf90e3873d0<span class=o>}</span>
+</span></span><span class=line><span class=cl>displayorder            <span class=o>{</span>default<span class=o>}</span>
+</span></span><span class=line><span class=cl>toolsdisplayorder       <span class=o>{</span>memdiag<span class=o>}</span>
+</span></span><span class=line><span class=cl>timeout                 <span class=m>30</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Windows Boot Loader
+</span></span><span class=line><span class=cl>-------------------
+</span></span><span class=line><span class=cl>identifier              <span class=o>{</span>default<span class=o>}</span>
+</span></span><span class=line><span class=cl>device                  <span class=nv>vhd</span><span class=o>=[</span>C:<span class=o>]</span><span class=se>\w</span>indows7.vhd
+</span></span><span class=line><span class=cl>path                    <span class=se>\W</span>indows<span class=se>\s</span>ystem32<span class=se>\w</span>inload.exe
+</span></span><span class=line><span class=cl>description             Windows <span class=m>7</span>
+</span></span><span class=line><span class=cl>locale                  en-us
+</span></span><span class=line><span class=cl>inherit                 <span class=o>{</span>bootloadersettings<span class=o>}</span>
+</span></span><span class=line><span class=cl>osdevice                <span class=nv>vhd</span><span class=o>=[</span>C:<span class=o>]</span><span class=se>\w</span>indows7.vhd
+</span></span><span class=line><span class=cl>systemroot              <span class=se>\W</span>indows
+</span></span><span class=line><span class=cl>resumeobject            <span class=o>{</span>fcd67427-e033-11eb-8826-cdf90e3873d0<span class=o>}</span>
+</span></span><span class=line><span class=cl>nx                      OptIn
+</span></span><span class=line><span class=cl>detecthal               Yes
+</span></span></code></pre></td></tr></table></div></div><p>The volume letter doesn&rsquo;t matter, it changes dynamically. Now <code>bootmgr</code> is able to locate the VHD file correctly.</p><h2 id=adding-windows-to-grub>Adding Windows to GRUB</h2><p>Restart PC and get into Linux.</p><p>Modify the GRUB config file to load <code>bootmgr</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># Adding Windows (bootmgr) entry to GRUB.  1DB1-9C31 is the boot partition&#39;s UUID</span>
+</span></span><span class=line><span class=cl>$ sudo cat <span class=s>&lt;&lt;EOF &gt;&gt;/etc/grub.d/40_custom
+</span></span></span><span class=line><span class=cl><span class=s>menuentry &#34;Windows 7&#34; {
+</span></span></span><span class=line><span class=cl><span class=s>    search --set=root --no-floppy --fs-uuid 1DB1-9C31
+</span></span></span><span class=line><span class=cl><span class=s>    linux16 /memdisk harddisk
+</span></span></span><span class=line><span class=cl><span class=s>    initrd16 /bootmgr.vhd
+</span></span></span><span class=line><span class=cl><span class=s>}
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Updating GRUB entries</span>
+</span></span><span class=line><span class=cl>$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+</span></span></code></pre></td></tr></table></div></div><p>Now we can restart PC. Keep pressing <code>shift</code> on bootup to go to the GRUB menu. Select Windows entry to boot Windows.</p><h2 id=fixing-windows-initialization-error>Fixing Windows Initialization Error</h2><p>During the first time bootup, Windows might have an error showing</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>Windows could not complete the installation.  To install Windows on this computer, restart the installation.
+</span></span></code></pre></td></tr></table></div></div><p>To <a class=link href=https://www.howisolve.com/windows-could-not-complete-the-installation-solved/ target=_blank rel=noopener>solve</a> this error:</p><ol><li>Press <code>SHIFT + F10</code> to bring up the command prompt.</li><li>Execute <code>C:\windows\system32\oobe\msoobe</code>.</li><li>Wait for a while and the setup window will show up.</li><li>Complete the setup and restart.</li></ol><h2 id=creating-a-differencing-disk>Creating a Differencing Disk</h2><p>A differencing disk can be used for quick recoveries.</p><p>To create it, restart into the Windows PE environment. In a command line window:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># Use the original VHD as base</span>
+</span></span><span class=line><span class=cl>&gt; move d:<span class=se>\w</span>indows7.vhd d:<span class=se>\w</span>indows7_base.vhd
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Create a differencing disk based on the original one</span>
+</span></span><span class=line><span class=cl><span class=c1># The name of the new differencing disk has to be the name that was recorded in the BCD</span>
+</span></span><span class=line><span class=cl>&gt; diskpart
+</span></span><span class=line><span class=cl>DISKPART&gt; creat vdisk <span class=nv>file</span><span class=o>=</span>d:<span class=se>\w</span>indows7.vhd <span class=nv>parent</span><span class=o>=</span>d:<span class=se>\w</span>indows7_base.vhd
+</span></span></code></pre></td></tr></table></div></div><p>Then all changes made in the future will go into the differencing disk. If system goes wrong one day, simply deleting the the differencing disk and creating a new one would quickly recover from the crysis.</p><p><strong>NOTE: After creating the differencing disk, the base VHD is not supposed to be modified.</strong></p><h2 id=references>References</h2><p><a class=link href=https://wiki.archlinux.org/title/GRUB target=_blank rel=noopener>GRUB wiki</a>
+<a class=link href=https://wzyboy.im/post/1049.html target=_blank rel=noopener>BIOS + GPT + GRUB + Linux + Windows 折腾笔记</a>
+<a class=link href=https://rimo.site/2017/02/08/install-win7-into-vhd/ target=_blank rel=noopener>在 VHD 中安装 Windows 7</a>
+<a class=link href="http://reboot.pro/index.php?showtopic=19516&page=2&#entry184489" target=_blank rel=noopener>Hack Bootmgr to boot Windows in BIOS to GPT</a>
+<a class=link href=https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/boot-to-vhd--native-boot--add-a-virtual-hard-disk-to-the-boot-menu target=_blank rel=noopener>Boot to a virtual hard disk: Add a VHDX or VHD to the boot menu</a>
+<a class=link href=http://www.mistyprojects.co.uk/documents/BCDEdit/files/device.htm target=_blank rel=noopener>BCDEdit notes</a>
+<a class=link href=https://www.howisolve.com/windows-could-not-complete-the-installation-solved/ target=_blank rel=noopener>100% Solved:Windows could not complete the installation</a></p></section><footer class=article-footer><section class=article-tags><a href=/tags/multi-boot/>multi-boot</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC 4.0</span></section><section class=article-lastmod><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><span>Last updated on Jun 04, 2022 18:55 UTC</span></section></footer></article><aside class=related-contents--wrapper><h2 class=section-title>Related contents</h2><div class=related-contents><div class="flex article-list--tile"><article><a href=/p/minimalists-multi-boot-usb-drive/><div class=article-details><h2 class=article-title>Minimalist's Multi-boot USB Drive</h2></div></a></article><article><a href=/p/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/><div class=article-details><h2 class=article-title>Use Git Worktree to Work with Multiple Checkout at the Same Time</h2></div></a></article><article><a href=/p/setup-a-gaming-vm/><div class=article-details><h2 class=article-title>Setup A Gaming VM</h2></div></a></article><article><a href=/p/fix-metadata-in-google-photo-takeout/><div class=article-details><h2 class=article-title>Fix Metadata in Google Photo Takeout</h2></div></a></article><article><a href=/p/shadowsocks-quick-setup/><div class=article-details><h2 class=article-title>Shadowsocks Quick Setup</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2017 -
+2022 Fang's Blog</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.11.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#background>Background</a></li><li><a href=#partitioning>Partitioning</a></li><li><a href=#installing-linux>Installing Linux</a></li><li><a href=#preparing-to-install-windows>Preparing to Install Windows</a><ol><li><a href=#preparing-images>Preparing Images</a></li><li><a href=#adding-windows-pe-to-grub>Adding Windows PE to GRUB</a></li></ol></li><li><a href=#installing-windows-to-a-vhd-file>Installing Windows to a VHD File</a><ol><li><a href=#creating-a-vhd-file-for-windows>Creating a VHD File for Windows</a></li><li><a href=#extracting-windows-image>Extracting Windows Image</a></li></ol></li><li><a href=#fixing-the-windows-bootloader>Fixing the Windows Bootloader</a><ol><li><a href=#creating-a-dedicated-bootloader-image-for-windows>Creating a Dedicated Bootloader Image for Windows</a></li><li><a href=#fixing-the-bcd-entry>Fixing the BCD Entry</a></li></ol></li><li><a href=#adding-windows-to-grub>Adding Windows to GRUB</a></li><li><a href=#fixing-windows-initialization-error>Fixing Windows Initialization Error</a></li><li><a href=#creating-a-differencing-disk>Creating a Differencing Disk</a></li><li><a href=#references>References</a></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement('link');e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
