@@ -1526,7 +1526,7 @@ $ git worktree remove --force ../foo-ref-1
 
 If there are uncommitted changes git will prevent you from deleting the directory.  In this case =--force= flag is needed.
 
-* Grumble                                                          :@grumble:
+* Ramble                                                            :@ramble:
 ** PUBLISHED Moving From Vim to Emacs                :vim:emacs:text_editor:
 :PROPERTIES:
 :EXPORT_FILE_NAME: moving-from-vim-to-emacs
