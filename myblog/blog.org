@@ -2,6 +2,7 @@
 #+startup: show2levels
 #+startup: nologdone
 #+startup: logdrawer
+#+startup: indent
 #+seq_todo: DRAFT(d) | CREATED(c!) PUBLISHED(p!)
 #+options: d:t
 #+hugo_base_dir: ../
