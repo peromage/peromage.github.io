@@ -968,6 +968,107 @@ let ss_url = "ss://" + btoa(`${config_json['method']}:${config_json['password']}
 console.log(ss_url);
 #+end_src
 
+** PUBLISHED VNC Quick Guide                                    :vnc:remote:
+:PROPERTIES:
+:EXPORT_FILE_NAME: vnc-quick-guide
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-06-15 Wed 18:36]
+- State "CREATED"    from              [2022-06-15 Wed 17:40]
+:END:
+I found that every time when I try to setup VNC for remote access I always have troubles configuring it.  I believe this is due to some conceptions which can be easily confusing.  So this post serves both notes and reminder for myself.
+
+*** Choose a VNC Server
+Generally I use [[https://tigervnc.org/][TigerVNC]].  It's a fork of /TightVNC/ and the performance is pretty good.  Also, it's easy to configure.  However, when it comes to installation there are two types of servers: standalone and scraping.
+
+The difference is:
+
+- Standalone: It creates a new X server when the client is connected.  Independent from the local X server.
+- Scraping: It mirrors the local X server.  Pretty much like screen sharing.
+
+Usually they are shipped with individual packages.  To install, for example, on Ubuntu
+
+#+begin_src bash
+$ sudo apt install tigervnc-standalone-server
+$ sudo apt install tigervnc-scraping-server
+#+end_src
+
+*** Standalone Server
+Configuring a standalone server is fairly easy.  You would only need three things: client password, server config and server startup script.  They are all located under =$HOME/.vnc/=.
+
+1. Create the password file.
+
+#+begin_src bash
+$ vncpasswd
+#+end_src
+
+2. Create the server config file (=$HOME/.vnc/config=).  A minimal configuration is shown as following.
+
+#+begin_src conf
+geometry=1366x768
+alwaysshared
+localhost
+#+end_src
+
+3. Create the server startup script (=$HOME/.vnc/xstartup=).  This is also a minimal configuration.
+
+#+begin_src bash
+#!/bin/sh
+unset DBUS_SESSION_BUS_ADDRESS
+vncconfig -iconic &
+dbus-launch --exit-with-session /usr/bin/gnome-session --session=ubuntu
+#+end_src
+
+Be aware that the last line =dbus-launch= is important on some distros that are shipped with default desktop environment.  Without it the VNC server could not be started correctly.  This is because the newly launched desktop environment tries to reuse the existing D-Bus but it's occupied by the local X server already.  =dbus-launch= makes sure it runs in its own little world.  See =dbus-launch='s man page for details.
+
+4. Start the server.  Make sure the display port is not used by anyone else.
+
+#+begin_src bash
+$ vncserver :1
+#+end_src
+
+5. Connect from the client.  On the remote PC:
+
+#+begin_src bash
+$ ssh -L 5901:localhost:5901 -t user@ip
+#+end_src
+
+The TCP port depends on the display port used to start the VNC server.  The equation is like: TCP_PORT = 5900 + DISPLAY_PORT.  Usually the =:0= is taken by local X server.
+
+Use any VNC client to connect to =localhost:5901=.
+
+*** Scraping Server
+Configuring a scraping server is slightly different from the standalone server but it's not hard.
+
+1. Create the password file.  Same with the standalone server.
+
+#+begin_src bash
+$ vncpasswd
+#+end_src
+
+2. Start the server.  This is where it's different from the standalone one.  Since it replicates the local X server it doesn't need the configuration.
+
+#+begin_src bash
+$ x0vncserver -rfbauth $HOME/.vnc/passwd
+#+end_src
+
+Don't forget to specify the password file or you'll not be able to connect to it.
+
+3. Connect from the client.  Same with the standalone server.  On the remote PC:
+
+#+begin_src bash
+$ ssh -L 5900:localhost:5900 -t user@ip
+#+end_src
+
+Local X server already uses display port =:0=. Then use any VNC client to connect to =localhost:5900=.
+
+*** Synonyms of TigerVNC
+I was confused by the TigerVNC since there are similar commands.  It turned out they are the same.
+
+- =vncserver= -> =tigervncserver=
+- =vncconfig= -> =tigervncconfig=
+- =vncpasswd= -> =tigervncpasswd=
+
 * Tech                                                                :@tech:
 ** PUBLISHED Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC :multi_boot:
 :PROPERTIES:
