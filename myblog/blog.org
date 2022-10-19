@@ -1631,6 +1631,9 @@ $ git worktree remove --force ../foo-ref-1
 If there are uncommitted changes git will prevent you from deleting the directory.  In this case =--force= flag is needed.
 
 ** PUBLISHED Windows Rescure Quick Reference                    :multi_boot:
+:PROPERTIES:
+:EXPORT_FILE_NAME: windows-rescure-quick-reference
+:END:
 :LOGBOOK:
 - State "PUBLISHED"  from "CREATED"    [2022-10-19 Wed 00:01]
 - State "CREATED"    from              [2022-10-19 Wed 00:01]
