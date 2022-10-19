@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on Fang's Blog</title><link>https://peromage.github.io/blog/</link><description>Recent content in Blogs on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 19 Oct 2022 00:01:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Windows Rescure Quick Reference</title><link>https://peromage.github.io/p/windows-rescure-quick-reference/</link><pubDate>Wed, 19 Oct 2022 00:01:00 +0000</pubDate><guid>https://peromage.github.io/p/windows-rescure-quick-reference/</guid><description>&lt;p>Though I&amp;rsquo;ve written posts about &lt;a class="link" href="https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/" >dual-booting Windows and Linux&lt;/a> and &lt;a class="link" href="https://peromage.github.io/p/minimalists-multi-boot-usb-drive/" >multi-booting a USB drive&lt;/a>, I have to go back and dig useful information out each time when I forget something.&lt;/p>
 &lt;p>After breaking my dual-boot setup once again (forgot to backup boot partition), I decided to create this post for a quick reference.&lt;/p>
 &lt;p>This reference assumes system is boot from UEFI and Windows is installed on a dedicated partition.&lt;/p>
-&lt;h2 id="setup-a-usb-with-system-images">Setup A USB with System Images&lt;/h2>
+&lt;h2 id="setup-a-usb-with-system-images">Setup A USB With System Images&lt;/h2>
 &lt;p>Forget the previous multi-boot USB post. Use &lt;a class="link" href="https://www.ventoy.net/en/index.html" target="_blank" rel="noopener"
 >Ventory&lt;/a> and it just works great.&lt;/p>
 &lt;p>In this case we need a Linux and Windows ISO. For Linux, I prefer Arch. For Windows, we need a PE environment. I don&amp;rsquo;t trust those PE ISOs from other people so the best way is to download an official image from Microsoft since we just need some tools and they are included in the installation ISO already.&lt;/p>
@@ -96,11 +96,12 @@
 &lt;/div>&lt;h3 id="problem">Problem&lt;/h3>
 &lt;p>I found that on Fedora &lt;code>linux16&lt;/code> and &lt;code>initrd16&lt;/code> is not available by default. A workaround must be done. If it comes in this case, I suggest to use method 2 below.&lt;/p>
 &lt;h2 id="method-2-add-windows-back-to-uefi-menu">Method 2: Add Windows Back To UEFI Menu&lt;/h2>
-&lt;p>This method is simpler but there is possibility that Windows is going to break Linux.&lt;/p>
+&lt;p>This method is simpler and it takes advantage of UEFI boot menu but there is possibility that Windows is going to break Linux if Linux is the default.&lt;/p>
 &lt;h3 id="fix-windows-s-bootloader">Fix Windows&amp;rsquo;s Bootloader&lt;/h3>
 &lt;p>Boot into Windows installation ISO.&lt;/p>
 &lt;p>Don&amp;rsquo;t start installing. Instead, choose &lt;code>Repair your computer&lt;/code> -&amp;gt; &lt;code>Troubleshoot&lt;/code> -&amp;gt; &lt;code>Command Prompt&lt;/code>.&lt;/p>
 &lt;p>In diskpart, use &lt;code>list volume&lt;/code> to confirm EFI partition volume letter. Usually it will not be assigned by PE environment automatically.&lt;/p>
+&lt;p>First, mount EFI partition and backup Linux EFI files because Windows will overwrite the default settings :).&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
@@ -113,13 +114,6 @@
 &lt;/span>&lt;span class="lnt"> 8
 &lt;/span>&lt;span class="lnt"> 9
 &lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&amp;gt; diskpart
@@ -132,17 +126,34 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Backup default UEFI entry (Linux)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; &lt;span class="nb">cd&lt;/span> /d e:&lt;span class="se">\E&lt;/span>FI
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; ren BOOT linux_BOOT
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Windows volume is C: confirmed from diskpart above&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Then Create Windows boot files.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Windows volume is C: confirmed from diskpart above&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; bcdboot c:&lt;span class="se">\W&lt;/span>indows /l en-us /s e: /f uefi
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Restore default Linux entry&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Lastly, restore Linux as the default start option. If you want Windows to be the default, leave it as it.&lt;/p>
+&lt;p>NOTE: For Fedora it seems to be a problem to be a none-default entry when log into display manager. Not sure why. So it&amp;rsquo;d be better to restore default for Fedora.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Restore default Linux entry&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; ren Boot Microsoft_Boot
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; ren linux_BOOT BOOT
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>If you want Windows to be the default, leave it as it.&lt;/p>
-&lt;p>NOTE: For Fedora it seems to be a problem to be a none-default entry when log into display manager. Not sure why. So it&amp;rsquo;d be better to restore default for Fedora.&lt;/p></description></item><item><title>VNC Quick Guide</title><link>https://peromage.github.io/p/vnc-quick-guide/</link><pubDate>Wed, 15 Jun 2022 17:40:00 +0000</pubDate><guid>https://peromage.github.io/p/vnc-quick-guide/</guid><description>&lt;p>I found that every time when I try to setup VNC for remote access I always have troubles configuring it. I believe this is due to some conceptions which can be easily confusing. So this post serves both notes and reminder for myself.&lt;/p>
+&lt;/div></description></item><item><title>VNC Quick Guide</title><link>https://peromage.github.io/p/vnc-quick-guide/</link><pubDate>Wed, 15 Jun 2022 17:40:00 +0000</pubDate><guid>https://peromage.github.io/p/vnc-quick-guide/</guid><description>&lt;p>I found that every time when I try to setup VNC for remote access I always have troubles configuring it. I believe this is due to some conceptions which can be easily confusing. So this post serves both notes and reminder for myself.&lt;/p>
 &lt;h2 id="choose-a-vnc-server">Choose a VNC Server&lt;/h2>
 &lt;p>Generally I use &lt;a class="link" href="https://tigervnc.org/" target="_blank" rel="noopener"
 >TigerVNC&lt;/a>. It&amp;rsquo;s a fork of &lt;em>TightVNC&lt;/em> and the performance is pretty good. Also, it&amp;rsquo;s easy to configure. However, when it comes to installation there are two types of servers: standalone and scraping.&lt;/p>
