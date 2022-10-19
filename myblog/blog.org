@@ -1635,7 +1635,7 @@ If there are uncommitted changes git will prevent you from deleting the director
 - State "PUBLISHED"  from "CREATED"    [2022-10-19 Wed 00:01]
 - State "CREATED"    from              [2022-10-19 Wed 00:01]
 :END:
-Though I've written posts about [[dual-boot-windows-linux][dual-booting Windows and Linux]] and [[multi-boot-usb][multi-booting a USB drive]], I have to go back and dig useful information out each time when I forget something.
+Though I've written posts about [[#dual-boot-windows-linux][dual-booting Windows and Linux]] and [[#multi-boot-usb][multi-booting a USB drive]], I have to go back and dig useful information out each time when I forget something.
 
 After breaking my dual-boot setup once again (forgot to backup boot partition), I decided to create this post for a quick reference.
 
