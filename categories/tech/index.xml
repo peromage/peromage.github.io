@@ -1,4 +1,148 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>tech on Fang's Blog</title><link>https://peromage.github.io/categories/tech/</link><description>Recent content in tech on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 06 Jun 2022 00:30:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml"/><item><title>Use Git Worktree to Work with Multiple Checkout at the Same Time</title><link>https://peromage.github.io/p/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</link><pubDate>Mon, 06 Jun 2022 00:30:00 +0000</pubDate><guid>https://peromage.github.io/p/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</guid><description>&lt;h2 id="troubles">Troubles&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>tech on Fang's Blog</title><link>https://peromage.github.io/categories/tech/</link><description>Recent content in tech on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 19 Oct 2022 00:01:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml"/><item><title>Windows Rescure Quick Reference</title><link>https://peromage.github.io/p/windows-rescure-quick-reference/</link><pubDate>Wed, 19 Oct 2022 00:01:00 +0000</pubDate><guid>https://peromage.github.io/p/windows-rescure-quick-reference/</guid><description>&lt;p>Though I&amp;rsquo;ve written posts about &lt;a class="link" href="https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/" >dual-booting Windows and Linux&lt;/a> and &lt;a class="link" href="https://peromage.github.io/p/minimalists-multi-boot-usb-drive/" >multi-booting a USB drive&lt;/a>, I have to go back and dig useful information out each time when I forget something.&lt;/p>
+&lt;p>After breaking my dual-boot setup once again (forgot to backup boot partition), I decided to create this post for a quick reference.&lt;/p>
+&lt;p>This reference assumes system is boot from UEFI and Windows is installed on a dedicated partition.&lt;/p>
+&lt;h2 id="setup-a-usb-with-system-images">Setup A USB with System Images&lt;/h2>
+&lt;p>Forget the previous multi-boot USB post. Use &lt;a class="link" href="https://www.ventoy.net/en/index.html" target="_blank" rel="noopener"
+>Ventory&lt;/a> and it just works great.&lt;/p>
+&lt;p>In this case we need a Linux and Windows ISO. For Linux, I prefer Arch. For Windows, we need a PE environment. I don&amp;rsquo;t trust those PE ISOs from other people so the best way is to download an official image from Microsoft since we just need some tools and they are included in the installation ISO already.&lt;/p>
+&lt;h2 id="method-1-load-windows-from-grub">Method 1: Load Windows From GRUB&lt;/h2>
+&lt;p>To prevent Windows from messing up with Linux&amp;rsquo;s bootloader, a good idea is to put Windows&amp;rsquo; bootloader in a VHD file and chainload it from GRUB.&lt;/p>
+&lt;h3 id="fix-windows-s-bootloader">Fix Windows&amp;rsquo;s Bootloader&lt;/h3>
+&lt;p>Boot into Windows installation ISO.&lt;/p>
+&lt;p>Don&amp;rsquo;t start installing. Instead, choose &lt;code>Repair your computer&lt;/code> -&amp;gt; &lt;code>Troubleshoot&lt;/code> -&amp;gt; &lt;code>Command Prompt&lt;/code>.&lt;/p>
+&lt;p>We need to create a VHD that contains Windows bootmgr. I used to create a file in 32 MB but it seems too small for the most recent bloated Windows so in case, we use 128 MB here.&lt;/p>
+&lt;p>NOTE: This file will be loaded into memory so don&amp;rsquo;t make it too big.&lt;/p>
+&lt;p>In diskpart, use &lt;code>list volume&lt;/code> to confirm EFI partition volume letter. Usually it will not be assigned by PE environment automatically.&lt;/p>
+&lt;p>NOTE: The file can be put in Windows partition though. It requires extra setup like load NTFS module for grub and find it&amp;rsquo;s root. That&amp;rsquo;s too cumbersome.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&amp;gt; diskpart
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; list volume
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># EFI partition&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; &lt;span class="k">select&lt;/span> volume &lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; assign &lt;span class="nv">letter&lt;/span>&lt;span class="o">=&lt;/span>e
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; create vdisk &lt;span class="nv">file&lt;/span>&lt;span class="o">=&lt;/span>e:&lt;span class="se">\b&lt;/span>ootmgr.vhd &lt;span class="nv">maximum&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">128&lt;/span> &lt;span class="nv">type&lt;/span>&lt;span class="o">=&lt;/span>fixed
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; &lt;span class="k">select&lt;/span> vdisk &lt;span class="nv">file&lt;/span>&lt;span class="o">=&lt;/span>e:&lt;span class="se">\b&lt;/span>ootmgr.vhd
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; attach vdisk
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; convert mbr
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; create partition primary
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; format &lt;span class="nv">fs&lt;/span>&lt;span class="o">=&lt;/span>ntfs quick
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; assign &lt;span class="nv">letter&lt;/span>&lt;span class="o">=&lt;/span>f
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; &lt;span class="nb">exit&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now the bootloader VHD is mounted at &lt;code>F:&lt;/code>. Then write the boot record and create boot configuration files.&lt;/p>
+&lt;p>NOTE: Windows partition volume letter should be confirmed in &lt;code>diskpart&lt;/code> above. It&amp;rsquo;s usually assigned by PE automatically. In this case it is &lt;code>C:&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&amp;gt; bootsect /nt60 e: /mbr
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; bcdboot c:&lt;span class="se">\W&lt;/span>indows /l en-us /s e: /f uefi
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="add-window-to-grub">Add Window to GRUB&lt;/h3>
+&lt;p>Boot into Linux and confirm EFI partition UUID where you put the Windows bootloader VHD file. In command line:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ lsblk -f
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Configure GRUB menu to include Windows. Assume the EFI partition is mounted at &lt;code>/boot/efi&lt;/code> and &lt;code>memdisk&lt;/code> (got from &lt;code>syslinux&lt;/code>) is put at EFI partition&amp;rsquo;s root.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ sudo cat &lt;span class="s">&amp;lt;&amp;lt;EOF &amp;gt;&amp;gt;/etc/grub.d/40_custom
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">menuentry &amp;#34;Windows 10&amp;#34; {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> search --set=root --no-floppy --fs-uuid 1DB1-9C31
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> linux16 /memdisk harddisk
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> initrd16 /bootmgr.vhd
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">}
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">EOF&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="problem">Problem&lt;/h3>
+&lt;p>I found that on Fedora &lt;code>linux16&lt;/code> and &lt;code>initrd16&lt;/code> is not available by default. A workaround must be done. If it comes in this case, I suggest to use method 2 below.&lt;/p>
+&lt;h2 id="method-2-add-windows-back-to-uefi-menu">Method 2: Add Windows Back To UEFI Menu&lt;/h2>
+&lt;p>This method is simpler but there is possibility that Windows is going to break Linux.&lt;/p>
+&lt;h3 id="fix-windows-s-bootloader">Fix Windows&amp;rsquo;s Bootloader&lt;/h3>
+&lt;p>Boot into Windows installation ISO.&lt;/p>
+&lt;p>Don&amp;rsquo;t start installing. Instead, choose &lt;code>Repair your computer&lt;/code> -&amp;gt; &lt;code>Troubleshoot&lt;/code> -&amp;gt; &lt;code>Command Prompt&lt;/code>.&lt;/p>
+&lt;p>In diskpart, use &lt;code>list volume&lt;/code> to confirm EFI partition volume letter. Usually it will not be assigned by PE environment automatically.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&amp;gt; diskpart
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; list volume
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># EFI partition&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; &lt;span class="k">select&lt;/span> volume &lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; assign &lt;span class="nv">letter&lt;/span>&lt;span class="o">=&lt;/span>e
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DISKPART&amp;gt; &lt;span class="nb">exit&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Backup default UEFI entry (Linux)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; &lt;span class="nb">cd&lt;/span> /d e:&lt;span class="se">\E&lt;/span>FI
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; ren BOOT linux_BOOT
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Windows volume is C: confirmed from diskpart above&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; bcdboot c:&lt;span class="se">\W&lt;/span>indows /l en-us /s e: /f uefi
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Restore default Linux entry&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; ren Boot Microsoft_Boot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; ren linux_BOOT BOOT
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If you want Windows to be the default, leave it as it.&lt;/p>
+&lt;p>NOTE: For Fedora it seems to be a problem to be a none-default entry when log into display manager. Not sure why. So it&amp;rsquo;d be better to restore default for Fedora.&lt;/p></description></item><item><title>Use Git Worktree to Work with Multiple Checkout at the Same Time</title><link>https://peromage.github.io/p/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</link><pubDate>Mon, 06 Jun 2022 00:30:00 +0000</pubDate><guid>https://peromage.github.io/p/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</guid><description>&lt;h2 id="troubles">Troubles&lt;/h2>
 &lt;p>When working with a complicated project where you have to compare different history versions side by side, it soon becomes frustrating frequently checking out refs.&lt;/p>
 &lt;p>The old stupid way is to clone multiple repos and checkout to the specific revisions. When the project is big this might be a trouble because you&amp;rsquo;re basically duplicating files.&lt;/p>
 &lt;h2 id="savior">Savior&lt;/h2>
