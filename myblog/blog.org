@@ -1644,7 +1644,7 @@ After breaking my dual-boot setup once again (forgot to backup boot partition), 
 
 This reference assumes system is boot from UEFI and Windows is installed on a dedicated partition.
 
-*** Setup A USB with System Images
+*** Setup A USB With System Images
 Forget the previous multi-boot USB post. Use [[https://www.ventoy.net/en/index.html][Ventory]] and it just works great.
 
 In this case we need a Linux and Windows ISO. For Linux, I prefer Arch. For Windows, we need a PE environment. I don't trust those PE ISOs from other people so the best way is to download an official image from Microsoft since we just need some tools and they are included in the installation ISO already.
@@ -1715,7 +1715,7 @@ $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 I found that on Fedora =linux16= and =initrd16= is not available by default. A workaround must be done. If it comes in this case, I suggest to use method 2 below.
 
 *** Method 2: Add Windows Back To UEFI Menu
-This method is simpler but there is possibility that Windows is going to break Linux.
+This method is simpler and it takes advantage of UEFI boot menu but there is possibility that Windows is going to break Linux if Linux is the default.
 
 **** Fix Windows's Bootloader
 Boot into Windows installation ISO.
@@ -1723,6 +1723,8 @@ Boot into Windows installation ISO.
 Don't start installing. Instead, choose =Repair your computer= -> =Troubleshoot= -> =Command Prompt=.
 
 In diskpart, use =list volume= to confirm EFI partition volume letter. Usually it will not be assigned by PE environment automatically.
+
+First, mount EFI partition and backup Linux EFI files because Windows will overwrite the default settings :).
 
 #+begin_src shell
 > diskpart
@@ -1735,18 +1737,24 @@ DISKPART> exit
 # Backup default UEFI entry (Linux)
 > cd /d e:\EFI
 > ren BOOT linux_BOOT
+#+end_src
 
+Then Create Windows boot files.
+
+#+begin_src shell
 # Windows volume is C: confirmed from diskpart above
 > bcdboot c:\Windows /l en-us /s e: /f uefi
+#+end_src
 
+Lastly, restore Linux as the default start option. If you want Windows to be the default, leave it as it.
+
+NOTE: For Fedora it seems to be a problem to be a none-default entry when log into display manager. Not sure why. So it'd be better to restore default for Fedora.
+
+#+begin_src shell
 # Restore default Linux entry
 > ren Boot Microsoft_Boot
 > ren linux_BOOT BOOT
 #+end_src
-
-If you want Windows to be the default, leave it as it.
-
-NOTE: For Fedora it seems to be a problem to be a none-default entry when log into display manager. Not sure why. So it'd be better to restore default for Fedora.
 
 * Ramble                                                            :@ramble:
 ** PUBLISHED Moving From Vim to Emacs                :vim:emacs:text_editor:
