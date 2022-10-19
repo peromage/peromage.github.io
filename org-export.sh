@@ -17,5 +17,6 @@ emacs -nw --batch --eval \
          (add-to-list (quote package-archives) (quote ("melpa" . "https://melpa.org/packages/")))
          (package-refresh-contents)
          (package-install (quote ox-hugo))
+         (require (quote org-id))
          (find-file "myblog/blog.org")
          (org-hugo-export-wim-to-md :all))'
