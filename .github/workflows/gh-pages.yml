@@ -38,7 +38,7 @@ jobs:
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
       - name: Export Org
-        run: ./org-export.sh
+        run: ./ox-hugo-export.sh
 
       - name: Build
         run: hugo --minify
