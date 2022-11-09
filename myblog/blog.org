@@ -32,6 +32,7 @@ Remind myself how to use this workflow.
 3. =C-c C-t= to change todo to =CREATED= to log creation time.
 4. =C-c C-t= to change todo to =PUBLISHED= to log last modified time.
 5. =C-c C-q= to add proper tags.
+6. Use =org-narrow-to-subtree= to focus on the current node that is being edited.  Use =widen= to exit.
 
 ** Format
 1. Use two spaces after the period.
