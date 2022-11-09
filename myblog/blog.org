@@ -1104,6 +1104,182 @@ I was confused by the TigerVNC since there are similar commands.  It turned out 
 - =vncconfig= -> =tigervncconfig=
 - =vncpasswd= -> =tigervncpasswd=
 
+** PUBLISHED Arch Linux on Laptop
+:PROPERTIES:
+:EXPORT_FILE_NAME: arch-linux-on-laptop
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "CREATED"    [2022-11-08 Tue 23:59]
+- State "CREATED"    from              [2022-11-08 Tue 22:45]
+:END:
+I recently got my new laptop and I found that some additional tweaks need to be made for laptops.  Thus, this post is to have a record in case I forget when I have to reinstall the system.
+
+*** Installing Arch Linux
+I have a script to handle this: https://github.com/peromage/pew/blob/master/rice/scripts/setup/arch-install.sh
+
+*** Laptop Disk Partitioning and Encryption
+Unlike desktop, laptops have to be secure so encrytion is a must.
+
+Details of how-to can be found on Arch wiki.  I'm not going to go through that here.  However, I'll note down some considerations and things that need to pay attention to.
+
+**** Partitioning
+[[https://wiki.archlinux.org/title/Btrfs][Arch wiki about BTRFS]]
+
+Using too many partitions is not good for SSD so I only have two partitions on the disk: EFI partition (also as boot) + a big partition formated with =BTRFS=.  The second partition is encrypted, which will be demonstrated in the next topic.
+
+With =BTRFS=, I can use subvolume to achieve the similar effect like what partition does, but it is more flexible.
+
+These subvolumes are created under the big =BTRFS='s root.
+
+| Subvolume  | Mount Point | Note                                |
+| @arch-root | /           | System root                         |
+| @arch-var  | /var        | Avoid getting snapshot              |
+| @home      | /home       | Separated home                      |
+| @swap      | /.swap      | Swap files (no compression, no CoW) |
+| @snapshot  | /.snapshot  | Snapshots                           |
+
+An example of how =fstab= is set up.
+
+Be aware that swap subvolume should NOT be mounted with compression on.
+
+#+begin_src
+# <file system> <dir> <type> <options> <dump> <pass>
+# /dev/mapper/myroot LABEL=FFROOT
+UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6	/         	btrfs     	rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@arch-root	0 1
+
+# /dev/nvme0n1p1 LABEL=EFI
+UUID=1569-822D 					/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+
+# /dev/mapper/myroot LABEL=FFROOT
+UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6	/home     	btrfs     	rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@home	0 2
+
+# /dev/mapper/myroot LABEL=FFROOT
+UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6	/var     	btrfs     	rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@arch-var	0 2
+
+# /dev/mapper/myroot LABEL=FFROOT
+UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6	/.swap 		btrfs     	rw,noatime,ssd,space_cache=v2,subvol=/@swap 			0 2
+
+# Swap files
+/.swap/swap-32gb.img 				none 		swap 		defaults 							0 0
+#+end_src
+
+**** Encryption
+[[https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system][Arch wiki about encryption]]
+
+Use =LUKS2=.  The latest =GRUB2= has integrated the support for this new algorithm.  Why not using it?
+
+As for the scheme, I leave EFI partition unencrypted and encrypt the whole =BTRFS= partition.  EFI partition also acts as boot partition (ramfs and kernel reside).
+
+The reason that I don't put boot partition encrypted is that I have to decrypt twice on startup: once by =GRUB= and the other one by kernel.  Though there is a way to [[https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system#Avoiding_having_to_enter_the_passphrase_twice][setup a key file]] to avoid that, I still prefer typing password (Maybe TPM can be used).
+
+To tell kernel to decrypt the disk on startup, ramfs and kernel parameters have to be updated.
+
+Kernel parameters.  The UUID has to be the UUID of the partition itself (not unencrypted BTRFS partition).
+
+#+begin_src
+GRUB_CMDLINE_LINUX_DEFAULT="cryptdevice=UUID=51d2be03-b9a4-4d4d-bc5a-0a9dba854c1f:ffroot root=/dev/mapper/ffroot"
+#+end_src
+
+Update ramfs hooks.  =encrypt= needs to go after =udev=.
+
+#+begin_src
+HOOKS=(base udev autodetect modconf block filesystems keyboard fsck encrypt)
+#+end_src
+
+*** Hibernation
+A workaround has to be made on =BTRFS= with swap files.
+
+First swap files should *NOT* be set with CoW attribute.
+
+Follow [[https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Hibernation_into_swap_file_on_Btrfs][this wiki]] to calculate swap file physical offset on =BTRFS= partition.
+
+Then set kernel parameters.  The UUID should be the UUID of decrypted =BTRFS= partition.  Differentiate from the UUID above.
+
+#+begin_src
+GRUB_CMDLINE_LINUX_DEFAULT="resume=UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 resume_offset=3420784"
+#+end_src
+
+Update ramfs.  Add =resume= hook.
+
+#+begin_src
+HOOKS=(base udev autodetect modconf block filesystems keyboard fsck encrypt resume)
+#+end_src
+
+*** TLP
+My =TLP= preferences.
+
+#+begin_src conf
+# /etc/tlp.d/my-power-plan.conf
+TLP_DEFAULT_MODE=AC
+TLP_PERSISTENT_DEFAULT=0
+
+CPU_SCALING_GOVERNOR_ON_AC=performance
+CPU_SCALING_GOVERNOR_ON_BAT=powersave
+
+CPU_ENERGY_PERF_POLICY_ON_AC=balance_performance
+CPU_ENERGY_PERF_POLICY_ON_BAT=balance_power
+
+CPU_MIN_PERF_ON_AC=0
+CPU_MAX_PERF_ON_AC=100
+CPU_MIN_PERF_ON_BAT=0
+CPU_MAX_PERF_ON_BAT=20
+
+CPU_BOOST_ON_AC=1
+CPU_BOOST_ON_BAT=0
+
+CPU_HWP_DYN_BOOST_ON_AC=1
+CPU_HWP_DYN_BOOST_ON_BAT=0
+
+SCHED_POWERSAVE_ON_AC=0
+SCHED_POWERSAVE_ON_BAT=1
+#+end_src
+
+*** Framework Laptop Specific
+Framework laptop needs some additional tweaks.
+
+**** Ambient Light Sensor
+#+begin_src bash
+# pacman -S iio-sensor-proxy
+#+end_src
+
+**** Fingerprint
+#+begin_src bash
+# pacman -S fprintd
+#+end_src
+
+**** Bluetooth
+#+begin_src bash
+# pacman -S bluez bluez-utils
+# systemctl enable --now bluetooth
+#+end_src
+
+**** Touchpad Two-finger/Three-finger Click
+1. Get touchpad device id
+
+#+begin_src bash
+# xinput
+#+end_src
+
+2. Add to .xinitrc
+
+#+begin_src bash
+# xinput set-prop <device> 'libinput Click Method Enabled' 0 1
+#+end_src
+
+**** Brightness Keys
+Add to kernel parameters:
+
+#+begin_src
+GRUB_CMDLINE_LINUX_DEFAULT="module_blacklist=hid_sensor_hub"
+#+end_src
+
+**** Suspend Power
+Add to kernel parameters:
+
+#+begin_src
+GRUB_CMDLINE_LINUX_DEFAULT="mem_sleep_default=deep nvme.noacpi=1"
+#+end_src
+
 * Tech                                                                :@tech:
 ** PUBLISHED Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC :multi_boot:
 :PROPERTIES:
