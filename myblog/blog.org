@@ -1,13 +1,45 @@
+* Metadata
+** Me
 #+author: Fang Deng
-#+startup: show2levels
+** On This File Open
+#+startup: fold
+#+startup: indent
+** Post Date and Time
+This settings make it possible to automatically log the last modefied time as well as the creation time.  Since the site will be fully generated every time on a new push by GitHub CI jobs, simply setting =hugo_auto_set_lastmod= would mark all posts' last modified time to the push time point. This is not the desired result.
+
+To log creation time and last modified time, two log entries have to be made.  The first one should transit to =CREATED=.  This is to log creation time.  The second one should transit to =PUBLISHED=.  This is to log the last modified time.  If both creation time and last modified time are the same, the last modified won't be shown at the last of the post.
+
 #+startup: nologdone
 #+startup: logdrawer
-#+startup: indent
 #+seq_todo: DRAFT(d) | CREATED(c!) PUBLISHED(p!)
 #+options: d:t
+#+hugo_auto_set_lastmod: t
+** Ox-hugo Export Settings
 #+hugo_base_dir: ../
 #+hugo_section: blog
-#+hugo_auto_set_lastmod: t
+
+* Notes
+** New Post
+:PROPERTIES:
+:EXPORT_FILE_NAME:
+:END:
+
+** Workflow
+Remind myself how to use this workflow.
+
+1. Copy the node above with =org-refile-copy=.
+2. Change the title and complete the property =EXPORT_FILE_NAME=.
+3. =C-c C-t= to change todo to =CREATED= to log creation time.
+4. =C-c C-t= to change todo to =PUBLISHED= to log last modified time.
+5. =C-c C-q= to add proper tags.
+
+** Format
+1. Use two spaces after the period.
+2. Leave an empty line after each node.
+3. Put new posts at the end of category nodes.
+
+** Keep This Workflow
+After experiments, a single org file works the best compared with using one-file-one-post style.  Even with organizing posts per year per file.  Considering this is just a source of the whole blog project, as long as it is easy to manage, there is no point to change it.
 
 * Site Pages
 This node contains site navigation page setup.
