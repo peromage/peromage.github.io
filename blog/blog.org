@@ -1404,7 +1404,7 @@ An example of how =fstab= is set up.
 
 Be aware that swap subvolume should NOT be mounted with compression on.
 
-#+begin_src
+#+begin_src conf
 # <file system> <dir> <type> <options> <dump> <pass>
 # /dev/mapper/myroot LABEL=FFROOT
 UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6	/         	btrfs     	rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@arch-root	0 1
@@ -1438,13 +1438,13 @@ To tell kernel to decrypt the disk on startup, ramfs and kernel parameters have 
 
 Kernel parameters.  The UUID has to be the UUID of the partition itself (not unencrypted BTRFS partition).
 
-#+begin_src
+#+begin_src conf
 GRUB_CMDLINE_LINUX_DEFAULT="cryptdevice=UUID=51d2be03-b9a4-4d4d-bc5a-0a9dba854c1f:ffroot root=/dev/mapper/ffroot"
 #+end_src
 
 Update ramfs hooks.  =encrypt= needs to go after =udev=.
 
-#+begin_src
+#+begin_src conf
 HOOKS=(base udev autodetect modconf block filesystems keyboard fsck encrypt)
 #+end_src
 
@@ -1457,13 +1457,13 @@ Follow [[https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate
 
 Then set kernel parameters.  The UUID should be the UUID of decrypted =BTRFS= partition.  Differentiate from the UUID above.
 
-#+begin_src
+#+begin_src conf
 GRUB_CMDLINE_LINUX_DEFAULT="resume=UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 resume_offset=3420784"
 #+end_src
 
 Update ramfs.  Add =resume= hook.
 
-#+begin_src
+#+begin_src conf
 HOOKS=(base udev autodetect modconf block filesystems keyboard fsck encrypt resume)
 #+end_src
 
@@ -1531,14 +1531,14 @@ Framework laptop needs some additional tweaks.
 **** Brightness Keys
 Add to kernel parameters:
 
-#+begin_src
+#+begin_src conf
 GRUB_CMDLINE_LINUX_DEFAULT="module_blacklist=hid_sensor_hub"
 #+end_src
 
 **** Suspend Power
 Add to kernel parameters:
 
-#+begin_src
+#+begin_src conf
 GRUB_CMDLINE_LINUX_DEFAULT="mem_sleep_default=deep nvme.noacpi=1"
 #+end_src
 
