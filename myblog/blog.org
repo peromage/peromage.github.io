@@ -1386,58 +1386,6 @@ Then all changes made in the future will go into the differencing disk.  If syst
 [[http://www.mistyprojects.co.uk/documents/BCDEdit/files/device.htm][BCDEdit notes]]
 [[https://www.howisolve.com/windows-could-not-complete-the-installation-solved/][100% Solved:Windows could not complete the installation]]
 
-** PUBLISHED Fix Metadata in Google Photo Takeout             :google_photo:
-:PROPERTIES:
-:EXPORT_FILE_NAME: fix-metadata-in-google-photo-takeout
-:END:
-:LOGBOOK:
-- State "PUBLISHED"  from "PUBLISHED"  [2022-06-04 Sat 18:55]
-- State "PUBLISHED"  from "DRAFT"      [2022-03-13 Sun 00:12]
-- State "CREATED"    from              [2022-03-13 Sun 00:12]
-:END:
-Google Photo sucks.
-
-*** Troubles
-When exporting photos from Google Photo, a bunch of JSON files come with your photos.  Those JSON files contain metadata which is supposed to be stored with your photo files.  If you simple import those photo files into another photo manager you will most likely not get a chronological view.  Obviously, Google does on purpose so that you will not leave it easily.
-However, there is a workaround that is able to merge those metadata into your photos.
-
-*** Restore the Metadate
-1. Get =exiftool=: https://github.com/exiftool/exiftool
-2. Export your Google Photos and extract the downloaded compressed files into a folder
-3. Save the following content to =fix-args.txt=
-
-#+begin_src conf
-# Usage: exiftool -@ fix-args.txt <takeout_dir>
--r
--d
-%s
--tagsFromFile
-%d/%F.json
--ext *
---ext json
--overwrite_original
--progress
--GPSAltitude<GeoDataAltitude
--GPSLatitude<GeoDataLatitude
--GPSLongitude<GeoDataLongitude
--DateTimeOriginal<PhotoTakenTimeTimestamp
--ModifyDate<PhotoLastModifiedTimeTimestamp
--CreateDate<CreationTimeTimestamp
--GPSAltitudeRef<GeoDataAltitude
--GPSLatitudeRef<GeoDataLatitude
--GPSLongitudeRef<GeoDataLongitude
-#+end_src
-
-4. Execute
-
-#+begin_src shell
-$ exiftool -@ fix-args.txt <takeout_dir>
-#+end_src
-
-5. Delete JSON files and import your photos to somewhere else
-
-This argument file contains the fields that are meaningful to me.  If you need to merge additional fields you can append them to the last.  For details, check the man page of =exiftool=.
-
 ** PUBLISHED Minimalist's Multi-boot USB Drive                  :multi_boot:
 :PROPERTIES:
 :EXPORT_FILE_NAME: minimalists-multi-boot-usb-drive
@@ -1630,6 +1578,58 @@ menuentry "Windows PE ISO" {
 
 *** The End
 Finally I'm very satisfied with this new USB drive.  Yay!
+
+** PUBLISHED Fix Metadata in Google Photo Takeout             :google_photo:
+:PROPERTIES:
+:EXPORT_FILE_NAME: fix-metadata-in-google-photo-takeout
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-06-04 Sat 18:55]
+- State "PUBLISHED"  from "DRAFT"      [2022-03-13 Sun 00:12]
+- State "CREATED"    from              [2022-03-13 Sun 00:12]
+:END:
+Google Photo sucks.
+
+*** Troubles
+When exporting photos from Google Photo, a bunch of JSON files come with your photos.  Those JSON files contain metadata which is supposed to be stored with your photo files.  If you simple import those photo files into another photo manager you will most likely not get a chronological view.  Obviously, Google does on purpose so that you will not leave it easily.
+However, there is a workaround that is able to merge those metadata into your photos.
+
+*** Restore the Metadate
+1. Get =exiftool=: https://github.com/exiftool/exiftool
+2. Export your Google Photos and extract the downloaded compressed files into a folder
+3. Save the following content to =fix-args.txt=
+
+#+begin_src conf
+# Usage: exiftool -@ fix-args.txt <takeout_dir>
+-r
+-d
+%s
+-tagsFromFile
+%d/%F.json
+-ext *
+--ext json
+-overwrite_original
+-progress
+-GPSAltitude<GeoDataAltitude
+-GPSLatitude<GeoDataLatitude
+-GPSLongitude<GeoDataLongitude
+-DateTimeOriginal<PhotoTakenTimeTimestamp
+-ModifyDate<PhotoLastModifiedTimeTimestamp
+-CreateDate<CreationTimeTimestamp
+-GPSAltitudeRef<GeoDataAltitude
+-GPSLatitudeRef<GeoDataLatitude
+-GPSLongitudeRef<GeoDataLongitude
+#+end_src
+
+4. Execute
+
+#+begin_src shell
+$ exiftool -@ fix-args.txt <takeout_dir>
+#+end_src
+
+5. Delete JSON files and import your photos to somewhere else
+
+This argument file contains the fields that are meaningful to me.  If you need to merge additional fields you can append them to the last.  For details, check the man page of =exiftool=.
 
 ** PUBLISHED Use Git Worktree to Work with Multiple Checkout at the Same Time :git:
 :PROPERTIES:
