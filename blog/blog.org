@@ -909,16 +909,18 @@ The biggest challenge is to convert string to Lisp list.  After a quick search w
 
 Suppose we have a =lisp-data= file named =mydata= with the content below.
 
-#+begin_src lisp-data
+#+begin_src shell :dir /tmp :results silent :exports code
+cat <<EOF >>mydata
 ;;; mydata -*- lisp-data -*-
 (("~/repo/peromage.github.io/")
  ("~/.emacs.d/")
  ("~/some/random/place"))
+ EOF
 #+end_src
 
 When we read it, we should read the whole file as a string first and then pass it to =read= function.  The easiest way is to use =with-temp-buffer=.
 
-#+begin_src emacs-lisp :results output :exports both
+#+begin_src emacs-lisp :dir /tmp :results output :exports both :eval never-export
 (setq data (read (with-temp-buffer
                    (insert-file-contents "mydata")
                    (buffer-string))))
