@@ -895,6 +895,45 @@ Alternative way is to use =package-install-from-buffer= to install the library f
 *** Reference
 https://emacs.stackexchange.com/questions/8023/how-to-use-autoload
 
+** PUBLISHED Use lisp-data Files in Emacs                            :emacs:
+:PROPERTIES:
+:EXPORT_FILE_NAME: use-lisp-data-in-emacs
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "CREATED"    [2022-11-14 Mon 12:42]
+- State "CREATED"    from              [2022-11-14 Mon 10:57]
+:END:
+I found that there were few posts mentioning about using =lisp-data= files.  However, it seems to be used widely in various packages.
+
+The biggest challenge is to convert string to Lisp list.  After a quick search with =describe-function=, =read= function is able to perfectly handle that in this case.
+
+Suppose we have a =lisp-data= file named =mydata= with the content below.
+
+#+begin_src lisp-data
+;;; mydata -*- lisp-data -*-
+(("~/repo/peromage.github.io/")
+ ("~/.emacs.d/")
+ ("~/some/random/place"))
+#+end_src
+
+When we read it, we should read the whole file as a string first and then pass it to =read= function.  The easiest way is to use =with-temp-buffer=.
+
+#+begin_src emacs-lisp :results output
+(setq data (read (with-temp-buffer
+                   (insert-file-contents "mydata")
+                   (buffer-string))))
+(print data)
+(print (nth 1 data))
+#+end_src
+
+#+RESULTS:
+:
+: (("~/repo/peromage.github.io/") ("~/.emacs.d/") ("~/some/random/place"))
+:
+: ("~/.emacs.d/")
+
+Nice.
+
 * Coding                                                            :@coding:
 ** PUBLISHED Initialize std::array at Compile Time    :cpp:meta_programming:
 :PROPERTIES:
