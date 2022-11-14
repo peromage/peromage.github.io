@@ -35,21 +35,25 @@ Read from file The biggest challenge is to parse file content to Lisp lists. Aft
 </span></span><span class=line><span class=cl>((&#34;~/repo/peromage.github.io/&#34;) (&#34;~/.emacs.d/&#34;) (&#34;~/some/random/place&#34;))
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>(&#34;~/.emacs.d/&#34;)
-</span></span></code></pre></td></tr></table></div></div><h2 id=write-to-file>Write to file</h2><p>Opposite to <code>read</code>, to write to file in format that <code>read</code> understands, use <code>print</code> or <code>prin1</code>. Unlike <code>princ</code> which outputs something that human readable, like removing double quotes for string, these two functions will keep the original data format.</p><p>Suppose there is a list that we want to save to a file.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><h2 id=write-to-file>Write to file</h2><p>Opposite to <code>read</code>, to write to file in format that <code>read</code> understands, use <code>print</code> or <code>prin1</code>. Unlike <code>princ</code> which outputs something that human readable, like removing double quotes for string, these two functions will keep the original data format.</p><p>Suppose there is a list that we want to save to a file.</p><p></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-emacs-lisp data-lang=emacs-lisp><span class=line><span class=cl><span class=p>(</span><span class=nb>setq</span> <span class=nv>data</span> <span class=o>&#39;</span><span class=p>((</span><span class=s>&#34;foo&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>	     <span class=p>(</span><span class=s>&#34;bar&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>	     <span class=p>(</span><span class=s>&#34;baz&#34;</span><span class=p>)))</span>
-</span></span><span class=line><span class=cl><span class=p>(</span><span class=nb>with-temp-file</span> <span class=s>&#34;saved_data&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>To write to a file.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-emacs-lisp data-lang=emacs-lisp><span class=line><span class=cl><span class=p>(</span><span class=nb>with-temp-file</span> <span class=s>&#34;saved_data&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nf>insert</span> <span class=s>&#34;;;; saved_data -*- lisp-data -*-\n&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>  <span class=p>(</span><span class=nf>print</span> <span class=nv>data</span> <span class=p>(</span><span class=nf>current-buffer</span><span class=p>)))</span>
-</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p>Check the out file.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>cat saved_data
 </span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>;;; mydata -*- lisp-data -*-
+</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>((&#34;foo&#34;) (&#34;bar&#34;) (&#34;baz&#34;))
 </span></span></code></pre></td></tr></table></div></div><p>Nice.</p></section><footer class=article-footer><section class=article-tags><a href=/tags/emacs/>emacs</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC 4.0</span></section><section class=article-lastmod><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><span>Last updated on Nov 14, 2022 16:58 UTC</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/autoloading-in-emacs/><div class=article-details><h2 class=article-title>Autoloading in Emacs</h2></div></a></article><article><a href=/p/use-org-mode-to-manage-my-blog/><div class=article-details><h2 class=article-title>Use Org Mode to Manage My Blog</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
 2017 -
