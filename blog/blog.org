@@ -918,7 +918,7 @@ Suppose we have a =lisp-data= file named =mydata= with the content below.
 
 When we read it, we should read the whole file as a string first and then pass it to =read= function.  The easiest way is to use =with-temp-buffer=.
 
-#+begin_src emacs-lisp :results output
+#+begin_src emacs-lisp :results output :exports both
 (setq data (read (with-temp-buffer
                    (insert-file-contents "mydata")
                    (buffer-string))))
