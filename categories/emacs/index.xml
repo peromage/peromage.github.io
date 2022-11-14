@@ -1,4 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>emacs on Fang's Blog</title><link>https://peromage.github.io/categories/emacs/</link><description>Recent content in emacs on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 06 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/categories/emacs/index.xml" rel="self" type="application/rss+xml"/><item><title>Autoloading in Emacs</title><link>https://peromage.github.io/p/autoloading-in-emacs/</link><pubDate>Mon, 06 Jun 2022 00:00:00 +0000</pubDate><guid>https://peromage.github.io/p/autoloading-in-emacs/</guid><description>&lt;p>Autoloading is a neat feature in Emacs. It speeds up Emacs by lazy load the files. But it could be a little confusing if you&amp;rsquo;re switching from Vim.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>emacs on Fang's Blog</title><link>https://peromage.github.io/categories/emacs/</link><description>Recent content in emacs on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 14 Nov 2022 10:57:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/categories/emacs/index.xml" rel="self" type="application/rss+xml"/><item><title>Use lisp-data Files in Emacs</title><link>https://peromage.github.io/p/use-lisp-data-files-in-emacs/</link><pubDate>Mon, 14 Nov 2022 10:57:00 +0000</pubDate><guid>https://peromage.github.io/p/use-lisp-data-files-in-emacs/</guid><description>&lt;p>I found that there were few posts mentioning about using &lt;code>lisp-data&lt;/code> files. However, it seems to be used widely in various packages.&lt;/p>
+&lt;p>The biggest challenge is to convert string to Lisp list. After a quick search with &lt;code>describe-function&lt;/code>, &lt;code>read&lt;/code> function is able to perfectly handle that in this case.&lt;/p>
+&lt;p>Suppose we have a &lt;code>lisp-data&lt;/code> file named &lt;code>mydata&lt;/code> with the content below.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">;;; mydata -*- lisp-data -*-
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">((&amp;#34;~/repo/peromage.github.io/&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> (&amp;#34;~/.emacs.d/&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> (&amp;#34;~/some/random/place&amp;#34;))
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>When we read it, we should read the whole file as a string first and then pass it to &lt;code>read&lt;/code> function. The easiest way is to use &lt;code>with-temp-buffer&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-emacs-lisp" data-lang="emacs-lisp">&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nb">setq&lt;/span> &lt;span class="nv">data&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nf">read&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nb">with-temp-buffer&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">(&lt;/span>&lt;span class="nf">insert-file-contents&lt;/span> &lt;span class="s">&amp;#34;mydata&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">(&lt;/span>&lt;span class="nf">buffer-string&lt;/span>&lt;span class="p">))))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nf">print&lt;/span> &lt;span class="nv">data&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nf">print&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nf">nth&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="nv">data&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Nice.&lt;/p></description></item><item><title>Autoloading in Emacs</title><link>https://peromage.github.io/p/autoloading-in-emacs/</link><pubDate>Mon, 06 Jun 2022 00:00:00 +0000</pubDate><guid>https://peromage.github.io/p/autoloading-in-emacs/</guid><description>&lt;p>Autoloading is a neat feature in Emacs. It speeds up Emacs by lazy load the files. But it could be a little confusing if you&amp;rsquo;re switching from Vim.&lt;/p>
 &lt;h2 id="myth-not-working-as-expected">Myth - Not Working as Expected&lt;/h2>
 &lt;p>If you have used Vim you know in Vim you can put your library files to the load path variable and Vim autoloads them whenever one of the functions/variables is used. Initially I thought this is the same in Emacs but with a little effort to put the magic autoload comments before the function/variable definition. It turned out I was wrong. When I called my functions Emacs could not find them until I explicitly require them. This is obviously not my intention.&lt;/p>
 &lt;h2 id="make-it-work">Make It Work&lt;/h2>
