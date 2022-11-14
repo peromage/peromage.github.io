@@ -900,12 +900,16 @@ https://emacs.stackexchange.com/questions/8023/how-to-use-autoload
 :EXPORT_FILE_NAME: use-lisp-data-in-emacs
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-11-14 Mon 16:58]
 - State "PUBLISHED"  from "CREATED"    [2022-11-14 Mon 12:42]
 - State "CREATED"    from              [2022-11-14 Mon 10:57]
 :END:
 I found that there were few posts mentioning about using =lisp-data= files.  However, it seems to be used widely in various packages.
 
-The biggest challenge is to convert string to Lisp list.  After a quick search with =describe-function=, =read= function is able to perfectly handle that in this case.
+[[https://www.gnu.org/software/emacs/manual/html_node/elisp/Read-and-Print.html][Emacs manumal]] has a very detailed description of how to read and write lisp objects.  In this post I'll mainly demonstrate one specific use case.
+
+*** Read from file
+The biggest challenge is to parse file content to Lisp lists.  After a quick search with =describe-function=, =read= function is able to perfectly handle it in this case.
 
 Suppose we have a =lisp-data= file named =mydata= with the content below.
 
@@ -920,7 +924,7 @@ cat <<EOF >>mydata
 
 When we read it, we should read the whole file as a string first and then pass it to =read= function.  The easiest way is to use =with-temp-buffer=.
 
-#+begin_src emacs-lisp :dir /tmp :results output :exports both :eval never-export
+#+begin_src emacs-lisp :dir /tmp :results output :exports both :eval no-export
 (setq data (read (with-temp-buffer
                    (insert-file-contents "mydata")
                    (buffer-string))))
@@ -933,6 +937,27 @@ When we read it, we should read the whole file as a string first and then pass i
 : (("~/repo/peromage.github.io/") ("~/.emacs.d/") ("~/some/random/place"))
 :
 : ("~/.emacs.d/")
+
+*** Write to file
+Opposite to =read=, to write to file in format that =read= understands, use =print= or =prin1=.  Unlike =princ= which outputs something that human readable, like removing double quotes for string, these two functions will keep the original data format.
+
+Suppose there is a list that we want to save to a file.
+
+#+begin_src emacs-lisp :dir /tmp :results silent :exports code :eval no-export
+(setq data '(("foo")
+             ("bar")
+             ("baz")))
+(with-temp-file "saved_data"
+  (print data (current-buffer)))
+#+end_src
+
+#+begin_src shell :dir /tmp :results output :exports both :eval no-export
+cat saved_data
+#+end_src
+
+#+RESULTS:
+:
+: (("foo") ("bar") ("baz"))
 
 Nice.
 
