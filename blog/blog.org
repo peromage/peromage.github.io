@@ -943,19 +943,29 @@ Opposite to =read=, to write to file in format that =read= understands, use =pri
 
 Suppose there is a list that we want to save to a file.
 
-#+begin_src emacs-lisp :dir /tmp :results silent :exports code :eval no-export
+#+name: data-to-save
+#+begin_src emacs-lisp
 (setq data '(("foo")
              ("bar")
              ("baz")))
+#+end_src
+
+To write to a file.
+
+#+begin_src emacs-lisp :var data=data-to-save :dir /tmp :results silent :exports code :eval no-export
 (with-temp-file "saved_data"
+  (insert ";;; saved_data -*- lisp-data -*-\n")
   (print data (current-buffer)))
 #+end_src
+
+Check the out file.
 
 #+begin_src shell :dir /tmp :results output :exports both :eval no-export
 cat saved_data
 #+end_src
 
 #+RESULTS:
+: ;;; mydata -*- lisp-data -*-
 :
 : (("foo") ("bar") ("baz"))
 
