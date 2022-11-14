@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>emacs on Fang's Blog</title><link>https://peromage.github.io/tags/emacs/</link><description>Recent content in emacs on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 14 Nov 2022 10:57:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/emacs/index.xml" rel="self" type="application/rss+xml"/><item><title>Use lisp-data Files in Emacs</title><link>https://peromage.github.io/p/use-lisp-data-files-in-emacs/</link><pubDate>Mon, 14 Nov 2022 10:57:00 +0000</pubDate><guid>https://peromage.github.io/p/use-lisp-data-files-in-emacs/</guid><description>&lt;p>I found that there were few posts mentioning about using &lt;code>lisp-data&lt;/code> files. However, it seems to be used widely in various packages.&lt;/p>
-&lt;p>The biggest challenge is to convert string to Lisp list. After a quick search with &lt;code>describe-function&lt;/code>, &lt;code>read&lt;/code> function is able to perfectly handle that in this case.&lt;/p>
+&lt;p>&lt;a class="link" href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Read-and-Print.html" target="_blank" rel="noopener"
+>Emacs manumal&lt;/a> has a very detailed description of how to read and write lisp objects. In this post I&amp;rsquo;ll mainly demonstrate one specific use case.&lt;/p>
+&lt;h2 id="read-from-file">Read from file&lt;/h2>
+&lt;p>The biggest challenge is to parse file content to Lisp lists. After a quick search with &lt;code>describe-function&lt;/code>, &lt;code>read&lt;/code> function is able to perfectly handle it in this case.&lt;/p>
 &lt;p>Suppose we have a &lt;code>lisp-data&lt;/code> file named &lt;code>mydata&lt;/code> with the content below.&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -48,6 +51,43 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">((&amp;#34;~/repo/peromage.github.io/&amp;#34;) (&amp;#34;~/.emacs.d/&amp;#34;) (&amp;#34;~/some/random/place&amp;#34;))
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">(&amp;#34;~/.emacs.d/&amp;#34;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="write-to-file">Write to file&lt;/h2>
+&lt;p>Opposite to &lt;code>read&lt;/code>, to write to file in format that &lt;code>read&lt;/code> understands, use &lt;code>print&lt;/code> or &lt;code>prin1&lt;/code>. Unlike &lt;code>princ&lt;/code> which outputs something that human readable, like removing double quotes for string, these two functions will keep the original data format.&lt;/p>
+&lt;p>Suppose there is a list that we want to save to a file.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-emacs-lisp" data-lang="emacs-lisp">&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nb">setq&lt;/span> &lt;span class="nv">data&lt;/span> &lt;span class="o">&amp;#39;&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="s">&amp;#34;foo&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;bar&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;baz&amp;#34;&lt;/span>&lt;span class="p">)))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nb">with-temp-file&lt;/span> &lt;span class="s">&amp;#34;saved_data&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">(&lt;/span>&lt;span class="nf">print&lt;/span> &lt;span class="nv">data&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nf">current-buffer&lt;/span>&lt;span class="p">)))&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">cat saved_data
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">((&amp;#34;foo&amp;#34;) (&amp;#34;bar&amp;#34;) (&amp;#34;baz&amp;#34;))
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>Nice.&lt;/p></description></item><item><title>Autoloading in Emacs</title><link>https://peromage.github.io/p/autoloading-in-emacs/</link><pubDate>Mon, 06 Jun 2022 00:00:00 +0000</pubDate><guid>https://peromage.github.io/p/autoloading-in-emacs/</guid><description>&lt;p>Autoloading is a neat feature in Emacs. It speeds up Emacs by lazy load the files. But it could be a little confusing if you&amp;rsquo;re switching from Vim.&lt;/p>
