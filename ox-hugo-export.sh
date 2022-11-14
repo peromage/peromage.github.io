@@ -11,7 +11,7 @@ if [ -d "content" ]; then
     rm -rf content
 fi
 
-emacs -nw --batch --eval \
+emacs -Q --batch --eval \
       '(progn
          (package-initialize)
          (add-to-list (quote package-archives) (quote ("melpa" . "https://melpa.org/packages/")))
@@ -19,6 +19,7 @@ emacs -nw --batch --eval \
          (package-install (quote ox-hugo))
          (require (quote org))
          (require (quote org-id))
+         (setq org-confirm-babel-evaluate nil)
          (find-file "blog/blog.org")
          (org-hugo-export-wim-to-md :all)
          (org-babel-tangle))'
