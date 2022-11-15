@@ -195,7 +195,8 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h2 id="hidpi">HiDPI&lt;/h2>
-&lt;h3 id="xfce">XFCE&lt;/h3>
+&lt;p>Update: I switched to KDE as the default desktop environment so HiDPI is not a problem anymore.&lt;/p>
+&lt;h3 id="xfce-obsolete">XFCE - Obsolete&lt;/h3>
 &lt;p>&lt;code>XFCE&lt;/code> is my choice of &amp;ldquo;just works&amp;rdquo; desktop environment. It has some issues with HiDPI out of the box so some tweaks need to be made.&lt;/p>
 &lt;p>&lt;a class="link" href="https://wiki.archlinux.org/title/HiDPI#Xfce" target="_blank" rel="noopener"
 >Arch wiki&lt;/a> has elaborated it already.&lt;/p>
