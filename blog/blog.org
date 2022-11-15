@@ -1,27 +1,3 @@
-* Notes
-** New Post
-:PROPERTIES:
-:EXPORT_FILE_NAME:
-:END:
-
-** Workflow
-Remind myself how to use this workflow.
-
-1. Copy the node above with =org-refile-copy=.
-2. Change the title and complete the property =EXPORT_FILE_NAME=.
-3. =C-c C-t= to change todo to =CREATED= to log creation time.
-4. =C-c C-t= to change todo to =PUBLISHED= to log last modified time.
-5. =C-c C-q= to add proper tags.
-6. Use =org-narrow-to-subtree= to focus on the current node that is being edited.  Use =widen= to exit.
-
-** Format
-1. Use two spaces after the period.
-2. Leave an empty line after each node.
-3. Put new posts at the end of category nodes.
-
-** Keep This Workflow
-After experiments, a single org file works the best compared with using one-file-one-post style.  Even with organizing posts per year per file.  Considering this is just a source of the whole blog project, as long as it is easy to manage, there is no point to change it.
-
 * Site Configurations
 This node contains site navigation page setup.
 
