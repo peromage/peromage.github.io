@@ -4,16 +4,6 @@
 #+hugo_tags: multi_boot
 #+setupfile: ./blog.conf
 
-* COMMENT some todo
-:PROPERTIES:
-:EXPORT_FILE_NAME: minimalists-multi-boot-usb-drive
-:CUSTOM_ID: multi-boot-usb
-:END:
-:LOGBOOK:
-- State "PUBLISHED"  from "PUBLISHED"  [2022-06-04 Sat 18:55]
-- State "PUBLISHED"  from "DRAFT"      [2022-01-26 Wed 20:34]
-- State "CREATED"    from              [2022-01-26 Wed 20:34]
-:END:
 * Story
 Recently I've realized a fact that I always have needs to keep a multi-boot USB in my pocket for either Linux or Windows installation.  There are a lot tools out there already but I don't really like them.  At least, I mean, they are too flashy to me.  A beautiful boot menu seems not to be attractive.  What I need is just a simple and practical maybe a little ugly boot device.  It should be minimalist.  More importantly, it has to be easy to setup with the tools on the system already and maintainable.  No funky scripts.
 

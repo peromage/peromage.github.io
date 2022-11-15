@@ -1,3 +1,4 @@
+#+hugo_base_dir: ../hugo
 #+setupfile: ./blog.conf
 
 Hugo site navigation page setup.

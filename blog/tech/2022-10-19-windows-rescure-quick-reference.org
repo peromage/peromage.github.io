@@ -4,7 +4,7 @@
 #+hugo_tags: multi_boot windows
 #+setupfile: ./blog.conf
 
-Though I've written posts about [[#dual-boot-windows-linux][dual-booting Windows and Linux]] and [[#multi-boot-usb][multi-booting a USB drive]], I have to go back and dig useful information out each time when I forget something.
+Though I've written posts about [[file:../linux/2021-07-09-dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc.org][dual-booting Windows and Linux]] and [[file:2022-01-26-minimalists-multi-boot-usb-drive.org][multi-booting a USB drive]], I have to go back and dig useful information out each time when I forget something.
 
 After breaking my dual-boot setup once again (forgot to backup boot partition), I decided to create this post for a quick reference.
 
