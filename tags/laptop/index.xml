@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>laptop on Fang's Blog</title><link>https://peromage.github.io/tags/laptop/</link><description>Recent content in laptop on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 08 Nov 2022 22:45:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/laptop/index.xml" rel="self" type="application/rss+xml"/><item><title>Arch Linux on Laptop</title><link>https://peromage.github.io/p/arch-linux-on-laptop/</link><pubDate>Tue, 08 Nov 2022 22:45:00 +0000</pubDate><guid>https://peromage.github.io/p/arch-linux-on-laptop/</guid><description>&lt;p>I recently got my new laptop and I found that some additional tweaks need to be made for laptops. Thus, this post is to have a record in case I forget when I have to reinstall the system.&lt;/p>
+&lt;h2 id="installing-arch-linux">Installing Arch Linux&lt;/h2>
+&lt;p>I have a script to handle this: &lt;a class="link" href="https://github.com/peromage/pew/blob/master/rice/scripts/setup/arch-install.sh" target="_blank" rel="noopener"
+>https://github.com/peromage/pew/blob/master/rice/scripts/setup/arch-install.sh&lt;/a>&lt;/p>
+&lt;h2 id="laptop-disk-partitioning-and-encryption">Laptop Disk Partitioning and Encryption&lt;/h2>
+&lt;p>Unlike desktop, laptops have to be secure so encrytion is a must.&lt;/p>
+&lt;p>Details of how-to can be found on Arch wiki. I&amp;rsquo;m not going to go through that here. However, I&amp;rsquo;ll note down some considerations and things that need to pay attention to.&lt;/p>
+&lt;h3 id="partitioning">Partitioning&lt;/h3>
+&lt;p>&lt;a class="link" href="https://wiki.archlinux.org/title/Btrfs" target="_blank" rel="noopener"
+>Arch wiki about BTRFS&lt;/a>&lt;/p>
+&lt;p>Using too many partitions is not good for SSD so I only have two partitions on the disk: EFI partition (also as boot) + a big partition formated with &lt;code>BTRFS&lt;/code>. The second partition is encrypted, which will be demonstrated in the next topic.&lt;/p>
+&lt;p>With &lt;code>BTRFS&lt;/code>, I can use subvolume to achieve the similar effect like what partition does, but it is more flexible.&lt;/p>
+&lt;p>These subvolumes are created under the big &lt;code>BTRFS&lt;/code>&amp;rsquo;s root.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Subvolume&lt;/th>
+&lt;th>Mount Point&lt;/th>
+&lt;th>Note&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>@arch-root&lt;/td>
+&lt;td>/&lt;/td>
+&lt;td>System root&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>@arch-var&lt;/td>
+&lt;td>/var&lt;/td>
+&lt;td>Avoid getting snapshot&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>@home&lt;/td>
+&lt;td>/home&lt;/td>
+&lt;td>Separated home&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>@swap&lt;/td>
+&lt;td>/.swap&lt;/td>
+&lt;td>Swap files (no compression, no CoW)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>@snapshot&lt;/td>
+&lt;td>/.snapshot&lt;/td>
+&lt;td>Snapshots&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>An example of how &lt;code>fstab&lt;/code> is set up.&lt;/p>
+&lt;p>Be aware that swap subvolume should NOT be mounted with compression on.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># &amp;lt;file system&amp;gt; &amp;lt;dir&amp;gt; &amp;lt;type&amp;gt; &amp;lt;options&amp;gt; &amp;lt;dump&amp;gt; &amp;lt;pass&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># /dev/mapper/myroot LABEL=FFROOT&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">UUID&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">dcc33411-f4ae-46e0-ba7a-f285301b25f6 / btrfs rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@arch-root 0 1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># /dev/nvme0n1p1 LABEL=EFI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">UUID&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">1569-822D /boot vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro 0 2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># /dev/mapper/myroot LABEL=FFROOT&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">UUID&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">dcc33411-f4ae-46e0-ba7a-f285301b25f6 /home btrfs rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@home 0 2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># /dev/mapper/myroot LABEL=FFROOT&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">UUID&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">dcc33411-f4ae-46e0-ba7a-f285301b25f6 /var btrfs rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@arch-var 0 2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># /dev/mapper/myroot LABEL=FFROOT&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">UUID&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">dcc33411-f4ae-46e0-ba7a-f285301b25f6 /.swap btrfs rw,noatime,ssd,space_cache=v2,subvol=/@swap 0 2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Swap files&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">/.swap/swap-32gb.img none swap defaults 0 0&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="encryption">Encryption&lt;/h3>
+&lt;p>&lt;a class="link" href="https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system" target="_blank" rel="noopener"
+>Arch wiki about encryption&lt;/a>&lt;/p>
+&lt;p>Use &lt;code>LUKS2&lt;/code>. The latest &lt;code>GRUB2&lt;/code> has integrated the support for this new algorithm. Why not using it?&lt;/p>
+&lt;p>As for the scheme, I leave EFI partition unencrypted and encrypt the whole &lt;code>BTRFS&lt;/code> partition. EFI partition also acts as boot partition (ramfs and kernel reside).&lt;/p>
+&lt;p>The reason that I don&amp;rsquo;t put boot partition encrypted is that I have to decrypt twice on startup: once by &lt;code>GRUB&lt;/code> and the other one by kernel. Though there is a way to &lt;a class="link" href="https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system#Avoiding_having_to_enter_the_passphrase_twice" target="_blank" rel="noopener"
+>setup a key file&lt;/a> to avoid that, I still prefer typing password (Maybe TPM can be used).&lt;/p>
+&lt;p>To tell kernel to decrypt the disk on startup, ramfs and kernel parameters have to be updated.&lt;/p>
+&lt;p>Kernel parameters. The UUID has to be the UUID of the partition itself (not unencrypted BTRFS partition).&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">GRUB_CMDLINE_LINUX_DEFAULT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;cryptdevice=UUID=51d2be03-b9a4-4d4d-bc5a-0a9dba854c1f:ffroot root=/dev/mapper/ffroot&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Update ramfs hooks. &lt;code>encrypt&lt;/code> needs to go after &lt;code>udev&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">HOOKS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">(base udev autodetect modconf block filesystems keyboard fsck encrypt)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="hibernation">Hibernation&lt;/h2>
+&lt;p>A workaround has to be made on &lt;code>BTRFS&lt;/code> with swap files.&lt;/p>
+&lt;p>First swap files should &lt;strong>NOT&lt;/strong> be set with CoW attribute.&lt;/p>
+&lt;p>Follow &lt;a class="link" href="https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Hibernation_into_swap_file_on_Btrfs" target="_blank" rel="noopener"
+>this wiki&lt;/a> to calculate swap file physical offset on &lt;code>BTRFS&lt;/code> partition.&lt;/p>
+&lt;p>Then set kernel parameters. The UUID should be the UUID of decrypted &lt;code>BTRFS&lt;/code> partition. Differentiate from the UUID above.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">GRUB_CMDLINE_LINUX_DEFAULT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;resume=UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 resume_offset=3420784&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Update ramfs. Add &lt;code>resume&lt;/code> hook.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">HOOKS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">(base udev autodetect modconf block filesystems keyboard fsck encrypt resume)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="tlp">TLP&lt;/h2>
+&lt;p>My &lt;code>TLP&lt;/code> preferences.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># /etc/tlp.d/my-power-plan.conf&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">TLP_DEFAULT_MODE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">AC&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">TLP_PERSISTENT_DEFAULT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">CPU_SCALING_GOVERNOR_ON_AC&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">performance&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">CPU_SCALING_GOVERNOR_ON_BAT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">powersave&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">CPU_ENERGY_PERF_POLICY_ON_AC&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">balance_performance&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">CPU_ENERGY_PERF_POLICY_ON_BAT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">balance_power&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">CPU_MIN_PERF_ON_AC&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">CPU_MAX_PERF_ON_AC&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">100&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">CPU_MIN_PERF_ON_BAT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">CPU_MAX_PERF_ON_BAT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">20&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">CPU_BOOST_ON_AC&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">CPU_BOOST_ON_BAT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">CPU_HWP_DYN_BOOST_ON_AC&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">CPU_HWP_DYN_BOOST_ON_BAT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">SCHED_POWERSAVE_ON_AC&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">SCHED_POWERSAVE_ON_BAT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="framework-laptop-specific">Framework Laptop Specific&lt;/h2>
+&lt;p>Framework laptop needs some additional tweaks.&lt;/p>
+&lt;h3 id="ambient-light-sensor">Ambient Light Sensor&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># pacman -S iio-sensor-proxy&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="fingerprint">Fingerprint&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># pacman -S fprintd&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="bluetooth">Bluetooth&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># pacman -S bluez bluez-utils&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># systemctl enable --now bluetooth&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="touchpad-two-finger-three-finger-click">Touchpad Two-finger/Three-finger Click&lt;/h3>
+&lt;ol>
+&lt;li>Get touchpad device id&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># xinput&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol>
+&lt;li>Add to .xinitrc&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># xinput set-prop &amp;lt;device&amp;gt; &amp;#39;libinput Click Method Enabled&amp;#39; 0 1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="brightness-keys">Brightness Keys&lt;/h3>
+&lt;p>Add to kernel parameters:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">GRUB_CMDLINE_LINUX_DEFAULT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;module_blacklist=hid_sensor_hub&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="suspend-power">Suspend Power&lt;/h3>
+&lt;p>Add to kernel parameters:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">GRUB_CMDLINE_LINUX_DEFAULT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;mem_sleep_default=deep nvme.noacpi=1&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>
