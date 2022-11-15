@@ -37,11 +37,8 @@ jobs:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
-      - name: Export Markdown Files
-        run: cd blog && echo where is Emacs located && which emacs && ./ox-hugo-export.el
-
       - name: Build
-        run: cd hugo && hugo --minify
+        run: ./build.sh
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

@@ -1,6 +1,5 @@
-#!/usr/bin/emacs --script
+;; Elisp script file which should be executed with `emacs --script'.
 
-;;; Code:
 ;; Use `ox-hugo' to convert org files to markdown files.
 
 ;; Check working directory first
@@ -23,12 +22,9 @@
               "hugo"
               (locate-dominating-file default-directory ".git")))))
 
-;; Cleanup before exporting
-(delete-directory "../hugo/content" t)
-
 ;; Export posts
 (dolist (post (file-expand-wildcards "**/*.org"))
-  (message ">> exporting %s" post)
+  (message ">> Exporting %s" post)
   (find-file post)
   (org-hugo-export-to-md)
   (kill-buffer))

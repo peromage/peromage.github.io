@@ -1,6 +1,7 @@
 # Content will be generated from org files
 /hugo/content/
 /hugo/public/
+/hugo/resources/
 
 # Garbage
 .DS_Store
