@@ -1,0 +1,71 @@
+#+setupfile: ./blog.conf
+#+title: Use lisp-data Files in Emacs
+#+date: <2022-11-14 Mon 10:57>
+#+hugo_lastmod: <2022-11-14 Mon 16:58>
+
+I found that there were few posts mentioning about using =lisp-data= files.  However, it seems to be used widely in various packages.
+
+[[https://www.gnu.org/software/emacs/manual/html_node/elisp/Read-and-Print.html][Emacs manumal]] has a very detailed description of how to read and write lisp objects.  In this post I'll mainly demonstrate one specific use case.
+
+* Read from file
+The biggest challenge is to parse file content to Lisp lists.  After a quick search with =describe-function=, =read= function is able to perfectly handle it in this case.
+
+Suppose we have a =lisp-data= file named =mydata= with the content below.
+
+#+begin_src shell :dir /tmp :results silent :exports code
+cat <<EOF >>mydata
+;;; mydata -*- lisp-data -*-
+(("~/repo/peromage.github.io/")
+ ("~/.emacs.d/")
+ ("~/some/random/place"))
+ EOF
+#+end_src
+
+When we read it, we should read the whole file as a string first and then pass it to =read= function.  The easiest way is to use =with-temp-buffer=.
+
+#+begin_src emacs-lisp :dir /tmp :results output :exports both :eval no-export
+(setq data (read (with-temp-buffer
+                   (insert-file-contents "mydata")
+                   (buffer-string))))
+(print data)
+(print (nth 1 data))
+#+end_src
+
+#+RESULTS:
+:
+: (("~/repo/peromage.github.io/") ("~/.emacs.d/") ("~/some/random/place"))
+:
+: ("~/.emacs.d/")
+
+* Write to file
+Opposite to =read=, to write to file in format that =read= understands, use =print= or =prin1=.  Unlike =princ= which outputs something that human readable, like removing double quotes for string, these two functions will keep the original data format.
+
+Suppose there is a list that we want to save to a file.
+
+#+name: data-to-save
+#+begin_src emacs-lisp
+(setq data '(("foo")
+             ("bar")
+             ("baz")))
+#+end_src
+
+To write to a file.
+
+#+begin_src emacs-lisp :var data=data-to-save :dir /tmp :results silent :exports code :eval no-export
+(with-temp-file "saved_data"
+  (insert ";;; saved_data -*- lisp-data -*-\n")
+  (print data (current-buffer)))
+#+end_src
+
+Check the out file.
+
+#+begin_src shell :dir /tmp :results output :exports both :eval no-export
+cat saved_data
+#+end_src
+
+#+RESULTS:
+: ;;; mydata -*- lisp-data -*-
+:
+: (("foo") ("bar") ("baz"))
+
+Nice.

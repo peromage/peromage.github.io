@@ -1,0 +1,29 @@
+#+setupfile: ./blog.conf
+#+title: Use Git Worktree to Work with Multiple Checkout at the Same Time
+#+date: <2022-06-06 Mon 00:30>
+#+hugo_lastmod: <2022-06-06 Mon 00:41>
+
+* Troubles
+When working with a complicated project where you have to compare different history versions side by side, it soon becomes frustrating frequently checking out refs.
+
+The old stupid way is to clone multiple repos and checkout to the specific revisions.  When the project is big this might be a trouble because you're basically duplicating files.
+
+* Savior
+Git provides a convenience sub-command =worktree= to checkout a specific ref in another directory without duplicating files.
+
+** Add a New Checkout
+
+#+begin_src shell
+$ git worktree add ../foo-ref-1 <ref>
+#+end_src
+
+Of course you can add as many checkouts as you want.
+
+** Remove a Checkout
+When the checkout is no longer needed, it can be deleted from this command.
+
+#+begin_src shell
+$ git worktree remove --force ../foo-ref-1
+#+end_src
+
+If there are uncommitted changes git will prevent you from deleting the directory.  In this case =--force= flag is needed.

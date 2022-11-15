@@ -1,0 +1,23 @@
+#+setupfile: ./blog.conf
+#+title: Autoloading in Emacs
+#+date: <2022-06-06 Mon 00:00>
+#+hugo_lastmod: <2022-06-06 Mon 00:22>
+
+Autoloading is a neat feature in Emacs.  It speeds up Emacs by lazy load the files.  But it could be a little confusing if you're switching from Vim.
+
+* Myth - Not Working as Expected
+If you have used Vim you know in Vim you can put your library files to the load path variable and Vim autoloads them whenever one of the functions/variables is used.  Initially I thought this is the same in Emacs but with a little effort to put the magic autoload comments before the function/variable definition.  It turned out I was wrong.  When I called my functions Emacs could not find them until I explicitly require them.  This is obviously not my intention.
+
+* Make It Work
+After carefully reading the document, I got that the magic autoload comment is just a [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Autoload.html#index-autoloadp][autoload cookie]] that guides Emacs to generate the real autoload code.  In one word, I have to define the function/variable autoload definition anyways.  But with the cookies it simplifies the process.
+
+1. Add magic comment =;;;###autoload= before the desired function/variable definition.
+2. ~M-x~ =update-file-autoloads= command on the library file which contains the definitions that need to be autoloaded.  Store that generated autoload definition file with a different name.
+3. Require that autoload definition file in the =init.el=.
+
+That's the process to autoload the custom library.  The downside is the =update-file-autoloads= command has to be called every time the library file is updated.
+
+Alternative way is to use =package-install-from-buffer= to install the library file as a package.  =package.el= does the dirty work for you, takes care of autoload definition generation and loading automatically.
+
+* Reference
+https://emacs.stackexchange.com/questions/8023/how-to-use-autoload

@@ -1,0 +1,122 @@
+#+setupfile: ./blog.conf
+#+title: Windows Rescure Quick Reference
+#+date: <2022-10-19 Wed 00:01>
+#+hugo_lastmod: <2022-10-19 Wed 00:01>
+
+Though I've written posts about [[#dual-boot-windows-linux][dual-booting Windows and Linux]] and [[#multi-boot-usb][multi-booting a USB drive]], I have to go back and dig useful information out each time when I forget something.
+
+After breaking my dual-boot setup once again (forgot to backup boot partition), I decided to create this post for a quick reference.
+
+This reference assumes system is boot from UEFI and Windows is installed on a dedicated partition.
+
+* Setup A USB With System Images
+Forget the previous multi-boot USB post. Use [[https://www.ventoy.net/en/index.html][Ventory]] and it just works great.
+
+In this case we need a Linux and Windows ISO. For Linux, I prefer Arch. For Windows, we need a PE environment. I don't trust those PE ISOs from other people so the best way is to download an official image from Microsoft since we just need some tools and they are included in the installation ISO already.
+
+* Method 1: Load Windows From GRUB
+To prevent Windows from messing up with Linux's bootloader, a good idea is to put Windows' bootloader in a VHD file and chainload it from GRUB.
+
+** Fix Windows's Bootloader
+Boot into Windows installation ISO.
+
+Don't start installing. Instead, choose =Repair your computer= -> =Troubleshoot= -> =Command Prompt=.
+
+We need to create a VHD that contains Windows bootmgr. I used to create a file in 32 MB but it seems too small for the most recent bloated Windows so in case, we use 128 MB here.
+
+NOTE: This file will be loaded into memory so don't make it too big.
+
+In diskpart, use =list volume= to confirm EFI partition volume letter. Usually it will not be assigned by PE environment automatically.
+
+NOTE: The file can be put in Windows partition though. It requires extra setup like load NTFS module for grub and find it's root. That's too cumbersome.
+
+#+begin_src shell
+> diskpart
+DISKPART> list volume
+# EFI partition
+DISKPART> select volume 2
+DISKPART> assign letter=e
+DISKPART> create vdisk file=e:\bootmgr.vhd maximum=128 type=fixed
+DISKPART> select vdisk file=e:\bootmgr.vhd
+DISKPART> attach vdisk
+DISKPART> convert mbr
+DISKPART> create partition primary
+DISKPART> format fs=ntfs quick
+DISKPART> assign letter=f
+DISKPART> exit
+#+end_src
+
+Now the bootloader VHD is mounted at =F:=.  Then write the boot record and create boot configuration files.
+
+NOTE: Windows partition volume letter should be confirmed in =diskpart= above. It's usually assigned by PE automatically. In this case it is =C:=.
+
+#+begin_src shell
+> bootsect /nt60 e: /mbr
+> bcdboot c:\Windows /l en-us /s e: /f uefi
+#+end_src
+
+** Add Window to GRUB
+Boot into Linux and confirm EFI partition UUID where you put the Windows bootloader VHD file. In command line:
+
+#+begin_src shell
+$ lsblk -f
+#+end_src
+
+Configure GRUB menu to include Windows. Assume the EFI partition is mounted at =/boot/efi= and =memdisk= (got from =syslinux=) is put at EFI partition's root.
+
+#+begin_src shell
+$ sudo cat <<EOF >>/etc/grub.d/40_custom
+menuentry "Windows 10" {
+    search --set=root --no-floppy --fs-uuid 1DB1-9C31
+    linux16 /memdisk harddisk
+    initrd16 /bootmgr.vhd
+}
+EOF
+
+$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+#+end_src
+
+** Problem
+I found that on Fedora =linux16= and =initrd16= is not available by default. A workaround must be done. If it comes in this case, I suggest to use method 2 below.
+
+* Method 2: Add Windows Back To UEFI Menu
+This method is simpler and it takes advantage of UEFI boot menu but there is possibility that Windows is going to break Linux if Linux is the default.
+
+** Fix Windows's Bootloader
+Boot into Windows installation ISO.
+
+Don't start installing. Instead, choose =Repair your computer= -> =Troubleshoot= -> =Command Prompt=.
+
+In diskpart, use =list volume= to confirm EFI partition volume letter. Usually it will not be assigned by PE environment automatically.
+
+First, mount EFI partition and backup Linux EFI files because Windows will overwrite the default settings :).
+
+#+begin_src shell
+> diskpart
+DISKPART> list volume
+# EFI partition
+DISKPART> select volume 2
+DISKPART> assign letter=e
+DISKPART> exit
+
+# Backup default UEFI entry (Linux)
+> cd /d e:\EFI
+> ren BOOT linux_BOOT
+#+end_src
+
+Then Create Windows boot files.
+
+#+begin_src shell
+# Windows volume is C: confirmed from diskpart above
+> bcdboot c:\Windows /l en-us /s e: /f uefi
+#+end_src
+
+Lastly, restore Linux as the default start option. If you want Windows to be the default, leave it as it.
+
+NOTE: For Fedora it seems to be a problem to be a none-default entry when log into display manager. Not sure why. So it'd be better to restore default for Fedora.
+
+#+begin_src shell
+# Restore default Linux entry
+> ren Boot Microsoft_Boot
+> ren linux_BOOT BOOT
+#+end_src
