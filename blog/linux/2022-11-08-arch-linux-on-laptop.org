@@ -6,6 +6,9 @@
 
 I recently got my new laptop and I found that some additional tweaks need to be made for laptops.  Thus, this post is to have a record in case I forget when I have to reinstall the system.
 
+* COMMENT Change Log
+<2022-11-15 Tue 16:19> Move to KDE as the default desktop so HiDPI is not a problem anymore.
+
 * Installing Arch Linux
 I have a script to handle this: https://github.com/peromage/pew/blob/master/rice/scripts/setup/arch-install.sh
 
@@ -127,7 +130,9 @@ SCHED_POWERSAVE_ON_BAT=1
 #+end_src
 
 * HiDPI
-** XFCE
+Update: I switched to KDE as the default desktop environment so HiDPI is not a problem anymore.
+
+** XFCE - Obsolete
 =XFCE= is my choice of "just works" desktop environment.  It has some issues with HiDPI out of the box so some tweaks need to be made.
 
 [[https://wiki.archlinux.org/title/HiDPI#Xfce][Arch wiki]] has elaborated it already.
@@ -147,6 +152,7 @@ exec startxfce4
 #+end_src
 
 The only problem is 2x scaling sometimes is too big.  GTK doesn't have the plan to support fractional scaling, which sucks.  I might switch to a Qt-based desktop environment.
+
 
 * Firefox scrolling with touchpad
 Yuck.  Default scrolling experience on touchpad is just disgusting.  To optimize it a bit, go to =about:config= page.
