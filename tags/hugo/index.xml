@@ -1,4 +1,189 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hugo on Fang's Blog</title><link>https://peromage.github.io/tags/hugo/</link><description>Recent content in hugo on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 05 Jun 2022 23:00:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>Use Org Mode to Manage My Blog</title><link>https://peromage.github.io/p/use-org-mode-to-manage-my-blog/</link><pubDate>Sun, 05 Jun 2022 23:00:00 +0000</pubDate><guid>https://peromage.github.io/p/use-org-mode-to-manage-my-blog/</guid><description>&lt;p>I&amp;rsquo;ve been using Emacs since last year but until recent I started using &lt;code>org-mode&lt;/code> seriously. After spending a couple of days reading and watching all kinds of org tutorial as well as using it for documentation, I realized that people who invented this must geniuses.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hugo on Fang's Blog</title><link>https://peromage.github.io/tags/hugo/</link><description>Recent content in hugo on Fang's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 15 Nov 2022 09:58:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>File-based Blog Management with ox-hugo</title><link>https://peromage.github.io/p/file-based-blog-management-with-ox-hugo/</link><pubDate>Tue, 15 Nov 2022 09:58:00 +0000</pubDate><guid>https://peromage.github.io/p/file-based-blog-management-with-ox-hugo/</guid><description>&lt;h2 id="background">Background&lt;/h2>
+&lt;p>I previously wrote a &lt;a class="link" href="https://peromage.github.io/p/use-org-mode-to-manage-my-blog/" >post&lt;/a> about managing blog posts with ox-hugo in org mode. I used to follow the recommendation to keep posts under org subtrees. As posts grew, I found that the opening speed is quite slow even I didn&amp;rsquo;t have many pictures inserted. Although managing the entire site within one file does have some convenience, the slowness is something I can&amp;rsquo;t bear.&lt;/p>
+&lt;p>Also I feel it a little awkward when I use the subtree style management. I always worried about if the format was correct like how many empty lines between posts or if something was accidentally changed outside of the post that I was editing. And in order to maintain the subtree structure, the actual posts have to be indented (nested), which is not what I like. There are solutions for this nested editing. I used to use &lt;code>org-narrow-to-subtree&lt;/code> when I was editing the post and use &lt;code>widen&lt;/code> to switch the view back. But still, I always worried about the format (please forgive OCD patient).&lt;/p>
+&lt;p>However, I want to continue using &lt;code>ox-hugo&lt;/code>. It is a wonderful package indeed! Luckily, it supports &lt;a class="link" href="https://ox-hugo.scripter.co/doc/usage/#for-only-the-one-post-per-file-flow" target="_blank" rel="noopener"
+>file-based style&lt;/a>.&lt;/p>
+&lt;h2 id="global-properties">Global properties&lt;/h2>
+&lt;p>One of the benefits that subtree style brings is you can inherit properties from the parent nodes. You can put category tags on the parent node. When creating posts under it, all posts will automatically inherit the category when they get exported. Also you can set some global org settings in the header so all posts can share it.&lt;/p>
+&lt;p>I want to have as much as close to this goodies when I use file-based style I created a &lt;a class="link" href="https://github.com/peromage/peromage.github.io/blob/master/blog/blog.conf" target="_blank" rel="noopener"
+>blog.conf file&lt;/a> as the global settings.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-org" data-lang="org">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># -*- mode: org; -*-&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># blog.conf&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Author.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+author&lt;/span>&lt;span class="c">: John Doe&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">On file open.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+startup&lt;/span>&lt;span class="c">: fold&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+startup&lt;/span>&lt;span class="c">: indent&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+startup&lt;/span>&lt;span class="c">: logdone&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+startup&lt;/span>&lt;span class="c">: logdrawer&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Todo states.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+seq_todo&lt;/span>&lt;span class="c">: DRAFT(d) | CREATED(c!) PUBLISHED(p!)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Categories.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">This is mainly for subtree-based export style.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+tags&lt;/span>&lt;span class="c">: @emacs @coding @linux @tech @ramble @折腾&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Posts under categories are expected to read this so the path is relative to the post files.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+hugo_base_dir&lt;/span>&lt;span class="c">: ../../hugo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Default section.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+hugo_section&lt;/span>&lt;span class="c">: blog&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Date and time.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+hugo_auto_set_lastmod&lt;/span>&lt;span class="c">: t&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+options&lt;/span>&lt;span class="c">: d:t&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>When starting a new post, simple use it as the setup file. The editing experience will be consistent. If some settings needs to be overridden in this post specifically, put them before the &lt;code>#+setupfile&lt;/code> directive (same settings only the first occurrence gets applied).&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-org" data-lang="org">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># new-post.org&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+startup&lt;/span>&lt;span class="c">: nofold&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+setupfile&lt;/span>&lt;span class="c">: ./blog.conf&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Something needs to be noticed is, as you can see, I&amp;rsquo;ve put some descriptions in the config file. Don&amp;rsquo;t worry. Only org directives will be read when used by &lt;code>#+setupfile&lt;/code>. This is great because it gives you flexibility to keep comments of those settings in case you forget in the future.&lt;/p>
+&lt;h2 id="inherit-category">Inherit category&lt;/h2>
+&lt;p>I also want to have the ability to inherit category so I don&amp;rsquo;t need to manually type it. Indeed I sometimes forget what categories I have if I don&amp;rsquo;t write blog for a while.&lt;/p>
+&lt;p>To achieve this, I created a few subfolders as categories and put posts under them respectively. Then I created another &lt;code>blog.conf&lt;/code> under each category folder with the settings.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-org" data-lang="org">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># emacs/blog.conf&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+hugo_categories&lt;/span>&lt;span class="c">: emacs&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cs">#+setupfile&lt;/span>&lt;span class="c">: ../blog.conf&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Don&amp;rsquo;t doubt it. &lt;code>#+setupfile&lt;/code> can be used recursively! Fantastic! Now new posts under emacs category just need to include this file in their headers and they will be assigned to this category automatically during export.&lt;/p>
+&lt;h2 id="hugo-pages">Hugo pages&lt;/h2>
+&lt;p>I actually use &lt;code>ox-hugo&lt;/code> in a hybrid way. For navigation pages, I continue managing &lt;a class="link" href="https://github.com/peromage/peromage.github.io/blob/master/blog/hugo-pages.org" target="_blank" rel="noopener"
+>them&lt;/a> with subtrees and overriding settings if it&amp;rsquo;s different from the global with heading properties.&lt;/p>
+&lt;h2 id="export-script">Export script&lt;/h2>
+&lt;p>I used to use a shell script to export. Just realized that Emacs had script support since version 22 so I created a &lt;a class="link" href="https://github.com/peromage/peromage.github.io/blob/master/blog/ox-hugo-export.el" target="_blank" rel="noopener"
+>Elisp script&lt;/a> for this purpose.&lt;/p>
+&lt;h2 id="similar-solution">Similar solution&lt;/h2>
+&lt;p>This can also be achieved by using Emacs local variable but it will ask you to confirm if those variables are safe if you don&amp;rsquo;t persist the settings. I find it quite annoying especially used with CI. It will most likely break CI if you are not careful.&lt;/p>
+&lt;p>However, this is more convenience than the header method when you have nested folder structures. It can calculate the Hugo base path when the variables get evaluated.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">((org-mode . ((eval . (setq org-hugo-base-dir (locate-dominating-file default-directory &amp;#34;.git&amp;#34;))))))
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Be careful when using it with CI.&lt;/p>
+&lt;h2 id="folder-structure">Folder structure&lt;/h2>
+&lt;p>My folder structure finally looks like this.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── coding
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── post1.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── post2.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── post3.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── blog.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── emacs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── post1.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── post2.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── post3.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── blog.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── linux
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── post1.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── post2.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── post3.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── blog.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── tech
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── post1.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── post2.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── post3.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── blog.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── blog.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── hugo-pages.org
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── ox-hugo-export.el
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="summary">Summary&lt;/h2>
+&lt;p>Now I feel it much clearer. &lt;code>ox-hugo&lt;/code> is a definitely a fantastic package. It helps me manage posts in org mode and seamlessly work with Hugo with ease.&lt;/p>
+&lt;p>If you haven&amp;rsquo;t used either org mode or Hugo, I highly recommend to give them a try.&lt;/p></description></item><item><title>Use Org Mode to Manage My Blog</title><link>https://peromage.github.io/p/use-org-mode-to-manage-my-blog/</link><pubDate>Sun, 05 Jun 2022 23:00:00 +0000</pubDate><guid>https://peromage.github.io/p/use-org-mode-to-manage-my-blog/</guid><description>&lt;p>I&amp;rsquo;ve been using Emacs since last year but until recent I started using &lt;code>org-mode&lt;/code> seriously. After spending a couple of days reading and watching all kinds of org tutorial as well as using it for documentation, I realized that people who invented this must geniuses.&lt;/p>
 &lt;p>Org document seems similar with Markdown: they are text markup format. However, Org provides far more capabilities to store metadata and greater editing experience together with Emacs&amp;rsquo; &lt;code>org-mode&lt;/code>.&lt;/p>
 &lt;h2 id="motivation">Motivation&lt;/h2>
 &lt;p>I used to use Markdown to write my blog articles and use &lt;em>Hugo&lt;/em> to generate static files.&lt;/p>
