@@ -126,6 +126,38 @@ SCHED_POWERSAVE_ON_AC=0
 SCHED_POWERSAVE_ON_BAT=1
 #+end_src
 
+* HiDPI
+** XFCE
+=XFCE= is my choice of "just works" desktop environment.  It has some issues with HiDPI out of the box so some tweaks need to be made.
+
+[[https://wiki.archlinux.org/title/HiDPI#Xfce][Arch wiki]] has elaborated it already.
+
+In short, update scaling:
+
+#+begin_src shell
+xfconf-query -c xsettings -p /Gdk/WindowScalingFactor -s 2
+xfconf-query -c xfwm4 -p /general/theme -s Default-xhdpi
+#+end_src
+
+In =~/.xinitrc=:
+
+#+begin_src shell
+export GDK_DPI_SCALE=0.5
+exec startxfce4
+#+end_src
+
+The only problem is 2x scaling sometimes is too big.  GTK doesn't have the plan to support fractional scaling, which sucks.  I might switch to a Qt-based desktop environment.
+
+* Firefox scrolling with touchpad
+Yuck.  Default scrolling experience on touchpad is just disgusting.  To optimize it a bit, go to =about:config= page.
+
+Change configurations:
+
+#+begin_example
+mousewheel.acceleration.start             1
+mousewheel.default.delta_multiplier_y     2
+#+end_example
+
 * Framework Laptop Specific
 Framework laptop needs some additional tweaks.
 
