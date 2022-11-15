@@ -153,7 +153,6 @@ exec startxfce4
 
 The only problem is 2x scaling sometimes is too big.  GTK doesn't have the plan to support fractional scaling, which sucks.  I might switch to a Qt-based desktop environment.
 
-
 * Firefox scrolling with touchpad
 Yuck.  Default scrolling experience on touchpad is just disgusting.  To optimize it a bit, go to =about:config= page.
 
