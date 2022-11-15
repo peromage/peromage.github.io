@@ -1,0 +1,253 @@
+baseurl: https://peromage.github.io
+languageCode: en-us
+theme: hugo-theme-stack
+paginate: 5
+title: Fang's Blog
+
+## Change it to your Disqus shortname before using
+disqusShortname: hugo-theme-stack
+
+## GA Tracking ID
+googleAnalytics:
+
+## Multilingual
+languages:
+    en:
+        languageName: English
+        weight: -100
+
+    zh-cn:
+        languageName: 中文
+        title: 狗窝
+        weight: -90
+        contentDir: content/lang-cn
+        params:
+            sidebar:
+                avatar:
+                    local: false
+                    src: https://github.com/peromage.png
+        menu:
+            main:
+                - identifier: home
+                  name: 主页
+                  url: /
+                  weight: -100
+                  params:
+                      icon: home
+                      newTab: false
+
+                - identifier: archives
+                  name: 归档
+                  url: /archives
+                  weight: -90
+                  params:
+                      icon: archives
+                      newTab: false
+
+                - identifier: about
+                  name : 关于
+                  url: /about
+                  weight: -80
+                  params:
+                      icon: user
+                      newTab: false
+
+                - identifier: search
+                  name : 搜索
+                  url: /search
+                  weight: -70
+                  params:
+                      icon: search
+                      newTab: false
+
+            social:
+                - identifier: github
+                  name: GitHub
+                  url: https://github.com/peromage
+                  params:
+                      icon: brand-github
+
+DefaultContentLanguage: en
+defaultContentLanguageInSubdir: false
+
+permalinks:
+    blog: /p/:slug/
+    page: /:slug/
+
+params:
+    mainSections:
+        - blog
+    featuredImageField: image
+    rssFullContent: true
+    favicon:
+
+    footer:
+        since: 2017
+        customText:
+
+    dateFormat:
+        published: Jan 02, 2006
+        lastUpdated: Jan 02, 2006 15:04 MST
+
+    sidebar:
+        emoji:
+        subtitle: May the sapphire star lights your way✨
+        avatar:
+            local: false
+            src: https://github.com/peromage.png
+
+    article:
+        math: false
+        toc: true
+        readingTime: false
+        license:
+            enabled: true
+            default: Licensed under CC BY-NC 4.0
+
+    comments:
+        enabled: false
+        provider: disqus
+
+        utterances:
+            repo:
+            issueTerm: pathname
+            label:
+
+        remark42:
+            host:
+            site:
+            locale:
+
+        vssue:
+            platform:
+            owner:
+            repo:
+            clientId:
+            clientSecret:
+            autoCreateIssue: false
+
+        ## Waline client configuration see: https://waline.js.org/en/reference/client.html
+        waline:
+            serverURL:
+            lang:
+            visitor:
+            avatar:
+            emoji:
+                - https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo
+            requiredMeta:
+                - name
+                - email
+                - url
+            placeholder:
+            locale:
+                admin: Admin
+
+    widgets:
+        homepage:
+            - type: search
+            - type: archives
+              params:
+                  limit: 5
+            - type: categories
+              params:
+                  limit: 10
+            - type: tag-cloud
+              params:
+                  limit: 10
+        page:
+            - type: toc
+
+    opengraph:
+        twitter:
+            ## Your Twitter username
+            site:
+            ## Available values: summary, summary_large_image
+            card: summary_large_image
+
+    defaultImage:
+        opengraph:
+            enabled: false
+            local: false
+            src:
+
+    colorScheme:
+        toggle: true
+        ## Available values: auto, light, dark
+        default: auto
+
+    imageProcessing:
+        cover:
+            enabled: true
+        content:
+            enabled: true
+
+## See https://docs.stack.jimmycai.com/configuration/custom-menu
+menu:
+    main:
+        - identifier: home
+          name: Home
+          url: /
+          weight: -100
+          params:
+              icon: home
+              newTab: false
+
+        - identifier: archives
+          name: Archives
+          url: /archives
+          weight: -90
+          params:
+              icon: archives
+              newTab: false
+
+        - identifier: about
+          name : About
+          url: /about
+          weight: -80
+          params:
+              icon: user
+              newTab: false
+
+        - identifier: search
+          name : Search
+          url: /search
+          weight: -70
+          params:
+              icon: search
+              newTab: false
+
+    social:
+        - identifier: github
+          name: GitHub
+          url: https://github.com/peromage
+          params:
+              icon: brand-github
+
+related:
+    includeNewer: true
+    threshold: 60
+    toLower: false
+    indices:
+        - name: tags
+          weight: 100
+
+        - name: categories
+          weight: 200
+
+markup:
+    goldmark:
+        renderer:
+            ## Set to true if you have HTML content inside Markdown
+            unsafe: false
+    tableOfContents:
+        endLevel: 4
+        ordered: true
+        startLevel: 2
+    highlight:
+        noClasses: false
+        codeFences: true
+        guessSyntax: true
+        lineNoStart: 1
+        lineNos: true
+        lineNumbersInTable: true
+        tabWidth: 4

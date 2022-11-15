@@ -37,7 +37,3 @@ Thumbs.db
 db.json
 *.log
 .hugo_build.lock
-
-# Don't include the config files since they are managed by org
-config.yaml
-static/CNAME
