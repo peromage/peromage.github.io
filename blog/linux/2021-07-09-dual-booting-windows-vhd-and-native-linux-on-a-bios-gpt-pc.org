@@ -2,6 +2,7 @@
 #+title: Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC
 #+date: <2021-07-09 Fri 16:40>
 #+hugo_lastmod: <2022-06-04 Sat 18:55>
+#+hugo_tags: multi_boot
 
 * COMMENT some todo
 :PROPERTIES:

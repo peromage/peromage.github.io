@@ -2,6 +2,7 @@
 #+title: Fix Metadata in Google Photo Takeout
 #+date: <2022-03-13 Sun 00:12>
 #+hugo_lastmod: <2022-06-04 Sat 18:55>
+#+hugo_tags: google_photo
 
 Google Photo sucks.
 

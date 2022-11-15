@@ -2,6 +2,7 @@
 #+title: Windows+Linux双系统引导手记
 #+date: <2017-04-05 Wed 19:26>
 #+hugo_lastmod: <2022-06-04 Sat 18:55>
+#+hugo_tags: 多系统引导 技术笔记
 
 * 0x00 情况简述
 由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。

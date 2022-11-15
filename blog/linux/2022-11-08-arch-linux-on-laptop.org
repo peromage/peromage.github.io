@@ -2,6 +2,7 @@
 #+title: Arch Linux on Laptop
 #+date: <2022-11-08 Tue 22:45>
 #+hugo_lastmod: <2022-11-08 Tue 23:59>
+#+hugo_tags: arch_linux laptop
 
 I recently got my new laptop and I found that some additional tweaks need to be made for laptops.  Thus, this post is to have a record in case I forget when I have to reinstall the system.
 
