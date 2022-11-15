@@ -1,0 +1,132 @@
+#+title: File-based Blog Management with ox-hugo
+#+date: <2022-11-15 Tue 09:58>
+#+hugo_lastmod: <2022-11-15 Tue 09:58>
+#+hugo_tags:
+#+setupfile: ./blog.conf
+
+* Background
+I previously wrote a [[file:2022-06-05-use-org-mode-to-manage-my-blog.org][post]] about managing blog posts with ox-hugo in org mode.  I used to follow the recommendation to keep posts under org subtrees.  As posts grew, I found that the opening speed is quite slow even I didn't have many pictures inserted.  Although managing the entire site within one file does have some convenience, the slowness is something I can't bear.
+
+Also I feel it a little awkward when I use the subtree style management.  I always worried about if the format was correct like how many empty lines between posts or if something was accidentally changed outside of the post that I was editing.  And in order to maintain the subtree structure, the actual posts have to be indented (nested), which is not what I like.  There are solutions for this nested editing.  I used to use =org-narrow-to-subtree= when I was editing the post and use =widen= to switch the view back.  But still, I always worried about the format (please forgive OCD patient).
+
+However, I want to continue using =ox-hugo=.  It is a wonderful package indeed!  Luckily, it supports [[https://ox-hugo.scripter.co/doc/usage/#for-only-the-one-post-per-file-flow][file-based style]].
+
+* Global properties
+One of the benefits that subtree style brings is you can inherit properties from the parent nodes.  You can put category tags on the parent node.  When creating posts under it, all posts will automatically inherit the category when they get exported.  Also you can set some global org settings in the header so all posts can share it.
+
+I want to have as much as close to this goodies when I use file-based style I created a [[https://github.com/peromage/peromage.github.io/blob/master/blog/blog.conf][blog.conf file]] as the global settings.
+
+#+begin_src org
+# -*- mode: org; -*-
+# blog.conf
+
+Author.
+#+author: John Doe
+
+On file open.
+#+startup: fold
+#+startup: indent
+#+startup: logdone
+#+startup: logdrawer
+
+Todo states.
+#+seq_todo: DRAFT(d) | CREATED(c!) PUBLISHED(p!)
+
+Categories.
+This is mainly for subtree-based export style.
+#+tags: @emacs @coding @linux @tech @ramble @折腾
+
+Posts under categories are expected to read this so the path is relative to the post files.
+#+hugo_base_dir: ../../hugo
+
+Default section.
+#+hugo_section: blog
+
+Date and time.
+#+hugo_auto_set_lastmod: t
+#+options: d:t
+...
+#+end_src
+
+When starting a new post, simple use it as the setup file.  The editing experience will be consistent.  If some settings needs to be overridden in this post specifically, put them before the =#+setupfile= directive (same settings only the first occurrence gets applied).
+
+#+begin_src org
+# new-post.org
+
+#+startup: nofold
+#+setupfile: ./blog.conf
+...
+#+end_src
+
+Something needs to be noticed is, as you can see, I've put some descriptions in the config file.  Don't worry.  Only org directives will be read when used by =#+setupfile=.  This is great because it gives you flexibility to keep comments of those settings in case you forget in the future.
+
+* Inherit category
+I also want to have the ability to inherit category so I don't need to manually type it.  Indeed I sometimes forget what categories I have if I don't write blog for a while.
+
+To achieve this, I created a few subfolders as categories and put posts under them respectively.  Then I created another =blog.conf= under each category folder with the settings.
+
+#+begin_src org
+# emacs/blog.conf
+
+#+hugo_categories: emacs
+#+setupfile: ../blog.conf
+#+end_src
+
+Don't doubt it.  =#+setupfile= can be used recursively!  Fantastic!  Now new posts under emacs category just need to include this file in their headers and they will be assigned to this category automatically during export.
+
+* Hugo pages
+I actually use =ox-hugo= in a hybrid way.  For navigation pages, I continue managing [[https://github.com/peromage/peromage.github.io/blob/master/blog/hugo-pages.org][them]] with subtrees and overriding settings if it's different from the global with heading properties.
+
+* Export script
+I used to use a shell script to export.  Just realized that Emacs had script support since version 22 so I created a [[https://github.com/peromage/peromage.github.io/blob/master/blog/ox-hugo-export.el][Elisp script]] for this purpose.
+
+* Similar solution
+This can also be achieved by using Emacs local variable but it will ask you to confirm if those variables are safe if you don't persist the settings.  I find it quite annoying especially used with CI.  It will most likely break CI if you are not careful.
+
+However, this is more convenience than the header method when you have nested folder structures.  It can calculate the Hugo base path when the variables get evaluated.
+
+#+begin_src lisp-data
+((org-mode . ((eval . (setq org-hugo-base-dir (locate-dominating-file default-directory ".git"))))))
+#+end_src
+
+Be careful when using it with CI.
+
+* Folder structure
+My folder structure finally looks like this.
+
+#+begin_src shell :results output :dir ../ :exports results :eval no-export
+tree --dirsfirst
+#+end_src
+
+#+RESULTS:
+#+begin_example
+.
+├── coding
+│   ├── post1.org
+│   ├── post2.org
+│   ├── post3.org
+│   └── blog.conf
+├── emacs
+│   ├── post1.org
+│   ├── post2.org
+│   ├── post3.org
+│   └── blog.conf
+├── linux
+│   ├── post1.org
+│   ├── post2.org
+│   ├── post3.org
+│   └── blog.conf
+├── tech
+│   ├── post1.org
+│   ├── post2.org
+│   ├── post3.org
+│   └── blog.conf
+├── blog.conf
+├── hugo-pages.org
+└── ox-hugo-export.el
+#+end_example
+
+* Summary
+Now I feel it much clearer.  =ox-hugo= is a definitely a fantastic package.  It helps me manage posts in org mode and seamlessly work with Hugo with ease.
+
+If you haven't used either org mode or Hugo, I highly recommend to give them a try.
