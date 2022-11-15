@@ -1,5 +1,7 @@
-* Site Configurations
-This node contains site navigation page setup.
+#+setupfile: ./blog.conf
+
+* Site pages
+This node contains Hugo site navigation page setup.
 
 ** Navigation
 :PROPERTIES:
@@ -101,7 +103,3 @@ Kira~ ✨
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
 
-* 折腾                                                                :@折腾:
-:PROPERTIES:
-:EXPORT_HUGO_SECTION: lang-cn/blog
-:END:
