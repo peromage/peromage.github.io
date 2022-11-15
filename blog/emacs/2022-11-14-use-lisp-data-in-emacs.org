@@ -1,8 +1,8 @@
-#+setupfile: ./blog.conf
 #+title: Use lisp-data Files in Emacs
 #+date: <2022-11-14 Mon 10:57>
 #+hugo_lastmod: <2022-11-14 Mon 16:58>
 #+hugo_tags: emacs elisp
+#+setupfile: ./blog.conf
 
 I found that there were few posts mentioning about using =lisp-data= files.  However, it seems to be used widely in various packages.
 

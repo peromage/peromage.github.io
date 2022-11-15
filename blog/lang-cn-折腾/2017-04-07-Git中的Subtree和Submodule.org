@@ -1,8 +1,8 @@
-#+setupfile: ./blog.conf
 #+title: Git中的Subtree和Submodule
 #+date: <2017-04-07 Fri 20:53>
 #+hugo_lastmod: <2022-06-04 Sat 18:55>
 #+hugo_tags: git 技术笔记
+#+setupfile: ./blog.conf
 
 因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。
 

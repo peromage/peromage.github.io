@@ -1,8 +1,8 @@
-#+setupfile: ./blog.conf
 #+title: Windows Rescure Quick Reference
 #+date: <2022-10-19 Wed 00:01>
 #+hugo_lastmod: <2022-10-19 Wed 00:01>
 #+hugo_tags: multi_boot windows
+#+setupfile: ./blog.conf
 
 Though I've written posts about [[#dual-boot-windows-linux][dual-booting Windows and Linux]] and [[#multi-boot-usb][multi-booting a USB drive]], I have to go back and dig useful information out each time when I forget something.
 

@@ -1,8 +1,8 @@
-#+setupfile: ./blog.conf
 #+title: Use Git Worktree to Work with Multiple Checkout at the Same Time
 #+date: <2022-06-06 Mon 00:30>
 #+hugo_lastmod: <2022-06-06 Mon 00:41>
 #+hugo_tags: git
+#+setupfile: ./blog.conf
 
 * Troubles
 When working with a complicated project where you have to compare different history versions side by side, it soon becomes frustrating frequently checking out refs.

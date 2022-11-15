@@ -1,8 +1,8 @@
-#+setupfile: ./blog.conf
 #+title: SSH Over GPG Agent
 #+date: <2022-03-13 Sun 00:02>
 #+hugo_lastmod: <2022-06-04 Sat 18:55>
 #+hugo_tags: ssh gpg
+#+setupfile: ./blog.conf
 
 This is a quick note of =gpg-agent= setup for SSH.
 

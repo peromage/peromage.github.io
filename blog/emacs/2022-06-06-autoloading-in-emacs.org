@@ -1,8 +1,8 @@
-#+setupfile: ./blog.conf
 #+title: Autoloading in Emacs
 #+date: <2022-06-06 Mon 00:00>
 #+hugo_lastmod: <2022-06-06 Mon 00:22>
 #+hugo_tags: emacs autoloading
+#+setupfile: ./blog.conf
 
 Autoloading is a neat feature in Emacs.  It speeds up Emacs by lazy load the files.  But it could be a little confusing if you're switching from Vim.
 

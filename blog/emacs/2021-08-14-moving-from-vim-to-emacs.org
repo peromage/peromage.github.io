@@ -1,8 +1,8 @@
-#+setupfile: ./blog.conf
 #+title: Moving From Vim to Emacs
 #+date: <2021-08-14 Sat 10:29>
 #+hugo_lastmod: <2022-06-04 Sat 18:55>
 #+hugo_tags: vim emacs text_editor
+#+setupfile: ./blog.conf
 
 YouTube has been pushing me a lot Emacs related contents.  This is weird since mostly I watch Vim videos only.  But probably this is also a great opportunity to try Emacs again.
 
