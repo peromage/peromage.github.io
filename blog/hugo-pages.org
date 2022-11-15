@@ -1,13 +1,12 @@
 #+setupfile: ./blog.conf
 
-* Site pages
-This node contains Hugo site navigation page setup.
+Hugo site navigation page setup.
 
-** Navigation
+* Navigation
 :PROPERTIES:
 :EXPORT_HUGO_SECTION: page
 :END:
-*** PUBLISHED About
+** PUBLISHED About
 :PROPERTIES:
 :EXPORT_FILE_NAME: about
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug about
@@ -19,7 +18,7 @@ This node contains Hugo site navigation page setup.
 - State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
-**** Me
+*** Me
 Hi there.  This is Fang.
 
 I'm currently a C++ developer working with one of the well-known automotive companies.
@@ -30,12 +29,12 @@ Emacser.  Former Vimmer.
 
 Oh most importantly, happy wife happy life.  :)
 
-**** Contact
+*** Contact
 Email: fang(at)saffyyre.com
 
 Github: https://github.com/peromage
 
-*** PUBLISHED Archives
+** PUBLISHED Archives
 :PROPERTIES:
 :EXPORT_FILE_NAME: archives
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug archives
@@ -46,7 +45,7 @@ Github: https://github.com/peromage
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
 
-*** PUBLISHED Search
+** PUBLISHED Search
 :PROPERTIES:
 :EXPORT_FILE_NAME: search
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug search
@@ -58,11 +57,11 @@ Github: https://github.com/peromage
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
 
-** Navigation - CN
+* Navigation - CN
 :PROPERTIES:
 :EXPORT_HUGO_SECTION: lang-cn/page
 :END:
-*** PUBLISHED 关于
+** PUBLISHED 关于
 :PROPERTIES:
 :EXPORT_FILE_NAME: about
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug about
@@ -80,7 +79,7 @@ Github: https://github.com/peromage
 
 Kira~ ✨
 
-*** PUBLISHED 归档
+** PUBLISHED 归档
 :PROPERTIES:
 :EXPORT_FILE_NAME: archives
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug archives
@@ -91,7 +90,7 @@ Kira~ ✨
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
 
-*** PUBLISHED 搜索
+** PUBLISHED 搜索
 :PROPERTIES:
 :EXPORT_FILE_NAME: search
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug search
