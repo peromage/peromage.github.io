@@ -30,5 +30,5 @@
   (kill-buffer))
 
 ;; Export navigation pages
-(find-file "hugo-pages.org")
+(find-file "pages.org")
 (org-hugo-export-wim-to-md :all-subtrees)
