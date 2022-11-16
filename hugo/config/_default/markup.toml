@@ -1,0 +1,22 @@
+[markup]
+defaultMarkdownHandler = "goldmark"
+
+[markup.tableOfContents]
+endLevel = 4
+ordered = true
+startLevel = 2
+
+[markup.highlight]
+codeFences = true
+guessSyntax = false
+hl_Lines = ""
+lineNoStart = 1
+lineNos = false
+lineNumbersInTable = true
+tabWidth = 4
+noClasses = true
+style = "tango"
+
+[markup.goldmark.renderer]
+## Set to true if you have HTML content inside Markdown
+unsafe = false

@@ -1,0 +1,34 @@
+theme = "skeria"
+
+# All parameters below here are optional and can be mixed and matched.
+[params]
+# Used when a given page doesn't set its own.
+defaultDescription = "Interesting content."
+defaultKeywords = "Interesting keywords."
+
+# Displays under the title, keep it short. You can use markdown here.
+tagline = "A collection of articles about Linux, Emacs, coding and music."
+
+# Navbar social links, these must be full URLs.
+github = ""
+bitbucket = ""
+stackOverflow = ""
+linkedin = ""
+googleplus = ""
+facebook = ""
+twitter = ""
+youtube = ""
+orcid = ""
+flattr = ""
+
+# Mailto link.
+email = "mailto:elias@gmail.com"
+
+# GPG key.
+gpgkey = "/gpg_public_key.txt"
+
+# RSS.
+rss = false
+
+# Privacy statement link.
+privacyPolicy = "https://www.iubenda.com/privacy-policy/76967501"
