@@ -1,8 +1,8 @@
 #+title: Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC
 #+date: <2021-07-09 Fri 16:40>
 #+hugo_lastmod: <2022-06-04 Sat 18:55>
-#+hugo_tags: multi_boot
-#+setupfile: ./blog.conf
+#+hugo_tags: dual_boot grub linux windows
+#+setupfile: ./setup.conf
 
 * Background
 Previously I wrote a post for this dual-boot scenario.  It is a little outdated.  In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition.  However, sometimes it is still needed.  That is why I started thinking to improve this setup even further.

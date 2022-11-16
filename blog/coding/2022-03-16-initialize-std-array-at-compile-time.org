@@ -2,7 +2,7 @@
 #+date: <2022-03-16 Wed 10:25>
 #+hugo_lastmod: <2022-06-04 Sat 18:55>
 #+hugo_tags: cpp meta_programming
-#+setupfile: ./blog.conf
+#+setupfile: ./setup.conf
 
 * Background
 I've been working on optimization for some C++ code recently.  One of the part is to initialize some data at compile time.  Consider we have a C style enum definition:

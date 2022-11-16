@@ -2,7 +2,7 @@
 #+date: <2022-06-05 Sun 23:00>
 #+hugo_lastmod: <2022-06-06 Mon 16:12>
 #+hugo_tags: emacs org markdown hugo ox_hugo
-#+setupfile: ./blog.conf
+#+setupfile: ./setup.conf
 
 I've been using Emacs since last year but until recent I started using =org-mode= seriously.  After spending a couple of days reading and watching all kinds of org tutorial as well as using it for documentation, I realized that people who invented this must geniuses.
 

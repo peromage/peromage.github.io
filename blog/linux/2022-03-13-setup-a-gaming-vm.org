@@ -2,7 +2,7 @@
 #+date: <2022-03-13 Sun 17:47>
 #+hugo_lastmod: <2022-06-04 Sat 18:55>
 #+hugo_tags: gaming kvm qemu gpu_passthrough
-#+setupfile: ./blog.conf
+#+setupfile: ./setup.conf
 
 * Before starting
 First thing first.  I've been rarely using Windows over years except for working and gaming.  Linux community grows fast and there are a lot alternatives available.  On the contrary, Windows gets crapy every year (Office 365 is still good IMO) so there is no reason to run this huge spyware all the time.

@@ -1,25 +1,21 @@
 #+hugo_base_dir: ../hugo
-#+setupfile: ./blog.conf
+#+hugo_section: /
+#+setupfile: ./setup.conf
 
 Hugo site navigation page setup.
 
-* Navigation
-:PROPERTIES:
-:EXPORT_HUGO_SECTION: page
-:END:
-** PUBLISHED About
+* PUBLISHED About
 :PROPERTIES:
 :EXPORT_FILE_NAME: about
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug about
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :license CC BY-NC-ND 4.0
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :aliases '(contact me)
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :toc false
 :END:
 :LOGBOOK:
 - State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
-*** Me
+** Me
 Hi there.  This is Fang.
 
 I'm currently a C++ developer working with one of the well-known automotive companies.
@@ -30,12 +26,12 @@ Emacser.  Former Vimmer.
 
 Oh most importantly, happy wife happy life.  :)
 
-*** Contact
+** Contact
 Email: fang(at)saffyyre.com
 
 Github: https://github.com/peromage
 
-** PUBLISHED Archives
+* PUBLISHED Archives
 :PROPERTIES:
 :EXPORT_FILE_NAME: archives
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug archives
@@ -46,7 +42,7 @@ Github: https://github.com/peromage
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
 
-** PUBLISHED Search
+* PUBLISHED Search
 :PROPERTIES:
 :EXPORT_FILE_NAME: search
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug search
@@ -57,49 +53,3 @@ Github: https://github.com/peromage
 - State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
-
-* Navigation - CN
-:PROPERTIES:
-:EXPORT_HUGO_SECTION: lang-cn/page
-:END:
-** PUBLISHED 关于
-:PROPERTIES:
-:EXPORT_FILE_NAME: about
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug about
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :license CC BY-NC-ND 4.0
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :aliases '(contact me)
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :toc false
-:END:
-:LOGBOOK:
-- State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
-- State "CREATED"    from              [2022-06-05 Mon 01:12]
-:END:
-你好，旅行者。欢迎来到我的博客。
-
-我的博客分成中文和英文，但目前更新以英文为主。如需阅读更多请移步英文站点。
-
-Kira~ ✨
-
-** PUBLISHED 归档
-:PROPERTIES:
-:EXPORT_FILE_NAME: archives
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug archives
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :layout archives
-:END:
-:LOGBOOK:
-- State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
-- State "CREATED"    from              [2022-06-05 Mon 01:12]
-:END:
-
-** PUBLISHED 搜索
-:PROPERTIES:
-:EXPORT_FILE_NAME: search
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug search
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :layout search
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :outputs '(html json)
-:END:
-:LOGBOOK:
-- State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
-- State "CREATED"    from              [2022-06-05 Mon 01:12]
-:END:
-

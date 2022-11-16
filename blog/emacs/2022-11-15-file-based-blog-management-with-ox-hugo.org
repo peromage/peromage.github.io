@@ -1,8 +1,8 @@
 #+title: File-based Blog Management with ox-hugo
 #+date: <2022-11-15 Tue 09:58>
-#+hugo_lastmod: <2022-11-15 Tue 09:58>
+#+hugo_lastmod: <2022-11-16 Wed 17:27>
 #+hugo_tags: emacs org ox-hugo hugo
-#+setupfile: ./blog.conf
+#+setupfile: ./setup.conf
 
 * Background
 I previously wrote a [[file:2022-06-05-use-org-mode-to-manage-my-blog.org][post]] about managing blog posts with ox-hugo in org mode.  I used to follow the recommendation to keep posts under org subtrees.  As posts grew, I found that the opening speed is quite slow even I didn't have many pictures inserted.  Although managing the entire site within one file does have some convenience, the slowness is something I can't bear.
@@ -14,11 +14,11 @@ However, I want to continue using =ox-hugo=.  It is a wonderful package indeed! 
 * Global properties
 One of the benefits that subtree style brings is you can inherit properties from the parent nodes.  You can put category tags on the parent node.  When creating posts under it, all posts will automatically inherit the category when they get exported.  Also you can set some global org settings in the header so all posts can share it.
 
-I want to have as much as close to this goodies when I use file-based style I created a [[https://github.com/peromage/peromage.github.io/blob/master/blog/blog.conf][blog.conf file]] as the global settings.
+I want to have as much as close to this goodies when I use file-based style I created a [[https://github.com/peromage/peromage.github.io/blob/master/blog/setup.conf][setup.conf file]] as the global settings.
 
 #+begin_src org
 # -*- mode: org; -*-
-# blog.conf
+# setup.conf
 
 Author.
 #+author: John Doe
@@ -54,7 +54,7 @@ When starting a new post, simple use it as the setup file.  The editing experien
 # new-post.org
 
 #+startup: nofold
-#+setupfile: ./blog.conf
+#+setupfile: ./setup.conf
 ...
 #+end_src
 
@@ -63,13 +63,13 @@ Something needs to be noticed is, as you can see, I've put some descriptions in 
 * Inherit category
 I also want to have the ability to inherit category so I don't need to manually type it.  Indeed I sometimes forget what categories I have if I don't write blog for a while.
 
-To achieve this, I created a few subfolders as categories and put posts under them respectively.  Then I created another =blog.conf= under each category folder with the settings.
+To achieve this, I created a few subfolders as categories and put posts under them respectively.  Then I created another =setup.conf= under each category folder with the settings.
 
 #+begin_src org
-# emacs/blog.conf
+# emacs/setup.conf
 
 #+hugo_categories: emacs
-#+setupfile: ../blog.conf
+#+setupfile: ../setup.conf
 #+end_src
 
 Don't doubt it.  =#+setupfile= can be used recursively!  Fantastic!  Now new posts under emacs category just need to include this file in their headers and they will be assigned to this category automatically during export.
@@ -105,23 +105,23 @@ tree --dirsfirst
 │   ├── post1.org
 │   ├── post2.org
 │   ├── post3.org
-│   └── blog.conf
+│   └── setup.conf
 ├── emacs
 │   ├── post1.org
 │   ├── post2.org
 │   ├── post3.org
-│   └── blog.conf
+│   └── setup.conf
 ├── linux
 │   ├── post1.org
 │   ├── post2.org
 │   ├── post3.org
-│   └── blog.conf
+│   └── setup.conf
 ├── tech
 │   ├── post1.org
 │   ├── post2.org
 │   ├── post3.org
-│   └── blog.conf
-├── blog.conf
+│   └── setup.conf
+├── setup.conf
 ├── hugo-pages.org
 └── ox-hugo-export.el
 #+end_example

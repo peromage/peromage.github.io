@@ -2,7 +2,7 @@
 #+date: <2022-03-13 Sun 00:03>
 #+hugo_lastmod: <2022-06-04 Sat 18:55>
 #+hugo_tags: shadowsocks proxy
-#+setupfile: ./blog.conf
+#+setupfile: ./setup.conf
 
 This note is written for my personal convenience.
 
