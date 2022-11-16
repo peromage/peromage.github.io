@@ -1,8 +1,21 @@
 #+hugo_base_dir: ../hugo
 #+hugo_section: /
+#+hugo_type: page
 #+setupfile: ./setup.conf
 
 Hugo site navigation page setup.
+
+* PUBLISHED Search
+:PROPERTIES:
+:EXPORT_FILE_NAME: search
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug search
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :layout search
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :outputs '(html json)
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
+- State "CREATED"    from              [2022-06-05 Mon 01:12]
+:END:
 
 * PUBLISHED About
 :PROPERTIES:
@@ -31,25 +44,3 @@ Email: fang(at)saffyyre.com
 
 Github: https://github.com/peromage
 
-* PUBLISHED Archives
-:PROPERTIES:
-:EXPORT_FILE_NAME: archives
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug archives
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :layout archives
-:END:
-:LOGBOOK:
-- State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
-- State "CREATED"    from              [2022-06-05 Mon 01:12]
-:END:
-
-* PUBLISHED Search
-:PROPERTIES:
-:EXPORT_FILE_NAME: search
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug search
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :layout search
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :outputs '(html json)
-:END:
-:LOGBOOK:
-- State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
-- State "CREATED"    from              [2022-06-05 Mon 01:12]
-:END:

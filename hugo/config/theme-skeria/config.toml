@@ -32,3 +32,28 @@ rss = false
 
 # Privacy statement link.
 privacyPolicy = ""
+
+[menu]
+[[menu.main]]
+identifier = "categories"
+name  = "Categories"
+url = "/categories"
+weight = 1
+
+[[menu.main]]
+identifier = "tags"
+name  = "Tags"
+url = "/tags"
+weight = 2
+
+[[menu.main]]
+identifier = "about"
+name  = "About"
+url = "/about"
+weight = 0
+
+[[menu.main]]
+identifier = "search"
+name  = "Search"
+url = "/search"
+weight = 4
