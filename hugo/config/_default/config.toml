@@ -10,19 +10,5 @@ defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 hasCJKLanguage = true
 
-[permalinks]
-blog = "/p/:slug/"
-page = "/:slug/"
-
-[related]
-includeNewer = true
-threshold = 60
-toLower = false
-
-[[related.indices]]
-name = "tags"
-weight = 100
-
-[taxonomies]
-category = "categories"
-tag = "tags"
+[author]
+name = "Fang Deng"

@@ -1,43 +1,26 @@
-[menu]
-[[menu.main]]
+[[main]]
 identifier = "home"
 name = "Home"
 url = "/"
 weight = -100
-[menu.main.params]
+[main.params]
 icon = "home"
 newTab = false
 
-[[menu.main]]
-identifier = "archives"
-name = "Archives"
-url = "/archives"
-weight = -90
-[menu.main.params]
-icon = "archives"
-newTab = false
-
-[[menu.main]]
+[[main]]
 identifier = "about"
 name  = "About"
 url = "/about"
 weight = -80
-[menu.main.params]
+[main.params]
 icon = "user"
 newTab = false
 
-[[menu.main]]
+[[main]]
 identifier = "search"
 name  = "Search"
 url = "/search"
 weight = -70
-[menu.main.params]
+[main.params]
 icon = "search"
 newTab = false
-
-[[menu.social]]
-identifier = "github"
-name = "GitHub"
-url = "https://github.com/peromage"
-[menu.social.params]
-icon = "brand-github"

@@ -1,12 +1,11 @@
-[markup]
 defaultMarkdownHandler = "goldmark"
 
-[markup.tableOfContents]
+[tableOfContents]
 endLevel = 4
 ordered = true
 startLevel = 2
 
-[markup.highlight]
+[highlight]
 codeFences = true
 guessSyntax = false
 hl_Lines = ""
@@ -17,6 +16,6 @@ tabWidth = 4
 noClasses = true
 style = "tango"
 
-[markup.goldmark.renderer]
+[goldmark.renderer]
 ## Set to true if you have HTML content inside Markdown
 unsafe = false

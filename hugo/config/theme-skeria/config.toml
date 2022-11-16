@@ -7,7 +7,7 @@ defaultDescription = "Interesting content."
 defaultKeywords = "Interesting keywords."
 
 # Displays under the title, keep it short. You can use markdown here.
-tagline = "A collection of articles about Linux, Emacs, coding and music."
+tagline = "May the sapphire star lights your way✨"
 
 # Navbar social links, these must be full URLs.
 github = ""
@@ -22,13 +22,13 @@ orcid = ""
 flattr = ""
 
 # Mailto link.
-email = "mailto:elias@gmail.com"
+email = ""
 
 # GPG key.
-gpgkey = "/gpg_public_key.txt"
+gpgkey = ""
 
 # RSS.
 rss = false
 
 # Privacy statement link.
-privacyPolicy = "https://www.iubenda.com/privacy-policy/76967501"
+privacyPolicy = ""

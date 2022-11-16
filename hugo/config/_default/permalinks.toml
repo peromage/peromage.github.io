@@ -1,0 +1,2 @@
+blog = "/p/:slug/"
+page = "/:slug/"
