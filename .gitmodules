@@ -1,3 +1,6 @@
 [submodule "themes/hugo-theme-stack"]
 	path = hugo/themes/hugo-theme-stack
 	url = https://github.com/CaiJimmy/hugo-theme-stack/
+[submodule "hugo/themes/skeria"]
+	path = hugo/themes/skeria
+	url = https://github.com/dschrempf/skeria.git
