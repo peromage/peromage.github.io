@@ -1,7 +1,9 @@
 #!/bin/sh
 
+THIS_FILE="deploy.sh"
+
 ## Working directory check
-if [ ! -f "build.sh" ]; then
+if [ ! -f $THIS_FILE ]; then
     echo "Wrong working directory"
     exit 1
 fi
@@ -12,7 +14,7 @@ hugo_base_dir="${repo_root}/hugo"
 blog_base_dir="${repo_root}/blog"
 
 logd() {
-    echo "[build.sh] $@"
+    echo "[$THIS_FILE] $@"
 }
 
 hugo_export() {

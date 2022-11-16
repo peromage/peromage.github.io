@@ -37,10 +37,10 @@ jobs:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
-      - name: Build
-        run: ./build.sh
-
       - name: Deploy
+        run: ./deploy.sh
+
+      - name: Publish
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/master' }}
         with:
