@@ -1,8 +1,8 @@
 baseUrl = "https://peromage.github.io"
-title = "Fang's Blog"
+title = "(->> love life knowledge (seek))"
 paginate = 20
 
-disqusShortname = "peromage"
+disqusShortname = ""
 googleAnalytics = ""
 
 languageCode = "en-us"

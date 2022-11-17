@@ -7,13 +7,13 @@ defaultDescription = "Interesting content."
 defaultKeywords = "Interesting keywords."
 
 # Displays under the title, keep it short. You can use markdown here.
-tagline = "May the sapphire star lights your way✨"
+tagline = "May the sapphire star light your way✨"
 
 # Navbar social links, these must be full URLs.
-github = ""
+github = "https://github.com/peromage"
 bitbucket = ""
 stackOverflow = ""
-linkedin = ""
+linkedin = "https://www.linkedin.com/in/fangdeng/"
 googleplus = ""
 facebook = ""
 twitter = ""
@@ -22,7 +22,7 @@ orcid = ""
 flattr = ""
 
 # Mailto link.
-email = ""
+email = "mailto:fang@saffyyre.com"
 
 # GPG key.
 gpgkey = ""
