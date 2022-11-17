@@ -18,16 +18,16 @@ This website and its content are licensed under the [[https://github.com/peromag
 
 This website is built with [[https://www.gnu.org/software/emacs/][Emacs]], [[https://orgmode.org/][Org Mode]], [[https://gohugo.io/][Hugo]], [[https://ox-hugo.scripter.co/][ox-hugo]] and [[https://github.com/dschrempf/skeria][Skeria]].  Please refer to these projects' home page for licenses.
 
-* PUBLISHED Privacy
+* PUBLISHED Privacy Notice
 :PROPERTIES:
 :EXPORT_FILE_NAME: privacy
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :toc false
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-11-16 Wed 21:33]
 - State "PUBLISHED"  from "CREATED"    [2022-11-16 Wed 19:57]
 - State "CREATED"    from              [2022-11-16 Wed 19:52]
 :END:
-** Privacy Notice
 This website does not collect any data from you.
 
 However, this website is themed with [[https://github.com/dschrempf/skeria][Skeria]] which loads some external resources and scripts.
@@ -54,7 +54,6 @@ If you have concerns, please visit its home page for more information.
 - State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
-** Me
 Hi there.  This is Fang.
 
 I'm currently a C++ developer working with one of the well-known automotive companies.
@@ -64,9 +63,4 @@ I have hair.  A lot.
 Emacser.  Former Vimmer.
 
 Oh most importantly, happy wife happy life.  :)
-
-** Contact
-Email: fang(at)saffyyre.com
-
-Github: https://github.com/peromage
 
