@@ -4,4 +4,4 @@ toLower = false
 
 [[indices]]
 name = "tags"
-weight = 100
+weight = 1

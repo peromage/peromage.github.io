@@ -2,10 +2,10 @@
 identifier = "about"
 name  = "About"
 url = "/about"
-weight = 0
+weight = 1
 
 [[main]]
 identifier = "search"
 name  = "Search"
 url = "/search"
-weight = 1
+weight = 2
