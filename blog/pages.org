@@ -45,7 +45,7 @@ If you have concerns, please visit its home page for more information.
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
 
-* PUBLISHED About
+* PUBLISHED Fang Deng
 :PROPERTIES:
 :EXPORT_FILE_NAME: about
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :toc false
@@ -54,13 +54,18 @@ If you have concerns, please visit its home page for more information.
 - State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
-Hi there.  This is Fang.
 
-I'm currently a C++ developer working with one of the well-known automotive companies.
+** Some attributes
+- C++ developer
+- Love Lisp and functional programming
+- Emacser, former Vimmer
+- Have a lot hair :)
 
-I have hair.  A lot.
+** About
+I'm a C++ software developer working for an automotive company.  I like C++ and use it extensively at work.  I also know other popular languages like C#, Python, Java, JavaScript as well as TypeScript.
 
-Emacser.  Former Vimmer.
+However, Lisp is my most favorite one (maybe Haskell?).
 
-Oh most importantly, happy wife happy life.  :)
+Writing blog is one of my hobbies.  I write posts mainly for personal records so some content might be trivial.
 
+You can find my contact at the bottom.
