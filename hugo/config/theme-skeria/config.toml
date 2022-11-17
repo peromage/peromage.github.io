@@ -25,13 +25,13 @@ flattr = ""
 email = "mailto:fang@saffyyre.com"
 
 # GPG key.
-gpgkey = ""
+gpgkey = "/gpg-pubkey.txt"
 
 # RSS.
 rss = false
 
 # Privacy statement link.
-privacyPolicy = ""
+privacyNotice = "/privacy"
 
 [menu]
 [[menu.main]]
