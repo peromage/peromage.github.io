@@ -36,8 +36,8 @@ hugo_build() {
 }
 
 hugo_export_and_build() {
-    hugo_export
-    hugo_build
+    hugo_export $@
+    hugo_build $@
 }
 
 hugo_start_server() {
