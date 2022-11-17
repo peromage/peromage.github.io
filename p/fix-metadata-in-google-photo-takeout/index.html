@@ -1,0 +1,32 @@
+<!doctype html><html xmlns=http://www.w3.org/1999/xhtml xml:lang=en-us lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>Fix Metadata in Google Photo Takeout &#183; Fang Deng</title><meta name=description content="Interesting content."><meta name=keywords content="Interesting keywords."><link rel=stylesheet href=https://peromage.github.io/css/skeria.css><link rel=stylesheet href=https://peromage.github.io/css/font.awesome.6.1.2.all.min.css></head><body><div class=topbar><div class=topbar-sticky><a href=https://peromage.github.io/ style=text-decoration:none><h1>(->> truth make (desire))</h1></a><span class=lead>May the sapphire star light your way✨</span>
+<span class=topbar-nav><p><span class=topbar-nav-item><a href=https://peromage.github.io/categories>Categories</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/tags>Tags</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/search>Search</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/about>About</a></span></p></span></div></div><div class="content container"><div class=post><h1 class=post-title>Fix Metadata in Google Photo Takeout</h1><span class=post-date>Mar 13, 2022
+&nbsp;&#183;&nbsp; 1 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/tech>tech</a></span><p>Google Photo sucks.</p><h2 id=troubles>Troubles</h2><p>When exporting photos from Google Photo, a bunch of JSON files come with your photos. Those JSON files contain metadata which is supposed to be stored with your photo files. If you simple import those photo files into another photo manager you will most likely not get a chronological view. Obviously, Google does on purpose so that you will not leave it easily.
+However, there is a workaround that is able to merge those metadata into your photos.</p><h2 id=restore-the-metadate>Restore the Metadate</h2><ol><li>Get <code>exiftool</code>: <a href=https://github.com/exiftool/exiftool>https://github.com/exiftool/exiftool</a></li><li>Export your Google Photos and extract the downloaded compressed files into a folder</li><li>Save the following content to <code>fix-args.txt</code></li></ol><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cfg data-lang=cfg><span style=display:flex><span><span style=color:#8f5902;font-style:italic># Usage: exiftool -@ fix-args.txt &lt;takeout_dir&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-r</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-d</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>%s</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-tagsFromFile</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>%d/%F.json</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-ext *</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>--ext json</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-overwrite_original</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-progress</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-GPSAltitude&lt;GeoDataAltitude</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-GPSLatitude&lt;GeoDataLatitude</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-GPSLongitude&lt;GeoDataLongitude</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-DateTimeOriginal&lt;PhotoTakenTimeTimestamp</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-ModifyDate&lt;PhotoLastModifiedTimeTimestamp</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-CreateDate&lt;CreationTimeTimestamp</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-GPSAltitudeRef&lt;GeoDataAltitude</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-GPSLatitudeRef&lt;GeoDataLatitude</span>
+</span></span><span style=display:flex><span><span style=color:#c4a000>-GPSLongitudeRef&lt;GeoDataLongitude</span>
+</span></span></code></pre></div><ol><li>Execute</li></ol><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ exiftool -@ fix-args.txt &lt;takeout_dir&gt;
+</span></span></code></pre></div><ol><li>Delete JSON files and import your photos to somewhere else</li></ol><p>This argument file contains the fields that are meaningful to me. If you need to merge additional fields you can append them to the last. For details, check the man page of <code>exiftool</code>.</p></div></div><script src=https://peromage.github.io/js/mathjax.3.2.2.tex-svg.min.js></script><div class=bottombar><div class=bottombar-sticky><div class=icons><span class=icons-item><a href=https://github.com/peromage target=_blank><i class="fab fa-github"></i></a></span>
+<span class=icons-item><a href=https://www.linkedin.com/in/fangdeng/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a></span>
+<span class=icons-item><a href=mailto:fang@saffyyre.com><i class="fas fa-envelope fa-1x"></i></a></span>
+<span class=icons-item><a href=/gpg-pubkey.txt><i class="fas fa-key fa-1x"></i></a></span></div><div class=footer><p>&copy; 2022 Fang Deng, <a href=https://peromage.github.io/license/>License</a><br><a href=/privacy title="Privacy notice">Privacy notice</a></p></div></div></div></body></html>

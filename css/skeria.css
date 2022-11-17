@@ -1,0 +1,356 @@
+/******************************************************************************/
+/* Main. */
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+html {
+  font-size: 1em;
+  font-family: 'Noto Serif', serif;
+  line-height: 1.5;
+}
+
+body {
+  color: #000;
+  background-color: #fff;
+  /* See https://css-tricks.com/couple-takes-sticky-footer/. */
+  display: flex;
+  flex-direction: column;
+}
+
+/******************************************************************************/
+/* Links. */
+
+a {
+  /* color: #444c57; */
+  /* color: #3873b3; */
+  /* color: #2c5a8c; */
+  color: #21446a;
+  text-decoration: none;
+}
+
+a:focus, a:hover {
+  text-decoration: underline;
+}
+
+/******************************************************************************/
+/* Headlines. */
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+  font-weight: 400;
+  color: #000;
+}
+
+h1 {
+  font-size: 1.75em
+}
+
+h2 {
+  font-size: 1.5em
+}
+
+h3 {
+  font-size: 1.25em
+}
+
+h4,
+h5,
+h6 {
+  font-size: 1em
+}
+
+/******************************************************************************/
+/* Lead (text under title). */
+
+.lead {
+}
+
+/******************************************************************************/
+/* Paragraphs and lists. */
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+dl, ol, ul {
+  margin-top: 0;
+  margin-bottom: 1em
+}
+
+dt {
+  font-weight: 700
+}
+
+dd {
+  margin-bottom: 0.5em
+}
+
+/******************************************************************************/
+/* Inline code, timestamps, and labels. */
+
+code, pre, .timestamp {
+  font-family: 'Inconsolata', monospace;
+}
+
+.label, .timestamp {
+  color: #444c57;
+  background-color: #eee;
+  display: inline;
+  border-radius: 0.25em;
+  line-height: 1;
+  /* Do not wrap to next line. */
+  /* XXX: May be problematic with long inline code blocks. */
+  white-space: nowrap;
+}
+
+pre {
+  padding: 0.5em;
+}
+
+.label {
+  padding: 0.2em 0.4em 0.2em 0.4em;
+  margin: 0 0.25em 0 0;
+}
+
+.timestamp {
+  padding: 0.2em 0em 0.2em 0.4em;
+  margin: 0 0.25em 0 0;
+}
+
+a.label:focus, a.label:hover {
+  text-decoration: none;
+  cursor: pointer
+}
+
+.label:empty {
+  display: none
+}
+
+/******************************************************************************/
+/* Images. */
+
+img {
+  display: block;
+  max-width: 100%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/******************************************************************************/
+/* Tables. */
+
+table {
+  padding: 0.25em 0.25em;
+  width: 100%;
+  border: 1px solid #eee;
+  border-collapse: collapse
+}
+
+td,
+th {
+  padding: 0.25em 0.25em;
+  border: 1px solid #ddd
+}
+
+tbody tr:nth-child(odd) td,
+tbody tr:nth-child(odd) th {
+  background-color: #eee
+}
+
+/******************************************************************************/
+/* Blocks */
+
+blockquote, .blockemph {
+  color: #666;
+  border-left: 0.2em solid #eee;
+  margin: 0.8em 1em;
+  padding-left: 0.8em;
+}
+
+@media (max-width: 48em) {
+  blockquote, .blockemph {
+    padding-right: 0.8em;
+  }
+}
+
+@media (min-width: 48em) {
+  blockquote, .blockemph {
+    padding-right: 3em;
+  }
+}
+
+.blockemph {
+  font-style: italic;
+}
+
+/******************************************************************************/
+/* Forms. */
+
+input[type=text] {
+  font-size: 1em;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 20px 0 20px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+input[type=text]:focus {
+  border-radius: 4px;
+  border: 1px solid #666;
+}
+
+/******************************************************************************/
+/* Containers. */
+
+.container {
+}
+
+/******************************************************************************/
+/* Topbar. */
+
+.topbar {
+  color: rgba(255,255,255,.5);
+  background-color: #444c57;
+  text-align: center;
+}
+
+.topbar a {
+  color: #fff;
+}
+
+.topbar p {
+  margin: 0;
+}
+
+.topbar-sticky {
+  padding: 0.5em 2em 0.5em 2em;
+}
+
+.topbar-sticky h1 {
+  color: #fff;
+  margin: 0.5em 0 0.5em 0;
+  padding: 0 0 0 0;
+}
+
+.topbar-nav-item {
+  margin: 0.7em;
+}
+
+
+/******************************************************************************/
+/* Bottombar. */
+
+.bottombar {
+  color: rgba(255,255,255,.5);
+  background-color: #444c57;
+  text-align: center;
+}
+
+.bottombar a {
+  color: #fff;
+}
+
+.bottombar p {
+  margin: 0;
+}
+
+.bottombar-sticky {
+  padding: 0.5em 2em 0.5em 2em;
+}
+
+/******************************************************************************/
+/* Footer. */
+
+.footer {
+  font-size: 0.8em;
+}
+
+/******************************************************************************/
+/* Icons. */
+
+.icons {
+  font-size: 1.5em;
+}
+
+.icons-item {
+  padding-let: 0.4em;
+  padding-right: 0.4em;
+}
+
+/******************************************************************************/
+/* Content. */
+
+.content {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: auto;
+  margin-right: auto;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: auto;
+}
+
+@media (max-width: 48em) {
+  .content {
+    width: 100%;
+  }
+}
+
+@media (min-width: 48em) {
+  .content {
+    width: 48em;
+  }
+}
+
+/******************************************************************************/
+/* Posts. */
+
+.post {
+  margin-top: 1em;
+  margin-bottom: 3em;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.post-list {
+  margin-top: 1em;
+  margin-bottom: 2em;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.post-title,
+.post-title a {
+  color: #444c57;
+  margin-bottom: 0.0em;
+}
+
+.date {
+  color: #7a7a7a;
+}
+
+.post-date {
+  color: #7a7a7a;
+  display: block;
+  margin-bottom: 1em;
+}
+
+/******************************************************************************/
+/* Other class selectors. */
+
+/* Useful to create right aligned tables. */
+.right-aligned {
+  text-align: right;
+}
