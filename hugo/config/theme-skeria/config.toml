@@ -37,8 +37,8 @@ privacyNotice = "/privacy"
 
 [menu]
 [[menu.main]]
-identifier = "home"
-name  = "Home"
+identifier = "recent"
+name  = "Recent"
 url = "/"
 weight = -102
 
