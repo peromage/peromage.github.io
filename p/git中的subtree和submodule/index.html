@@ -1,8 +1,10 @@
 <!doctype html><html xmlns=http://www.w3.org/1999/xhtml xml:lang=en-us lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>Git中的Subtree和Submodule &#183; Fang Deng</title><meta name=description content="Interesting content."><meta name=keywords content="Interesting keywords."><link rel=stylesheet href=https://peromage.github.io/css/skeria.css><link rel=stylesheet href=https://peromage.github.io/css/font.awesome.6.1.2.all.min.css></head><body><div class=topbar><div class=topbar-sticky><a href=https://peromage.github.io/ style=text-decoration:none><h1>(->> truth make (desire))</h1></a><span class=lead>May the sapphire star light your way✨</span>
-<span class=topbar-nav><p><span class=topbar-nav-item><a href=https://peromage.github.io/categories>Categories</a></span>
+<span class=topbar-nav><p><span class=topbar-nav-item><a href=https://peromage.github.io/>Recent</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/posts>All Posts</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/categories>Categories</a></span>
 <span class=topbar-nav-item><a href=https://peromage.github.io/tags>Tags</a></span>
-<span class=topbar-nav-item><a href=https://peromage.github.io/search>Search</a></span>
-<span class=topbar-nav-item><a href=https://peromage.github.io/about>About</a></span></p></span></div></div><div class="content container"><div class=post><h1 class=post-title>Git中的Subtree和Submodule</h1><span class=post-date>Apr 7, 2017
+<span class=topbar-nav-item><a href=https://peromage.github.io/about>About</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/search>Search</a></span></p></span></div></div><div class="content container"><div class=post><h1 class=post-title>Git中的Subtree和Submodule</h1><span class=post-date>Apr 7, 2017
 &nbsp;&#183;&nbsp; 4 minute read
 &nbsp;&#183;&nbsp;
 <a class=label href=https://peromage.github.io/tech>tech</a></span><p>因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。</p><h2 id=为什么有这样的需求>为什么有这样的需求</h2><p>版本库嵌套很好理解，就是在一个 Git 仓库里面包含了其他的 Git 仓库。通常有这样的需求往往涉及到协同开发。比如这里有一个插件单独的 Git 仓库姑且叫“Plugin”。现在我创建了一个自己的项目，其中需要用到这个“Plugin”插件。通常比较笨的办法就是把插件库源码拖下来，复制到自己的项目里。但是这样当插件库更新的时候，插件源码更新往往比较麻烦。而且如果在使用的过程中修改了插件的源码，也不便于插件单独的版本控制，更别说为插件库贡献代码了。但如果插件单独以 Git 仓库存在于我的项目目录中，以上的问题就解决了。</p><p>在 Git 里面提供了两种方式实现上述需求，那就是 Subtree 和 Submodule。</p><h2 id=submodule>Submodule</h2><p>Submodule 是 Git 里面最早提供的一种方法。顾名思义“子模块”。</p><h3 id=添加子模块>添加子模块</h3><p>执行</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ git submodule add &lt;repo&gt; &lt;module_path&gt;

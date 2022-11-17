@@ -1,0 +1,57 @@
+<!doctype html><html xmlns=http://www.w3.org/1999/xhtml xml:lang=en-us lang=en-us><head><meta name=generator content="Hugo 0.105.0"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>(->> truth make (desire)) &#183; Fang Deng</title><meta name=description content="Interesting content."><meta name=keywords content="Interesting keywords."><link rel=stylesheet href=https://peromage.github.io/css/skeria.css><link rel=stylesheet href=https://peromage.github.io/css/font.awesome.6.1.2.all.min.css></head><body><div class=topbar><div class=topbar-sticky><a href=https://peromage.github.io/ style=text-decoration:none><h1>(->> truth make (desire))</h1></a><span class=lead>May the sapphire star light your way✨</span>
+<span class=topbar-nav><p><span class=topbar-nav-item><a href=https://peromage.github.io/>Recent</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/posts>All Posts</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/categories>Categories</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/tags>Tags</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/about>About</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/search>Search</a></span></p></span></div></div><div class="content container"><div class=posts><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/fix-metadata-in-google-photo-takeout/>Fix Metadata in Google Photo Takeout</a></h1><span class=post-date>Mar 13, 2022
+&nbsp;&#183;&nbsp; 1 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/tech>tech</a></span>
+Google Photo sucks.
+Troubles When exporting photos from Google Photo, a bunch of JSON files come with your photos. Those JSON files contain metadata which is supposed to be stored with your photo files. If you simple import those photo files into another photo manager you will most likely not get a chronological view. Obviously, Google does on purpose so that you will not leave it easily. However, there is a workaround that is able to merge those metadata into your photos.
+<a href=https://peromage.github.io/p/fix-metadata-in-google-photo-takeout/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/shadowsocks-quick-setup/>Shadowsocks Quick Setup</a></h1><span class=post-date>Mar 13, 2022
+&nbsp;&#183;&nbsp; 2 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/linux>linux</a></span>
+This note is written for my personal convenience.
+Server Setup Installation Use system package manager to install shadowsocks-libev. In this case, for Arch Linux it is pacman.
+There is also a Python package which can be installed by pip but it seems not to be maintained for a long time.
+$ sudo pacman -S shadowsocks-libev Shadowsocks Server Configuration Config file is located at /etc/shadowsocks/myserver.json. On FreeBSD it is /usr/local/etc/shadowsocks/myserver.json
+The file name can vary.
+<a href=https://peromage.github.io/p/shadowsocks-quick-setup/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/ssh-over-gpg-agent/>SSH Over GPG Agent</a></h1><span class=post-date>Mar 13, 2022
+&nbsp;&#183;&nbsp; 1 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/linux>linux</a></span>
+This is a quick note of gpg-agent setup for SSH.
+Quick Setup Import your GPG authentication key. Enable SSH support for gpg-agent. $ echo enable-ssh-support >> $HOME/.gnupg/gpg-agent.conf Get the authentication keygrip. $ gpg -k --with-keygrip Add the authentication key to the keychain (replace KEYGRIP with the value obtained from the previous step) $ echo KEYGRIP >> $HOME/.gnupg/sshcontrol Add the following init code to .bashrc unset SSH_AGENT_PID export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)" export GPG_TTY="$(tty)" gpg-connect-agent updatestartuptty /bye > /dev/null Kill any running ssh-agent and gpg-agent, and then open a new Bash session.
+<a href=https://peromage.github.io/p/ssh-over-gpg-agent/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/minimalists-multi-boot-usb-drive/>Minimalist's Multi-boot USB Drive</a></h1><span class=post-date>Jan 26, 2022
+&nbsp;&#183;&nbsp; 6 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/tech>tech</a></span>
+Story Recently I&rsquo;ve realized a fact that I always have needs to keep a multi-boot USB in my pocket for either Linux or Windows installation. There are a lot tools out there already but I don&rsquo;t really like them. At least, I mean, they are too flashy to me. A beautiful boot menu seems not to be attractive. What I need is just a simple and practical maybe a little ugly boot device.
+<a href=https://peromage.github.io/p/minimalists-multi-boot-usb-drive/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/moving-from-vim-to-emacs/>Moving From Vim to Emacs</a></h1><span class=post-date>Aug 14, 2021
+&nbsp;&#183;&nbsp; 2 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/emacs>emacs</a></span>
+YouTube has been pushing me a lot Emacs related contents. This is weird since mostly I watch Vim videos only. But probably this is also a great opportunity to try Emacs again.
+I have tried Emacs half year ago. I looked a lot Elisp programming fundamentals and tried a few Emacs configurations from others including Doom Emacs. However, it didn&rsquo;t last long since I found that I didn&rsquo;t have enough time to configure this Emacs setup as good as the Vim setup that I was using.
+<a href=https://peromage.github.io/p/moving-from-vim-to-emacs/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/>Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC</a></h1><span class=post-date>Jul 9, 2021
+&nbsp;&#183;&nbsp; 3 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/tech>tech</a></span>
+Background Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further. Starting from Windows 7, Windows supports boots from
+<a href=https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/>Git中的Subtree和Submodule</a></h1><span class=post-date>Apr 7, 2017
+&nbsp;&#183;&nbsp; 4 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/tech>tech</a></span>
+因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。 为什么有这样的需求 版本库嵌套很好理解，就是在一个 Git 仓库里面包含了
+<a href=https://peromage.github.io/p/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/>Windows+Linux双系统引导手记</a></h1><span class=post-date>Apr 5, 2017
+&nbsp;&#183;&nbsp; 5 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/tech>tech</a></span>
+0x00 情况简述 由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。 这台电脑的基本情况是这样的，64GB 固态硬盘 + 720GB 机械硬盘（实际可用空间有折
+<a href=https://peromage.github.io/p/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/>&nbsp;Read on &mldr;</a></div></div></div><script src=https://peromage.github.io/js/mathjax.3.2.2.tex-svg.min.js></script><div class=bottombar><div class=bottombar-sticky><div class=icons><span class=icons-item><a href=https://github.com/peromage target=_blank><i class="fab fa-github"></i></a></span>
+<span class=icons-item><a href=https://www.linkedin.com/in/fangdeng/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a></span>
+<span class=icons-item><a href=mailto:fang@saffyyre.com><i class="fas fa-envelope fa-1x"></i></a></span>
+<span class=icons-item><a href=/gpg-pubkey.txt><i class="fas fa-key fa-1x"></i></a></span></div><div class=footer><p>&copy; 2022 Fang Deng, <a href=https://peromage.github.io/license/>License</a><br><a href=/privacy title="Privacy notice">Privacy notice</a></p></div></div></div></body></html>
