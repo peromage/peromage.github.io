@@ -5,10 +5,38 @@
 
 Hugo site navigation page setup.
 
+* PUBLISHED License
+:PROPERTIES:
+:EXPORT_FILE_NAME: license
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :toc false
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "CREATED"    [2022-11-16 Wed 19:52]
+- State "CREATED"    from              [2022-11-16 Wed 19:39]
+:END:
+This website and its content are licensed under the [[https://github.com/peromage/peromage.github.io/blob/master/LICENSE][GNU General Public License v3.0]].
+
+This website is built with [[https://www.gnu.org/software/emacs/][Emacs]], [[https://orgmode.org/][Org Mode]], [[https://gohugo.io/][Hugo]], [[https://ox-hugo.scripter.co/][ox-hugo]] and [[https://github.com/dschrempf/skeria][Skeria]].  Please refer to these projects' home page for licenses.
+
+* PUBLISHED Privacy
+:PROPERTIES:
+:EXPORT_FILE_NAME: privacy
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :toc false
+:END:
+:LOGBOOK:
+- State "PUBLISHED"  from "CREATED"    [2022-11-16 Wed 19:57]
+- State "CREATED"    from              [2022-11-16 Wed 19:52]
+:END:
+** Privacy Notice
+This website does not collect any data from you.
+
+However, this website is themed with [[https://github.com/dschrempf/skeria][Skeria]] which loads some external resources and scripts.
+
+If you have concerns, please visit its home page for more information.
+
 * PUBLISHED Search
 :PROPERTIES:
 :EXPORT_FILE_NAME: search
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug search
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :layout search
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :outputs '(html json)
 :END:
@@ -20,8 +48,6 @@ Hugo site navigation page setup.
 * PUBLISHED About
 :PROPERTIES:
 :EXPORT_FILE_NAME: about
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :slug about
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :license CC BY-NC-ND 4.0
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :toc false
 :END:
 :LOGBOOK:
