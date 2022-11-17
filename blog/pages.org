@@ -3,7 +3,7 @@
 #+hugo_type: page
 #+setupfile: ./setup.conf
 
-Hugo site navigation page setup.
+Hugo site pages.
 
 * PUBLISHED License
 :PROPERTIES:
@@ -51,6 +51,7 @@ If you have concerns, please visit its home page for more information.
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER+: :toc false
 :END:
 :LOGBOOK:
+- State "PUBLISHED"  from "PUBLISHED"  [2022-11-16 Wed 21:52]
 - State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
