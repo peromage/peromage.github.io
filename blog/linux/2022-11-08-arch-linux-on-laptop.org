@@ -1,6 +1,6 @@
 #+title: Arch Linux on Laptop
 #+date: <2022-11-08 Tue 22:45>
-#+hugo_lastmod: <2022-11-08 Tue 23:59>
+#+hugo_lastmod: <2022-11-22 Tue 09:45>
 #+hugo_tags: arch_linux laptop
 #+setupfile: ./setup.conf
 
@@ -9,6 +9,7 @@ I recently got my new laptop and I found that some additional tweaks need to be 
 * COMMENT Change Log
 <2022-11-15 Tue 16:19> Move to KDE as the default desktop so HiDPI is not a problem anymore.
 <2022-11-21 Mon 22:31> Add secure boot.
+<2022-11-22 Tue 09:45> Add more description for power management.
 
 * Installing Arch Linux
 I have a script to handle this: https://github.com/peromage/pew/blob/master/rice/scripts/setup/arch-install.sh
@@ -122,8 +123,17 @@ Update ramfs.  Add =resume= hook.
 HOOKS=(base udev autodetect modconf block filesystems keyboard fsck encrypt resume)
 #+end_src
 
-* TLP
-My =TLP= preferences.
+* Power management
+For power management, there are two options: =TLP= and =power-profiles-daemon=.
+
+=TLP= is powerful but it needs quite a bit attention to manually manage the configuration.  And most of desktop environments don't have integration with it by default.
+
+=power-profiles-daemon= can be used out of the box and desktop like =KDE= detects it automatically when it is installed.
+
+Both power manager can only exist one at a time because they conflict with each other.  You can mask one of them in =systemd= though.  I don't think that's a good idea.  To avoid scratching my head and save some hair, usually I use =power-profiles-daemon=.
+
+** TLP
+My =TLP= preferences.  Not too much.  It might be a little aggressive since I want to have maximal battery life.
 
 #+begin_src conf
 # /etc/tlp.d/my-power-plan.conf
@@ -150,6 +160,9 @@ CPU_HWP_DYN_BOOST_ON_BAT=0
 SCHED_POWERSAVE_ON_AC=0
 SCHED_POWERSAVE_ON_BAT=1
 #+end_src
+
+** power-profiles-daemon
+No configuration needed.  Just remember to enable the daemon service once it's installed.
 
 * HiDPI
 Update: I switched to KDE as the default desktop environment so HiDPI is not a problem anymore.
