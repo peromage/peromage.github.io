@@ -8,11 +8,12 @@ I recently got my new laptop and I found that some additional tweaks need to be 
 
 * COMMENT Change Log
 <2022-11-15 Tue 16:19> Move to KDE as the default desktop so HiDPI is not a problem anymore.
+<2022-11-21 Mon 22:31> Add secure boot.
 
 * Installing Arch Linux
 I have a script to handle this: https://github.com/peromage/pew/blob/master/rice/scripts/setup/arch-install.sh
 
-* Laptop Disk Partitioning and Encryption
+* Laptop disk partitioning and encryption
 Unlike desktop, laptops have to be secure so encrytion is a must.
 
 Details of how-to can be found on Arch wiki.  I'm not going to go through that here.  However, I'll note down some considerations and things that need to pay attention to.
@@ -79,6 +80,27 @@ Update ramfs hooks.  =encrypt= needs to go after =udev=.
 
 #+begin_src conf
 HOOKS=(base udev autodetect modconf block filesystems keyboard fsck encrypt)
+#+end_src
+
+* Secure boot
+Arch wiki has a very clear [[https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot][tutorial]] but eh.  It's too cumbersome.  I choose to use [[https://github.com/Foxboron/sbctl][sbctl]] to save my life.
+
+The readme is very easy to follow but one thing needs to pay attention to is, =grub= doesn't work with it.  If you sign =grub='s EFI file it will fail when secure boot is enforced.  I switched to =systemd-boot= due to this reason.  And I also find that =systemd-boot= is way easier to configure.
+
+** Use bundles (optional)
+Alternatively, you can also bundle kernel image and ramdisk image together as an EFI file.
+
+#+begin_src shell
+$ sudo sbctl bundle -s -i /boot/intel-ucode.img -k /boot/vmlinuz-linux -f /boot/initramfs-linux.img -c /proc/cmdline /boot/EFI/Linux/linux.efi
+$ sudo sbctl bundle -s -i /boot/intel-ucode.img -k /boot/vmlinuz-linux-zen -f /boot/initramfs-linux-zen.img -c /proc/cmdline /boot/EFI/Linux/linux-zen.efi
+#+end_src
+
+Since the bundles are registered in =sbctl='s database, the EFI files will be automatically re-generated when kernel is updated.
+
+However, in case if kernel parameter or ramdisk is updated, run this manually to re-generate new bundles.
+
+#+begin_src shell
+$sudo sbctl generate-bundles
 #+end_src
 
 * Hibernation
@@ -163,7 +185,7 @@ mousewheel.acceleration.start             1
 mousewheel.default.delta_multiplier_y     2
 #+end_example
 
-* Framework Laptop Specific
+* Framework laptop specific
 Framework laptop needs some additional tweaks.
 
 ** Ambient Light Sensor
