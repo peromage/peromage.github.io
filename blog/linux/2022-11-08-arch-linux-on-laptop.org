@@ -14,13 +14,63 @@ I recently got my new laptop and I found that some additional tweaks need to be 
 * Installing Arch Linux
 I have a script to handle this: https://github.com/peromage/pew/blob/master/rice/scripts/setup/arch-install.sh
 
-* Laptop disk partitioning and encryption
+* Some basic setup
 Unlike desktop, laptops have to be secure so encrytion is a must.
 
 Details of how-to can be found on Arch wiki.  I'm not going to go through that here.  However, I'll note down some considerations and things that need to pay attention to.
 
+** Encryption
+[[https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system][Arch wiki about encryption]] has very good examples.
+
+In my case I use =LUKS2=.  As for the scheme, I leave EFI partition unencrypted and encrypt the whole =BTRFS= partition (See [[*Partitioning]]).  EFI partition also acts as boot partition (ramfs and kernel reside inside).  Reason to take this approach is encrypted boot partition makes things more complicated (Like you have to decrypt the partition twice. Once from bootloader and the other one from kernel).  Plus I have secure boot enabled (see [[*Secure bool]]) so unencrypted boot partition is not really a big problem.
+
+Quick setup.
+
+#+begin_src shell
+# cryptsetup -y -v luksFormat /dev/sda2
+# cryptsetup open /dev/sda2 myroot
+#+end_src
+
+A passphrase will be created to unlock the partition in slot =0=.
+
+To tell kernel to decrypt the disk on startup, ramfs and kernel parameters have to be updated.  I prefer using =systemd= rather than busybox provided by =udev=.  In this case =sd-encrypt= has to be added instead of =encrypt=
+
+#+begin_src conf
+# /etc/mkinitcpio.conf
+...
+HOOKS=(base systemd autodetect keyboard modconf block sd-encrypt filesystems fsck)
+#+end_src
+
+Then update kernel parameters to unlock and map the encrypted partition.
+
+#+begin_src conf
+# /boot/loader/entries/arch.conf
+...
+options rd.luks.name=51d2be03-b9a4-4d4d-bc5a-0a9dba854c1f=ffroot root=/dev/mapper/ffroot
+#+end_src
+
+Then use TPM2 to automatically decrypt on bootup.  For =PCR= see [[https://man.archlinux.org/man/systemd-cryptenroll.1][this help page]].
+
+In order to let ramfs use TPM as the default decryption option, the TPM key has to be placed at the beginning (slot =0=), so I'm going to add my super-complicated-strong passphrase again to slot =1= and remove slot =0=, then add TPM key to slot =0= again.
+
+#+begin_src shell
+# systemd-cryptenroll /dev/sda2 --password
+# systemd-cryptenroll /dev/sda2 --wipe-slot=0
+# systemd-cryptenroll /dev/sda2 --tpm2-device=auto --tpm2-pcrs=0+7 --tpm2-with-pin=true
+#+end_src
+
+Alternatively you can use a more secure recovery key generated randomly instead of using your own passphrase.
+
+#+begin_src shell
+# systemd-cryptenroll /dev/sda2 --recovery-key
+# systemd-cryptenroll /dev/sda2 --wipe-slot=0
+# systemd-cryptenroll /dev/sda2 --tpm2-device=auto --tpm2-pcrs=0+7 --tpm2-with-pin=true
+#+end_src
+
+Note: It is important to keep at least a backup decryption method (recovery key or passphrase) when making modifications to slots.  If only TPM slot left then you probably fucked up because you can no longer add or remove key slots.  Once the boot is tampered you would not be able to recover anymore.
+
 ** Partitioning
-[[https://wiki.archlinux.org/title/Btrfs][Arch wiki about BTRFS]]
+See [[https://wiki.archlinux.org/title/Btrfs][Arch wiki about BTRFS]] to get to know how to setup =BTRFS= file system.
 
 Using too many partitions is not good for SSD so I only have two partitions on the disk: EFI partition (also as boot) + a big partition formated with =BTRFS=.  The second partition is encrypted, which will be demonstrated in the next topic.
 
@@ -35,6 +85,12 @@ These subvolumes are created under the big =BTRFS='s root.
 | @swap      | /.swap      | Swap files (no compression, no CoW) |
 | @snapshot  | /.snapshot  | Snapshots                           |
 
+Quick setup.
+
+#+begin_src shell
+
+#+end_src
+
 An example of how =fstab= is set up.
 
 Be aware that swap subvolume should NOT be mounted with compression on.
@@ -42,58 +98,47 @@ Be aware that swap subvolume should NOT be mounted with compression on.
 #+begin_src conf
 # <file system> <dir> <type> <options> <dump> <pass>
 # /dev/mapper/myroot LABEL=FFROOT
-UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6	/         	btrfs     	rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@arch-root	0 1
+UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 	/ 	btrfs 	rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@arch-root 	0 	1
 
 # /dev/nvme0n1p1 LABEL=EFI
-UUID=1569-822D 					/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+UUID=1569-822D 	/boot 	vfat 	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro 	0 	2
 
 # /dev/mapper/myroot LABEL=FFROOT
-UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6	/home     	btrfs     	rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@home	0 2
+UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 	/home 	btrfs 	rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@home 	0 	2
 
 # /dev/mapper/myroot LABEL=FFROOT
-UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6	/var     	btrfs     	rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@arch-var	0 2
+UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 	/var 	btrfs 	rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@arch-var 	0 	2
 
 # /dev/mapper/myroot LABEL=FFROOT
-UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6	/.swap 		btrfs     	rw,noatime,ssd,space_cache=v2,subvol=/@swap 			0 2
+UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 	/.swap 	btrfs 	rw,noatime,ssd,space_cache=v2,subvol=/@swap 	0 	2
 
 # Swap files
-/.swap/swap-32gb.img 				none 		swap 		defaults 							0 0
+/.swap/swap-32gb.img 	none 	swap 	defaults 	0 	0
 #+end_src
 
-** Encryption
-[[https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system][Arch wiki about encryption]]
-
-Use =LUKS2=.  The latest =GRUB2= has integrated the support for this new algorithm.  Why not using it?
-
-As for the scheme, I leave EFI partition unencrypted and encrypt the whole =BTRFS= partition.  EFI partition also acts as boot partition (ramfs and kernel reside).
-
-The reason that I don't put boot partition encrypted is that I have to decrypt twice on startup: once by =GRUB= and the other one by kernel.  Though there is a way to [[https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system#Avoiding_having_to_enter_the_passphrase_twice][setup a key file]] to avoid that, I still prefer typing password (Maybe TPM can be used).
-
-To tell kernel to decrypt the disk on startup, ramfs and kernel parameters have to be updated.
-
-Kernel parameters.  The UUID has to be the UUID of the partition itself (not unencrypted BTRFS partition).
-
-#+begin_src conf
-GRUB_CMDLINE_LINUX_DEFAULT="cryptdevice=UUID=51d2be03-b9a4-4d4d-bc5a-0a9dba854c1f:ffroot root=/dev/mapper/ffroot"
-#+end_src
-
-Update ramfs hooks.  =encrypt= needs to go after =udev=.
-
-#+begin_src conf
-HOOKS=(base udev autodetect modconf block filesystems keyboard fsck encrypt)
-#+end_src
-
-* Secure boot
+** Secure boot
 Arch wiki has a very clear [[https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot][tutorial]] but eh.  It's too cumbersome.  I choose to use [[https://github.com/Foxboron/sbctl][sbctl]] to save my life.
 
 The readme is very easy to follow but one thing needs to pay attention to is, =grub= doesn't work with it.  If you sign =grub='s EFI file it will fail when secure boot is enforced.  I switched to =systemd-boot= due to this reason.  And I also find that =systemd-boot= is way easier to configure.
 
-** Use bundles (optional)
+For a quick start.
+
+#+begin_src shell
+# sbctl status
+# sbctl create-keys
+# sbctl enroll-keys
+# sbctl status
+# sbctl sign -s /efi/EFI/BOOT/BOOTX64.EFI
+# sbctl sign -s /efi/EFI/systemd/systemd-bootx64.efi
+# sbctl sign -s /boot/vmlinuz-linux
+#+end_src
+
+*** Use bundles (optional)
 Alternatively, you can also bundle kernel image and ramdisk image together as an EFI file.
 
 #+begin_src shell
-$ sudo sbctl bundle -s -i /boot/intel-ucode.img -k /boot/vmlinuz-linux -f /boot/initramfs-linux.img -c /proc/cmdline /boot/EFI/Linux/linux.efi
-$ sudo sbctl bundle -s -i /boot/intel-ucode.img -k /boot/vmlinuz-linux-zen -f /boot/initramfs-linux-zen.img -c /proc/cmdline /boot/EFI/Linux/linux-zen.efi
+# sbctl bundle -s -i /boot/intel-ucode.img -k /boot/vmlinuz-linux -f /boot/initramfs-linux.img -c /proc/cmdline /boot/EFI/Linux/linux.efi
+# sbctl bundle -s -i /boot/intel-ucode.img -k /boot/vmlinuz-linux-zen -f /boot/initramfs-linux-zen.img -c /proc/cmdline /boot/EFI/Linux/linux-zen.efi
 #+end_src
 
 Since the bundles are registered in =sbctl='s database, the EFI files will be automatically re-generated when kernel is updated.
@@ -101,10 +146,10 @@ Since the bundles are registered in =sbctl='s database, the EFI files will be au
 However, in case if kernel parameter or ramdisk is updated, run this manually to re-generate new bundles.
 
 #+begin_src shell
-$sudo sbctl generate-bundles
+# sbctl generate-bundles
 #+end_src
 
-* Hibernation
+** Hibernation
 A workaround has to be made on =BTRFS= with swap files.
 
 First swap files should *NOT* be set with CoW attribute.
@@ -121,6 +166,17 @@ Update ramfs.  Add =resume= hook.
 
 #+begin_src conf
 HOOKS=(base udev autodetect modconf block filesystems keyboard fsck encrypt resume)
+#+end_src
+
+** Overall kernel parameters
+Kernel parameters used for the previous sections include partitioning, encryption and hibernation.
+
+#+begin_src conf
+title Arch Liunx
+linux /vmlinuz-linux
+initrd /intel-ucode.img
+initrd /initramfs-linux.img
+options loglevel=3 quiet cryptdevice=UUID=51d2be03-b9a4-4d4d-bc5a-0a9dba854c1f:ffroot root=/dev/mapper/ffroot rootflags=subvol=@arch-root rw mem_sleep_default=deep nvme.noacpi=1 module_blacklist=hid_sensor_hub resume=UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 resume_offset=3420784
 #+end_src
 
 * Power management
@@ -165,28 +221,7 @@ SCHED_POWERSAVE_ON_BAT=1
 No configuration needed.  Just remember to enable the daemon service once it's installed.
 
 * HiDPI
-Update: I switched to KDE as the default desktop environment so HiDPI is not a problem anymore.
-
-** XFCE - Obsolete
-=XFCE= is my choice of "just works" desktop environment.  It has some issues with HiDPI out of the box so some tweaks need to be made.
-
-[[https://wiki.archlinux.org/title/HiDPI#Xfce][Arch wiki]] has elaborated it already.
-
-In short, update scaling:
-
-#+begin_src shell
-xfconf-query -c xsettings -p /Gdk/WindowScalingFactor -s 2
-xfconf-query -c xfwm4 -p /general/theme -s Default-xhdpi
-#+end_src
-
-In =~/.xinitrc=:
-
-#+begin_src shell
-export GDK_DPI_SCALE=0.5
-exec startxfce4
-#+end_src
-
-The only problem is 2x scaling sometimes is too big.  GTK doesn't have the plan to support fractional scaling, which sucks.  I might switch to a Qt-based desktop environment.
+I previously used =XFCE= but now I've switched to KDE as the default desktop environment so HiDPI is not a problem anymore.
 
 * Firefox scrolling with touchpad
 Yuck.  Default scrolling experience on touchpad is just disgusting.  To optimize it a bit, go to =about:config= page.
