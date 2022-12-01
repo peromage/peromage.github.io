@@ -4,74 +4,78 @@ THIS_FILE="deploy.sh"
 
 ## Working directory check
 if [ ! -f $THIS_FILE ]; then
-    echo "Wrong working directory"
+    echo "Current working directory is not the project root. Aborting..."
     exit 1
 fi
 
 ## Save root directory
-repo_root="$(pwd)"
-hugo_base_dir="${repo_root}/hugo"
-blog_base_dir="${repo_root}/blog"
+REPO_ROOT="$(pwd)"
+HUGO_BASE_DIR="${REPO_ROOT}/hugo"
+BLOG_BASE_DIR="${REPO_ROOT}/blog"
+SELECTED_SUBCOMMAND="cmd_export_and_build"
+HUGO_ENVIRONMENT="current"
 
+## Logging function
 logd() {
     echo "[$THIS_FILE] $@"
 }
 
-hugo_export() {
+## Subcommands
+cmd_export() {
     ## Cleaning
     if [ -d "hugo/content" ]; then
-        logd "Cleaning content"
+        logd "Cleaning old exported content"
         rm -rf hugo/content
     fi
 
     logd "Exporting from org files"
-    cd $blog_base_dir
+    cd $BLOG_BASE_DIR
     emacs --script ox-hugo-export.el
 }
 
-hugo_build() {
-    logd "Building static files"
-    cd $hugo_base_dir
-    hugo --minify --environment "$1"
+cmd_build() {
+    logd "Building Hugo static files using environment($HUGO_ENVIRONMENT)"
+    cd $HUGO_BASE_DIR
+    hugo --minify --environment "$HUGO_ENVIRONMENT"
 }
 
-hugo_export_and_build() {
-    hugo_export $@
-    hugo_build $@
+cmd_export_and_build() {
+    cmd_export || exit $?
+    cmd_build || exit $?
 }
 
-hugo_start_server() {
-    cd $hugo_base_dir
-    hugo server --disableFastRender --environment "$1"
+cmd_server() {
+    cd $HUGO_BASE_DIR
+    logd "Starting Hugo server using environment($HUGO_ENVIRONMENT)"
+    hugo server --disableFastRender --environment "$HUGO_ENVIRONMENT"
 }
 
-## Subcommands
-command_to_run="hugo_export_and_build"
-
+## CLI: Choose a subcommand
 case $1 in
     server)
-        command_to_run="hugo_start_server" && shift
+        SELECTED_SUBCOMMAND="cmd_server" && shift
         ;;
     export)
-        command_to_run="hugo_export" && shift
+        SELECTED_SUBCOMMAND="cmd_export" && shift
         ;;
     build)
-        command_to_run="hugo_build" && shift
+        SELECTED_SUBCOMMAND="cmd_build" && shift
+        ;;
+    export-build)
+        SELECTED_SUBCOMMAND="cmd_export_and_build" && shift
         ;;
     *) :; ;;
 esac
 
-## Arguments
-environment="current"
-
+## CLI: Process arguments
 for i in $@; do
     case $i in
         --environment)
-            shift && environment="$1"
+            shift && HUGO_ENVIRONMENT="$1"
             ;;
         *) :; ;;
     esac
 done
 
-logd "Use environment $environment"
-eval $command_to_run $environment
+## Run the subcommand
+eval $SELECTED_SUBCOMMAND
