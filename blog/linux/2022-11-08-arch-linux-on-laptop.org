@@ -20,7 +20,7 @@ Details of how-to can be found on Arch wiki.  I'm not going to go through that h
 ** Encryption
 [[https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system][Arch wiki about encryption]] has very good examples.
 
-In my case I use =LUKS2=.  As for the scheme, I leave EFI partition unencrypted and encrypt the whole =BTRFS= partition (See [[*Partitioning]]).  EFI partition also acts as boot partition (ramfs and kernel reside inside).  Reason to take this approach is encrypted boot partition makes things more complicated (Like you have to decrypt the partition twice. Once from bootloader and the other one from kernel).  Plus I have secure boot enabled (see [[*Secure bool]]) so unencrypted boot partition is not really a big problem.
+In my case I use =LUKS2=.  As for the scheme, I leave EFI partition unencrypted and encrypt the whole =BTRFS= partition (See [[*Partitioning]]).  EFI partition also acts as boot partition (ramfs and kernel reside inside).  Reason to take this approach is encrypted boot partition makes things more complicated (Like you have to decrypt the partition twice. Once from bootloader and the other one from kernel).  Plus I have secure boot enabled (see [[*Secure boot]]) so unencrypted boot partition is not really a big problem.
 
 Quick setup.
 
