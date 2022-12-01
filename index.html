@@ -4,7 +4,26 @@
 <span class=topbar-nav-item><a href=https://peromage.github.io/categories>Categories</a></span>
 <span class=topbar-nav-item><a href=https://peromage.github.io/tags>Tags</a></span>
 <span class=topbar-nav-item><a href=https://peromage.github.io/about>About</a></span>
-<span class=topbar-nav-item><a href=https://peromage.github.io/search>Search</a></span></p></span></div></div><div class="content container"><div class=posts><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/windows-rescure-quick-reference/>Windows Rescure Quick Reference</a></h1><span class=post-date>Oct 19, 2022
+<span class=topbar-nav-item><a href=https://peromage.github.io/search>Search</a></span></p></span></div></div><div class="content container"><div class=posts><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/file-based-blog-management-with-ox-hugo/>File-based Blog Management with ox-hugo</a></h1><span class=post-date>Nov 15, 2022
+&nbsp;&#183;&nbsp; 2 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/emacs>emacs</a></span>
+Background I previously wrote a post about managing blog posts with ox-hugo in org mode. I used to follow the recommendation to keep posts under org subtrees. As posts grew, I found that the opening speed is quite slow even I didn&rsquo;t have many pictures inserted. Although managing the entire site within one file does have some convenience, the slowness is something I can&rsquo;t bear. Also I feel it a
+<a href=https://peromage.github.io/p/file-based-blog-management-with-ox-hugo/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/use-lisp-data-files-in-emacs/>Use lisp-data Files in Emacs</a></h1><span class=post-date>Nov 14, 2022
+&nbsp;&#183;&nbsp; 2 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/emacs>emacs</a></span>
+I found that there were few posts mentioning about using lisp-data files. However, it seems to be used widely in various packages.
+Emacs manumal has a very detailed description of how to read and write lisp objects. In this post I&rsquo;ll mainly demonstrate one specific use case.
+Read from file The biggest challenge is to parse file content to Lisp lists. After a quick search with describe-function, read function is able to perfectly handle it in this case.
+<a href=https://peromage.github.io/p/use-lisp-data-files-in-emacs/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/arch-linux-on-laptop/>Arch Linux on Laptop</a></h1><span class=post-date>Nov 8, 2022
+&nbsp;&#183;&nbsp; 6 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/linux>linux</a></span>
+I recently got my new laptop and I found that some additional tweaks need to be made for laptops. Thus, this post is to have a record in case I forget when I have to reinstall the system.
+Some basic setup Unlike desktop, laptops have to be secure so encrytion is a must.
+Details of how-to can be found on Arch wiki. I&rsquo;m not going to go through that here. However, I&rsquo;ll note down some considerations and things that need to pay attention to.
+<a href=https://peromage.github.io/p/arch-linux-on-laptop/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/windows-rescure-quick-reference/>Windows Rescure Quick Reference</a></h1><span class=post-date>Oct 19, 2022
 &nbsp;&#183;&nbsp; 4 minute read
 &nbsp;&#183;&nbsp;
 <a class=label href=https://peromage.github.io/tech>tech</a></span>
@@ -18,54 +37,38 @@ Setup A USB With System Images Forget the previous multi-boot USB post.
 <a class=label href=https://peromage.github.io/linux>linux</a></span>
 I found that every time when I try to setup VNC for remote access I always have troubles configuring it. I believe this is due to some conceptions which can be easily confusing. So this post serves both notes and reminder for myself.
 Choose a VNC Server Generally I use TigerVNC. It&rsquo;s a fork of TightVNC and the performance is pretty good. Also, it&rsquo;s easy to configure. However, when it comes to installation there are two types of servers: standalone and scraping.
-<a href=https://peromage.github.io/p/vnc-quick-guide/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/setup-a-gaming-vm/>Setup A Gaming VM</a></h1><span class=post-date>Mar 13, 2022
+<a href=https://peromage.github.io/p/vnc-quick-guide/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/>Use Git Worktree to Work with Multiple Checkout at the Same Time</a></h1><span class=post-date>Jun 6, 2022
+&nbsp;&#183;&nbsp; 1 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/coding>coding</a></span>
+Troubles When working with a complicated project where you have to compare different history versions side by side, it soon becomes frustrating frequently checking out refs.
+The old stupid way is to clone multiple repos and checkout to the specific revisions. When the project is big this might be a trouble because you&rsquo;re basically duplicating files.
+Savior Git provides a convenience sub-command worktree to checkout a specific ref in another directory without duplicating files.
+<a href=https://peromage.github.io/p/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/autoloading-in-emacs/>Autoloading in Emacs</a></h1><span class=post-date>Jun 6, 2022
+&nbsp;&#183;&nbsp; 2 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/emacs>emacs</a></span>
+Autoloading is a neat feature in Emacs. It speeds up Emacs by lazy load the files. But it could be a little confusing if you&rsquo;re switching from Vim.
+Myth - Not Working as Expected If you have used Vim you know in Vim you can put your library files to the load path variable and Vim autoloads them whenever one of the functions/variables is used. Initially I thought this is the same in Emacs but with a little effort to put the magic autoload comments before the function/variable definition.
+<a href=https://peromage.github.io/p/autoloading-in-emacs/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/use-org-mode-to-manage-my-blog/>Use Org Mode to Manage My Blog</a></h1><span class=post-date>Jun 5, 2022
+&nbsp;&#183;&nbsp; 6 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/emacs>emacs</a></span>
+I&rsquo;ve been using Emacs since last year but until recent I started using org-mode seriously. After spending a couple of days reading and watching all kinds of org tutorial as well as using it for documentation, I realized that people who invented this must geniuses.
+Org document seems similar with Markdown: they are text markup format. However, Org provides far more capabilities to store metadata and greater editing experience together with Emacs&rsquo; org-mode.
+<a href=https://peromage.github.io/p/use-org-mode-to-manage-my-blog/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/initialize-stdarray-at-compile-time/>Initialize std::array at Compile Time</a></h1><span class=post-date>Mar 16, 2022
+&nbsp;&#183;&nbsp; 2 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/coding>coding</a></span>
+Background I&rsquo;ve been working on optimization for some C++ code recently. One of the part is to initialize some data at compile time. Consider we have a C style enum definition:
+typedef enum Foo { AAA = 0, BBB, CCC } Foo_t; We want to have an array of the enum with undefined initial values 999 because by default initialization the values would be 0&rsquo;s. However, std::array can only be initialized by initializer list, which is said:
+<a href=https://peromage.github.io/p/initialize-stdarray-at-compile-time/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/setup-a-gaming-vm/>Setup A Gaming VM</a></h1><span class=post-date>Mar 13, 2022
 &nbsp;&#183;&nbsp; 5 minute read
 &nbsp;&#183;&nbsp;
 <a class=label href=https://peromage.github.io/linux>linux</a></span>
 Before starting First thing first. I&rsquo;ve been rarely using Windows over years except for working and gaming. Linux community grows fast and there are a lot alternatives available. On the contrary, Windows gets crapy every year (Office 365 is still good IMO) so there is no reason to run this huge spyware all the time.
 Modern PCs are strong enough to run a VM. Besides most of PCs have both integrated and descret graphic cards.
-<a href=https://peromage.github.io/p/setup-a-gaming-vm/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/fix-metadata-in-google-photo-takeout/>Fix Metadata in Google Photo Takeout</a></h1><span class=post-date>Mar 13, 2022
-&nbsp;&#183;&nbsp; 1 minute read
-&nbsp;&#183;&nbsp;
-<a class=label href=https://peromage.github.io/tech>tech</a></span>
-Google Photo sucks.
-Troubles When exporting photos from Google Photo, a bunch of JSON files come with your photos. Those JSON files contain metadata which is supposed to be stored with your photo files. If you simple import those photo files into another photo manager you will most likely not get a chronological view. Obviously, Google does on purpose so that you will not leave it easily. However, there is a workaround that is able to merge those metadata into your photos.
-<a href=https://peromage.github.io/p/fix-metadata-in-google-photo-takeout/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/shadowsocks-quick-setup/>Shadowsocks Quick Setup</a></h1><span class=post-date>Mar 13, 2022
-&nbsp;&#183;&nbsp; 2 minute read
-&nbsp;&#183;&nbsp;
-<a class=label href=https://peromage.github.io/linux>linux</a></span>
-This note is written for my personal convenience.
-Server Setup Installation Use system package manager to install shadowsocks-libev. In this case, for Arch Linux it is pacman.
-There is also a Python package which can be installed by pip but it seems not to be maintained for a long time.
-$ sudo pacman -S shadowsocks-libev Shadowsocks Server Configuration Config file is located at /etc/shadowsocks/myserver.json. On FreeBSD it is /usr/local/etc/shadowsocks/myserver.json
-The file name can vary.
-<a href=https://peromage.github.io/p/shadowsocks-quick-setup/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/ssh-over-gpg-agent/>SSH Over GPG Agent</a></h1><span class=post-date>Mar 13, 2022
-&nbsp;&#183;&nbsp; 1 minute read
-&nbsp;&#183;&nbsp;
-<a class=label href=https://peromage.github.io/linux>linux</a></span>
-This is a quick note of gpg-agent setup for SSH.
-Quick Setup Import your GPG authentication key. Enable SSH support for gpg-agent. $ echo enable-ssh-support >> $HOME/.gnupg/gpg-agent.conf Get the authentication keygrip. $ gpg -k --with-keygrip Add the authentication key to the keychain (replace KEYGRIP with the value obtained from the previous step) $ echo KEYGRIP >> $HOME/.gnupg/sshcontrol Add the following init code to .bashrc unset SSH_AGENT_PID export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)" export GPG_TTY="$(tty)" gpg-connect-agent updatestartuptty /bye > /dev/null Kill any running ssh-agent and gpg-agent, and then open a new Bash session.
-<a href=https://peromage.github.io/p/ssh-over-gpg-agent/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/minimalists-multi-boot-usb-drive/>Minimalist's Multi-boot USB Drive</a></h1><span class=post-date>Jan 26, 2022
-&nbsp;&#183;&nbsp; 6 minute read
-&nbsp;&#183;&nbsp;
-<a class=label href=https://peromage.github.io/tech>tech</a></span>
-Story Recently I&rsquo;ve realized a fact that I always have needs to keep a multi-boot USB in my pocket for either Linux or Windows installation. There are a lot tools out there already but I don&rsquo;t really like them. At least, I mean, they are too flashy to me. A beautiful boot menu seems not to be attractive. What I need is just a simple and practical maybe a little ugly boot device.
-<a href=https://peromage.github.io/p/minimalists-multi-boot-usb-drive/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/>Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC</a></h1><span class=post-date>Jul 9, 2021
-&nbsp;&#183;&nbsp; 3 minute read
-&nbsp;&#183;&nbsp;
-<a class=label href=https://peromage.github.io/tech>tech</a></span>
-Background Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further. Starting from Windows 7, Windows supports boots from
-<a href=https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/>Git中的Subtree和Submodule</a></h1><span class=post-date>Apr 7, 2017
-&nbsp;&#183;&nbsp; 4 minute read
-&nbsp;&#183;&nbsp;
-<a class=label href=https://peromage.github.io/tech>tech</a></span>
-因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。 为什么有这样的需求 版本库嵌套很好理解，就是在一个 Git 仓库里面包含了
-<a href=https://peromage.github.io/p/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/>Windows+Linux双系统引导手记</a></h1><span class=post-date>Apr 5, 2017
-&nbsp;&#183;&nbsp; 5 minute read
-&nbsp;&#183;&nbsp;
-<a class=label href=https://peromage.github.io/tech>tech</a></span>
-0x00 情况简述 由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。 这台电脑的基本情况是这样的，64GB 固态硬盘 + 720GB 机械硬盘（实际可用空间有折
-<a href=https://peromage.github.io/p/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/>&nbsp;Read on &mldr;</a></div></div></div><script src=https://peromage.github.io/js/mathjax.3.2.2.tex-svg.min.js></script><div class=bottombar><div class=bottombar-sticky><div class=icons><span class=icons-item><a href=https://github.com/peromage target=_blank><i class="fab fa-github"></i></a></span>
+<a href=https://peromage.github.io/p/setup-a-gaming-vm/>&nbsp;Read on &mldr;</a></div></div></div><script src=https://peromage.github.io/js/mathjax.3.2.2.tex-svg.min.js></script><div class=bottombar><div class=bottombar-sticky><div class=icons><span class=icons-item><a href=https://github.com/peromage target=_blank><i class="fab fa-github"></i></a></span>
 <span class=icons-item><a href=https://www.linkedin.com/in/fangdeng/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a></span>
 <span class=icons-item><a href=mailto:fang@saffyyre.com><i class="fas fa-envelope fa-1x"></i></a></span>
 <span class=icons-item><a href=/gpg-pubkey.txt><i class="fas fa-key fa-1x"></i></a></span></div><div class=footer><p>&copy; 2022 Fang Deng, <a href=https://peromage.github.io/license/>License</a><br><a href=/privacy title="Privacy notice">Privacy notice</a></p></div></div></div></body></html>
