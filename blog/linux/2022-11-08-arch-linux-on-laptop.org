@@ -184,7 +184,7 @@ options loglevel=3 quiet rd.luks.name=51d2be03-b9a4-4d4d-bc5a-0a9dba854c1f=ffroo
 #+end_src
 
 * Installing Arch Linux
-I have a script to handle this: https://github.com/peromage/pew/blob/master/rice/scripts/setup/arch-install.sh
+I have a script to handle this: https://github.com/peromage/pew/blob/master/rice/setup-scripts/arch-install.sh
 
 * Power management
 For power management, there are two options: =TLP= and =power-profiles-daemon=.
