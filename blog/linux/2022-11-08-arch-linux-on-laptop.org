@@ -11,6 +11,7 @@ I recently got my new laptop and I found that some additional tweaks need to be 
 <2022-11-21 Mon 22:31> Add secure boot.
 <2022-11-22 Tue 09:45> Add more description for power management.
 <2022-11-26 Sat 00:29> Add TPM.  Rephrase some content.
+<2022-12-04 Sun 20:20> Correct encryption description.
 
 * Some basic setup
 Unlike desktop, laptops have to be secure so encrytion is a must.
@@ -29,7 +30,7 @@ Quick setup.
 # cryptsetup open /dev/sda2 myroot
 #+end_src
 
-A passphrase will be created to unlock the partition in slot =0=.  Since we're gonna use TPM for automatic decryption, slot =0= will be reconfigured so it can be empty for now.
+A passphrase will be created to unlock the partition in slot =0=.
 
 To tell kernel to decrypt the disk on startup, ramfs and kernel parameters have to be updated.  I prefer using =systemd= rather than busybox provided by =udev=.  In this case =sd-encrypt= has to be added instead of =encrypt=
 
@@ -47,17 +48,13 @@ Then update kernel parameters to unlock and map the encrypted partition.
 options rd.luks.name=51d2be03-b9a4-4d4d-bc5a-0a9dba854c1f=ffroot root=/dev/mapper/ffroot
 #+end_src
 
-Then use TPM2 to automatically decrypt on bootup.  For =PCR= see [[https://man.archlinux.org/man/systemd-cryptenroll.1][this help page]].
-
-In order to let ramfs use TPM as the default decryption option, the TPM key has to be placed at the beginning (slot =0=), so I'm going to add my super-complicated-strong passphrase again to slot =1= and remove slot =0=, then add TPM key to slot =0= again.
+Then we're going to use TPM2 to automatically decrypt on bootup.  For =PCR= see [[https://man.archlinux.org/man/systemd-cryptenroll.1][this help page]].
 
 #+begin_src shell
-# systemd-cryptenroll /dev/sda2 --password
-# systemd-cryptenroll /dev/sda2 --wipe-slot=0
 # systemd-cryptenroll /dev/sda2 --tpm2-device=auto --tpm2-pcrs=0+7 --tpm2-with-pin=true
 #+end_src
 
-Alternatively you can use a more secure recovery key generated randomly instead of using your own passphrase.
+Alternatively you can use a more secure recovery key generated randomly instead of using your own passphrase.  Assume the passphrase that was created previously is in slot =0=.
 
 #+begin_src shell
 # systemd-cryptenroll /dev/sda2 --recovery-key
@@ -65,7 +62,7 @@ Alternatively you can use a more secure recovery key generated randomly instead 
 # systemd-cryptenroll /dev/sda2 --tpm2-device=auto --tpm2-pcrs=0+7 --tpm2-with-pin=true
 #+end_src
 
-Note: It is important to keep at least a backup decryption method (recovery key or passphrase) when making modifications to slots.  If only TPM slot left then you probably fucked up because you can no longer add or remove key slots.  Once the boot is tampered you would not be able to recover anymore.
+Note: It is important to keep at least a backup decryption method (recovery key or passphrase) when making modifications to slots.  If only TPM slot left then you're probably fucked up because you can no longer add or remove key slots.  Once the boot is tampered you would not be able to recover anymore.
 
 ** Partitioning
 See [[https://wiki.archlinux.org/title/Btrfs][Arch wiki about BTRFS]] to get to know how to setup =BTRFS= file system.
@@ -76,12 +73,12 @@ With =BTRFS=, I can use subvolume to achieve the similar effect like what partit
 
 These subvolumes are created under the big =BTRFS='s root.
 
-| Subvolume  | Mount Point | Note                                |
-| @arch-root | /           | System root                         |
-| @arch-var  | /var        | Avoid getting snapshot              |
-| @home      | /home       | Separated home                      |
-| @swap      | /.swap      | Swap files (no compression, no CoW) |
-| @snapshot  | /.snapshot  | Snapshots                           |
+| Subvolume    | Mount Point | Note                                |
+| @os-arch     | /           | System root                         |
+| @os-arch-var | /var        | Avoid getting snapshot              |
+| @home        | /home       | Separated home                      |
+| @swap        | /.swap      | Swap files (no compression, no CoW) |
+| @snapshots   | /.snapshots | Snapshots                           |
 
 Quick setup.
 
@@ -92,7 +89,8 @@ Quick setup.
 # btrfs subvolume create /mnt/@arch-var
 # btrfs subvolume create /mnt/@home
 # btrfs subvolume create /mnt/@swap
-# btrfs subvolume create /mnt/@snapshot
+# chattr +C /mnt/@swap
+# btrfs subvolume create /mnt/@snapshots
 #+end_src
 
 An example of how =fstab= is set up.
@@ -154,13 +152,19 @@ However, in case if kernel parameter or ramdisk is updated, run this manually to
 #+end_src
 
 ** Hibernation
-A workaround has to be made on =BTRFS= with swap files.
+When creating swap files, keep in mind of the following:
 
-First swap files should *NOT* be set with CoW attribute.
+1. Swap files should *NOT* be set with CoW attribute on =BTRFS= file system.
+2. Use =dd= to ensure swap files don't have [[https://unix.stackexchange.com/a/659915][holes]].
 
-Follow [[https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Hibernation_into_swap_file_on_Btrfs][this wiki]] to calculate swap file physical offset on =BTRFS= partition.
+#+begin_src shell
+# chattr +C /mnt/@swap
+# dd if=/dev/zero of=/mnt/@swap/swapfile bs=1M count=8192 status=progress
+#+end_src
 
-Then set kernel parameters.  The UUID should be the UUID of decrypted =BTRFS= partition.  Differentiate from the UUID above.
+Then follow [[https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Hibernation_into_swap_file_on_Btrfs][this wiki]] to calculate swap file physical offset on =BTRFS= partition.
+
+Then set kernel parameters.  The UUID should be the UUID of *decrypted* =BTRFS= partition.  Differentiate from the UUID above.
 
 #+begin_src conf
 GRUB_CMDLINE_LINUX_DEFAULT="resume=UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 resume_offset=3420784"
