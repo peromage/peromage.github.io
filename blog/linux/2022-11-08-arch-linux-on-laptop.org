@@ -1,6 +1,6 @@
 #+title: Arch Linux on Laptop
 #+date: <2022-11-08 Tue 22:45>
-#+hugo_lastmod: <2022-11-22 Tue 09:45>
+#+hugo_lastmod: <2022-12-05 Mon 00:02>
 #+hugo_tags: arch_linux laptop
 #+setupfile: ./setup.conf
 
@@ -167,7 +167,8 @@ Then follow [[https://wiki.archlinux.org/title/Power_management/Suspend_and_hibe
 Then set kernel parameters.  The UUID should be the UUID of *decrypted* =BTRFS= partition.  Differentiate from the UUID above.
 
 #+begin_src conf
-GRUB_CMDLINE_LINUX_DEFAULT="resume=UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 resume_offset=3420784"
+# Kernel parameters
+... resume=UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 resume_offset=3420784 ...
 #+end_src
 
 Update ramfs.  Add =resume= hook.
@@ -184,7 +185,7 @@ title Arch Liunx
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options loglevel=3 quiet rd.luks.name=51d2be03-b9a4-4d4d-bc5a-0a9dba854c1f=ffroot root=/dev/mapper/ffroot rootflags=subvol=@arch-root rw mem_sleep_default=deep nvme.noacpi=1 module_blacklist=hid_sensor_hub resume=UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 resume_offset=3420784
+options loglevel=4 quiet rw rd.luks.name=51d2be03-b9a4-4d4d-bc5a-0a9dba854c1f=ffroot root=/dev/mapper/ffroot rootflags=subvol=@arch-root mem_sleep_default=deep nvme.noacpi=1 module_blacklist=hid_sensor_hub resume=UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 resume_offset=3420784
 #+end_src
 
 * Installing Arch Linux
@@ -280,12 +281,14 @@ Framework laptop needs some additional tweaks.
 Add to kernel parameters:
 
 #+begin_src conf
-GRUB_CMDLINE_LINUX_DEFAULT="module_blacklist=hid_sensor_hub"
+# Kernel parameters
+... module_blacklist=hid_sensor_hub ...
 #+end_src
 
 ** Suspend Power
 Add to kernel parameters:
 
 #+begin_src conf
-GRUB_CMDLINE_LINUX_DEFAULT="mem_sleep_default=deep nvme.noacpi=1"
+# Kernel parameters
+... mem_sleep_default=deep nvme.noacpi=1 ...
 #+end_src
