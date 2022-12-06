@@ -1,6 +1,6 @@
 #+title: Arch Linux on Laptop
 #+date: <2022-11-08 Tue 22:45>
-#+hugo_lastmod: <2022-12-05 Mon 00:02>
+#+hugo_lastmod: <2022-12-06 Tue 00:41>
 #+hugo_tags: arch_linux laptop
 #+setupfile: ./setup.conf
 
@@ -12,6 +12,7 @@ I recently got my new laptop and I found that some additional tweaks need to be 
 <2022-11-22 Tue 09:45> Add more description for power management.
 <2022-11-26 Sat 00:29> Add TPM.  Rephrase some content.
 <2022-12-04 Sun 20:20> Correct encryption description.
+<2022-12-06 Tue 00:41> Fix Firefox scrolling issue.
 
 * Some basic setup
 Unlike desktop, laptops have to be secure so encrytion is a must.
@@ -236,14 +237,19 @@ No configuration needed.  Just remember to enable the daemon service once it's i
 I previously used =XFCE= but now I've switched to KDE as the default desktop environment so HiDPI is not a problem anymore.
 
 * Firefox scrolling with touchpad
-Yuck.  Default scrolling experience on touchpad is just disgusting.  To optimize it a bit, go to =about:config= page.
+Yuck.  Default scrolling experience on touchpad is just disgusting -- it lacks kinetic scrolling.  This mostly because Firefox is not configured properly.
 
-Change configurations:
+For =X11=, add following to the profile file.
 
-#+begin_example
-mousewheel.acceleration.start             1
-mousewheel.default.delta_multiplier_y     2
-#+end_example
+#+begin_src shell
+export MOZ_USE_XINPUT2=1
+#+end_src
+
+For =Wayland=, same in the profile file.
+
+#+begin_src shell
+export MOZ_ENABLE_WAYLAND=1
+#+end_src
 
 * Framework laptop specific
 Framework laptop needs some additional tweaks.
