@@ -1,0 +1,279 @@
+#+title: My Common VM Setup
+#+date: <2022-03-13 Sun 17:47>
+#+hugo_lastmod: <2022-12-12 Mon 00:00>
+#+hugo_tags: gaming kvm qemu pci_passthrough vm
+#+setupfile: ./setup.conf
+
+* Before Starting
+This post mainly discusses VM setup for Windows since I've been using Windows as a secondary OS for apps or games that cannot run on Linux.
+
+This post discusses setup on Arch Linux.
+
+This post assumes the CPU and motherboard support =VT-d= and =IOMMU= features.  Detailed prerequisites can be found on [[https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF][this page]].
+
+* Install Hypervisor
+Follow Arch wiki to install and setup:
+1. [[https://wiki.archlinux.org/title/QEMU][QEMU]]
+2. [[https://wiki.archlinux.org/title/libvirt][Libvirt]]
+3. [[https://wiki.archlinux.org/title/Virt-Manager][Virt-Manager]]
+4. [[https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF][OVMF]]
+
+* Install Windows VM
+** Before Installation
+Download the latest Windows 10 ISO from [[https://www.microsoft.com/en-ca/software-download/windows10ISO][Microsoft]].  Windows 11 is buggy and requires Microsoft account login during installation, which sucks.
+
+We also need to get [[https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md][VirtIO]] driver before installing Windows.
+
+** During Installation
+Then create a new VM with the following configuration before starting installation:
+- Overview: Change /Firmware/ to =UEFI=.
+- CPUs:
+  - Unselect /Copy host CPU configuration/ and change /Model/ to =host-passthrough=.
+  - Select /Manually set CPU topology/.  Change /Sockets/ to =1=, /Cores/ to =4=, /Threads/ to =2= (Physical core =4= * threads for each core =2=).
+- Disk: Change /Disk bus/ to =VirtIO=.
+- Display Spice: Use /Type/ =Spice server=.
+- Video: Use /Model/ =QXL=.
+
+During the installation, the Windows installer may not be able to find the disk because it doesn't have the driver (that's why you have to download it beforehand).  Load the driver from the ISO and continue installation.  This step should be trivial.
+
+** After Installation
+Keep the =VirtIO= ISO in the CD ROM device when boot into Windows.  Find =virtio-win-gt-x64.msi= and =virtio-win-guest-tools.exe= then install them both.  Then power off VM.
+
+Then configure VM:
+- Add Hardware -> Channel -> Select =org.qemu.guest_agent.0= -> Finish
+
+Until here, the basic Windows VM setup is done.
+
+** Note
+The video device doesn't support =VirtIO= [[https://wiki.archlinux.org/title/QEMU#virtio][on Windows]] so we have to use =QXL= for now.
+
+* Passthrough: Discrete Graphic Card
+
+** Identify Discrete Graphic Card
+In a terminal:
+
+#+begin_src shell
+$ lspci -nnk
+01:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204 [GeForce GTX 970] [10de:13c2] (rev a1)
+    Subsystem: Gigabyte Technology Co., Ltd Device [1458:367a]
+    Kernel driver in use: nouveau
+    Kernel modules: nouveau
+01:00.1 Audio device [0403]: NVIDIA Corporation GM204 High Definition Audio Controller [10de:0fbb] (rev a1)
+    Subsystem: Gigabyte Technology Co., Ltd Device [1458:367a]
+    Kernel driver in use: snd_hda_intel
+    Kernel modules: snd_hda_intel
+#+end_src
+
+Take a note of the device IDs.  In this example I have a Nvidia GTX970 graphic card along with a audio controller.  They belong to the same group (domain) you have to take them all.
+
+In this case I got =1458:367a= and =1458:367a=.  These are the PCI devices that will be passed through to the VM.  Other PCI devices can be passed too.
+
+** Add Kernel Parameters
+Then we're going to enable IOMMU and prevent host Linux loading PCI devices that we want to passthrough to the VM.
+
+The kernel parameter passing could be different depending on the bootloader you use.  In this example, I use =systemd-boot=.
+
+Edit the system entry.  Add =intel_iommu=on= to the kernel parameter along with =vfio-pci.ids=10de:13c2,10de:0fbb= which contains the device IDs we got from the previous step.
+
+#+begin_src conf
+# /boot/loader/entries/arch.conf
+options intel_iommu=on vfio-pci.ids=10de:13c2,10de:0fbb
+#+end_src
+
+Then restart the system.
+
+NOTE: You can check =dmesg= after reboot to verify IOMMU is turned on successfully.
+
+#+begin_src shell
+$ sudo dmesg | grep -i -e DMAR -e IOMMU
+[    0.000000] ACPI: DMAR 0x00000000BDCB1CB0 0000B8 (v01 INTEL  BDW      00000001 INTL 00000001)
+[    0.000000] Intel-IOMMU: enabled
+[    0.028879] dmar: IOMMU 0: reg_base_addr fed90000 ver 1:0 cap c0000020660462 ecap f0101a
+[    0.028883] dmar: IOMMU 1: reg_base_addr fed91000 ver 1:0 cap d2008c20660462 ecap f010da
+[    0.028950] IOAPIC id 8 under DRHD base  0xfed91000 IOMMU 1
+[    0.536212] DMAR: No ATSR found
+[    0.536229] IOMMU 0 0xfed90000: using Queued invalidation
+[    0.536230] IOMMU 1 0xfed91000: using Queued invalidation
+[    0.536231] IOMMU: Setting RMRR:
+[    0.536241] IOMMU: Setting identity map for device 0000:00:02.0 [0xbf000000 - 0xcf1fffff]
+[    0.537490] IOMMU: Setting identity map for device 0000:00:14.0 [0xbdea8000 - 0xbdeb6fff]
+[    0.537512] IOMMU: Setting identity map for device 0000:00:1a.0 [0xbdea8000 - 0xbdeb6fff]
+[    0.537530] IOMMU: Setting identity map for device 0000:00:1d.0 [0xbdea8000 - 0xbdeb6fff]
+[    0.537543] IOMMU: Prepare 0-16MiB unity mapping for LPC
+[    0.537549] IOMMU: Setting identity map for device 0000:00:1f.0 [0x0 - 0xffffff]
+[    2.182790] [drm] DMAR active, disabling use of stolen memory
+#+end_src
+
+** Passthrough PCI
+Open VM settings and add the discrete graphic card as well as it's audio controller etc.
+
+Then open VM settings in XML view, add following content in the relevant sections to prevent Nvidia driver installer discovering the VM environment.  Some sections may exist already so just append to them.
+
+#+begin_src xml
+<domain>
+  <features>
+    <hyperv>
+      <vendor_id state='on' value='1234567890ab'/>
+    </hyperv>
+    <kvm>
+      <hidden state='on'>
+    </kvm>
+  </features>
+</domain>
+#+end_src
+
+Alternatively, this has the same effect.
+
+#+begin_src shell
+# NOTE: win10 is the VM name you've just created.
+$ sudo virshpatcher --error43 --vender-id 1234567890ab win10
+#+end_src
+
+** Install Drivers
+Boot into Windows VM, now you should be able to install the graphic card driver.
+
+* Passthrough: Integrated Graphic Card with GVT-g
+I have a fairly new laptop with 12th gen Intel and Iris Xe graphic card but no discrete one.  In this case Intel has provided a technology call =SR-IOV= which allows me to passthrough a part of my iGPU to the VM.
+
+Note: =GVT-g= is [[https://wiki.archlinux.org/title/Intel_GVT-g#Prerequisite][only supported on 5th gen to 10th gen Intel CPUs]].
+
+** Install Kernel Module
+I was following this [[https://github.com/intel/linux-intel-lts/issues/33][GitHub issue]].  Basically an Intel customized =i915= kernel module is needed.  However, thanks to @strongtz who has created an [[https://aur.archlinux.org/packages/i915-sriov-dkms-git][AUR package]] so the Intel custom kernel is not required.  All we need is this AUR package, which is awesome.
+
+After installing the AUR package, update kernel parameters to enable IOMMU and SR-IOV virtual functions.
+
+#+begin_src shell
+# /boot/loader/entries/arch.conf
+options intel_iommu=on iommu=pt i915.enable_guc=7
+#+end_src
+
+Then reboot the system.
+
+** Create Virtual Functions
+If hardware supports and configuration is correct, the following [[https://github.com/intel/linux-intel-lts/issues/33#issuecomment-1328970093][kernel message]] should be observed.
+
+#+begin_src shell
+$ sudo dmesg | grep i915_virtualization_probe
+[    1.740640] i915 0000:00:02.0: i915_virtualization_probe: entry
+#+end_src
+
+Then identify the iGPU by =lspci=.  Usually Intel device starts with =00:02.x=.
+
+#+begin_src shell
+$ lspci | grep -P "VGA.*Intel"
+00:02.0 VGA compatible controller: Intel Corporation Alder Lake-P Integrated Graphics Controller (rev 0c)
+#+end_src
+
+Then we should be able to get the number of virtual functions allowed currently.
+
+#+begin_src shell
+$ cat /sys/devices/pci0000:00/0000:00:02.0/sriov_numvfs
+0
+#+end_src
+
+To enable virtual functions, run this command as root user.  I'm creating one virtual function since I only have one VM that needs it.  Maximal 7 virtual functions can be created.
+
+#+begin_src shell
+$ su
+# echo 1 > /sys/devices/pci0000:00/0000:00:02.0/sriov_numvfs
+#+end_src
+
+Finally check VGA device again, there should be an additional device created (the one starts with =00:02.1=).
+
+#+begin_src shell
+$ lspci | grep -P "VGA.*Intel"
+00:02.0 VGA compatible controller: Intel Corporation Alder Lake-P Integrated Graphics Controller (rev 0c)
+00:02.1 VGA compatible controller: Intel Corporation Alder Lake-P Integrated Graphics Controller (rev 0c)
+#+end_src
+
+** Install Intel Graphics Driver
+Add the virtual PCI graphics adapter to VM (choose the shared on =00:02.1=) and boot up Windows.  Be aware that we still the =QXL= video adapter this time.
+
+Windows should now recognize a *Display adapters/Microsoft Basic Display Adapter* in /Device Manager/ if everything is correct.  Go to Intel website to get [[https://www.intel.ca/content/www/ca/en/download-center/home.html][the latest driver]].
+
+Install it and reboot Windows.  That adapter should now be recognized as *Intel(R) Iris(R) Xe Graphics*.
+
+** Install Looking Glass
+Since I'm setting this up on a laptop I don't have external display so =Looking Glass= must be used to redirect the VM display on the laptop screen.
+
+*** Create Shared Memory
+When the Windows VM is powered off, add the following content to the VM XML config (be aware of the hierarchy).
+
+#+begin_src xml
+<domain>
+  <device>
+    <shmem name='looking-glass'>
+      <model type='ivshmem-plain'/>
+      <size unit='M'>64</size>
+    </shmem>
+  </device>
+</domain>
+#+end_src
+
+The size of shared memory depends on the [[https://looking-glass.io/docs/B5.0.1/install/#determining-memory][maximal resolution]] that Windows VM will be using.  Simply this formula can be used.  The result must be rounded up to the nearest power of 2.
+
+#+begin_example
+total bytes = width x height x 4 x 2 / 1024 / 1024 + 10
+#+end_example
+
+For example my Windows VM can setup maximal 2560x1600 so it would be /2560 x 1600 x 4 x 2 / 1024 / 1024 + 10 = 41.25/.  Then round it up to *64*.
+
+After that, create a temp file config.  The user name must match the user that is being used.
+
+#+begin_src conf
+# /etc/tmpfiles.d/10-looking-glass.conf
+#Type Path                   Mode UID  GID Age Argument
+f     /dev/shm/looking-glass 0660 user kvm -
+#+end_src
+
+Create the temp file for the first time (it will be created automatically after reboot).
+
+#+begin_src shell
+$ sudo systemd-tmpfiles --create /etc/tmpfiles.d/10-looking-glass.conf
+#+end_src
+
+*** Install Host Service
+Download and install Looking Glass [[https://looking-glass.io/downloads][service installer]] in Windows.  Note that Windows is the host in Looking Glass's context (Linux is the client that reads output from Windows VM).
+
+Additionally, =IVSHMEM= [[https://looking-glass.io/docs/B5.0.1/install/#installing-the-ivshmem-driver][driver]] is also needed so that Looking Glass service can shared the display via shared memory.  It can be downloaded from [[https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/upstream-virtio/][RedHat]].
+
+Then go to /Device Manager/ and find *System Devices/PCI standard RAM Controller*.  Update its driver with the downloaded =IVSHMEM= driver.
+
+*** Solve Display Adapter Error Code 43
+Similarly I got the same error code as the passthrough for discrete graphic card.  To solve it, add the following content to the VM config XML.
+
+#+begin_src xml
+<domain>
+  <features>
+    <hyperv>
+      <vendor_id state='on' value='1234567890ab'/>
+    </hyperv>
+    <kvm>
+      <hidden state='on'>
+    </kvm>
+  </features>
+</domain>
+#+end_src
+
+*** Create a Dummy Display
+Since Looking Glass basically mirrors display output, the VM must have a valid display (I.E. a monitor).  We can use a dummy display to bypass it.
+
+Download the [[https://github.com/ge9/IddSampleDriver][IddSampleDriver]] from it's release page.
+- Extract all content to =C:\IddSampleDriver= (Important since the path of config file is hard-coded).
+- Run =C:\installCert.bat= with Administrator privilege.
+- Install display driver: /Device Manager/ -> /Add legacy haradware/ -> /Advanced install/ -> /Display adapter/ -> /Browse driver on the disk/ -> /Choose the inf file in the extracted directory/.
+- Restart Windows.
+
+*** Finish up
+Now get the same version of [[https://looking-glass.io/downloads][Looking Glass client]] (important).  Compile and run.  The VM should be running smoothly with graphic acceleration.
+
+* References
+[[https://wiki.archlinux.org/title/QEMU][ArchWiki QEMU]]
+[[https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF][ArchWiki OVMF]]
+[[https://wiki.archlinux.org/title/Intel_GVT-g][Intel GVT-g]]
+[[https://looking-glass.io/][Looking Glass]]
+[[https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md][Virtio driver]]
+[[https://github.com/intel/linux-intel-lts/issues/33][SR-IOV: mainlining?]]
+[[https://github.com/strongtz/i915-sriov-dkms][strongtz/i915-sriov-dkms]]
+[[https://github.com/ge9/IddSampleDriver][ge9/IddSampleDriver]]
+[[https://www.reddit.com/r/VFIO/comments/wj6zhz/gpu_passthrough_looking_glass_no_external/][GPU Passthrough + Looking Glass + no external monitor/dummy]]
