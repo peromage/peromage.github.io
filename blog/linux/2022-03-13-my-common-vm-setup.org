@@ -1,6 +1,6 @@
 #+title: My Common VM Setup
 #+date: <2022-03-13 Sun 17:47>
-#+hugo_lastmod: <2022-12-12 Mon 00:00>
+#+hugo_lastmod: <2022-12-12 Mon 01:51>
 #+hugo_tags: gaming kvm qemu pci_passthrough vm
 #+setupfile: ./setup.conf
 
@@ -132,7 +132,7 @@ $ sudo virshpatcher --error43 --vender-id 1234567890ab win10
 ** Install Drivers
 Boot into Windows VM, now you should be able to install the graphic card driver.
 
-* Passthrough: Integrated Graphic Card with GVT-g
+* Passthrough: Integrated Graphic Card with SR-IOV
 I have a fairly new laptop with 12th gen Intel and Iris Xe graphic card but no discrete one.  In this case Intel has provided a technology call =SR-IOV= which allows me to passthrough a part of my iGPU to the VM.
 
 Note: =GVT-g= is [[https://wiki.archlinux.org/title/Intel_GVT-g#Prerequisite][only supported on 5th gen to 10th gen Intel CPUs]].
