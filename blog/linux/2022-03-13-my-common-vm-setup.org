@@ -68,6 +68,20 @@ Take a note of the device IDs.  In this example I have a Nvidia GTX970 graphic c
 
 In this case I got =10de:13c2= and =10de:0fbb=.  These are the PCI devices that will be passed through to the VM.  Other PCI devices can be passed too.
 
+** Add Kernel Modules
+Add following modules to =mkinitcpio.conf=.
+
+#+begin_src conf
+# /etc/mkinitcpio.conf
+MODULES=(vfio_pci vfio vfio_iommu_type1 vfio_virqfd)
+#+end_src
+
+Then regenerate ramfs.
+
+#+begin_src shell
+$ sudo mkinitcpio -P
+#+end_src
+
 ** Add Kernel Parameters
 Then we're going to enable IOMMU and prevent host Linux loading PCI devices that we want to passthrough to the VM.
 
@@ -79,8 +93,6 @@ Edit the system entry.  Add =intel_iommu=on= to the kernel parameter along with 
 # /boot/loader/entries/arch.conf
 options intel_iommu=on vfio-pci.ids=10de:13c2,10de:0fbb
 #+end_src
-
-Then restart the system.
 
 NOTE: You can check =dmesg= after reboot to verify IOMMU is turned on successfully.
 
@@ -148,6 +160,13 @@ After installing the AUR package, update kernel parameters to enable IOMMU and S
 #+begin_src shell
 # /boot/loader/entries/arch.conf
 options intel_iommu=on iommu=pt i915.enable_guc=7
+#+end_src
+
+Also add it to =mkinitcpio.conf=
+
+#+begin_src conf
+# /etc/mkinitcpio.conf
+MODULES=(i915)
 #+end_src
 
 Then reboot the system.
