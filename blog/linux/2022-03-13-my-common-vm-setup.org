@@ -31,6 +31,7 @@ Then create a new VM with the following configuration before starting installati
   - Unselect /Copy host CPU configuration/ and change /Model/ to =host-passthrough=.
   - Select /Manually set CPU topology/.  Change /Sockets/ to =1=, /Cores/ to =4=, /Threads/ to =2= (Physical core =4= * threads for each core =2=).
 - Disk: Change /Disk bus/ to =VirtIO=.
+- NIC: Change /Device model/ to =VirtIO=.
 - Display Spice: Use /Type/ =Spice server=.
 - Video: Use /Model/ =QXL=.
 
@@ -94,7 +95,7 @@ Edit the system entry.  Add =intel_iommu=on= to the kernel parameter along with 
 options intel_iommu=on vfio-pci.ids=10de:13c2,10de:0fbb
 #+end_src
 
-NOTE: You can check =dmesg= after reboot to verify IOMMU is turned on successfully.
+After reboot, verify IOMMU is enabled successfully via =dmesg=.
 
 #+begin_src shell
 $ sudo dmesg | grep -i -e DMAR -e IOMMU
@@ -116,8 +117,28 @@ $ sudo dmesg | grep -i -e DMAR -e IOMMU
 [    2.182790] [drm] DMAR active, disabling use of stolen memory
 #+end_src
 
+Also, make sure VFIO driver is loaded.
+
+#+begin_src shell
+$ lspci -nnk | grep -i -A 3 nvidia
+04:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204 [GeForce GTX 970] [10de:13c2] (rev a1)
+	Subsystem: Gigabyte Technology Co., Ltd Device [1458:367a]
+	Kernel driver in use: vfio-pci
+	Kernel modules: nouveau
+04:00.1 Audio device [0403]: NVIDIA Corporation GM204 High Definition Audio Controller [10de:0fbb] (rev a1)
+	Subsystem: Gigabyte Technology Co., Ltd Device [1458:367a]
+	Kernel driver in use: vfio-pci
+	Kernel modules: snd_hda_intel
+#+end_src
+
 ** Passthrough PCI
 Open VM settings and add the discrete graphic card as well as it's audio controller etc.
+
+** Install Drivers
+Boot into Windows VM, now you should be able to install the graphic card driver.
+
+*** Fix Error Code 43
+The latest Windows 10/11 should not have this problem.  However, in any case if display adapter is malfunctioning and showing error code 43, use following workaround to avoid it.
 
 Then open VM settings in XML view, add following content in the relevant sections to prevent Nvidia driver installer discovering the VM environment.  Some sections may exist already so just append to them.
 
@@ -134,15 +155,8 @@ Then open VM settings in XML view, add following content in the relevant section
 </domain>
 #+end_src
 
-Alternatively, this has the same effect.
-
-#+begin_src shell
-# NOTE: win10 is the VM name you've just created.
-$ sudo virshpatcher --error43 --vender-id 1234567890ab win10
-#+end_src
-
-** Install Drivers
-Boot into Windows VM, now you should be able to install the graphic card driver.
+** Passthrough Enclosure Device
+I'm using Razer Core Chroma and Synapse is not available on Linux.  In order to adjust RGB lights, pass the enclosure from USB device list.
 
 ** Notes
 My setup is based on external GPU.  If eGPU is powered on when laptop starts, somehow the kernel will be stuck.  The eGPU has to be powered off and then powered on when system is up.  Weird.
@@ -157,7 +171,7 @@ I was following this [[https://github.com/intel/linux-intel-lts/issues/33][GitHu
 
 After installing the AUR package, update kernel parameters to enable IOMMU and SR-IOV virtual functions.
 
-#+begin_src shell
+#+begin_src conf
 # /boot/loader/entries/arch.conf
 options intel_iommu=on iommu=pt i915.enable_guc=7
 #+end_src
@@ -215,10 +229,10 @@ Windows should now recognize a *Display adapters/Microsoft Basic Display Adapter
 
 Install it and reboot Windows.  That adapter should now be recognized as *Intel(R) Iris(R) Xe Graphics*.
 
-** Install Looking Glass
+* Install Looking Glass
 Since I'm setting this up on a laptop I don't have external display so =Looking Glass= must be used to redirect the VM display on the laptop screen.
 
-*** Create Shared Memory
+** Create Shared Memory
 When the Windows VM is powered off, add the following content to the VM XML config (be aware of the hierarchy).
 
 #+begin_src xml
@@ -254,14 +268,14 @@ Create the temp file for the first time (it will be created automatically after 
 $ sudo systemd-tmpfiles --create /etc/tmpfiles.d/10-looking-glass.conf
 #+end_src
 
-*** Install Host Service
+** Install Host Service
 Download and install Looking Glass [[https://looking-glass.io/downloads][service installer]] in Windows.  Note that Windows is the host in Looking Glass's context (Linux is the client that reads output from Windows VM).
 
 Additionally, =IVSHMEM= [[https://looking-glass.io/docs/B5.0.1/install/#installing-the-ivshmem-driver][driver]] is also needed so that Looking Glass service can shared the display via shared memory.  It can be downloaded from [[https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/upstream-virtio/][RedHat]].
 
 Then go to /Device Manager/ and find *System Devices/PCI standard RAM Controller*.  Update its driver with the downloaded =IVSHMEM= driver.
 
-*** Solve Display Adapter Error Code 43
+** Solve Display Adapter Error Code 43
 Similarly I got the same error code as the passthrough for discrete graphic card.  To solve it, add the following content to the VM config XML.
 
 #+begin_src xml
@@ -277,8 +291,8 @@ Similarly I got the same error code as the passthrough for discrete graphic card
 </domain>
 #+end_src
 
-*** Create a Dummy Display
-Since Looking Glass basically mirrors display output, the VM must have a valid display (I.E. a monitor).  We can use a dummy display to bypass it.
+** Create a Dummy Display
+Looking Glass mirrors display output so a display monitor must be connected to the eGPU's output.  If you don't have a dummy HDMI dongle, a fake display device can be installed.
 
 Download the [[https://github.com/ge9/IddSampleDriver][IddSampleDriver]] from it's release page.
 - Extract all content to =C:\IddSampleDriver= (Important since the path of config file is hard-coded).
@@ -286,8 +300,82 @@ Download the [[https://github.com/ge9/IddSampleDriver][IddSampleDriver]] from it
 - Install display driver: /Device Manager/ -> /Add legacy haradware/ -> /Advanced install/ -> /Display adapter/ -> /Browse driver on the disk/ -> /Choose the inf file in the extracted directory/.
 - Restart Windows.
 
-*** Finish up
+** Finish up
 Now get the same version of [[https://looking-glass.io/downloads][Looking Glass client]] (important).  Compile and run.  The VM should be running smoothly with graphic acceleration.
+
+* Pinned CPU Cores
+To reduce latency, I prefer manually allocating CPU cores for both host and guest.  One thing needs to mention is this doesn't prevent host process from running on the pinned cores.  If the cores are expected to be used by VM only, consider [[https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Isolating_pinned_CPUs][isolate pinned cores]].
+
+First find out how many cores the CPU has.
+
+#+begin_src shell
+$ lscpu -e
+CPU NODE SOCKET CORE L1d:L1i:L2:L3 ONLINE    MAXMHZ   MINMHZ       MHZ
+  0    0      0    0 0:0:0:0          yes 4400.0000 400.0000  594.1430
+  1    0      0    0 0:0:0:0          yes 4400.0000 400.0000  987.0030
+  2    0      0    1 4:4:1:0          yes 4400.0000 400.0000 1144.1160
+  3    0      0    1 4:4:1:0          yes 4400.0000 400.0000 2100.0000
+  4    0      0    2 8:8:2:0          yes 4400.0000 400.0000  944.5790
+  5    0      0    2 8:8:2:0          yes 4400.0000 400.0000  975.3940
+  6    0      0    3 12:12:3:0        yes 4400.0000 400.0000 1116.9910
+  7    0      0    3 12:12:3:0        yes 4400.0000 400.0000  829.3560
+  8    0      0    4 16:16:4:0        yes 3300.0000 400.0000 1250.2290
+  9    0      0    5 17:17:4:0        yes 3300.0000 400.0000 1150.0020
+ 10    0      0    6 18:18:4:0        yes 3300.0000 400.0000 1208.8120
+ 11    0      0    7 19:19:4:0        yes 3300.0000 400.0000 1016.9800
+ 12    0      0    8 20:20:5:0        yes 3300.0000 400.0000 1226.8660
+ 13    0      0    9 21:21:5:0        yes 3300.0000 400.0000 1046.9780
+ 14    0      0   10 22:22:5:0        yes 3300.0000 400.0000 1068.5780
+ 15    0      0   11 23:23:5:0        yes 3300.0000 400.0000 2100.0000
+#+end_src
+
+My CPU is Intel 1240P.  It has 4 performance cores and 8 efficiency cores.  In my setup, I keep core 0 for host and pass the rest 3 performance cores and 2 efficiency cores to the guest (for 8 threads).
+
+Add this configuration to the VM.
+
+#+begin_src xml
+<vcpu placement="static">8</vcpu>
+<iothreads>1</iothreads>
+<cputune>
+  <vcpupin vcpu="0" cpuset="2"/>
+  <vcpupin vcpu="1" cpuset="3"/>
+  <vcpupin vcpu="2" cpuset="4"/>
+  <vcpupin vcpu="3" cpuset="5"/>
+  <vcpupin vcpu="4" cpuset="6"/>
+  <vcpupin vcpu="5" cpuset="7"/>
+  <vcpupin vcpu="6" cpuset="8"/>
+  <vcpupin vcpu="7" cpuset="9"/>
+  <emulatorpin cpuset="0-1"/>
+  <iothreadpin iothread="1" cpuset="0-1"/>
+</cputune>
+<cpu mode="host-passthrough" check="none" migratable="on">
+  <topology sockets="1" dies="1" cores="4" threads="2"/>
+</cpu>
+#+end_src
+
+* Huge Memory Pages
+Normally, I don't think I really need this setup.  In any case if it's needed, I'll use [[https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Static_huge_pages][static huge pages]].  With static huge pages, a portion of memory will be allocated for VM and can't be used by host.
+
+To verify is CPU supports it.
+
+#+begin_src shell
+$ grep pdpe1gb /proc/cpuinfo
+#+end_src
+
+Add kernel parameters.
+
+#+begin_src conf
+# /boot/loader/entries/arch.conf
+options default_hugepagesz=1G hugepagesz=1G hugepages=X
+#+end_src
+
+Add this configuration to the VM.
+
+#+begin_src xml
+<memoryBacking>
+  <hugepages/>
+</memoryBacking>
+#+end_src
 
 * References
 [[https://wiki.archlinux.org/title/QEMU][ArchWiki QEMU]]
