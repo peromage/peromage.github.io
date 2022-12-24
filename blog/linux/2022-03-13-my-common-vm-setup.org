@@ -54,7 +54,7 @@ The video device doesn't support =VirtIO= [[https://wiki.archlinux.org/title/QEM
 In a terminal:
 
 #+begin_src shell
-$ lspci -nnk
+$ lspci -nnk | grep -A 3 -i nvidia
 01:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204 [GeForce GTX 970] [10de:13c2] (rev a1)
     Subsystem: Gigabyte Technology Co., Ltd Device [1458:367a]
     Kernel driver in use: nouveau
@@ -376,6 +376,20 @@ Add this configuration to the VM.
   <hugepages/>
 </memoryBacking>
 #+end_src
+
+* Audio Redirection
+By default the audio is output from HDMI through the graphic card (if it supports).  In order to use the laptop speaker, we need to install a special virtual audio device called [[https://github.com/duncanthrax/scream][scream]].
+
+On Arch, installing from [[https://aur.archlinux.org/packages/scream][AUR]] is the most convenient way.  Then start the service by receiving audio through network.  In this case, =virbr0= is my NAT adapter.
+
+#+begin_src shell
+$ scream -i virbr0
+#+end_src
+
+On Windows, download and install the [[https://github.com/duncanthrax/scream/releases][driver]] then switch output device to scream.  It should work perfectly out of the box.
+
+** Alternative Way to Stream Audio
+=scream= also supports stream through shared memory but it requires additional setup.  Checkout it's readme as it shows how to set it up.  Usually, I don't feel like I really need it.  If there is obvious latency, this should a backup plan.
 
 * References
 [[https://wiki.archlinux.org/title/QEMU][ArchWiki QEMU]]
