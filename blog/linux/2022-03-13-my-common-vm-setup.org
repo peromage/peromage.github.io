@@ -353,6 +353,35 @@ Add this configuration to the VM.
 </cpu>
 #+end_src
 
+* Enable MSI(Message Signaled-Based Interrupts)
+Most likely by default the Windows VM will use /Line-Base Interrupts/ which usually causes audio distortion and slow down the performance.  In this case, we need to enable MSI.
+
+To check what type of interrupts the graphic card is using at the moment, run this command as root while VM is running.  =04:00= is my graphic card bus ID.
+
+#+begin_src shell
+$ sudo lspci -vs 04:00 | grep 'MSI:'
+Capabilities: [68] MSI: Enable+ Count=1/1 Maskable- 64bit+
+Capabilities: [68] MSI: Enable+ Count=1/1 Maskable- 64bit+
+#+end_src
+
+A =-= after Enable [[https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Slowed_down_audio_pumped_through_HDMI_on_the_video_card][means]] MSI is supported, but not used by the virtual machine, while a =+= says that the virtual machine is using it.  Since I have enabled it already the result shows =+= which is expected.
+
+Then go back to the Windows VM and [[https://forums.guru3d.com/threads/windows-line-based-vs-message-signaled-based-interrupts-msi-tool.378044/][enable]] MSI.
+
+In /Device Manager/, find the graphic card: /View/ -> /Resource by type/ -> /Interrupt request (IRQ)/ -> /(PCI) 0xFFFFFFD0 (-48)  NVIDIA GeForce GTX 970/.
+
+The value in the parenthesis also reflects the interrupt status.  Positive value means Line-Based Interrupt mode and negative value means Message Signaled-Based mode.  As my card has already been tweaked, it is negative value here.
+
+To enable MSI: open the property of /(PCI) 0xFFFFFFD0 (-48)  NVIDIA GeForce GTX 970/ -> /Details/ -> in the /Property/ dropdown menu select /Device instance path/.
+
+Note down the value of this property.  In my case it is =PCI\VEN_10DE&DEV_13C2&SUBSYS_367A1458&REV_A1\4&123CFF10&0&000C=.
+
+Then open /Registry Editor/ and find out the device entry.  It should be a subkey of =Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum=.  E.g. =PCI\VEN_10DE&DEV_13C2&SUBSYS_367A1458&REV_A1\4&123cff10&0&000C\Device Parameters\Interrupt Management=.  From there, create a new key named =MessageSignaledInterruptProperties= as well as a DWORD value =MSISupported= with data =1= (Change the data if it exists already).
+
+In addition to the graphic card itself, the audio device on the card also needs to be tweaked.  Audio device should have the same vendor ID and a different device ID which can be obtained from [[*Identify Discrete Graphic Card][the previous section]].  Normally it should be adjacent to the card.  For example =Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\PCI\VEN_10DE&DEV_0FBB&SUBSYS_367A1458&REV_A1\4&336a283&0&0010\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties=.  Similarly update the data to =1=.
+
+Now reboot Windows and check if graphic card works from /Device Manager/ as well as the IRQ value which shows MSI status.
+
 * Huge Memory Pages
 Normally, I don't think I really need this setup.  In any case if it's needed, I'll use [[https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Static_huge_pages][static huge pages]].  With static huge pages, a portion of memory will be allocated for VM and can't be used by host.
 
@@ -401,3 +430,4 @@ On Windows, download and install the [[https://github.com/duncanthrax/scream/rel
 [[https://github.com/strongtz/i915-sriov-dkms][strongtz/i915-sriov-dkms]]
 [[https://github.com/ge9/IddSampleDriver][ge9/IddSampleDriver]]
 [[https://www.reddit.com/r/VFIO/comments/wj6zhz/gpu_passthrough_looking_glass_no_external/][GPU Passthrough + Looking Glass + no external monitor/dummy]]
+[[https://forums.guru3d.com/threads/windows-line-based-vs-message-signaled-based-interrupts-msi-tool.378044/][Windows: Line-Based vs. Message Signaled-Based Interrupts. MSI tool.]]
