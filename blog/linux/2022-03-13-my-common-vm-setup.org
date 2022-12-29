@@ -1,6 +1,6 @@
 #+title: My Common VM Setup
 #+date: <2022-03-13 Sun 17:47>
-#+hugo_lastmod: <2022-12-12 Mon 01:51>
+#+hugo_lastmod: <2022-12-28 Wed 20:44>
 #+hugo_tags: gaming kvm qemu pci_passthrough vm
 #+setupfile: ./setup.conf
 
