@@ -1,6 +1,6 @@
 #+title: Arch Linux on Laptop
 #+date: <2022-11-08 Tue 22:45>
-#+hugo_lastmod: <2022-12-06 Tue 00:41>
+#+hugo_lastmod: <2022-12-28 Wed 20:44>
 #+hugo_tags: arch_linux laptop
 #+setupfile: ./setup.conf
 
@@ -78,46 +78,62 @@ These subvolumes are created under the big =BTRFS='s root.
 | @os-arch     | /           | System root                         |
 | @os-arch-var | /var        | Avoid getting snapshot              |
 | @home        | /home       | Separated home                      |
-| @swap        | /.swap      | Swap files (no compression, no CoW) |
-| @snapshots   | /.snapshots | Snapshots                           |
+| @swap        | /swap       | Swap files (no compression, no CoW) |
+| @snapshots   | /snapshots  | Snapshots                           |
 
-Quick setup.
+Quick setup.  Note that the swap subvolume should have no-COW flag.
 
 #+begin_src shell
 # mkfs.btrfs -L ffroot /dev/mapper/ffroot
 # mount /dev/mapper/ffroot /mnt
-# btrfs subvolume create /mnt/@arch-root
-# btrfs subvolume create /mnt/@arch-var
+# btrfs subvolume create /mnt/@os-arch
+# btrfs subvolume create /mnt/@os-arch-var
 # btrfs subvolume create /mnt/@home
+# btrfs subvolume create /mnt/@vm
 # btrfs subvolume create /mnt/@swap
+# chattr +C /mnt/@vm
 # chattr +C /mnt/@swap
 # btrfs subvolume create /mnt/@snapshots
 #+end_src
 
-An example of how =fstab= is set up.
+An example of how =fstab= is set up.  For SSD, I also have =discard=async= enabled.
 
-Be aware that swap subvolume should NOT be mounted with compression on.
+As for the compression, it seems to be enabled for the whole file system once [[https://btrfs.wiki.kernel.org/index.php/Compression#Can_I_set_compression_per-subvolume.3F][one of the subvolume has it enabled]].  A workaround is to set the property by =chattr +c=.  Based on the document statement, even if I don't have compression option for the swap subvolume, it is enabled implicitly.  The reason that I don't want to use property-based compression option is that it cannot specify compression method.  And =btrfs property set <file> compression <zlib|lzo|zstd>= seems to have [[https://www.reddit.com/r/btrfs/comments/qklux7/comment/hixefz0/?utm_source=share&utm_medium=web2x&context=3][some quirks]].
+
+So far I haven't found any issues with this setup.  Hope per-subvolume compression will be implemented soon.
 
 #+begin_src conf
 # <file system> <dir> <type> <options> <dump> <pass>
-# /dev/mapper/myroot LABEL=FFROOT
-UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 	/ 	btrfs 	rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@arch-root 	0 	1
+# /dev/mapper/ffroot
+/dev/mapper/ffroot      /               btrfs           rw,noatime,ssd,discard=async,space_cache=v2,compress=zstd:3,subvol=/@os-arch    0 1
 
-# /dev/nvme0n1p1 LABEL=EFI
-UUID=1569-822D 	/boot 	vfat 	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro 	0 	2
+# /dev/nvme0n1p1 LABEL=EFI_BOOT
+UUID=4652-2467          /boot           vfat            rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro   0 2
 
-# /dev/mapper/myroot LABEL=FFROOT
-UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 	/home 	btrfs 	rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@home 	0 	2
+# /dev/mapper/ffroot
+/dev/mapper/ffroot      /var            btrfs           rw,noatime,ssd,discard=async,space_cache=v2,compress=zstd:3,subvol=/@os-arch-var        0 2
 
-# /dev/mapper/myroot LABEL=FFROOT
-UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 	/var 	btrfs 	rw,noatime,compress=zstd:3,ssd,space_cache=v2,subvol=/@arch-var 	0 	2
+# /dev/mapper/ffroot
+/dev/mapper/ffroot      /home           btrfs           rw,noatime,ssd,discard=async,space_cache=v2,compress=zstd:3,subvol=/@home       0 2
 
-# /dev/mapper/myroot LABEL=FFROOT
-UUID=dcc33411-f4ae-46e0-ba7a-f285301b25f6 	/.swap 	btrfs 	rw,noatime,ssd,space_cache=v2,subvol=/@swap 	0 	2
+# /dev/mapper/ffroot
+/dev/mapper/ffroot      /swap           btrfs           rw,noatime,ssd,discard=async,space_cache=v2,subvol=/@swap       0 2
 
-# Swap files
-/.swap/swap-32gb.img 	none 	swap 	defaults 	0 	0
+# /dev/mapper/ffroot
+/dev/mapper/ffroot      /vm             btrfs           rw,noatime,ssd,discard=async,space_cache=v2,subvol=/@vm         0 2
+
+# swap files
+/swap/swap32gb.img      none    swap    defaults        0       0
 #+end_src
+
+*** Snapshots
+Thanks to CoW feature provided by BTRFS, taking snapshots is easy.
+
+#+begin_src shell
+btrfs subvolume snapshot source [dest/]name
+#+end_src
+
+Read-only snapshot requires [[https://wiki.archlinux.org/title/btrfs#Snapshots][additional work]] when it gets restored.  Usually I don't use read-only argument when creating a snapshot.
 
 ** Secure boot
 Arch wiki has a very clear [[https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot][tutorial]] but eh.  It's too cumbersome.  I choose to use [[https://github.com/Foxboron/sbctl][sbctl]] to save my life.
