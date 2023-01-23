@@ -1,7 +1,7 @@
-#+title: My Common VM Setup
+#+title: My Common Windows VM Setup
 #+date: <2022-03-13 Sun 17:47>
-#+hugo_lastmod: <2022-12-28 Wed 20:44>
-#+hugo_tags: gaming kvm qemu pci_passthrough vm
+#+hugo_lastmod: <2023-01-22 Sun 21:19>
+#+hugo_tags: gaming kvm qemu pci_passthrough vm windows
 #+setupfile: ./setup.conf
 
 * Before Starting
@@ -36,6 +36,77 @@ Then create a new VM with the following configuration before starting installati
 - Video: Use /Model/ =QXL=.
 
 During the installation, the Windows installer may not be able to find the disk because it doesn't have the driver (that's why you have to download it beforehand).  Load the driver from the ISO and continue installation.  This step should be trivial.
+
+*** Optional: Use VHD(X) Native Boot
+QCOW and raw format image files have decent performance.  However, in most cases the guest Windows prefers to be installed on a real SSD drive to achieve maximum I/O.  But you have experience installing Windows you would know that Windows creates several unnecessary partitions during installation.  I don't want Windows to occupy the whole disk and create those clusters, especially on a portable SSD drive.  I probably use the disk for other purposes and having those partitions is a really bad idea.  It also looks ugly.
+
+This VHD(X) native boot trick I have used it in [[file:../linux/2021-07-09-dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc.org][dual-booting Windows and Linux]] before.
+
+To start, passthrough the SSD drive with =SATA= bus (don't use VirtIO for now).  Then boot into Windows installation ISO and press ~Shift+F10~ to open a CMD window (Yes, you don't even need to start the installation process).
+
+First we need to create the partitions.  In the CMD window:
+
+#+begin_src shell
+> diskpart
+# List all disks
+DISKPART> list disk
+
+# Choose the SSD drive
+DISKPART> select disk 0
+
+# Make sure have a backup as this wipes out the whole disk
+DISKPART> clean
+
+# Creat the partition table
+DISKPART> convert gpt
+
+# An EFI partition is necessary
+DISKPART> create partition efi size=512
+DISKPART> select partition 1
+DISKPART> format fs=fat quick
+DISKPART> assign letter=E
+
+# Assign the rest space for our main partition
+DISKPART> create partition primary
+DISKPART> select partition 2
+DISKPART> format fs=ntfs quick
+DISKPART> assign letter=D
+
+# Create a VHD file to host the Windows system files
+# Note: Better use VHDX format as it has data corruption protection
+DISKPART> create vdisk file=f:\win.vhdx maximum=64000 type=fixed
+DISKPART> select vdisk file=f:\win.vhdx
+DISKPART> attach vdisk
+DISKPART> convert gpt
+DISKPART> create partition primary
+DISKPART> format fs=ntfs quick
+DISKPART> assign letter=H
+DISKPART> exit
+#+end_src
+
+Now we have EFI partition assigned to =E:=, data partition assigned to =D:= and Windows VHD mounted at =H:=.
+
+Then extract Windows files to =H:=, but before that we need to make sure select the correct version that we want to install.
+
+Assume the installation medium is mounted at =G:=.
+
+#+begin_src shell
+> dism /get-wiminfo /wimfile=g:\sources\install.wim
+#+end_src
+
+There would be a list of different versions that this installation medium has.  For me, Windows 10 Pro for Workstations is at 10.  Then I can use the following command to extract it to =H:=.
+
+#+begin_src shell
+> dism /apply-image /imagefile:g:\sources\install.wim /index:10 /applydir:h:\
+#+end_src
+
+Lastly, fix the bootloader.  Make sure install the bootloader files to the EFI partition.
+
+#+begin_src shell
+> bcdboot h:\Windows /l en-us /s e: /f uefi
+#+end_src
+
+Reboot and finish Windows installation.  Don't forget to switch the SSD bus to =VirtIO= after installing the driver.
 
 ** After Installation
 Keep the =VirtIO= ISO in the CD ROM device when boot into Windows.  Find =virtio-win-gt-x64.msi= and =virtio-win-guest-tools.exe= then install them both.  Then power off VM.
@@ -305,6 +376,8 @@ Now get the same version of [[https://looking-glass.io/downloads][Looking Glass 
 
 * Pinned CPU Cores
 To reduce latency, I prefer manually allocating CPU cores for both host and guest.  One thing needs to mention is this doesn't prevent host process from running on the pinned cores.  If the cores are expected to be used by VM only, consider [[https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF#Isolating_pinned_CPUs][isolate pinned cores]].
+
+*Note*: /I've noticed some sudden freeze if CPU cores are pinned while having some loads on Linux host side.  Removing pinning and letting hypervisor decide itself seems to work fine, and the performance wise does not have too much difference.  I don't usually pin cores now unless it's necessary./
 
 First find out how many cores the CPU has.
 
