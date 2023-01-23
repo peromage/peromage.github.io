@@ -167,7 +167,7 @@ $ sudo mount /dev/sda1 /mnt/reserved
 更为简单的办法是，先装 Windows 然后装 Ubuntu，后者会自动搞定这些麻烦事。╮(╯_╰)╭
 
 * 0x07 参考资料
-[[https://www.gnu.org/software/grub/manual/grub.html#Images]]
-[[http://askubuntu.com/questions/180033/how-to-add-different-drive-ubuntu-to-bcd-manually]]
-[[https://wiki.archlinux.org/index.php/Talk:Dual_boot_with_Windows]]
-[[https://wiki.archlinux.org/index.php/Dual_boot_with_Windows]]
+- [[https://www.gnu.org/software/grub/manual/grub.html#Images]]
+- [[http://askubuntu.com/questions/180033/how-to-add-different-drive-ubuntu-to-bcd-manually]]
+- [[https://wiki.archlinux.org/index.php/Talk:Dual_boot_with_Windows]]
+- [[https://wiki.archlinux.org/index.php/Dual_boot_with_Windows]]

@@ -165,5 +165,5 @@ Git 官方推荐使用新的 Subtree ，事实证明的确比 Submodule 方便�
 但也不是说 Submodule 一无是处， Submodule 在我感觉最大的意义在于可以隔离子项目的业务代码，并且记录严格的依赖关系。对于一些子模块更新较慢的项目还是比较适合的。
 
 * 参考
-[[https://gist.github.com/kvnsmth/4688345][subtree_usage]]
-[[http://www.fwolf.com/blog/post/246][subtree_squash]]
+- [[https://gist.github.com/kvnsmth/4688345][subtree_usage]]
+- [[http://www.fwolf.com/blog/post/246][subtree_squash]]

@@ -21,4 +21,4 @@ That's the process to autoload the custom library.  The downside is the =update-
 Alternative way is to use =package-install-from-buffer= to install the library file as a package.  =package.el= does the dirty work for you, takes care of autoload definition generation and loading automatically.
 
 * Reference
-https://emacs.stackexchange.com/questions/8023/how-to-use-autoload
+- https://emacs.stackexchange.com/questions/8023/how-to-use-autoload

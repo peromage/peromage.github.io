@@ -494,13 +494,13 @@ On Windows, download and install the [[https://github.com/duncanthrax/scream/rel
 =scream= also supports stream through shared memory but it requires additional setup.  Checkout it's readme as it shows how to set it up.  Usually, I don't feel like I really need it.  If there is obvious latency, this should a backup plan.
 
 * References
-[[https://wiki.archlinux.org/title/QEMU][ArchWiki QEMU]]
-[[https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF][ArchWiki OVMF]]
-[[https://wiki.archlinux.org/title/Intel_GVT-g][Intel GVT-g]]
-[[https://looking-glass.io/][Looking Glass]]
-[[https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md][Virtio driver]]
-[[https://github.com/intel/linux-intel-lts/issues/33][SR-IOV: mainlining?]]
-[[https://github.com/strongtz/i915-sriov-dkms][strongtz/i915-sriov-dkms]]
-[[https://github.com/ge9/IddSampleDriver][ge9/IddSampleDriver]]
-[[https://www.reddit.com/r/VFIO/comments/wj6zhz/gpu_passthrough_looking_glass_no_external/][GPU Passthrough + Looking Glass + no external monitor/dummy]]
-[[https://forums.guru3d.com/threads/windows-line-based-vs-message-signaled-based-interrupts-msi-tool.378044/][Windows: Line-Based vs. Message Signaled-Based Interrupts. MSI tool.]]
+- [[https://wiki.archlinux.org/title/QEMU][ArchWiki QEMU]]
+- [[https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF][ArchWiki OVMF]]
+- [[https://wiki.archlinux.org/title/Intel_GVT-g][Intel GVT-g]]
+- [[https://looking-glass.io/][Looking Glass]]
+- [[https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md][Virtio driver]]
+- [[https://github.com/intel/linux-intel-lts/issues/33][SR-IOV: mainlining?]]
+- [[https://github.com/strongtz/i915-sriov-dkms][strongtz/i915-sriov-dkms]]
+- [[https://github.com/ge9/IddSampleDriver][ge9/IddSampleDriver]]
+- [[https://www.reddit.com/r/VFIO/comments/wj6zhz/gpu_passthrough_looking_glass_no_external/][GPU Passthrough + Looking Glass + no external monitor/dummy]]
+- [[https://forums.guru3d.com/threads/windows-line-based-vs-message-signaled-based-interrupts-msi-tool.378044/][Windows: Line-Based vs. Message Signaled-Based Interrupts. MSI tool.]]
