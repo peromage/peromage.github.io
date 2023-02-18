@@ -1,0 +1,93 @@
+<!doctype html><html xmlns=http://www.w3.org/1999/xhtml xml:lang=en-us lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>LSP Setup for Java &#183; Fang Deng</title><meta name=description content="Interesting content."><meta name=keywords content="Interesting keywords."><link rel=stylesheet href=https://peromage.github.io/css/skeria.css><link rel=stylesheet href=https://peromage.github.io/css/font.awesome.6.1.2.all.min.css></head><body><div class=topbar><div class=topbar-sticky><a href=https://peromage.github.io/ style=text-decoration:none><h1>(->> truth seek (desire))</h1></a><span class=lead>May the sapphire star light your way✨</span>
+<span class=topbar-nav><p><span class=topbar-nav-item><a href=https://peromage.github.io/>Recent</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/posts>All Posts</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/categories>Categories</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/tags>Tags</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/about>About</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/search>Search</a></span></p></span></div></div><div class="content container"><div class=post><h1 class=post-title>LSP Setup for Java</h1><span class=post-date>Feb 18, 2023
+&nbsp;&#183;&nbsp; 3 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/coding>coding</a></span><h2 id=background>Background</h2><p>As a Java newbie I found that Java setup is quite different from C++.</p><p>Initially I added <a href=https://github.com/emacs-lsp/lsp-java>lsp-java</a> along with the existing <a href=https://github.com/emacs-lsp/lsp-mode>lsp-mode</a> I&rsquo;ve been using. With zero configuration it seemed to work fine. Completion is well supported for Java built-in libraries. However, when I tried visiting some symbols from some other places in the project that I&rsquo;m working on, say <code>JUnit</code>, things getting complicated.</p><p>In C++&rsquo;s world, with <a href=https://clangd.llvm.org/>clangd</a>, I can easily write a <code>compile_flags.txt</code> file and paste dependency header paths in it. But in Java, the code is organized as one big project and they are linked together in a &ldquo;workspace&rdquo;. I believe this is a concept from Eclipse. It doesn&rsquo;t work like C++ where all your projects are loosely coupled and only bundled together during compile time. That&rsquo;s why you can write <code>compile_flags.txt</code> for arbitrary projects because basically you&rsquo;re writing compiler options.</p><p>So, how to make LSP work with external dependencies without copying them to the current working project. I searched a lot but it seemed like no one had discussed this problem. Maybe this is a very fundamental knowledge that every Java developer should know and not worth discussing. As a Java newbie, this really made me crazy. However, after several experiments it turned rather easy than I thought.</p><h2 id=solution>Solution</h2><p>The <code>lsp-java</code> uses <a href=https://github.com/eclipse/eclipse.jdt.ls>eclipse.jdt.ls</a> as the LSP service provider. Whenever a project is opened, it creates a workspace folder under <code>~/.emacs.d/workspace</code>.</p><p>For example, I have a project called <em>awesome_app</em>. When I open it in Emacs, <code>lsp-java</code> creates <code>~/.emacs.d/workspace/awesome_app_69131352</code> directory for me.</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>tree -a -L <span style=color:#0000cf;font-weight:700>3</span>
+</span></span><span style=display:flex><span>awesome_app_69131352/
+</span></span><span style=display:flex><span>├── bin
+</span></span><span style=display:flex><span>│   ├── com
+</span></span><span style=display:flex><span>│   │   └── awesome
+</span></span><span style=display:flex><span>├── .classpath
+</span></span><span style=display:flex><span>├── .project
+</span></span><span style=display:flex><span>└── .settings
+</span></span><span style=display:flex><span>    ├── org.eclipse.core.resources.prefs
+</span></span><span style=display:flex><span>    └── org.eclipse.jdt.core.prefs
+</span></span></code></pre></div><p>In the <code>bin</code> directory it caches all class files. Normally those files are stored in the project&rsquo;s root directory along with the <code>.classpath</code> and <code>.project</code> files if it is opened by Eclipse. <code>lsp-java</code> configures it separately by default. I feel it kind neat and I like it.</p><p>To add other dependencies, simply modify the <code>.classpath</code> and <code>.project</code>.</p><p>By default, <code>.project</code> only contains the <em>awesome_app</em> project. The external dependencies need to be added under <code>&lt;linkedResources></code> section. It will look like this after modifications.</p><p>Note that the <code>&lt;type></code> should be <code>2</code> if this is a directory. Otherwise <code>1</code> for files. Details can be found in <a href="https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fmisc%2Fproject_description_file.html&cp%3D2_1_3_11">Eclipse document</a>.</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=display:flex><span><span style=color:#8f5902;font-style:italic>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#204a87;font-weight:700>&lt;projectDescription&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;name&gt;</span>awesome_app_69131352<span style=color:#204a87;font-weight:700>&lt;/name&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;comment&gt;&lt;/comment&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;projects&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;/projects&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;buildSpec&gt;</span>
+</span></span><span style=display:flex><span>		<span style=color:#204a87;font-weight:700>&lt;buildCommand&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;name&gt;</span>org.eclipse.jdt.core.javabuilder<span style=color:#204a87;font-weight:700>&lt;/name&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;arguments&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;/arguments&gt;</span>
+</span></span><span style=display:flex><span>		<span style=color:#204a87;font-weight:700>&lt;/buildCommand&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;/buildSpec&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;natures&gt;</span>
+</span></span><span style=display:flex><span>		<span style=color:#204a87;font-weight:700>&lt;nature&gt;</span>org.eclipse.jdt.core.javanature<span style=color:#204a87;font-weight:700>&lt;/nature&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;/natures&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;linkedResources&gt;</span>
+</span></span><span style=display:flex><span>		<span style=color:#204a87;font-weight:700>&lt;link&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;name&gt;</span>_<span style=color:#204a87;font-weight:700>&lt;/name&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;type&gt;</span>2<span style=color:#204a87;font-weight:700>&lt;/type&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;location&gt;</span>/home/fang/awesome_app<span style=color:#204a87;font-weight:700>&lt;/location&gt;</span>
+</span></span><span style=display:flex><span>		<span style=color:#204a87;font-weight:700>&lt;/link&gt;</span>
+</span></span><span style=display:flex><span>		<span style=color:#204a87;font-weight:700>&lt;link&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;name&gt;</span>junit<span style=color:#204a87;font-weight:700>&lt;/name&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;type&gt;</span>2<span style=color:#204a87;font-weight:700>&lt;/type&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;location&gt;</span>/home/fang/external/junit<span style=color:#204a87;font-weight:700>&lt;/location&gt;</span>
+</span></span><span style=display:flex><span>		<span style=color:#204a87;font-weight:700>&lt;/link&gt;</span>
+</span></span><span style=display:flex><span>		<span style=color:#204a87;font-weight:700>&lt;link&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;name&gt;</span>mockito<span style=color:#204a87;font-weight:700>&lt;/name&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;type&gt;</span>2<span style=color:#204a87;font-weight:700>&lt;/type&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;location&gt;</span>/home/fang/external/mockito<span style=color:#204a87;font-weight:700>&lt;/location&gt;</span>
+</span></span><span style=display:flex><span>		<span style=color:#204a87;font-weight:700>&lt;/link&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;/linkedResources&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;filteredResources&gt;</span>
+</span></span><span style=display:flex><span>		<span style=color:#204a87;font-weight:700>&lt;filter&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;id&gt;</span>1676757224502<span style=color:#204a87;font-weight:700>&lt;/id&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;name&gt;&lt;/name&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;type&gt;</span>30<span style=color:#204a87;font-weight:700>&lt;/type&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;matcher&gt;</span>
+</span></span><span style=display:flex><span>				<span style=color:#204a87;font-weight:700>&lt;id&gt;</span>org.eclipse.core.resources.regexFilterMatcher<span style=color:#204a87;font-weight:700>&lt;/id&gt;</span>
+</span></span><span style=display:flex><span>				<span style=color:#204a87;font-weight:700>&lt;arguments&gt;</span>node_modules|.metadata|archetype-resources|META-INF/maven|__CREATED_BY_JAVA_LANGUAGE_SERVER__<span style=color:#204a87;font-weight:700>&lt;/arguments&gt;</span>
+</span></span><span style=display:flex><span>			<span style=color:#204a87;font-weight:700>&lt;/matcher&gt;</span>
+</span></span><span style=display:flex><span>		<span style=color:#204a87;font-weight:700>&lt;/filter&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;/filteredResources&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#204a87;font-weight:700>&lt;/projectDescription&gt;</span>
+</span></span></code></pre></div><p>Then modify the <code>.classpath</code> file to let JDT server cache dependency class files.</p><p>The dependency&rsquo;s kind should be <code>src</code> and path should be <code>name/path/to/root/of/package</code>. The name in path is the name we specified in the <code>.project</code> for this dependency and the relative path should be the root where package&rsquo;s fully qualified name starts.</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=display:flex><span><span style=color:#8f5902;font-style:italic>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#204a87;font-weight:700>&lt;classpath&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;classpathentry</span> <span style=color:#c4a000>kind=</span><span style=color:#4e9a06>&#34;con&#34;</span> <span style=color:#c4a000>path=</span><span style=color:#4e9a06>&#34;org.eclipse.jdt.launching.JRE_CONTAINER&#34;</span><span style=color:#204a87;font-weight:700>/&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;classpathentry</span> <span style=color:#c4a000>kind=</span><span style=color:#4e9a06>&#34;src&#34;</span> <span style=color:#c4a000>path=</span><span style=color:#4e9a06>&#34;_/src&#34;</span><span style=color:#204a87;font-weight:700>/&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;classpathentry</span> <span style=color:#c4a000>kind=</span><span style=color:#4e9a06>&#34;src&#34;</span> <span style=color:#c4a000>path=</span><span style=color:#4e9a06>&#34;junit/src/main/java&#34;</span><span style=color:#204a87;font-weight:700>/&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;classpathentry</span> <span style=color:#c4a000>kind=</span><span style=color:#4e9a06>&#34;src&#34;</span> <span style=color:#c4a000>path=</span><span style=color:#4e9a06>&#34;mockito/src/main/java&#34;</span><span style=color:#204a87;font-weight:700>/&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#204a87;font-weight:700>&lt;classpathentry</span> <span style=color:#c4a000>kind=</span><span style=color:#4e9a06>&#34;output&#34;</span> <span style=color:#c4a000>path=</span><span style=color:#4e9a06>&#34;bin&#34;</span><span style=color:#204a87;font-weight:700>/&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#204a87;font-weight:700>&lt;/classpath&gt;</span>
+</span></span></code></pre></div><p>Lastly, restart LSP workspace and see if cached class files appear in <code>bin</code> directory. It should have something like this.</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>awesome_app_69131352/
+</span></span><span style=display:flex><span>├── bin
+</span></span><span style=display:flex><span>│   ├── com
+</span></span><span style=display:flex><span>│   │   └── awesome
+</span></span><span style=display:flex><span>│   ├── junit
+</span></span><span style=display:flex><span>│   │   ├── extensions
+</span></span><span style=display:flex><span>│   │   ├── framework
+</span></span><span style=display:flex><span>│   │   ├── runner
+</span></span><span style=display:flex><span>│   │   └── textui
+</span></span><span style=display:flex><span>│   └── org
+</span></span><span style=display:flex><span>│       ├── junit
+</span></span><span style=display:flex><span>│       └── mockito
+</span></span><span style=display:flex><span>├── .classpath
+</span></span><span style=display:flex><span>├── .project
+</span></span><span style=display:flex><span>└── .settings
+</span></span><span style=display:flex><span>    ├── org.eclipse.core.resources.prefs
+</span></span><span style=display:flex><span>    └── org.eclipse.jdt.core.prefs
+</span></span></code></pre></div><p>Hooray!</p></div></div><script src=https://peromage.github.io/js/mathjax.3.2.2.tex-svg.min.js></script><div class=bottombar><div class=bottombar-sticky><div class=icons><span class=icons-item><a href=https://github.com/peromage target=_blank><i class="fab fa-github"></i></a></span>
+<span class=icons-item><a href=https://www.linkedin.com/in/fangdeng/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a></span>
+<span class=icons-item><a href=mailto:fang@saffyyre.com><i class="fas fa-envelope fa-1x"></i></a></span>
+<span class=icons-item><a href=/gpg-pubkey.txt><i class="fas fa-key fa-1x"></i></a></span></div><div class=footer><p>&copy; 2023 Fang Deng, <a href=https://peromage.github.io/license/>License</a><br><a href=/privacy title="Privacy notice">Privacy notice</a></p></div></div></div></body></html>
