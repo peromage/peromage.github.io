@@ -1,0 +1,127 @@
+#+title: LSP Setup for Java
+#+date: <2023-02-18 Sat 17:04>
+#+hugo_lastmod: <2023-02-18 Sat 17:04>
+#+hugo_tags: lsp java emacs jdt
+#+setupfile: ./setup.conf
+
+* Background
+As a Java newbie I found that Java setup is quite different from C++.
+
+Initially I added [[https://github.com/emacs-lsp/lsp-java][lsp-java]] along with the existing [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]] I've been using.  With zero configuration it seemed to work fine.  Completion is well supported for Java built-in libraries.  However, when I tried visiting some symbols from some other places in the project that I'm working on, say =JUnit=, things getting complicated.
+
+In C++'s world, with [[https://clangd.llvm.org/][clangd]], I can easily write a =compile_flags.txt= file and paste dependency header paths in it.  But in Java, the code is organized as one big project and they are linked together in a "workspace".  I believe this is a concept from Eclipse.  It doesn't work like C++ where all your projects are loosely coupled and only bundled together during compile time.  That's why you can write =compile_flags.txt= for arbitrary projects because basically you're writing compiler options.
+
+So, how to make LSP work with external dependencies without copying them to the current working project.  I searched a lot but it seemed like no one had discussed this problem.  Maybe this is a very fundamental knowledge that every Java developer should know and not worth discussing.  As a Java newbie, this really made me crazy.  However, after several experiments it turned rather easy than I thought.
+
+* Solution
+The =lsp-java= uses [[https://github.com/eclipse/eclipse.jdt.ls][eclipse.jdt.ls]] as the LSP service provider.  Whenever a project is opened, it creates a workspace folder under =~/.emacs.d/workspace=.
+
+For example, I have a project called /awesome_app/.  When I open it in Emacs, =lsp-java= creates =~/.emacs.d/workspace/awesome_app_69131352= directory for me.
+
+#+begin_src bash
+tree -a -L 3
+awesome_app_69131352/
+├── bin
+│   ├── com
+│   │   └── awesome
+├── .classpath
+├── .project
+└── .settings
+    ├── org.eclipse.core.resources.prefs
+    └── org.eclipse.jdt.core.prefs
+#+end_src
+
+In the =bin= directory it caches all class files.  Normally those files are stored in the project's root directory along with the =.classpath= and =.project= files if it is opened by Eclipse.  =lsp-java= configures it separately by default.  I feel it kind neat and I like it.
+
+To add other dependencies, simply modify the =.classpath= and =.project=.
+
+By default, =.project= only contains the /awesome_app/ project.  The external dependencies need to be added under =<linkedResources>= section.  It will look like this after modifications.
+
+Note that the =<type>= should be =2= if this is a directory.  Otherwise =1= for files.  Details can be found in [[https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fmisc%2Fproject_description_file.html&cp%3D2_1_3_11][Eclipse document]].
+
+#+begin_src xml
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>awesome_app_69131352</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>_</name>
+			<type>2</type>
+			<location>/home/fang/awesome_app</location>
+		</link>
+		<link>
+			<name>junit</name>
+			<type>2</type>
+			<location>/home/fang/external/junit</location>
+		</link>
+		<link>
+			<name>mockito</name>
+			<type>2</type>
+			<location>/home/fang/external/mockito</location>
+		</link>
+	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1676757224502</id>
+			<name></name>
+			<type>30</type>
+			<matcher>
+				<id>org.eclipse.core.resources.regexFilterMatcher</id>
+				<arguments>node_modules|.metadata|archetype-resources|META-INF/maven|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
+</projectDescription>
+#+end_src
+
+Then modify the =.classpath= file to let JDT server cache dependency class files.
+
+The dependency's kind should be =src= and path should be =name/path/to/root/of/package=.  The name in path is the name we specified in the =.project= for this dependency and the relative path should be the root where package's fully qualified name starts.
+
+#+begin_src xml
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="_/src"/>
+	<classpathentry kind="src" path="junit/src/main/java"/>
+	<classpathentry kind="src" path="mockito/src/main/java"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
+#+end_src
+
+Lastly, restart LSP workspace and see if cached class files appear in =bin= directory.  It should have something like this.
+
+#+begin_src bash
+awesome_app_69131352/
+├── bin
+│   ├── com
+│   │   └── awesome
+│   ├── junit
+│   │   ├── extensions
+│   │   ├── framework
+│   │   ├── runner
+│   │   └── textui
+│   └── org
+│       ├── junit
+│       └── mockito
+├── .classpath
+├── .project
+└── .settings
+    ├── org.eclipse.core.resources.prefs
+    └── org.eclipse.jdt.core.prefs
+#+end_src
+
+Hooray!
