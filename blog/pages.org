@@ -56,17 +56,17 @@ If you have concerns, please visit its home page for more information.
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
 
-** Some attributes
+** Attributes
 - C++ developer
-- Love Lisp and functional programming
-- Emacser, former Vimmer
-- Have a lot hair :)
+- Emacser
+- Gamer
+- Open source advocate
+- Passionate about Lisp and functional programming (Haskell in the future maybe)
+- Has a lot hair :)
 
 ** About
-I'm a C++ software developer working for an automotive company.  I like C++ and use it extensively at work.  I also know other popular languages like C#, Python, Java, JavaScript as well as TypeScript.
+I'm a C++ software developer working for an automotive company.  I like C++ and use it extensively at work.  However, I also use other popular languages like C#, Python, Java, JavaScript(TypeScript) and Rust from time to time.
 
-However, Lisp is my most favorite one (maybe Haskell?).
-
-Writing blog is one of my hobbies.  I write posts mainly for personal records so some content might be trivial.
+Writing blog is one of my hobbies.  I write posts mainly for personal noting purpose so some content might be trivial.
 
 You can find my contact at the bottom.
