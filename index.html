@@ -4,7 +4,17 @@
 <span class=topbar-nav-item><a href=https://peromage.github.io/categories>Categories</a></span>
 <span class=topbar-nav-item><a href=https://peromage.github.io/tags>Tags</a></span>
 <span class=topbar-nav-item><a href=https://peromage.github.io/about>About</a></span>
-<span class=topbar-nav-item><a href=https://peromage.github.io/search>Search</a></span></p></span></div></div><div class="content container"><div class=posts><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/lsp-setup-for-java/>LSP Setup for Java</a></h1><span class=post-date>Feb 18, 2023
+<span class=topbar-nav-item><a href=https://peromage.github.io/search>Search</a></span></p></span></div></div><div class="content container"><div class=posts><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/different-ways-to-write-a-major-mode/>Different Ways to Write a Major Mode</a></h1><span class=post-date>Mar 16, 2023
+&nbsp;&#183;&nbsp; 3 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/emacs>emacs</a></span>
+#+begin_src org
+This post mainly helps myself remember how to quickly write a major mode. My memory is getting worse. So sad. :(
+Use define-derived-mode Doc: https://www.gnu.org/software/emacs/manual/html_node/elisp/Derived-Modes.html
+This perhaps the most common way to write a major mode.
+Most of the times I derive from fundamental-mode, or nil if the parent mode is not needed (a brand new mode).
+;; With a parent mode (define-derived-mode foo-mode fundamental-mode "Foo" (do something)) ;; Or nothing (define-derived-mode foo-mode nil "Foo" (do something)) Here is the common pattern that I use.
+<a href=https://peromage.github.io/p/different-ways-to-write-a-major-mode/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/lsp-setup-for-java/>LSP Setup for Java</a></h1><span class=post-date>Feb 18, 2023
 &nbsp;&#183;&nbsp; 3 minute read
 &nbsp;&#183;&nbsp;
 <a class=label href=https://peromage.github.io/coding>coding</a></span>
@@ -63,13 +73,7 @@ Myth - Not Working as Expected If you have used Vim you know in Vim you can put 
 <a class=label href=https://peromage.github.io/emacs>emacs</a></span>
 I&rsquo;ve been using Emacs since last year but until recent I started using org-mode seriously. After spending a couple of days reading and watching all kinds of org tutorial as well as using it for documentation, I realized that people who invented this must geniuses.
 Org document seems similar with Markdown: they are text markup format. However, Org provides far more capabilities to store metadata and greater editing experience together with Emacs&rsquo; org-mode.
-<a href=https://peromage.github.io/p/use-org-mode-to-manage-my-blog/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/initialize-stdarray-at-compile-time/>Initialize std::array at Compile Time</a></h1><span class=post-date>Mar 16, 2022
-&nbsp;&#183;&nbsp; 2 minute read
-&nbsp;&#183;&nbsp;
-<a class=label href=https://peromage.github.io/coding>coding</a></span>
-Background I&rsquo;ve been working on optimization for some C++ code recently. One of the part is to initialize some data at compile time. Consider we have a C style enum definition:
-typedef enum Foo { AAA = 0, BBB, CCC } Foo_t; We want to have an array of the enum with undefined initial values 999 because by default initialization the values would be 0&rsquo;s. However, std::array can only be initialized by initializer list, which is said:
-<a href=https://peromage.github.io/p/initialize-stdarray-at-compile-time/>&nbsp;Read on &mldr;</a></div></div></div><script src=https://peromage.github.io/js/mathjax.3.2.2.tex-svg.min.js></script><div class=bottombar><div class=bottombar-sticky><div class=icons><span class=icons-item><a href=https://github.com/peromage target=_blank><i class="fab fa-github"></i></a></span>
+<a href=https://peromage.github.io/p/use-org-mode-to-manage-my-blog/>&nbsp;Read on &mldr;</a></div></div></div><script src=https://peromage.github.io/js/mathjax.3.2.2.tex-svg.min.js></script><div class=bottombar><div class=bottombar-sticky><div class=icons><span class=icons-item><a href=https://github.com/peromage target=_blank><i class="fab fa-github"></i></a></span>
 <span class=icons-item><a href=https://www.linkedin.com/in/fangdeng/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a></span>
 <span class=icons-item><a href=mailto:fang@saffyyre.com><i class="fas fa-envelope fa-1x"></i></a></span>
 <span class=icons-item><a href=/gpg-pubkey.txt><i class="fas fa-key fa-1x"></i></a></span></div><div class=footer><p>&copy; 2023 Fang Deng, <a href=https://peromage.github.io/license/>License</a><br><a href=/privacy title="Privacy notice">Privacy notice</a></p></div></div></div></body></html>
