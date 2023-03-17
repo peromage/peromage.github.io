@@ -1,0 +1,85 @@
+#+begin_src org
+#+title: Different Ways to Write a Major Mode
+#+date: <2023-03-16 Thu 23:17>
+#+hugo_lastmod: <2023-03-16 Thu 23:17>
+#+hugo_tags: emacs elisp
+#+setupfile: ./setup.conf
+
+This post mainly helps myself remember how to quickly write a major mode.  My memory is getting worse.  So sad. :(
+
+* Use define-derived-mode
+Doc: https://www.gnu.org/software/emacs/manual/html_node/elisp/Derived-Modes.html
+
+This perhaps the most common way to write a major mode.
+
+Most of the times I derive from =fundamental-mode=, or =nil= if the parent mode is not needed (a brand new mode).
+
+#+begin_src elisp
+;; With a parent mode
+(define-derived-mode foo-mode fundamental-mode "Foo"
+  (do something))
+
+;; Or nothing
+(define-derived-mode foo-mode nil "Foo"
+  (do something))
+#+end_src
+
+Here is the common pattern that I use.  I use =:after-hook= keyword to run some additional setups after the major mode call.  This is useful if some of the settings need to be overridden from the parent mode settings or its hooks.
+
+#+begin_src elisp
+(define-derived-mode long-log-mode so-long-mode "LongLog"
+  "A major mode used for large text files.  Based on `so-long-mode'.
+Buffers with this mode enabled are read-only by default."
+  :interactive t
+  :after-hook
+  ;; Override the settings by `so-long-mode'
+  (progn
+    (toggle-truncate-lines 1)
+    (hl-line-mode 1))
+  ;; `long-log-mode' settings start from here
+  (add-to-list 'so-long-minor-modes 'line-number-mode)
+  (read-only-mode 1))
+#+end_src
+
+*Note*: The parent mode hooks will be executed anyway even if =delay-mode-hooks= is used in the body.  To avoid this, see [[*Use defun]].
+
+* Use define-generic-mode
+Doc: https://www.gnu.org/software/emacs/manual/html_node/elisp/Generic-Modes.html
+
+This is useful when I need a major mode with some syntax highlights.  Quick and dirty.
+
+The third argument =keyword-list= is a shorthand which will be highlighted with =font-lock-keyword-face=.  It is equivalent to using the forth argument =font-lock-list= and setting it there.  For more information about font lock, see [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Search_002dbased-Fontification.html][here]].
+
+#+begin_src elisp
+;; This example is taken from EmacsWiki: https://www.emacswiki.org/emacs/GenericMode
+(define-generic-mode
+    'foo-mode                       ;; name of the mode to create
+  '("!!")                           ;; comments start with '!!'
+  '("account" "user"
+    "password")                     ;; some keywords
+  '(("=" . 'font-lock-operator)     ;; '=' is an operator
+    (";" . 'font-lock-builtin))     ;; ';' is a built-in
+  '("\\.foo$")                      ;; files for which to activate this mode
+  nil                               ;; other functions to call
+  "A mode for foo files"            ;; doc string for this mode
+  )
+#+end_src
+
+*Note*: Any major mode hook will be executed anyway even if =delay-mode-hooks= is used in the last function list.  To avoid this, see [[*Use defun]].
+
+* Use defun
+Sometimes I just want to use the syntax table and font locks from a major mode but don't want to invoke any hooks from it, LSP per say.  Using =define-derived-mode= or =define-generic-mode= will not work since the major mode hooks will be called anyway at the end of major mode call (this is default behavior defined in those macro).  However, we can simply define a function and use =delay-mode-hooks= to bypass this restriction.
+
+A pattern that I commonly use.
+
+#+begin_src elisp
+(defun foo-mode ()
+  (interactive)
+  (delay-mode-hooks (python-mode))     ;; Use the parent major mode except the hooks
+  (setq mode-name "Foo")               ;; Don't forget the name your mode
+  (setq major-mode #'foo-mode)         ;; Don't forget the major mode symbol
+  (setq-local indent-tabs-mode nil)
+  (setq-local tab-width 4))
+#+end_src
+
+Happy hacking!
