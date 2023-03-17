@@ -1,4 +1,3 @@
-#+begin_src org
 #+title: Different Ways to Write a Major Mode
 #+date: <2023-03-16 Thu 23:17>
 #+hugo_lastmod: <2023-03-16 Thu 23:17>
