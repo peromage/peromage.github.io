@@ -1,8 +1,19 @@
 #+title: LSP Setup for Java
 #+date: <2023-02-18 Sat 17:04>
-#+hugo_lastmod: <2023-02-18 Sat 17:04>
+#+hugo_lastmod: <2023-06-07 Wed 13:18>
 #+hugo_tags: lsp java emacs jdt
 #+setupfile: ./setup.conf
+
+* Update on <2023-06-07 Wed>
+Found a much easier way to configure this and tried again with the update-to-date =lsp-java= and it worked magically.  Can't recall why I had configuration issues before.
+
+Simply it would be:
+
+1. Make sure JDK 17 is installed (According to the requirement of =lsp-java=).
+2. Create a =lib= folder and put =.jar= files into it (or symlinks).  See [[https://github.com/emacs-lsp/lsp-java/issues/226][this issue]].
+3. Run ~lsp-restart-workspace~.
+
+Voila! Now LSP works as you would expect :).
 
 * Background
 As a Java newbie I found that Java setup is quite different from C++.
