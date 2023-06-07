@@ -3,7 +3,7 @@
 THIS_FILE="deploy.sh"
 
 ## Working directory check
-if [ ! -f $THIS_FILE ]; then
+if [ ! -f "$THIS_FILE" ]; then
     echo "Current working directory is not the project root. Aborting..."
     exit 1
 fi
@@ -11,6 +11,7 @@ fi
 ## Save root directory
 REPO_ROOT="$(pwd)"
 HUGO_BASE_DIR="${REPO_ROOT}/hugo"
+HUGO_BASE_CONTENT_DIR="${HUGO_BASE_DIR}/content"
 BLOG_BASE_DIR="${REPO_ROOT}/blog"
 SELECTED_SUBCOMMAND="cmd_export_and_build"
 HUGO_ENVIRONMENT="current"
@@ -23,19 +24,19 @@ logd() {
 ## Subcommands
 cmd_export() {
     ## Cleaning
-    if [ -d "hugo/content" ]; then
-        logd "Cleaning old exported content"
-        rm -rf hugo/content
+    if [ -d "$HUGO_BASE_CONTENT_DIR" ]; then
+        logd "Cleaning old exported content: $HUGO_BASE_CONTENT_DIR"
+        rm -rf "$HUGO_BASE_CONTENT_DIR"
     fi
 
     logd "Exporting from org files"
-    cd $BLOG_BASE_DIR
-    emacs --script ox-hugo-export.el
+    cd "$BLOG_BASE_DIR"
+    emacs --script ox-hugo-export.el -- "--hugo-dir=$HUGO_BASE_DIR" "--blog-dir=$BLOG_BASE_DIR"
 }
 
 cmd_build() {
     logd "Building Hugo static files using environment($HUGO_ENVIRONMENT)"
-    cd $HUGO_BASE_DIR
+    cd "$HUGO_BASE_DIR"
     hugo --minify --environment "$HUGO_ENVIRONMENT"
 }
 
@@ -45,7 +46,7 @@ cmd_export_and_build() {
 }
 
 cmd_server() {
-    cd $HUGO_BASE_DIR
+    cd "$HUGO_BASE_DIR"
     logd "Starting Hugo server using environment($HUGO_ENVIRONMENT)"
     hugo server --disableFastRender --environment "$HUGO_ENVIRONMENT"
 }
@@ -64,7 +65,9 @@ case $1 in
     export-build)
         SELECTED_SUBCOMMAND="cmd_export_and_build" && shift
         ;;
-    *) :; ;;
+    *)
+        SELECTED_SUBCOMMAND="cmd_export_and_build"
+        ;;
 esac
 
 ## CLI: Process arguments

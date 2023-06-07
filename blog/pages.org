@@ -1,4 +1,3 @@
-#+hugo_base_dir: ../hugo
 #+hugo_section: /
 #+hugo_type: page
 #+setupfile: ./setup.conf
