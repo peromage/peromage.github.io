@@ -1,4 +1,4 @@
-<!doctype html><html xmlns=http://www.w3.org/1999/xhtml xml:lang=en-us lang=en-us><head><meta name=generator content="Hugo 0.111.3"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>undefined behavior &#183; Fang Deng</title><meta name=description content="Interesting content."><meta name=keywords content="Interesting keywords."><link rel=stylesheet href=https://peromage.github.io/css/skeria.css><link rel=stylesheet href=https://peromage.github.io/css/font.awesome.6.1.2.all.min.css></head><body><div class=topbar><div class=topbar-sticky><a href=https://peromage.github.io/ style=text-decoration:none><h1>undefined behavior</h1></a><span class=lead>May the sapphire star light your way✨</span>
+<!doctype html><html xmlns=http://www.w3.org/1999/xhtml xml:lang=en-us lang=en-us><head><meta name=generator content="Hugo 0.113.0"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>undefined behavior &#183; Fang Deng</title><meta name=description content="Interesting content."><meta name=keywords content="Interesting keywords."><link rel=stylesheet href=https://peromage.github.io/css/skeria.css><link rel=stylesheet href=https://peromage.github.io/css/font.awesome.6.1.2.all.min.css></head><body><div class=topbar><div class=topbar-sticky><a href=https://peromage.github.io/ style=text-decoration:none><h1>undefined behavior</h1></a><span class=lead>May the sapphire star light your way✨</span>
 <span class=topbar-nav><p><span class=topbar-nav-item><a href=https://peromage.github.io/>Recent</a></span>
 <span class=topbar-nav-item><a href=https://peromage.github.io/posts>All Posts</a></span>
 <span class=topbar-nav-item><a href=https://peromage.github.io/categories>Categories</a></span>
@@ -14,12 +14,12 @@ This perhaps the most common way to write a major mode.
 Most of the times I derive from fundamental-mode, or nil if the parent mode is not needed (a brand new mode).
 ;; With a parent mode (define-derived-mode foo-mode fundamental-mode "Foo" (do something)) ;; Or nothing (define-derived-mode foo-mode nil "Foo" (do something)) Here is the common pattern that I use.
 <a href=https://peromage.github.io/p/different-ways-to-write-a-major-mode/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/lsp-setup-for-java/>LSP Setup for Java</a></h1><span class=post-date>Feb 18, 2023
-&nbsp;&#183;&nbsp; 3 minute read
+&nbsp;&#183;&nbsp; 4 minute read
 &nbsp;&#183;&nbsp;
 <a class=label href=https://peromage.github.io/coding>coding</a></span>
-Background As a Java newbie I found that Java setup is quite different from C++.
-Initially I added lsp-java along with the existing lsp-mode I&rsquo;ve been using. With zero configuration it seemed to work fine. Completion is well supported for Java built-in libraries. However, when I tried visiting some symbols from some other places in the project that I&rsquo;m working on, say JUnit, things getting complicated.
-In C++&rsquo;s world, with clangd, I can easily write a compile_flags.
+Update on &lt;2023-06-07 Wed> Found a much easier way to configure this and tried again with the update-to-date lsp-java and it worked magically. Can&rsquo;t recall why I had configuration issues before.
+Simply it would be:
+Make sure JDK 17 is installed (According to the requirement of lsp-java). Create a lib folder and put .jar files into it (or symlinks). See this issue. Run lsp-restart-workspace. Voila! Now LSP works as you would expect :).
 <a href=https://peromage.github.io/p/lsp-setup-for-java/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/file-based-blog-management-with-ox-hugo/>File-based Blog Management with ox-hugo</a></h1><span class=post-date>Nov 15, 2022
 &nbsp;&#183;&nbsp; 2 minute read
 &nbsp;&#183;&nbsp;
