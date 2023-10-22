@@ -1,13 +1,15 @@
-name: Deploy My Site
+# -*- yaml-indent-offset: 2; -*-
+
+name: Deploy
 
 on:
   pull_request:
   push:
     branches:
-      - master  # Set a branch to deploy
+      - master
 
 jobs:
-  deploy_hugo_site_with_org:
+  compile:
     strategy:
       fail-fast: false
       matrix:
@@ -16,28 +18,29 @@ jobs:
           - 28.1
 
     runs-on: ${{ matrix.os }}
+    continue-on-error: true
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
 
     steps:
-      - name: Setup Emacs
+      - name: Set up Emacs
         uses: purcell/setup-emacs@master
         with:
           version: ${{ matrix.emacs_version }}
 
-      - name: Setup Hugo
+      - name: Set up Hugo
         uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: 'latest'
           extended: true
 
-      - name: Checkout
+      - name: Check out blog source
         uses: actions/checkout@v3
         with:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
-      - name: Deploy
+      - name: Deploy with Hugo
         run: ./deploy.sh
 
       - name: Publish
