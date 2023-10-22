@@ -27,7 +27,7 @@ flattr = ""
 email = "mailto:fang@elfang.com"
 
 # GPG key.
-gpgkey = "/me.pub"
+gpgkey = "/pub.txt"
 
 # RSS.
 rss = false
