@@ -70,8 +70,11 @@ The TCP port depends on the display port used to start the VNC server.  The equa
 Use any VNC client to connect to =localhost:5901=.
 
 ** Add it as a Systemd service
-=$HOME/.config/systemd/user/vncserver.service=
+Add the service file.
+
 #+begin_src conf
+# $HOME/.config/systemd/user/vncserver.service
+
 [Service]
 ExecStart=vncserver :1
 Restart=on-failure
@@ -81,6 +84,7 @@ WantedBy=default.target
 #+end_src
 
 Start the service.
+
 #+begin_src sh
 systemctl --user enable vncserver.service
 systemctl --user start vncserver.service
@@ -112,10 +116,11 @@ $ ssh -L 5900:localhost:5900 -t user@ip
 Local X server already uses display port =:0=. Then use any VNC client to connect to =localhost:5900=.
 
 ** Add it as a Systemd service
-CAVEAT: The user must be configured to auto login, otherwise the user has to be logged in manually in order to start the service (make display =:0= ready).
+*CAVEAT*: The user must be configured to auto login, otherwise the user has to be logged in manually in order to start the service (make display =:0= ready).
 
-=$HOME/.config/systemd/user/x0vncserver.service=
 #+begin_src conf
+# $HOME/.config/systemd/user/x0vncserver.service
+
 [Service]
 ExecStart=x0tigervncserver -display :0 -rfbauth %h/.vnc/passwd
 
@@ -130,6 +135,7 @@ WantedBy=default.target
 #+end_src
 
 Start the service.
+
 #+begin_src sh
 systemctl --user enable x0vncserver.service
 systemctl --user start x0vncserver.service
