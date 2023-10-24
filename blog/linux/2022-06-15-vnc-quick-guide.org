@@ -1,18 +1,20 @@
 #+title: VNC Quick Guide
 #+date: <2022-06-15 Wed 17:40>
-#+hugo_lastmod: <2022-06-15 Wed 18:36>
+#+hugo_lastmod: <2023-10-23 Mon 21:28>
 #+hugo_tags: vnc remote
 #+setupfile: ./setup.conf
 
-I found that every time when I try to setup VNC for remote access I always have troubles configuring it.  I believe this is due to some conceptions which can be easily confusing.  So this post serves both notes and reminder for myself.
+I found that every time when I try to setup VNC for remote access I always have troubles so this post serves as a note for myself.
+
+Be aware VNC only works for X (not sure about Wayland).
 
 * Choose a VNC Server
-Generally I use [[https://tigervnc.org/][TigerVNC]].  It's a fork of /TightVNC/ and the performance is pretty good.  Also, it's easy to configure.  However, when it comes to installation there are two types of servers: standalone and scraping.
+Generally I use [[https://tigervnc.org/][TigerVNC]].  It's a fork of /TightVNC/ with good performance and easy configuration.
 
-The difference is:
+It has two types of installations:
 
 - Standalone: It creates a new X server when the client is connected.  Independent from the local X server.
-- Scraping: It mirrors the local X server.  Pretty much like screen sharing.
+- Scraping: It mirrors the local X server, like screen sharing.
 
 Usually they are shipped with individual packages.  To install, for example, on Ubuntu
 
@@ -20,6 +22,8 @@ Usually they are shipped with individual packages.  To install, for example, on 
 $ sudo apt install tigervnc-standalone-server
 $ sudo apt install tigervnc-scraping-server
 #+end_src
+
+Usually I would go with the scraping mode since open windows persist as long as the user is not logged out.  And also I can quickly jump onto the physical desktop if it is needed.  Unlike the standalone mode which closes all the windows when the service is stopped or restarted.
 
 * Standalone Server
 Configuring a standalone server is fairly easy.  You would only need three things: client password, server config and server startup script.  They are all located under =$HOME/.vnc/=.
@@ -65,6 +69,23 @@ The TCP port depends on the display port used to start the VNC server.  The equa
 
 Use any VNC client to connect to =localhost:5901=.
 
+** Add it as a Systemd service
+=$HOME/.config/systemd/user/vncserver.service=
+#+begin_src conf
+[Service]
+ExecStart=vncserver :1
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+#+end_src
+
+Start the service.
+#+begin_src sh
+systemctl --user enable vncserver.service
+systemctl --user start vncserver.service
+#+end_src
+
 * Scraping Server
 Configuring a scraping server is slightly different from the standalone server but it's not hard.
 
@@ -77,7 +98,7 @@ $ vncpasswd
 2. Start the server.  This is where it's different from the standalone one.  Since it replicates the local X server it doesn't need the configuration.
 
 #+begin_src bash
-$ x0vncserver -rfbauth $HOME/.vnc/passwd
+$ x0vncserver -rfbauth $HOME/.vnc/passwd -display :0
 #+end_src
 
 Don't forget to specify the password file or you'll not be able to connect to it.
@@ -90,9 +111,34 @@ $ ssh -L 5900:localhost:5900 -t user@ip
 
 Local X server already uses display port =:0=. Then use any VNC client to connect to =localhost:5900=.
 
+** Add it as a Systemd service
+CAVEAT: The user must be configured to auto login, otherwise the user has to be logged in manually in order to start the service (make display =:0= ready).
+
+=$HOME/.config/systemd/user/x0vncserver.service=
+#+begin_src conf
+[Service]
+ExecStart=x0tigervncserver -display :0 -rfbauth %h/.vnc/passwd
+
+# Restart when :0 is not ready
+RestartForceExitStatus=1
+
+# General restart
+#Restart=on-failure
+
+[Install]
+WantedBy=default.target
+#+end_src
+
+Start the service.
+#+begin_src sh
+systemctl --user enable x0vncserver.service
+systemctl --user start x0vncserver.service
+#+end_src
+
 * Synonyms of TigerVNC
 I was confused by the TigerVNC since there are similar commands.  It turned out they are the same.
 
 - =vncserver= -> =tigervncserver=
 - =vncconfig= -> =tigervncconfig=
 - =vncpasswd= -> =tigervncpasswd=
+- =x0vncserver= -> =tigerx0vncserver=
