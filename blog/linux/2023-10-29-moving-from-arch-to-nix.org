@@ -1,6 +1,6 @@
 #+title: Moving from Arch Linux to NixOS
-#+date: <2022-11-14 Mon 21:29>
-#+hugo_lastmod: <2023-10-29 Sun 14:58>
+#+date: <2023-10-29 Sun 15:07>
+#+hugo_lastmod: <2023-10-29 Sun 15:07>
 #+hugo_tags: arch_linux nixos
 #+setupfile: ./setup.conf
 
