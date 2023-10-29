@@ -1,0 +1,233 @@
+<!doctype html><html xmlns=http://www.w3.org/1999/xhtml xml:lang=en-us lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>Moving from Arch Linux to NixOS &#183; Fang Deng</title><meta name=description content="Interesting content."><meta name=keywords content="Interesting keywords."><link rel=stylesheet href=https://peromage.github.io/css/skeria.css><link rel=stylesheet href=https://peromage.github.io/css/font.awesome.6.1.2.all.min.css></head><body><div class=topbar><div class=topbar-sticky><a href=https://peromage.github.io/ style=text-decoration:none><h1>undefined behavior</h1></a><span class=lead>tb;dr - too boring; don&rsquo;t read</span>
+<span class=topbar-nav><p><span class=topbar-nav-item><a href=https://peromage.github.io/>Recent</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/posts>All Posts</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/categories>Categories</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/tags>Tags</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/about>About</a></span>
+<span class=topbar-nav-item><a href=https://peromage.github.io/search>Search</a></span></p></span></div></div><div class="content container"><div class=post><h1 class=post-title>Moving from Arch Linux to NixOS</h1><span class=post-date>Nov 14, 2022
+&nbsp;&#183;&nbsp; 6 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/linux>linux</a></span><p>I&rsquo;ve been learning Nix for a while and using the Nix package manager on my work desktop that runs Ubuntu. However, I did not use the NixOS on my personal laptop because I thought I might put a lot effort after work to set it up, which I didn&rsquo;t really want to. Until recent, the Arch dependencies broke again and I felt it kinda suck to fix those issues so I decided to give Nix a try. To my suprise, the installation process is way simpler than I expected.</p><p>In this post, I&rsquo;m going to put the miniaml intial setup of NixOS on my laptop. The complete tweaks may come up a little later because I&rsquo;m still playing around with it.</p><p>Note that, my setup is based on <code>btrfs</code> and <code>luks</code>. And the NixOS version used at the time writing this post is <code>23.05</code>.</p><h2 id=set-up-partition>Set up partition</h2><p>Since I have this set up already and I don&rsquo;t want to wipe my entire disk, the filesystem and encryption setup parts are skipped. However, the Arch documents are still viable for Nix.</p><p><a href=https://wiki.archlinux.org/title/btrfs>Btrfs</a></p><p><a href=https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system>Luks</a></p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span><span style=color:#8f5902;font-style:italic># Decrypt the disk</span>
+</span></span><span style=display:flex><span>cryptsetup open /dev/nvme0n1p2 ffroot
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic># Mount btrfs root to prepare subvolumes</span>
+</span></span><span style=display:flex><span>mount /dev/mapper/ffroot /mnt
+</span></span><span style=display:flex><span><span style=color:#204a87>cd</span> /mnt
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>btrfs subvolume create @nixos
+</span></span><span style=display:flex><span>btrfs subvolume create @nixstore
+</span></span><span style=display:flex><span>btrfs subvolume create @home
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>btrfs subvolume create @swap
+</span></span><span style=display:flex><span>chattr +C @swap
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>btrfs subvolume create @vm
+</span></span><span style=display:flex><span>chattr +C @vm
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic># Mount NixOS root and other partitions</span>
+</span></span><span style=display:flex><span>umount /mnt
+</span></span><span style=display:flex><span>mount -o <span style=color:#000>subvol</span><span style=color:#ce5c00;font-weight:700>=</span>@nixos,noatime,ssd,compress<span style=color:#ce5c00;font-weight:700>=</span>zstd:3 /dev/mapper/ffroot /mnt
+</span></span><span style=display:flex><span><span style=color:#204a87>cd</span> /mnt
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>mkdir nix
+</span></span><span style=display:flex><span>mkdir home
+</span></span><span style=display:flex><span>mkdir ffstore
+</span></span><span style=display:flex><span>mkdir ffstore/swap
+</span></span><span style=display:flex><span>mkdir ffstore/vm
+</span></span><span style=display:flex><span>mkdir boot
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>mount -o <span style=color:#000>subvol</span><span style=color:#ce5c00;font-weight:700>=</span>@nixstore,noatime,ssd,compress<span style=color:#ce5c00;font-weight:700>=</span>zstd:3 /dev/mapper/ffroot /mnt/nix
+</span></span><span style=display:flex><span>mount -o <span style=color:#000>subvol</span><span style=color:#ce5c00;font-weight:700>=</span>@home,noatime,ssd,compress<span style=color:#ce5c00;font-weight:700>=</span>zstd:3 /dev/mapper/ffroot /mnt/home
+</span></span><span style=display:flex><span>mount -o <span style=color:#000>subvol</span><span style=color:#ce5c00;font-weight:700>=</span>@swap,noatime,ssd,compress<span style=color:#ce5c00;font-weight:700>=</span>zstd:3 /dev/mapper/ffroot /mnt/ffstore/swap
+</span></span><span style=display:flex><span>mount -o <span style=color:#000>subvol</span><span style=color:#ce5c00;font-weight:700>=</span>@vm,noatime,ssd,compress<span style=color:#ce5c00;font-weight:700>=</span>zstd:3 /dev/mapper/ffroot /mnt/ffstore/vm
+</span></span><span style=display:flex><span>mount /dev/nvme0n1p1 /mnt/boot
+</span></span></code></pre></div><h2 id=initialize-the-system-config>Initialize the system config</h2><p>Just one command. The generated config files will be located under <code>/etc/nixos/</code>.</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>nixos-generate-config --root /mnt
+</span></span></code></pre></div><h2 id=edit-the-system-config>Edit the system config</h2><p>For the hardware config nothing really needs to be changed. Nix is amazing that it has all the stuff ready to go including configuring the decryption on startup!</p><p>Only two minor changes that needs to be made. One is the subvolume mount options. For some reasons it doesn&rsquo;t have all the options that we used to mount. The other one is the swap file.</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nix data-lang=nix><span style=display:flex><span><span style=color:#8f5902;font-style:italic># Do not modify this file!  It was generated by ‘nixos-generate-config’</span>
+</span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic># and may be overwritten by future invocations.  Please make changes</span>
+</span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic># to /etc/nixos/configuration.nix instead.</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>{</span> <span style=color:#000>config</span><span style=color:#ce5c00;font-weight:700>,</span> <span style=color:#000>lib</span><span style=color:#ce5c00;font-weight:700>,</span> <span style=color:#000>pkgs</span><span style=color:#ce5c00;font-weight:700>,</span> <span style=color:#000>modulesPath</span><span style=color:#ce5c00;font-weight:700>,</span> <span style=color:#ce5c00;font-weight:700>...</span> <span style=color:#000;font-weight:700>}:</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>imports</span> <span style=color:#ce5c00;font-weight:700>=</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>[</span> <span style=color:#000;font-weight:700>(</span><span style=color:#000>modulesPath</span> <span style=color:#ce5c00;font-weight:700>+</span> <span style=color:#4e9a06>&#34;/installer/scan/not-detected.nix&#34;</span><span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000>boot</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>initrd</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>availableKernelModules</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#4e9a06>&#34;xhci_pci&#34;</span> <span style=color:#4e9a06>&#34;thunderbolt&#34;</span> <span style=color:#4e9a06>&#34;nvme&#34;</span> <span style=color:#4e9a06>&#34;usb_storage&#34;</span> <span style=color:#4e9a06>&#34;sd_mod&#34;</span> <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>boot</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>initrd</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>kernelModules</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>boot</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>kernelModules</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#4e9a06>&#34;kvm-intel&#34;</span> <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>boot</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>extraModulePackages</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000>fileSystems</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#4e9a06>&#34;/&#34;</span> <span style=color:#ce5c00;font-weight:700>=</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>{</span> <span style=color:#000>device</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;/dev/disk/by-uuid/35154f6e-27aa-49f8-b1b6-6472127cb524&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>fsType</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;btrfs&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>options</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#4e9a06>&#34;subvol=@nixos&#34;</span> <span style=color:#4e9a06>&#34;ssd&#34;</span> <span style=color:#4e9a06>&#34;noatime&#34;</span> <span style=color:#4e9a06>&#34;compress=zstd:3&#34;</span> <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000>boot</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>initrd</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>luks</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>devices</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#4e9a06>&#34;ffroot&#34;</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>device</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;/dev/disk/by-uuid/d698d7a5-125f-46ad-bc1d-47f9807afdef&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000>fileSystems</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#4e9a06>&#34;/nix&#34;</span> <span style=color:#ce5c00;font-weight:700>=</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>{</span> <span style=color:#000>device</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;/dev/disk/by-uuid/35154f6e-27aa-49f8-b1b6-6472127cb524&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>fsType</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;btrfs&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>options</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#4e9a06>&#34;subvol=@nixstore&#34;</span> <span style=color:#4e9a06>&#34;ssd&#34;</span> <span style=color:#4e9a06>&#34;noatime&#34;</span> <span style=color:#4e9a06>&#34;compress=zstd:3&#34;</span> <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000>fileSystems</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#4e9a06>&#34;/home&#34;</span> <span style=color:#ce5c00;font-weight:700>=</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>{</span> <span style=color:#000>device</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;/dev/disk/by-uuid/35154f6e-27aa-49f8-b1b6-6472127cb524&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>fsType</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;btrfs&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>options</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#4e9a06>&#34;subvol=@home&#34;</span> <span style=color:#4e9a06>&#34;ssd&#34;</span> <span style=color:#4e9a06>&#34;noatime&#34;</span> <span style=color:#4e9a06>&#34;compress=zstd:3&#34;</span> <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000>fileSystems</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#4e9a06>&#34;/boot&#34;</span> <span style=color:#ce5c00;font-weight:700>=</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>{</span> <span style=color:#000>device</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;/dev/disk/by-uuid/8F86-D998&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>fsType</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;vfat&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000>fileSystems</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#4e9a06>&#34;/ffstore/swap&#34;</span> <span style=color:#ce5c00;font-weight:700>=</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>{</span> <span style=color:#000>device</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;/dev/disk/by-uuid/35154f6e-27aa-49f8-b1b6-6472127cb524&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>fsType</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;btrfs&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>options</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#4e9a06>&#34;subvol=@swap&#34;</span> <span style=color:#4e9a06>&#34;ssd&#34;</span> <span style=color:#4e9a06>&#34;noatime&#34;</span> <span style=color:#4e9a06>&#34;compress=zstd:3&#34;</span> <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000>fileSystems</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#4e9a06>&#34;/ffstore/vm&#34;</span> <span style=color:#ce5c00;font-weight:700>=</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>{</span> <span style=color:#000>device</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;/dev/disk/by-uuid/35154f6e-27aa-49f8-b1b6-6472127cb524&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>fsType</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;btrfs&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>options</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#4e9a06>&#34;subvol=@vm&#34;</span> <span style=color:#4e9a06>&#34;ssd&#34;</span> <span style=color:#4e9a06>&#34;noatime&#34;</span> <span style=color:#4e9a06>&#34;compress=zstd:3&#34;</span> <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000>swapDevices</span> <span style=color:#ce5c00;font-weight:700>=</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>[</span>
+</span></span><span style=display:flex><span>      <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>	<span style=color:#000>device</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;/ffstore/swap/swap32gb.img&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Enables DHCP on each ethernet and wireless interface. In case of scripted networking</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># (the default) this is the recommended approach. When using systemd-networkd it&#39;s</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># still possible to use this option, but it&#39;s recommended to use it in conjunction</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># with explicit per-interface declarations with `networking.interfaces.&lt;interface&gt;.useDHCP`.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>networking</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>useDHCP</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>lib</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>mkDefault</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># networking.interfaces.wlp166s0.useDHCP = lib.mkDefault true;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000>nixpkgs</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>hostPlatform</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>lib</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>mkDefault</span> <span style=color:#4e9a06>&#34;x86_64-linux&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>powerManagement</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>cpuFreqGovernor</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>lib</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>mkDefault</span> <span style=color:#4e9a06>&#34;powersave&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>hardware</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>cpu</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>intel</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>updateMicrocode</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>lib</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>mkDefault</span> <span style=color:#000>config</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>hardware</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>enableRedistributableFirmware</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span></code></pre></div><p>For the system config, just enable whatever we need.</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nix data-lang=nix><span style=display:flex><span><span style=color:#8f5902;font-style:italic># Edit this configuration file to define what should be installed on</span>
+</span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic># your system.  Help is available in the configuration.nix(5) man page</span>
+</span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic># and in the NixOS manual (accessible by running `nixos-help`).</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>{</span> <span style=color:#000>config</span><span style=color:#ce5c00;font-weight:700>,</span> <span style=color:#000>pkgs</span><span style=color:#ce5c00;font-weight:700>,</span> <span style=color:#ce5c00;font-weight:700>...</span> <span style=color:#000;font-weight:700>}:</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>imports</span> <span style=color:#ce5c00;font-weight:700>=</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>[</span> <span style=color:#8f5902;font-style:italic># Include the results of the hardware scan.</span>
+</span></span><span style=display:flex><span>      <span style=color:#4e9a06>./hardware-configuration.nix</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Use the systemd-boot EFI boot loader.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>boot</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>loader</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>systemd-boot</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>enable</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>boot</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>loader</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>efi</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>canTouchEfiVariables</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000>networking</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>hostName</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;potpie&#34;</span><span style=color:#000;font-weight:700>;</span> <span style=color:#8f5902;font-style:italic># Define your hostname.</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Pick only one of the below networking options.</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>networking</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>networkmanager</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>enable</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>  <span style=color:#8f5902;font-style:italic># Easiest to use and most distros use this by default.</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Set your time zone.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>time</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>timeZone</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;America/Detroit&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Configure network proxy if necessary</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># networking.proxy.default = &#34;http://user:password@proxy:port/&#34;;</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># networking.proxy.noProxy = &#34;127.0.0.1,localhost,internal.domain&#34;;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Select internationalisation properties.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>i18n</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>defaultLocale</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;en_US.UTF-8&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>console</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>font</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;Lat2-Terminus16&#34;</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#8f5902;font-style:italic># keyMap = &#34;us&#34;;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>useXkbConfig</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span> <span style=color:#8f5902;font-style:italic># use xkbOptions in tty.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Enable the X11 windowing system.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>services</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>xserver</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>enable</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Enable the GNOME Desktop Environment.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>services</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>xserver</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>displayManager</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>gdm</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>enable</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>services</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>xserver</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>desktopManager</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>gnome</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>enable</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Configure keymap in X11</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># services.xserver.layout = &#34;us&#34;;</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># services.xserver.xkbOptions = &#34;eurosign:e,caps:escape&#34;;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Enable CUPS to print documents.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>services</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>printing</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>enable</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Enable sound.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>sound</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>enable</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>hardware</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>pulseaudio</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>enable</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Enable touchpad support (enabled default in most desktopManager).</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>services</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>xserver</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>libinput</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>enable</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Define a user account. Don&#39;t forget to set a password with ‘passwd’.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>users</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>users</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>fang</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>isNormalUser</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>extraGroups</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#4e9a06>&#34;wheel&#34;</span> <span style=color:#000;font-weight:700>];</span> <span style=color:#8f5902;font-style:italic># Enable ‘sudo’ for the user.</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>uid</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#0000cf;font-weight:700>1001</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>packages</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#204a87;font-weight:700>with</span> <span style=color:#000>pkgs</span><span style=color:#000;font-weight:700>;</span> <span style=color:#000;font-weight:700>[</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>firefox</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>tree</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>emacs29</span>
+</span></span><span style=display:flex><span>      <span style=color:#000>git</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># List packages installed in system profile. To search, run:</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># $ nix search wget</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>environment</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>systemPackages</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#204a87;font-weight:700>with</span> <span style=color:#000>pkgs</span><span style=color:#000;font-weight:700>;</span> <span style=color:#000;font-weight:700>[</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>vim</span> <span style=color:#8f5902;font-style:italic># Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>wget</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>coreutils</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>];</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Some programs need SUID wrappers, can be configured further or are</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># started in user sessions.</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># programs.mtr.enable = true;</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>programs</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>gnupg</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>agent</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>enable</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>enableSSHSupport</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># List services that you want to enable:</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Enable the OpenSSH daemon.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>services</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>openssh</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>enable</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Open ports in the firewall.</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># networking.firewall.allowedTCPPorts = [ ... ];</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># networking.firewall.allowedUDPPorts = [ ... ];</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Or disable the firewall altogether.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>networking</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>firewall</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>enable</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>true</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Copy the NixOS configuration file and link it from the resulting system</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># (/run/current-system/configuration.nix). This is useful in case you</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># accidentally delete configuration.nix.</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># system.copySystemConfiguration = true;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># This value determines the NixOS release from which the default</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># settings for stateful data, like file locations and database versions</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># on your system were taken. It&#39;s perfectly fine and recommended to leave</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># this value at the release version of the first install of this system.</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># Before changing this value read the documentation for this option</span>
+</span></span><span style=display:flex><span>  <span style=color:#8f5902;font-style:italic># (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>system</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>stateVersion</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#4e9a06>&#34;23.05&#34;</span><span style=color:#000;font-weight:700>;</span> <span style=color:#8f5902;font-style:italic># Did you read the comment?</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span></code></pre></div><h2 id=build-the-system>Build the system</h2><p>Finally let&rsquo;s build our first NixOS.</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>nixos-install
+</span></span></code></pre></div><p>And that&rsquo;s it!</p><p>It was a blast that I&rsquo;ve never seen such an elegant way to install a system. This is even simpler than Arch!</p><p>Next up, secure boot, hibernation, the laptop specific fixes (functional keys)&mldr; and Flakes! It must be a lot fun.</p></div></div><script src=https://peromage.github.io/js/mathjax.3.2.2.tex-svg.min.js></script><div class=bottombar><div class=bottombar-sticky><div class=icons><span class=icons-item><a href=https://github.com/peromage target=_blank><i class="fab fa-github"></i></a></span>
+<span class=icons-item><a href=https://www.linkedin.com/in/fangdeng/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a></span>
+<span class=icons-item><a href=mailto:fang@elfang.com><i class="fas fa-envelope fa-1x"></i></a></span>
+<span class=icons-item><a href=/pub.txt><i class="fas fa-key fa-1x"></i></a></span></div><div class=footer><p>&copy; 2023 Fang Deng, <a href=https://peromage.github.io/license/>License</a><br><a href=/privacy title="Privacy notice">Privacy notice</a></p></div></div></div></body></html>
