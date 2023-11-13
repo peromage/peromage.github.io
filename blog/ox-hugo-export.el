@@ -45,7 +45,8 @@
 ;; Export
 (let ((default-directory (expand-file-name my-blog-dir))
       (org-confirm-babel-evaluate nil)
-      (org-hugo-base-dir (expand-file-name my-hugo-dir)))
+      (org-hugo-base-dir (expand-file-name my-hugo-dir))
+      (enable-local-variables :all))
   ;; Export posts
   (dolist (post (file-expand-wildcards "**/*.org"))
     (message ">> Exporting %s" post)
