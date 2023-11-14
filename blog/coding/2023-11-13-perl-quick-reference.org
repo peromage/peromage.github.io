@@ -169,7 +169,7 @@ A better way to handle it:
 
 #+begin_src perl
 while (<>) {
-    print $_;
+    print($_);
 }
 #+end_src
 
@@ -192,27 +192,27 @@ When accessing by the index, one can use either =$= or =@=.  In most cases, they
 #+begin_src perl
 my @array = ("foo", "bar", "baz");
 
-print "Accessing element: ";
-print @array[1];
-print "\n";
+print("Accessing element: ");
+print(@array[1]);
+print("\n");
 
-print "Accessing element (mostly equivalent to above): ";
-print $array[1];
-print "\n";
+print("Accessing element (mostly equivalent to above): ");
+print($array[1]);
+print("\n");
 
-print "Index of the last element: ";
-print $#array;
-print "\n";
+print("Index of the last element: ");
+print($#array);
+print("\n");
 
-print "Slicing using \@: ";
-print @array[0, 1];
-print @array[0..$#array];
-print "\n";
+print("Slicing using \@: ");
+print(@array[0, 1]);
+print(@array[0..$#array]);
+print("\n");
 
-print "Slicing using \$: ";
-print $array[0, 1];
-print $array[0..$#array];
-print "\n";
+print("Slicing using \$: ");
+print($array[0, 1]);
+print($array[0..$#array]);
+print("\n");
 #+end_src
 
 #+RESULTS:
@@ -229,8 +229,8 @@ Some common array functions.
 #+begin_src perl
 my @array = (3, 1, 2);
 
-my @sorted_array = sort @array;
-my @reversed_array = reverse @array;
+my @sorted_array = sort(@array);
+my @reversed_array = reverse(@array);
 #+end_src
 
 ** Hash
@@ -248,13 +248,13 @@ When it comes to access, one can use either =$= or =%= just like array above.  =
 #+begin_src perl
 my %hash = ("key1" => "value1", "key2" => "value2");
 
-print "Accessing pair: ";
-print %hash{"key1"};
-print "\n";
+print("Accessing pair: ");
+print(%hash{"key1"});
+print("\n");
 
-print "Accessing value: ";
-print $hash{"key1"};
-print "\n";
+print("Accessing value: ");
+print($hash{"key1"});
+print("\n");
 #+end_src
 
 #+RESULTS:
@@ -268,8 +268,8 @@ Get keys and values.
 #+begin_src perl
 my %hash = ("key1" => "value1", "key2" => "value2");
 
-my @keys = keys %hash;
-my @values = values %hash;
+my @keys = keys(%hash);
+my @values = values(%hash);
 #+end_src
 
 ** Subroutine (Function)
@@ -282,7 +282,7 @@ sub foo {
     # Not preferred
     # my $para1 = @_[0], $para2 = @_[1];
     my ($para1, $para2) = @_;
-    print "Parameter1: $para1, Parameter2: $para2";
+    print("Parameter1: $para1, Parameter2: $para2");
 }
 
 foo("hello", "world");
@@ -339,7 +339,7 @@ In Perl 5, a new syntax was introduced, where the subroutine can be invoked with
 
 #+begin_src perl
 sub foo {
-    print "aha @_\n";
+    print("aha @_\n");
 }
 
 @_ = ("foo", "bar");
@@ -366,14 +366,16 @@ Note that on the binder end (the =test= subroutine), the reference variables mus
 $scalar = "foo";
 @array = (1, 2, 3);
 %hash = (foo => "foo1", bar => "bar1");
-sub func { print "called func"; }
+sub func { print("called func"); }
 
 sub test {
     my ($s, $aref, $href, $fref) = @_;
-    print "Scalar: $s";
-    print "\nArray: "; print "$_, " for @$aref;
-    print "\nHash: "; print "$_ => $hash{$_}, " for keys %$href;
-    print "\n";
+    print("Scalar: $s");
+    print("\nArray: ");
+    print("$_, ") for @$aref;
+    print("\nHash: ");
+    print("$_ => $hash{$_}, ") for keys %$href;
+    print("\n");
     $fref->();
 }
 
@@ -384,7 +386,7 @@ test $scalar, \@array, \%hash, \&func;
 #+begin_example
 Scalar: foo
 Array: 1, 2, 3,
-Hash: bar => bar1, foo => foo1,
+Hash: foo => foo1, bar => bar1,
 called func
 #+end_example
 
@@ -393,26 +395,28 @@ Also note that array and hash variables must be passed by reference if they are 
 #+begin_src perl
 sub want_array {
     my ($a, $bref) = @_;
-    print "Parameter a is: $a";
-    print "\nArray ref is: $bref";
-    print "\nThe rest: "; print "$_, " for @_; print "\n";
+    print("Parameter a is: $a");
+    print("\nArray ref is: $bref");
+    print("\nThe rest: ");
+    print("$_, ") for @_;
+    print("\n");
 }
 
 my @array = (1, 2, 3);
 
-print "Passing by refenrence\n";
-want_array "foo", \@array;
+print("Passing by refenrence\n");
+want_array("foo", \@array);
 
-print "Passing by value\n";
-want_array "foo", @array;
+print("Passing by value\n");
+want_array("foo", @array);
 #+end_src
 
 #+RESULTS:
 #+begin_example
 Passing by refenrence
 Parameter a is: foo
-Array ref is: ARRAY(0x22f40b0)
-The rest: foo, ARRAY(0x22f40b0),
+Array ref is: ARRAY(0x2019140)
+The rest: foo, ARRAY(0x2019140),
 Passing by value
 Parameter a is: foo
 Array ref is: 1
@@ -473,10 +477,10 @@ Use keyword =my=.
 my $foo = "foo";
 {
     my $foo = "FOO";
-    print "Inside: $foo\n";
+    print("Inside: $foo\n");
 }
-print $foo;
-print "outside: $foo\n";
+print($foo);
+print("outside: $foo\n");
 #+end_src
 
 #+RESULTS:
@@ -490,19 +494,19 @@ Use keyword =local=.
 
 #+begin_src perl
 sub foo {
-    print "In foo: $bar\n" # Access a free variable
+    print("In foo: $bar\n"); # Access a free variable
 }
 
 $bar = "bar";
 
 {
     local $bar = "BAR";
-    print "In block: $bar\n";
-    foo $bar;
+    print("In block: $bar\n");
+    foo($bar);
 }
 
-print "Out of block: $bar\n";
-foo $bar;
+print("Out of block: $bar\n");
+foo($bar);
 #+end_src
 
 #+RESULTS:
@@ -518,7 +522,7 @@ Similar with shell scripts.
 
 #+begin_src perl
 my $foo = "foo", $bar = "bar";
-print "Hello $foo $bar! Hey ${foo}-${bar}\n";
+print("Hello $foo $bar! Hey ${foo}-${bar}\n");
 #+end_src
 
 #+RESULTS:
