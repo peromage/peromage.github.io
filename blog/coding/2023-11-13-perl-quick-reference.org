@@ -1,6 +1,6 @@
 #+title: Perl Quick Reference
 #+date: <2023-11-13 Mon 15:44>
-#+hugo_lastmod:
+#+hugo_lastmod: <2023-11-14 Tue 09:26>
 #+hugo_tags: perl linux text_processing
 #+setupfile: ./setup.conf
 
@@ -95,7 +95,7 @@ EOF
 Jun 15 04:06:18 combo su(pam_unix)[21416]: session opened for user foobar by (uid=0)
 #+end_example
 
-** Actions on pipe begin and end
+** Actions on pipe begin and end (awk)
 #+begin_src bash
 cat <<EOF | perl -lne 'BEGIN { print "Pipe begins!"; } END { print "Pipe ends!"; } print "2023 $_"'
 <<log_stream>>
@@ -390,7 +390,7 @@ aha
 ** Referencing
 Use =\= to reference a variable/subroutine.
 
-Note that on the binder end (the =test= subroutine), the reference variables must be scalars (because they references which make sense).  For the function call, the =->= operator is used to dereference (similar with C).
+Note that on the binder end (the =test= subroutine), the reference variables must be scalars (because they are references which make sense).  For the function call, the =->= operator is used to dereference (similar with C).
 
 #+begin_src perl
 $scalar = "foo";
@@ -456,7 +456,7 @@ The rest: foo, 1, 2, 3,
 ** Anonymous
 
 *** Anonymous array
-The anonymous array construction returns a reference.  Note the square brackets =[]= are used here.
+The anonymous array construction returns a reference.  Note that the square brackets =[]= are used here.
 
 #+begin_src perl
 my $aref = [1, 2, 3];
@@ -469,7 +469,7 @@ print("$_, ") for @$aref;
 #+end_example
 
 *** Anonymous hash
-The anonymous hash construction returns a reference.  Note the curly brackets ={}= are used here.
+The anonymous hash construction returns a reference.  Note that the curly brackets ={}= are used here.
 
 #+begin_src perl
 my $href = {
@@ -488,7 +488,7 @@ foo => foovalue, bar => barvalue,
 #+end_example
 
 *** Anonymous subroutine
-The anonymous subroutine construction returns a reference.  Note no name is specified here and =->= operator are used to invoke the call.
+The anonymous subroutine construction returns a reference.  Note that no name is specified here and =->= operator are used to invoke the call.
 
 #+begin_src perl
 my $sref = sub { print("Called subroutine @_[0]"); };
