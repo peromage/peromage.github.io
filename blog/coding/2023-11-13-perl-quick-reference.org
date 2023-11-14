@@ -30,6 +30,18 @@ Jun 15 12:12:34 combo sshd(pam_unix)[23397]: authentication failure; logname= ui
 #+end_src
 
 * Command line
+** Commonly used switches
+| Switch      | Description                                  |
+|-------------+----------------------------------------------|
+| -n          | Similar with =sed -n=                        |
+| -p          | Similar with =sed=                           |
+| -l[oct]     | Specify line terminator.  Default to =\n=.   |
+| -0[oct/hex] | Like =-l=.  Default to =\0=.                 |
+| -a          | Autosplit columns.  Used with =-n= or =-p=.  |
+| -F          | Specify autosplit pattern.  Used with =-a=.  |
+| -e          | Specify expressions.                         |
+| -E          | Like =-e= but enables all optional features. |
+
 ** Line matching (grep)
 #+begin_src bash
 cat <<EOF | perl -lne 'print if /sshd/'
@@ -81,6 +93,23 @@ EOF
 #+RESULTS:
 #+begin_example
 Jun 15 04:06:18 combo su(pam_unix)[21416]: session opened for user foobar by (uid=0)
+#+end_example
+
+** Actions on pipe begin and end
+#+begin_src bash
+cat <<EOF | perl -lne 'BEGIN { print "Pipe begins!"; } END { print "Pipe ends!"; } print "2023 $_"'
+<<log_stream>>
+EOF
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Pipe begins!
+2023 Jun 15 04:06:18 combo su(pam_unix)[21416]: session opened for user cyrus by (uid=0)
+2023 Jun 15 04:06:20 combo logrotate: ALERT exited abnormally with [1]
+2023 Jun 15 04:12:42 combo su(pam_unix)[22644]: session opened for user news by (uid=0)
+2023 Jun 15 12:12:34 combo sshd(pam_unix)[23397]: authentication failure; logname= uid=0 euid=0 tty=NODEVssh ruser= rhost=218.188.2.4
+Pipe ends!
 #+end_example
 
 ** Splitting (cut)
