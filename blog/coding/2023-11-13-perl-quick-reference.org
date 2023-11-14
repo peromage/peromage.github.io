@@ -1,0 +1,771 @@
+#+title: Perl Quick Reference
+#+date: <2023-11-13 Mon 15:44>
+#+hugo_lastmod:
+#+hugo_tags: perl linux text_processing
+#+setupfile: ./setup.conf
+
+* Preface
+Perl is a powerful tool to handle text processing.  However, the learning curve might be steep due to some unusual syntax.  I find myself even need to revisit the doc sometimes if I don't use it often, so this post I'll write down some commonly used patterns when it comes to text processing.  That said this post is updated from time to time so remember to come back!
+
+When used as a command line tool, =perl= is powerful enough to replace traditional text processing tools like =sed=, =awk=, =grep=, =tr= etc..  Actually using =perl= instead of =grep= and =tr= might be a little overkill in most cases but the functionalities of =sed= and =awk= can be almost replced.  I recommend someone who starts learning text processing and regex to start with Perl.  The reasons are:
+
+- Perl is installed by default almost on every Linux distribution.
+- The regex syntax used by Perl follows PCRE which is more intuitive for someone comes from Python and JavaScript world.
+- Perl is a fully fledged language compared =sed= and =awk=.
+- Extra modules is needed.
+
+Without furthur ado, let's get started!
+
+*PS*: The sample text used in this post is from [[https://github.com/logpai/loghub][loghub]].
+*PPS*: Some content is copied from Perl documents.
+
+* Sample text                                                      :noexport:
+#+name: log_stream
+#+begin_src bash
+Jun 15 04:06:18 combo su(pam_unix)[21416]: session opened for user cyrus by (uid=0)
+Jun 15 04:06:20 combo logrotate: ALERT exited abnormally with [1]
+Jun 15 04:12:42 combo su(pam_unix)[22644]: session opened for user news by (uid=0)
+Jun 15 12:12:34 combo sshd(pam_unix)[23397]: authentication failure; logname= uid=0 euid=0 tty=NODEVssh ruser= rhost=218.188.2.4
+#+end_src
+
+* Command line
+** Line matching (grep)
+#+begin_src bash
+cat <<EOF | perl -lne 'print if /sshd/'
+<<log_stream>>
+EOF
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Jun 15 12:12:34 combo sshd(pam_unix)[23397]: authentication failure; logname= uid=0 euid=0 tty=NODEVssh ruser= rhost=218.188.2.4
+#+end_example
+
+** Print matched only (grep)
+#+begin_src bash
+cat <<EOF | perl -lne '/(pam_unix)/ and print $1'
+<<log_stream>>
+EOF
+#+end_src
+
+#+RESULTS:
+#+begin_example
+pam_unix
+pam_unix
+pam_unix
+#+end_example
+
+** Substitution (sed)
+#+begin_src bash
+cat <<EOF | perl -lpe 's/^Jun/Aug/'
+<<log_stream>>
+EOF
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Aug 15 04:06:18 combo su(pam_unix)[21416]: session opened for user cyrus by (uid=0)
+Aug 15 04:06:20 combo logrotate: ALERT exited abnormally with [1]
+Aug 15 04:12:42 combo su(pam_unix)[22644]: session opened for user news by (uid=0)
+Aug 15 12:12:34 combo sshd(pam_unix)[23397]: authentication failure; logname= uid=0 euid=0 tty=NODEVssh ruser= rhost=218.188.2.4
+#+end_example
+
+** Substitute on matches (awk)
+#+begin_src bash
+cat <<EOF | perl -lne '/uid=0/ and s/cyrus/foobar/ and print'
+<<log_stream>>
+EOF
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Jun 15 04:06:18 combo su(pam_unix)[21416]: session opened for user foobar by (uid=0)
+#+end_example
+
+** Splitting (cut)
+By default Perl splits by spaces.
+
+#+begin_src bash
+cat <<EOF | perl -lane 'print $F[4]'
+<<log_stream>>
+EOF
+#+end_src
+
+#+RESULTS:
+#+begin_example
+su(pam_unix)[21416]:
+logrotate:
+su(pam_unix)[22644]:
+sshd(pam_unix)[23397]:
+#+end_example
+
+Specify patterns.
+
+#+begin_src bash
+cat <<EOF | perl -F':' -lane 'print $F[3]'
+<<log_stream>>
+EOF
+#+end_src
+
+#+RESULTS:
+#+begin_example
+ session opened for user cyrus by (uid=0)
+ ALERT exited abnormally with [1]
+ session opened for user news by (uid=0)
+ authentication failure; logname= uid=0 euid=0 tty=NODEVssh ruser= rhost=218.188.2.4
+#+end_example
+
+** Transformation (tr)
+#+begin_src bash
+cat <<EOF | perl -lpe 'tr/a-z/A-Z/'
+<<log_stream>>
+EOF
+#+end_src
+
+#+RESULTS:
+#+begin_example
+JUN 15 04:06:18 COMBO SU(PAM_UNIX)[21416]: SESSION OPENED FOR USER CYRUS BY (UID=0)
+JUN 15 04:06:20 COMBO LOGROTATE: ALERT EXITED ABNORMALLY WITH [1]
+JUN 15 04:12:42 COMBO SU(PAM_UNIX)[22644]: SESSION OPENED FOR USER NEWS BY (UID=0)
+JUN 15 12:12:34 COMBO SSHD(PAM_UNIX)[23397]: AUTHENTICATION FAILURE; LOGNAME= UID=0 EUID=0 TTY=NODEVSSH RUSER= RHOST=218.188.2.4
+#+end_example
+
+** Remove duplicated lines (uniq)
+#+begin_src bash
+cat <<EOF | perl -lne 'print unless $a{$_}++'
+<<log_stream>>
+<<log_stream>>
+EOF
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Jun 15 04:06:18 combo su(pam_unix)[21416]: session opened for user cyrus by (uid=0)
+Jun 15 04:06:20 combo logrotate: ALERT exited abnormally with [1]
+Jun 15 04:12:42 combo su(pam_unix)[22644]: session opened for user news by (uid=0)
+Jun 15 12:12:34 combo sshd(pam_unix)[23397]: authentication failure; logname= uid=0 euid=0 tty=NODEVssh ruser= rhost=218.188.2.4
+#+end_example
+
+* Language quirks
+For quick references:
+
+- Perl intro: https://perldoc.perl.org/perlintro
+- Perl syntax: https://perldoc.perl.org/perlsyn
+- Perl regex: https://perldoc.perl.org/perlre
+- Perl operators: https://perldoc.perl.org/perlop
+- Perl subroutine: https://perldoc.perl.org/perlsub
+
+** $_ and @_
+The =$_= and =@_= are commonly used to represent the implicit variable/array in the current context.  Expressions like string matching can refer to =$_= by default without specifying it.  Also functions like =print= can also refer to =$_= by just calling it.
+
+** Read from stdin
+Use =<>= or =<STDIN>= to read from stdin line by line.  Using this should be careful since it could eat a lot memory.
+
+#+begin_src perl
+my @lines = <>;
+#+end_src
+
+A better way to handle it:
+
+#+begin_src perl
+while (<>) {
+    print $_;
+}
+#+end_src
+
+** Scalar
+Denoted by =$= sigil.
+
+#+begin_src perl
+my $foo = "foo";
+#+end_src
+
+** Array
+Denoted by =@= sigil.
+
+#+begin_src perl
+my @array = (123, "foo", undef, "bar");
+#+end_src
+
+When accessing by the index, one can use either =$= or =@=.  In most cases, they are equivalent.  However, they do have slight different meanings.  =$= implies the result is a scalar while =@= indicates the result could be an array.  The example can be seen below.
+
+#+begin_src perl
+my @array = ("foo", "bar", "baz");
+
+print "Accessing element: ";
+print @array[1];
+print "\n";
+
+print "Accessing element (mostly equivalent to above): ";
+print $array[1];
+print "\n";
+
+print "Index of the last element: ";
+print $#array;
+print "\n";
+
+print "Slicing using \@: ";
+print @array[0, 1];
+print @array[0..$#array];
+print "\n";
+
+print "Slicing using \$: ";
+print $array[0, 1];
+print $array[0..$#array];
+print "\n";
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Accessing element: bar
+Accessing element (mostly equivalent to above): bar
+Index of the last element: 2
+Slicing using @: foobarfoobarbaz
+Slicing using $: barbar
+#+end_example
+
+Some common array functions.
+
+#+begin_src perl
+my @array = (3, 1, 2);
+
+my @sorted_array = sort @array;
+my @reversed_array = reverse @array;
+#+end_src
+
+** Hash
+Denoted by =%= sigil.
+
+There are two different ways to initialize the hash variable.  One is like array style and the other is more obivious to construct with pairs.
+
+#+begin_src perl
+my %hash = ("key1", "value1", "key2", "value2");
+my %hash1 = ("key1" => "value1", "key2" => "value2");
+#+end_src
+
+When it comes to access, one can use either =$= or =%= just like array above.  =$= implies scalar, which is the value here, while =%= can access the pair.
+
+#+begin_src perl
+my %hash = ("key1" => "value1", "key2" => "value2");
+
+print "Accessing pair: ";
+print %hash{"key1"};
+print "\n";
+
+print "Accessing value: ";
+print $hash{"key1"};
+print "\n";
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Accessing pair: key1value1
+Accessing value: value1
+#+end_example
+
+Get keys and values.
+
+#+begin_src perl
+my %hash = ("key1" => "value1", "key2" => "value2");
+
+my @keys = keys %hash;
+my @values = values %hash;
+#+end_src
+
+** Subroutine (Function)
+Subroutines in Perl just like shell functions where the parameter can be omitted and accessed by the default array =@_=.
+
+To invoke a subroutine, use either =foo 1, 2, 3;= or =foo(1, 2, 3)= (preferred).  Note that the former one needs comma to delimit arguments (not space!)
+
+#+begin_src perl
+sub foo {
+    # Not preferred
+    # my $para1 = @_[0], $para2 = @_[1];
+    my ($para1, $para2) = @_;
+    print "Parameter1: $para1, Parameter2: $para2";
+}
+
+foo("hello", "world");
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Parameter1: hello, Parameter2: world
+#+end_example
+
+The subroutines can actually be defined with explicit parameters so that the number of parameters will be checked.
+
+#+begin_src perl
+use 5.36.0;
+# or
+# use feature 'signatures';
+
+sub foo($a, $b) {
+    return $a + $b;
+}
+
+print(foo(1, 2));
+#+end_src
+
+#+RESULTS:
+#+begin_example
+3
+#+end_example
+
+Variadic parameter is also supported.
+
+#+begin_src perl
+use 5.36.0;
+# or
+# use feature 'signatures';
+
+sub foo($a, $b, @c) {
+    my $sum = $a + $b;
+    for (@c) {
+        $sum += $_;
+    }
+    return $sum;
+}
+
+print(foo(1, 2, 3..10));
+#+end_src
+
+#+RESULTS:
+#+begin_example
+55
+#+end_example
+
+In Perl 5, a new syntax was introduced, where the subroutine can be invoked with a =&= prefix, like =&foo(1, 2, 3)=.  This syntax can be ignored in most cases since it doesn't bring much benefit but confusion.  A noticeable difference is with this syntax the subroutine can access caller's =@_=.
+
+#+begin_src perl
+sub foo {
+    print "aha @_\n";
+}
+
+@_ = ("foo", "bar");
+foo;
+foo();
+&foo;
+&foo();
+#+end_src
+
+#+RESULTS:
+#+begin_example
+aha
+aha
+aha foo bar
+aha
+#+end_example
+
+** Referencing
+Use =\= to reference a variable/subroutine.
+
+Note that on the binder end (the =test= subroutine), the reference variables must be scalars (because they references which make sense).  For the function call, the =->= operator is used to dereference (similar with C).
+
+#+begin_src perl
+$scalar = "foo";
+@array = (1, 2, 3);
+%hash = (foo => "foo1", bar => "bar1");
+sub func { print "called func"; }
+
+sub test {
+    my ($s, $aref, $href, $fref) = @_;
+    print "Scalar: $s";
+    print "\nArray: "; print "$_, " for @$aref;
+    print "\nHash: "; print "$_ => $hash{$_}, " for keys %$href;
+    print "\n";
+    $fref->();
+}
+
+test $scalar, \@array, \%hash, \&func;
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Scalar: foo
+Array: 1, 2, 3,
+Hash: bar => bar1, foo => foo1,
+called func
+#+end_example
+
+Also note that array and hash variables must be passed by reference if they are intended to be used as it.  Otherwise they will be slurped into the positional parameters.
+
+#+begin_src perl
+sub want_array {
+    my ($a, $bref) = @_;
+    print "Parameter a is: $a";
+    print "\nArray ref is: $bref";
+    print "\nThe rest: "; print "$_, " for @_; print "\n";
+}
+
+my @array = (1, 2, 3);
+
+print "Passing by refenrence\n";
+want_array "foo", \@array;
+
+print "Passing by value\n";
+want_array "foo", @array;
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Passing by refenrence
+Parameter a is: foo
+Array ref is: ARRAY(0x22f40b0)
+The rest: foo, ARRAY(0x22f40b0),
+Passing by value
+Parameter a is: foo
+Array ref is: 1
+The rest: foo, 1, 2, 3,
+#+end_example
+
+** Anonymous
+
+*** Anonymous array
+The anonymous array construction returns a reference.  Note the square brackets =[]= are used here.
+
+#+begin_src perl
+my $aref = [1, 2, 3];
+print("$_, ") for @$aref;
+#+end_src
+
+#+RESULTS:
+#+begin_example
+1, 2, 3,
+#+end_example
+
+*** Anonymous hash
+The anonymous hash construction returns a reference.  Note the curly brackets ={}= are used here.
+
+#+begin_src perl
+my $href = {
+    foo => "foovalue",
+    bar => "barvalue"
+};
+
+while (my ($k, $v) = each %$href) {
+    print("$k => $v, ");
+}
+#+end_src
+
+#+RESULTS:
+#+begin_example
+foo => foovalue, bar => barvalue,
+#+end_example
+
+*** Anonymous subroutine
+The anonymous subroutine construction returns a reference.  Note no name is specified here and =->= operator are used to invoke the call.
+
+#+begin_src perl
+my $sref = sub { print("Called subroutine @_[0]"); };
+$sref->("wow");
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Called subroutine wow
+#+end_example
+
+** Lexical binding
+Use keyword =my=.
+
+#+begin_src perl
+my $foo = "foo";
+{
+    my $foo = "FOO";
+    print "Inside: $foo\n";
+}
+print $foo;
+print "outside: $foo\n";
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Inside: FOO
+foooutside: foo
+#+end_example
+
+** Variable shadowing
+Use keyword =local=.
+
+#+begin_src perl
+sub foo {
+    print "In foo: $bar\n" # Access a free variable
+}
+
+$bar = "bar";
+
+{
+    local $bar = "BAR";
+    print "In block: $bar\n";
+    foo $bar;
+}
+
+print "Out of block: $bar\n";
+foo $bar;
+#+end_src
+
+#+RESULTS:
+#+begin_example
+In block: BAR
+In foo: BAR
+Out of block: bar
+In foo: bar
+#+end_example
+
+** String interpolation
+Similar with shell scripts.
+
+#+begin_src perl
+my $foo = "foo", $bar = "bar";
+print "Hello $foo $bar! Hey ${foo}-${bar}\n";
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Hello foo bar! Hey foo-bar
+#+end_example
+
+** Expression
+Statement modifiers.
+
+#+begin_example
+if EXPR
+unless EXPR
+while EXPR
+until EXPR
+for LIST
+foreach LIST
+when EXPR
+#+end_example
+
+Arithmetic
+
+#+begin_example
+ +   addition
+ -   subtraction
+ *   multiplication
+ /   division
+#+end_example
+
+Numeric comparison
+
+#+begin_example
+==  equality
+!=  inequality
+<   less than
+>   greater than
+<=  less than or equal
+>=  greater than or equal
+#+end_example
+
+String comparison
+
+#+begin_example
+eq  equality
+ne  inequality
+lt  less than
+gt  greater than
+le  less than or equal
+ge  greater than or equal
+#+end_example
+
+Boolean logic
+
+#+begin_example
+&&  and
+||  or
+!   not
+#+end_example
+
+Boolean logic (with much lower precedence)
+
+#+begin_example
+and
+or
+not
+#+end_example
+
+Miscellaneous
+
+#+begin_example
+=   assignment
+.   string concatenation
+x   string multiplication (repeats strings)
+..  range operator (creates a list of numbers or strings)
+#+end_example
+
+** Statement
+Commonly used compound statements like =if=, =for=, and =while= have the same usage like C.
+
+Worth noting that the =continue= indicates the block of code will be executed every time before the loop condition is updated, even the iteration is skipped via =next= statement.
+
+#+begin_example
+if (EXPR) BLOCK
+if (EXPR) BLOCK else BLOCK
+if (EXPR) BLOCK elsif (EXPR) BLOCK ...
+if (EXPR) BLOCK elsif (EXPR) BLOCK ... else BLOCK
+
+unless (EXPR) BLOCK
+unless (EXPR) BLOCK else BLOCK
+unless (EXPR) BLOCK elsif (EXPR) BLOCK ...
+unless (EXPR) BLOCK elsif (EXPR) BLOCK ... else BLOCK
+
+given (EXPR) BLOCK
+
+LABEL while (EXPR) BLOCK
+LABEL while (EXPR) BLOCK continue BLOCK
+
+LABEL until (EXPR) BLOCK
+LABEL until (EXPR) BLOCK continue BLOCK
+
+LABEL for (EXPR; EXPR; EXPR) BLOCK
+LABEL for VAR (LIST) BLOCK
+LABEL for VAR (LIST) BLOCK continue BLOCK
+
+LABEL foreach (EXPR; EXPR; EXPR) BLOCK
+LABEL foreach VAR (LIST) BLOCK
+LABEL foreach VAR (LIST) BLOCK continue BLOCK
+
+LABEL BLOCK
+LABEL BLOCK continue BLOCK
+
+PHASE BLOCK
+#+end_example
+
+As of Perl 5.36, you can iterate over multiple values at a time by specifying a list of lexicals within parentheses:
+
+#+begin_example
+no warnings "experimental::for_list";
+LABEL for my (VAR, VAR) (LIST) BLOCK
+LABEL for my (VAR, VAR) (LIST) BLOCK continue BLOCK
+LABEL foreach my (VAR, VAR) (LIST) BLOCK
+LABEL foreach my (VAR, VAR) (LIST) BLOCK continue BLOCK
+#+end_example
+
+If enabled by the experimental try feature, the following may also be used:
+
+#+begin_example
+try BLOCK catch (VAR) BLOCK
+try BLOCK catch (VAR) BLOCK finally BLOCK
+#+end_example
+
+** Quoting
+| Customary | Generic | Meaning         | Interpolates       |      |
+|-----------+---------+-----------------+--------------------+------|
+|           |         |                 |                    |      |
+| ''        | q{}     | Literal         |                    | no   |
+| ""        | qq{}    | Literal         |                    | yes  |
+| ``        | qx{}    | Command         |                    | yes* |
+|           | qw{}    | Word list       |                    | no   |
+| //        | m{}     | Pattern match   | yes*               |      |
+|           | qr{}    | Pattern         |                    | yes* |
+|           | s{}{}   | Substitution    | yes*               |      |
+|           | tr{}{}  | Transliteration | no (but see below) |      |
+|           | y{}{}   | Transliteration | no (but see below) |      |
+| EOF       |         | here-doc        |                    | yes* |
+
+Note: * unless the delimiter is ''.
+
+** Regex
+*** Regex quoting
+=qr/STRING/msixpodualn=
+
+If "'" is used as the delimiter, no variable interpolation is done.
+
+| Option | Description                                              |
+|--------+----------------------------------------------------------|
+| m      | Treat string as multiple lines.                          |
+| s      | Treat string as single line. (Make . match a newline)    |
+| i      | Do case-insensitive pattern matching.                    |
+| x      | Use extended regular expressions; specifying two         |
+|        | x's means \t and the SPACE character are ignored within  |
+|        | square-bracketed character classes                       |
+| p      | When matching preserve a copy of the matched string so   |
+|        | that ${^PREMATCH}, ${^MATCH}, ${^POSTMATCH} will be      |
+|        | defined (ignored starting in v5.20 as these are always   |
+|        | defined starting in that release)                        |
+| o      | Compile pattern only                                     |
+| a      | ASCII-restrict: Use ASCII for \d, \s, \w and [[:posix:]] |
+|        | character classes; specifying two a's adds the further   |
+|        | restriction that no ASCII character will match a         |
+|        | non-ASCII one under /i.                                  |
+| l      | Use the current run-time locale's rules.                 |
+| u      | Use Unicode rules.                                       |
+| d      | Use Unicode or native charset, as in 5.12 and earlier.   |
+| n      | Non-capture mode. Don't let () fill in $1, $2, etc...    |
+
+*** Matching
+=m/PATTERN/msixpodualngc=
+
+=/PATTERN/msixpodualngc=
+
+=m?PATTERN?msixpodualngc= This is just like the =m/PATTERN/= search, except that it matches only once between calls to the reset() operator.
+
+| Option | Description                                                          |
+|--------+----------------------------------------------------------------------|
+| m      | Treat string as multiple lines.                          |
+| s      | Treat string as single line. (Make . match a newline)    |
+| i      | Do case-insensitive pattern matching.                    |
+| x      | Use extended regular expressions; specifying two         |
+|        | x's means \t and the SPACE character are ignored within  |
+|        | square-bracketed character classes                       |
+| p      | When matching preserve a copy of the matched string so   |
+|        | that ${^PREMATCH}, ${^MATCH}, ${^POSTMATCH} will be      |
+|        | defined (ignored starting in v5.20 as these are always   |
+|        | defined starting in that release)                        |
+| o      | Compile pattern only                                     |
+| a      | ASCII-restrict: Use ASCII for \d, \s, \w and [[:posix:]] |
+|        | character classes; specifying two a's adds the further   |
+|        | restriction that no ASCII character will match a         |
+|        | non-ASCII one under /i.                                  |
+| l      | Use the current run-time locale's rules.                 |
+| u      | Use Unicode rules.                                       |
+| d      | Use Unicode or native charset, as in 5.12 and earlier.   |
+| n      | Non-capture mode. Don't let () fill in $1, $2, etc...    |
+| g      | Match globally, i.e., find all occurrences.                          |
+| c      | Do not reset search position on a failed match when /g is in effect. |
+
+*** Substitution
+=s/PATTERN/REPLACEMENT/msixpodualngcer=
+
+Options:
+| Option | Description                                                  |
+|--------+--------------------------------------------------------------|
+| m      | Treat string as multiple lines.                          |
+| s      | Treat string as single line. (Make . match a newline)    |
+| i      | Do case-insensitive pattern matching.                    |
+| x      | Use extended regular expressions; specifying two         |
+|        | x's means \t and the SPACE character are ignored within  |
+|        | square-bracketed character classes                       |
+| p      | When matching preserve a copy of the matched string so   |
+|        | that ${^PREMATCH}, ${^MATCH}, ${^POSTMATCH} will be      |
+|        | defined (ignored starting in v5.20 as these are always   |
+|        | defined starting in that release)                        |
+| o      | Compile pattern only                                     |
+| a      | ASCII-restrict: Use ASCII for \d, \s, \w and [[:posix:]] |
+|        | character classes; specifying two a's adds the further   |
+|        | restriction that no ASCII character will match a         |
+|        | non-ASCII one under /i.                                  |
+| l      | Use the current run-time locale's rules.                 |
+| u      | Use Unicode rules.                                       |
+| d      | Use Unicode or native charset, as in 5.12 and earlier.   |
+| n      | Non-capture mode. Don't let () fill in $1, $2, etc...    |
+| g      | Match globally, i.e., find all occurrences.                          |
+| c      | Do not reset search position on a failed match when /g is in effect. |
+| e      | Evaluate the right side as an expression.                    |
+| ee     | Evaluate the right side as a string then eval the result.    |
+| r      | Return substitution and leave the original string untouched. |
+
+*** Transform
+=tr/SEARCHLIST/REPLACEMENTLIST/cdsr=
+
+=y/SEARCHLIST/REPLACEMENTLIST/cdsr=
+
+Options:
+| Option | Description                                                         |
+|--------+---------------------------------------------------------------------|
+| c      | Complement the SEARCHLIST.                                          |
+| d      | Delete found but unreplaced characters.                             |
+| r      | Return the modified string and leave the original string untouched. |
+| s      | Squash duplicate replaced characters.                               |
