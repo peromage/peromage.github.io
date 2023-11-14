@@ -17,6 +17,7 @@ When used as a command line tool, =perl= is powerful enough to replace tradition
 Without furthur ado, let's get started!
 
 *PS*: The sample text used in this post is from [[https://github.com/logpai/loghub][loghub]].
+
 *PPS*: Some content is copied from Perl documents.
 
 * Sample text                                                      :noexport:
@@ -671,33 +672,33 @@ try BLOCK catch (VAR) BLOCK finally BLOCK
 
 Note: * unless the delimiter is ''.
 
-** Regex
+** Regex                                                          :noexport:
 *** Regex quoting
 =qr/STRING/msixpodualn=
 
 If "'" is used as the delimiter, no variable interpolation is done.
 
-| Option | Description                                              |
-|--------+----------------------------------------------------------|
-| m      | Treat string as multiple lines.                          |
-| s      | Treat string as single line. (Make . match a newline)    |
-| i      | Do case-insensitive pattern matching.                    |
-| x      | Use extended regular expressions; specifying two         |
-|        | x's means \t and the SPACE character are ignored within  |
-|        | square-bracketed character classes                       |
-| p      | When matching preserve a copy of the matched string so   |
-|        | that ${^PREMATCH}, ${^MATCH}, ${^POSTMATCH} will be      |
-|        | defined (ignored starting in v5.20 as these are always   |
-|        | defined starting in that release)                        |
-| o      | Compile pattern only                                     |
-| a      | ASCII-restrict: Use ASCII for \d, \s, \w and [[:posix:]] |
-|        | character classes; specifying two a's adds the further   |
-|        | restriction that no ASCII character will match a         |
-|        | non-ASCII one under /i.                                  |
-| l      | Use the current run-time locale's rules.                 |
-| u      | Use Unicode rules.                                       |
-| d      | Use Unicode or native charset, as in 5.12 and earlier.   |
-| n      | Non-capture mode. Don't let () fill in $1, $2, etc...    |
+| Option | Description                                                |
+|--------+------------------------------------------------------------|
+| m      | Treat string as multiple lines.                            |
+| s      | Treat string as single line. (Make . match a newline)      |
+| i      | Do case-insensitive pattern matching.                      |
+| x      | Use extended regular expressions; specifying two           |
+|        | x's means \t and the SPACE character are ignored within    |
+|        | square-bracketed character classes                         |
+| p      | When matching preserve a copy of the matched string so     |
+|        | that ${^PREMATCH}, ${^MATCH}, ${^POSTMATCH} will be        |
+|        | defined (ignored starting in v5.20 as these are always     |
+|        | defined starting in that release)                          |
+| o      | Compile pattern only                                       |
+| a      | ASCII-restrict: Use ASCII for \d, \s, \w and =[[:posix:]]= |
+|        | character classes; specifying two a's adds the further     |
+|        | restriction that no ASCII character will match a           |
+|        | non-ASCII one under /i.                                    |
+| l      | Use the current run-time locale's rules.                   |
+| u      | Use Unicode rules.                                         |
+| d      | Use Unicode or native charset, as in 5.12 and earlier.     |
+| n      | Non-capture mode. Don't let () fill in $1, $2, etc...      |
 
 *** Matching
 =m/PATTERN/msixpodualngc=
@@ -708,25 +709,25 @@ If "'" is used as the delimiter, no variable interpolation is done.
 
 | Option | Description                                                          |
 |--------+----------------------------------------------------------------------|
-| m      | Treat string as multiple lines.                          |
-| s      | Treat string as single line. (Make . match a newline)    |
-| i      | Do case-insensitive pattern matching.                    |
-| x      | Use extended regular expressions; specifying two         |
-|        | x's means \t and the SPACE character are ignored within  |
-|        | square-bracketed character classes                       |
-| p      | When matching preserve a copy of the matched string so   |
-|        | that ${^PREMATCH}, ${^MATCH}, ${^POSTMATCH} will be      |
-|        | defined (ignored starting in v5.20 as these are always   |
-|        | defined starting in that release)                        |
-| o      | Compile pattern only                                     |
-| a      | ASCII-restrict: Use ASCII for \d, \s, \w and [[:posix:]] |
-|        | character classes; specifying two a's adds the further   |
-|        | restriction that no ASCII character will match a         |
-|        | non-ASCII one under /i.                                  |
-| l      | Use the current run-time locale's rules.                 |
-| u      | Use Unicode rules.                                       |
-| d      | Use Unicode or native charset, as in 5.12 and earlier.   |
-| n      | Non-capture mode. Don't let () fill in $1, $2, etc...    |
+| m      | Treat string as multiple lines.                                      |
+| s      | Treat string as single line. (Make . match a newline)                |
+| i      | Do case-insensitive pattern matching.                                |
+| x      | Use extended regular expressions; specifying two                     |
+|        | x's means \t and the SPACE character are ignored within              |
+|        | square-bracketed character classes                                   |
+| p      | When matching preserve a copy of the matched string so               |
+|        | that ${^PREMATCH}, ${^MATCH}, ${^POSTMATCH} will be                  |
+|        | defined (ignored starting in v5.20 as these are always               |
+|        | defined starting in that release)                                    |
+| o      | Compile pattern only                                                 |
+| a      | ASCII-restrict: Use ASCII for \d, \s, \w and =[[:posix:]]=           |
+|        | character classes; specifying two a's adds the further               |
+|        | restriction that no ASCII character will match a                     |
+|        | non-ASCII one under /i.                                              |
+| l      | Use the current run-time locale's rules.                             |
+| u      | Use Unicode rules.                                                   |
+| d      | Use Unicode or native charset, as in 5.12 and earlier.               |
+| n      | Non-capture mode. Don't let () fill in $1, $2, etc...                |
 | g      | Match globally, i.e., find all occurrences.                          |
 | c      | Do not reset search position on a failed match when /g is in effect. |
 
@@ -734,32 +735,32 @@ If "'" is used as the delimiter, no variable interpolation is done.
 =s/PATTERN/REPLACEMENT/msixpodualngcer=
 
 Options:
-| Option | Description                                                  |
-|--------+--------------------------------------------------------------|
-| m      | Treat string as multiple lines.                          |
-| s      | Treat string as single line. (Make . match a newline)    |
-| i      | Do case-insensitive pattern matching.                    |
-| x      | Use extended regular expressions; specifying two         |
-|        | x's means \t and the SPACE character are ignored within  |
-|        | square-bracketed character classes                       |
-| p      | When matching preserve a copy of the matched string so   |
-|        | that ${^PREMATCH}, ${^MATCH}, ${^POSTMATCH} will be      |
-|        | defined (ignored starting in v5.20 as these are always   |
-|        | defined starting in that release)                        |
-| o      | Compile pattern only                                     |
-| a      | ASCII-restrict: Use ASCII for \d, \s, \w and [[:posix:]] |
-|        | character classes; specifying two a's adds the further   |
-|        | restriction that no ASCII character will match a         |
-|        | non-ASCII one under /i.                                  |
-| l      | Use the current run-time locale's rules.                 |
-| u      | Use Unicode rules.                                       |
-| d      | Use Unicode or native charset, as in 5.12 and earlier.   |
-| n      | Non-capture mode. Don't let () fill in $1, $2, etc...    |
+| Option | Description                                                          |
+|--------+----------------------------------------------------------------------|
+| m      | Treat string as multiple lines.                                      |
+| s      | Treat string as single line. (Make . match a newline)                |
+| i      | Do case-insensitive pattern matching.                                |
+| x      | Use extended regular expressions; specifying two                     |
+|        | x's means \t and the SPACE character are ignored within              |
+|        | square-bracketed character classes                                   |
+| p      | When matching preserve a copy of the matched string so               |
+|        | that ${^PREMATCH}, ${^MATCH}, ${^POSTMATCH} will be                  |
+|        | defined (ignored starting in v5.20 as these are always               |
+|        | defined starting in that release)                                    |
+| o      | Compile pattern only                                                 |
+| a      | ASCII-restrict: Use ASCII for \d, \s, \w and =[[:posix:]]=           |
+|        | character classes; specifying two a's adds the further               |
+|        | restriction that no ASCII character will match a                     |
+|        | non-ASCII one under /i.                                              |
+| l      | Use the current run-time locale's rules.                             |
+| u      | Use Unicode rules.                                                   |
+| d      | Use Unicode or native charset, as in 5.12 and earlier.               |
+| n      | Non-capture mode. Don't let () fill in $1, $2, etc...                |
 | g      | Match globally, i.e., find all occurrences.                          |
 | c      | Do not reset search position on a failed match when /g is in effect. |
-| e      | Evaluate the right side as an expression.                    |
-| ee     | Evaluate the right side as a string then eval the result.    |
-| r      | Return substitution and leave the original string untouched. |
+| e      | Evaluate the right side as an expression.                            |
+| ee     | Evaluate the right side as a string then eval the result.            |
+| r      | Return substitution and leave the original string untouched.         |
 
 *** Transform
 =tr/SEARCHLIST/REPLACEMENTLIST/cdsr=
