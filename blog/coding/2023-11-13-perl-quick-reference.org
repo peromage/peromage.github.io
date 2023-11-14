@@ -7,7 +7,7 @@
 * Preface
 Perl is a powerful tool to handle text processing.  However, the learning curve might be steep due to some unusual syntax.  I find myself even need to revisit the doc sometimes if I don't use it often, so this post I'll write down some commonly used patterns when it comes to text processing.  That said this post is updated from time to time so remember to come back!
 
-When used as a command line tool, =perl= is powerful enough to replace traditional text processing tools like =sed=, =awk=, =grep=, =tr= etc..  Actually using =perl= instead of =grep= and =tr= might be a little overkill in most cases but the functionalities of =sed= and =awk= can be almost replced.  I recommend someone who starts learning text processing and regex to start with Perl.  The reasons are:
+When used as a command line tool, =perl= is powerful enough to replace traditional text processing tools like =sed=, =awk=, =grep=, =tr= etc..  Actually using =perl= instead of =grep= and =tr= might be a little overkill in most cases but the functionalities of =sed= and =awk= can be almost replaced.  I recommend someone who starts learning text processing and regex to start with Perl.  The reasons are:
 
 - Perl is installed by default almost on every Linux distribution.
 - The regex syntax used by Perl follows PCRE which is more intuitive for someone comes from Python and JavaScript world.
@@ -16,9 +16,9 @@ When used as a command line tool, =perl= is powerful enough to replace tradition
 
 Without furthur ado, let's get started!
 
-*PS*: The sample text used in this post is from [[https://github.com/logpai/loghub][loghub]].
+*PS1*: The sample text used in this post is from [[https://github.com/logpai/loghub][loghub]].
 
-*PPS*: Some content is copied from Perl documents.
+*PS2*: Some content is copied from Perl documents.
 
 * Sample text                                                      :noexport:
 #+name: log_stream
