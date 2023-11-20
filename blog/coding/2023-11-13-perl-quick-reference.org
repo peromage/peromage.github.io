@@ -685,18 +685,18 @@ try BLOCK catch (VAR) BLOCK finally BLOCK
 #+end_example
 
 ** Quoting
-| Customary | Generic | Meaning         | Interpolates       |      |
-|-----------+---------+-----------------+--------------------+------|
-| ''        | q{}     | Literal         |                    | no   |
-| ""        | qq{}    | Literal         |                    | yes  |
-| ``        | qx{}    | Command         |                    | yes* |
-|           | qw{}    | Word list       |                    | no   |
-| //        | m{}     | Pattern match   | yes*               |      |
-|           | qr{}    | Pattern         |                    | yes* |
-|           | s{}{}   | Substitution    | yes*               |      |
-|           | tr{}{}  | Transliteration | no (but see below) |      |
-|           | y{}{}   | Transliteration | no (but see below) |      |
-| EOF       |         | here-doc        |                    | yes* |
+| Customary | Generic | Meaning         | Interpolates       |
+|-----------+---------+-----------------+--------------------|
+| ''        | q{}     | Literal         | no                 |
+| ""        | qq{}    | Literal         | yes                |
+| ``        | qx{}    | Command         | yes*               |
+|           | qw{}    | Word list       | no                 |
+| //        | m{}     | Pattern match   | yes*               |
+|           | qr{}    | Pattern         | yes*               |
+|           | s{}{}   | Substitution    | yes*               |
+|           | tr{}{}  | Transliteration | no (but see below) |
+|           | y{}{}   | Transliteration | no (but see below) |
+| <<EOF     |         | here-doc        | yes*               |
 
 Note: * unless the delimiter is ''.
 
