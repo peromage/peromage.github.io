@@ -184,14 +184,6 @@ Jun 15 12:12:34 combo sshd(pam_unix)[23397]: authentication failure; logname= ui
 #+end_example
 
 * Language quirks
-For quick references:
-
-- Perl intro: https://perldoc.perl.org/perlintro
-- Perl syntax: https://perldoc.perl.org/perlsyn
-- Perl regex: https://perldoc.perl.org/perlre
-- Perl operators: https://perldoc.perl.org/perlop
-- Perl subroutine: https://perldoc.perl.org/perlsub
-
 ** $_ and @_
 The =$_= and =@_= are commonly used to represent the implicit variable/array in the current context.  Expressions like string matching can refer to =$_= by default without specifying it.  Also functions like =print= can also refer to =$_= by just calling it.
 
@@ -208,6 +200,14 @@ A better way to handle it:
 while (<>) {
     print $_;
 }
+#+end_src
+
+Note that the [[https://metacpan.org/pod/perldata#Context][context]] should be considered when using =<>= operator.
+
+#+begin_src perl
+int(<STDIN>);          # One line
+sort(<STDIN>);         # All the lines as a list
+my $line = <STDIN>;    # One line
 #+end_src
 
 ** Scalar
@@ -861,3 +861,12 @@ Options:
 | d      | Delete found but unreplaced characters.                             |
 | r      | Return the modified string and leave the original string untouched. |
 | s      | Squash duplicate replaced characters.                               |
+
+* References
+- Perl data types: https://metacpan.org/pod/perldata
+- Perl intro: https://perldoc.perl.org/perlintro
+- Perl syntax: https://perldoc.perl.org/perlsyn
+- Perl regex: https://perldoc.perl.org/perlre
+- Perl operators: https://perldoc.perl.org/perlop
+- Perl subroutine: https://perldoc.perl.org/perlsub
+- Perl builtin functions: https://perldoc.perl.org/functions
