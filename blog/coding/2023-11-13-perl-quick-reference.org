@@ -205,9 +205,10 @@ while (<>) {
 Note that the [[https://metacpan.org/pod/perldata#Context][context]] should be considered when using =<>= operator.
 
 #+begin_src perl
-int(<STDIN>);          # One line
-sort(<STDIN>);         # All the lines as a list
-my $line = <STDIN>;    # One line
+int(<STDIN>);                   # One line
+sort(<STDIN>);                  # All the lines as a list
+my $line1 = <STDIN>;            # One line
+my $line2 = readline(STDIN);    # One line (equivalent to above)
 #+end_src
 
 ** Scalar
@@ -220,105 +221,55 @@ my $foo = "foo";
 ** Array
 Denoted by =@= sigil.
 
-#+begin_src perl
-my @array = (123, "foo", undef, "bar");
-#+end_src
+When accessing by the index, one can use either =@= or =$=.  In most cases, they are equivalent.  However, they do have slight different meanings.  =@= indicates the result is a list while =$= implies the result is a scalar, which means the =$= notation can only access one element at a time.  The example can be seen below.
 
-When accessing by the index, one can use either =$= or =@=.  In most cases, they are equivalent.  However, they do have slight different meanings.  =$= implies the result is a scalar while =@= indicates the result could be an array.  The example can be seen below.
+[[https://perldoc.perl.org/functions#Functions-for-real-@ARRAYs][Array functions]].
 
 #+begin_src perl
-my @array = ("foo", "bar", "baz");
-
-print "Accessing element: ";
-print @array[1];
-print "\n";
-
-print "Accessing element (mostly equivalent to above): ";
-print $array[1];
-print "\n";
-
-print "Index of the last element: ";
-print $#array;
-print "\n";
-
-print "Slicing using \@: ";
-print @array[0, 1];
-print @array[0..$#array];
-print "\n";
-
-print "Slicing using \$: ";
-print $array[0, 1];
-print $array[0..$#array];
-print "\n";
-#+end_src
-
-#+RESULTS:
-#+begin_example
-Accessing element: bar
-Accessing element (mostly equivalent to above): bar
-Index of the last element: 2
-Slicing using @: foobarfoobarbaz
-Slicing using $: barbar
-#+end_example
-
-Some common array functions.
-
-#+begin_src perl
-my @array = (3, 1, 2);
-
-my @sorted_array = sort(@array);
-my @reversed_array = reverse(@array);
+my @array = ("foo", 123, "bar", undef, "baz");    # Declaration
+@array[0];                                        # First element
+$array[0];                                        # First element
+@array[-1];                                       # Last element
+$#array;                                          # Last index
+scalar @array;                                    # Size
+@array[0, 2];                                     # Slice: First and third element
+@array[0, -1];                                    # Slice: First and last element
+@array[0..$#array];                               # Slice: All elements
 #+end_src
 
 ** Hash
 Denoted by =%= sigil.
 
-There are two different ways to initialize the hash variable.  One is like array style and the other is more obivious to construct with pairs.
+Hash can be initialized with a named list as well as the ~=>~ notation for better readability (the key can be barewords).
+
+*NOTE*: Since hashes can be converted from named lists, they can be converted to named lists also.  When passing a hash with =%= notation it will collapse to a named list.
+
+Access wise it's similar with array.  One can use either =%= or =$=.  =%= can access the pairs while =$= implies a scalar value.
+
+[[https://perldoc.perl.org/functions#Functions-for-real-%25HASHes][Hash functions]]
 
 #+begin_src perl
-my %hash = ("key1", "value1", "key2", "value2");
-my %hash1 = ("key1" => "value1", "key2" => "value2");
-#+end_src
-
-When it comes to access, one can use either =$= or =%= just like array above.  =$= implies scalar, which is the value here, while =%= can access the pair.
-
-#+begin_src perl
-my %hash = ("key1" => "value1", "key2" => "value2");
-
-print "Accessing pair: ";
-print %hash{"key1"};
-print "\n";
-
-print "Accessing value: ";
-print $hash{"key1"};
-print "\n";
-#+end_src
-
-#+RESULTS:
-#+begin_example
-Accessing pair: key1value1
-Accessing value: value1
-#+end_example
-
-Get keys and values.
-
-#+begin_src perl
-my %hash = ("key1" => "value1", "key2" => "value2");
-
-my @keys = keys(%hash);
-my @values = values(%hash);
+my %hash = ("foo", "foovalue", "bar", "barvalue", "baz", "bazvalue");           # Declaration
+my %hash1 = ("foo" => "foovalue", "bar" => "barvalue", "baz" => "bazvalue");    # Declaration
+%hash{"foo"};                                                                   # Access pair by key
+$hash{"foo"};                                                                   # Access value by key
+scalar keys %hash;                                                              # Size
+%hash{"foo", "bar"};                                                            # Slice: Subset
 #+end_src
 
 ** Subroutine (Function)
 Subroutines in Perl just like shell functions where the parameter can be omitted and accessed by the default array =@_=.
 
-To invoke a subroutine, use either =foo 1, 2, 3;= or =foo(1, 2, 3)=.  Note that the former one needs comma to delimit arguments (not space!)
+To invoke a subroutine, use either =foo 1, 2, 3;= or =foo(1, 2, 3);=.  Note that the former one needs comma to delimit arguments (not space!)
 
 #+begin_src perl
 sub foo {
-    # Not preferred
-    # my $para1 = @_[0], $para2 = @_[1];
     my ($para1, $para2) = @_;
+    # Or
+    # my $para1 = shift;
+    # my $para2 = shift;
+    # Or (not preferred)
+    # my $para1 = @_[0], $para2 = @_[1];
     print "Parameter1: $para1, Parameter2: $para2";
 }
 
@@ -465,7 +416,7 @@ The rest: foo, 1, 2, 3,
 Sometimes functions like =grep= and =map= return an arry or hash but a reference is needed.  The following example shows the usage of =Data::Dumper= where a reference to an array/a hash is neede.
 
 #+begin_src perl
-use Data::Dumper;
+use Data::Dumper "Dumper";
 
 print "Traditional way of doing it: referencing from variables.\n";
 my @a = grep { $_ % 2 } 1..10;
@@ -489,8 +440,8 @@ $VAR1 = [
           9
         ];
 $VAR1 = {
-          '3' => 'foo',
           '5' => 'foo',
+          '3' => 'foo',
           '4' => 'foo',
           '2' => 'foo',
           '1' => 'foo'
@@ -505,12 +456,94 @@ $VAR1 = [
         ];
 $VAR1 = {
           '21' => 'bar',
-          '25' => 'bar',
-          '24' => 'bar',
-          '20' => 'bar',
           '23' => 'bar',
-          '22' => 'bar'
+          '20' => 'bar',
+          '25' => 'bar',
+          '22' => 'bar',
+          '24' => 'bar'
         };
+#+end_example
+
+*** Typeglobs
+There is an internal type called =typeglob= to hold an entire symbol table entry.  As the name implies it can represent [[https://metacpan.org/pod/perldata#Typeglobs-and-Filehandles][any type]].
+
+Basically:
+
+#+begin_src perl
+*this = *that;
+*mine = \$theirs;
+#+end_src
+
+Then =$this= is an alias for =$that=, =@this= for =@that=, =%this= for =%that=, =&this= for =&that= so on and so forth.
+
+However, =$mine= can only represent =$theirs=.  Things like =@theirs=, =%theirs=, etc. will not work.
+
+*** File handles
+File handles are usually represented in barewords like =STDIN=, =STDOUT=, =STDERR=, etc..
+
+When they need to be [[https://metacpan.org/dist/perl/view/pod/perlsub.pod#Pass-by-Reference][passed around]], one can use either bare typeglob or typeglob reference.
+
+#+begin_src perl
+use File::Temp "tempfile";
+
+my ($fh, $fn) = tempfile(UNLINK => 1);
+say $fh "line 1\nline 2\nline 3";
+close $fh;
+
+sub read_one_line {
+    my $h = shift;
+    print scalar readline($h);
+}
+
+sub open_read {
+    my $fn = shift;
+    local *fh; # Not my!
+    open fh, "<", $fn or die "cannot open $fn";
+    return *fh;
+}
+
+sub open_read_ref {
+    my $fn = shift;
+    my $fh;
+    open $fh, "<", $fn or die "cannot open $fn";
+    return $fh;
+}
+
+# Bareword file handle
+print "Passing bareword file handle\n";
+open FH, "<", $fn or die "cannot open $fn";
+read_one_line(\*FH);
+close FH;
+
+print "Return tyepglob file handle\n";
+my $FH1 = open_read($fn);
+read_one_line($FH1);
+close $FH1;
+
+# Typeglob reference also works
+print "Passing typeglob reference\n";
+my $FH2;
+open $FH2, "<", $fn or die "cannot open $fn";
+read_one_line($FH2);
+close $FH2;
+
+print "Return typeblob reference\n";
+my $FH3;
+$FH3 = open_read_ref($fn);
+read_one_line($FH3);
+close $FH3;
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Passing bareword file handle
+line 1
+Return tyepglob file handle
+line 1
+Passing typeglob reference
+line 1
+Return typeblob reference
+line 1
 #+end_example
 
 ** Anonymous
@@ -607,16 +640,18 @@ In foo: bar
 #+end_example
 
 ** String interpolation
-Similar with shell scripts.
+Similar with shell scripts.  =.= can be used to concatenate strings.
 
 #+begin_src perl
 my $foo = "foo", $bar = "bar";
 print "Hello $foo $bar! Hey ${foo}-${bar}\n";
+print "This " . $foo . " also works with " . $bar . "!\n";
 #+end_src
 
 #+RESULTS:
 #+begin_example
 Hello foo bar! Hey foo-bar
+This foo also works with bar!
 #+end_example
 
 ** Expression
@@ -864,6 +899,7 @@ Options:
 
 * References
 - Perl data types: https://metacpan.org/pod/perldata
+- Perl subroutines: https://metacpan.org/dist/perl/view/pod/perlsub.pod
 - Perl intro: https://perldoc.perl.org/perlintro
 - Perl syntax: https://perldoc.perl.org/perlsyn
 - Perl regex: https://perldoc.perl.org/perlre
