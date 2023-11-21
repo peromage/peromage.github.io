@@ -29,6 +29,12 @@ Jun 15 04:12:42 combo su(pam_unix)[22644]: session opened for user news by (uid=
 Jun 15 12:12:34 combo sshd(pam_unix)[23397]: authentication failure; logname= uid=0 euid=0 tty=NODEVssh ruser= rhost=218.188.2.4
 #+end_src
 
+* Personal convention
+- Use =my= to limit the variable scope whenever possible.
+- For non-builtin function (subroutine) calls, use parentheses to enclose argument list.
+- For builtin functions calls, prioritize calling them without parentheses to provide a cleaner syntax unless there is ambiguity.
+- The reasons to have above two different function call style are: (a) Some builtin functions accepts a block of code as their first argument, which cannot be done in a parenthese style.  (b) No-parenthese style also aligns with oneliner scripting style (since you don't want to type too many parentheses on command line).  (c) Make an obvious difference between builtin functions and other functions/subroutines.
+
 * Command line
 ** Commonly used switches
 | Switch      | Description                                  |
@@ -199,7 +205,7 @@ A better way to handle it:
 
 #+begin_src perl
 while (<>) {
-    print($_);
+    print $_;
 }
 #+end_src
 
@@ -222,27 +228,27 @@ When accessing by the index, one can use either =$= or =@=.  In most cases, they
 #+begin_src perl
 my @array = ("foo", "bar", "baz");
 
-print("Accessing element: ");
-print(@array[1]);
-print("\n");
+print "Accessing element: ";
+print @array[1];
+print "\n";
 
-print("Accessing element (mostly equivalent to above): ");
-print($array[1]);
-print("\n");
+print "Accessing element (mostly equivalent to above): ";
+print $array[1];
+print "\n";
 
-print("Index of the last element: ");
-print($#array);
-print("\n");
+print "Index of the last element: ";
+print $#array;
+print "\n";
 
-print("Slicing using \@: ");
-print(@array[0, 1]);
-print(@array[0..$#array]);
-print("\n");
+print "Slicing using \@: ";
+print @array[0, 1];
+print @array[0..$#array];
+print "\n";
 
-print("Slicing using \$: ");
-print($array[0, 1]);
-print($array[0..$#array]);
-print("\n");
+print "Slicing using \$: ";
+print $array[0, 1];
+print $array[0..$#array];
+print "\n";
 #+end_src
 
 #+RESULTS:
@@ -278,13 +284,13 @@ When it comes to access, one can use either =$= or =%= just like array above.  =
 #+begin_src perl
 my %hash = ("key1" => "value1", "key2" => "value2");
 
-print("Accessing pair: ");
-print(%hash{"key1"});
-print("\n");
+print "Accessing pair: ";
+print %hash{"key1"};
+print "\n";
 
-print("Accessing value: ");
-print($hash{"key1"});
-print("\n");
+print "Accessing value: ";
+print $hash{"key1"};
+print "\n";
 #+end_src
 
 #+RESULTS:
@@ -305,14 +311,14 @@ my @values = values(%hash);
 ** Subroutine (Function)
 Subroutines in Perl just like shell functions where the parameter can be omitted and accessed by the default array =@_=.
 
-To invoke a subroutine, use either =foo 1, 2, 3;= or =foo(1, 2, 3)= (preferred).  Note that the former one needs comma to delimit arguments (not space!)
+To invoke a subroutine, use either =foo 1, 2, 3;= or =foo(1, 2, 3)=.  Note that the former one needs comma to delimit arguments (not space!)
 
 #+begin_src perl
 sub foo {
     # Not preferred
     # my $para1 = @_[0], $para2 = @_[1];
     my ($para1, $para2) = @_;
-    print("Parameter1: $para1, Parameter2: $para2");
+    print "Parameter1: $para1, Parameter2: $para2";
 }
 
 foo("hello", "world");
@@ -334,7 +340,7 @@ sub foo($a, $b) {
     return $a + $b;
 }
 
-print(foo(1, 2));
+print foo(1, 2);
 #+end_src
 
 #+RESULTS:
@@ -357,7 +363,7 @@ sub foo($a, $b, @c) {
     return $sum;
 }
 
-print(foo(1, 2, 3..10));
+print foo(1, 2, 3..10);
 #+end_src
 
 #+RESULTS:
@@ -369,7 +375,7 @@ In Perl 5, a new syntax was introduced, where the subroutine can be invoked with
 
 #+begin_src perl
 sub foo {
-    print("aha @_\n");
+    print "aha @_\n";
 }
 
 @_ = ("foo", "bar");
@@ -396,16 +402,16 @@ Note that on the binder end (the =test= subroutine), the reference variables mus
 $scalar = "foo";
 @array = (1, 2, 3);
 %hash = (foo => "foo1", bar => "bar1");
-sub func { print("called func"); }
+sub func { print "called func"; }
 
 sub test {
     my ($s, $aref, $href, $fref) = @_;
-    print("Scalar: $s");
-    print("\nArray: ");
-    print("$_, ") for @$aref;
-    print("\nHash: ");
-    print("$_ => $hash{$_}, ") for keys %$href;
-    print("\n");
+    print "Scalar: $s";
+    print "\nArray: ";
+    print "$_, " for @$aref;
+    print "\nHash: ";
+    print "$_ => $hash{$_}, " for keys %$href;
+    print "\n";
     $fref->();
 }
 
@@ -425,19 +431,19 @@ Also note that array and hash variables must be passed by reference if they are 
 #+begin_src perl
 sub want_array {
     my ($a, $bref) = @_;
-    print("Parameter a is: $a");
-    print("\nArray ref is: $bref");
-    print("\nThe rest: ");
-    print("$_, ") for @_;
-    print("\n");
+    print "Parameter a is: $a";
+    print "\nArray ref is: $bref";
+    print "\nThe rest: ";
+    print "$_, " for @_;
+    print "\n";
 }
 
 my @array = (1, 2, 3);
 
-print("Passing by refenrence\n");
+print "Passing by refenrence\n";
 want_array("foo", \@array);
 
-print("Passing by value\n");
+print "Passing by value\n";
 want_array("foo", @array);
 #+end_src
 
@@ -445,8 +451,8 @@ want_array("foo", @array);
 #+begin_example
 Passing by refenrence
 Parameter a is: foo
-Array ref is: ARRAY(0x2019140)
-The rest: foo, ARRAY(0x2019140),
+Array ref is: ARRAY(0x116b140)
+The rest: foo, ARRAY(0x116b140),
 Passing by value
 Parameter a is: foo
 Array ref is: 1
@@ -460,7 +466,7 @@ The anonymous array construction returns a reference.  Note that the square brac
 
 #+begin_src perl
 my $aref = [1, 2, 3];
-print("$_, ") for @$aref;
+print "$_, " for @$aref;
 #+end_src
 
 #+RESULTS:
@@ -478,20 +484,20 @@ my $href = {
 };
 
 while (my ($k, $v) = each %$href) {
-    print("$k => $v, ");
+    print "$k => $v, ";
 }
 #+end_src
 
 #+RESULTS:
 #+begin_example
-foo => foovalue, bar => barvalue,
+bar => barvalue, foo => foovalue,
 #+end_example
 
 *** Anonymous subroutine
 The anonymous subroutine construction returns a reference.  Note that no name is specified here and =->= operator are used to invoke the call.
 
 #+begin_src perl
-my $sref = sub { print("Called subroutine @_[0]"); };
+my $sref = sub { print "Called subroutine @_[0]"; };
 $sref->("wow");
 #+end_src
 
@@ -507,10 +513,10 @@ Use keyword =my=.
 my $foo = "foo";
 {
     my $foo = "FOO";
-    print("Inside: $foo\n");
+    print "Inside: $foo\n";
 }
-print($foo);
-print("outside: $foo\n");
+print $foo;
+print "outside: $foo\n";
 #+end_src
 
 #+RESULTS:
@@ -524,18 +530,18 @@ Use keyword =local=.
 
 #+begin_src perl
 sub foo {
-    print("In foo: $bar\n"); # Access a free variable
+    print "In foo: $bar\n"; # Access a free variable
 }
 
 $bar = "bar";
 
 {
     local $bar = "BAR";
-    print("In block: $bar\n");
+    print "In block: $bar\n";
     foo($bar);
 }
 
-print("Out of block: $bar\n");
+print "Out of block: $bar\n";
 foo($bar);
 #+end_src
 
@@ -552,7 +558,7 @@ Similar with shell scripts.
 
 #+begin_src perl
 my $foo = "foo", $bar = "bar";
-print("Hello $foo $bar! Hey ${foo}-${bar}\n");
+print "Hello $foo $bar! Hey ${foo}-${bar}\n";
 #+end_src
 
 #+RESULTS:
