@@ -670,40 +670,40 @@ when EXPR
 Arithmetic
 
 #+begin_example
- +   addition
- -   subtraction
- *   multiplication
- /   division
+ +    addition
+ -    subtraction
+ *    multiplication
+ /    division
 #+end_example
 
 Numeric comparison
 
 #+begin_example
-==  equality
-!=  inequality
-<   less than
->   greater than
-<=  less than or equal
->=  greater than or equal
+==    equality
+!=    inequality
+<     less than
+>     greater than
+<=    less than or equal
+>=    greater than or equal
 #+end_example
 
 String comparison
 
 #+begin_example
-eq  equality
-ne  inequality
-lt  less than
-gt  greater than
-le  less than or equal
-ge  greater than or equal
+eq    equality
+ne    inequality
+lt    less than
+gt    greater than
+le    less than or equal
+ge    greater than or equal
 #+end_example
 
 Boolean logic
 
 #+begin_example
-&&  and
-||  or
-!   not
+&&    and
+||    or
+!     not
 #+end_example
 
 Boolean logic (with much lower precedence)
@@ -717,10 +717,40 @@ not
 Miscellaneous
 
 #+begin_example
-=   assignment
-.   string concatenation
-x   string multiplication (repeats strings)
-..  range operator (creates a list of numbers or strings)
+=    assignment
+.    string concatenation
+x    string multiplication (repeats strings)
+..   range operator (creates a list of numbers or strings)
+#+end_example
+
+Precedence
+
+#+begin_example
+left        terms and list operators (leftward)
+left        ->
+nonassoc    ++ --
+right       **
+right       ! ~ ~. \ and unary + and -
+left        =~ !~
+left        * / % x
+left        + - .
+left        << >>
+nonassoc    named unary operators
+nonassoc    isa
+chained     < > <= >= lt gt le ge
+chain/na    == != eq ne <=> cmp ~~
+left        & &.
+left        | |. ^ ^.
+left        &&
+left        || //
+nonassoc    ..  ...
+right       ?:
+right       = += -= *= etc. goto last next redo dump
+left        , =>
+nonassoc    list operators (rightward)
+right       not
+left        and
+left        or xor
 #+end_example
 
 ** Statement
