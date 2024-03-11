@@ -1,7 +1,7 @@
 #+title: [Archive] Multiboot USB
 #+date: <2023-08-27 Sun 17:55>
 #+hugo_lastmod:
-#+hugo_tags: multi_boot usb_drive
+#+hugo_tags: multi_boot usb_drive linux
 #+setupfile: ./setup.conf
 
 Boot from any ISO file
