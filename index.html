@@ -1,4 +1,4 @@
-<!doctype html><html xmlns=http://www.w3.org/1999/xhtml xml:lang=en-us lang=en-us><head><meta name=generator content="Hugo 0.120.4"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>undefined behavior &#183; Fang Deng</title>
+<!doctype html><html xmlns=http://www.w3.org/1999/xhtml xml:lang=en-us lang=en-us><head><meta name=generator content="Hugo 0.123.8"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>undefined behavior &#183; Fang Deng</title>
 <meta name=description content="Interesting content."><meta name=keywords content="Interesting keywords."><link rel=stylesheet href=https://peromage.github.io/css/skeria.css><link rel=stylesheet href=https://peromage.github.io/css/font.awesome.6.1.2.all.min.css></head><body><div class=topbar><div class=topbar-sticky><a href=https://peromage.github.io/ style=text-decoration:none><h1>undefined behavior</h1></a><span class=lead>tb;dr - too boring; don&rsquo;t read</span>
 <span class=topbar-nav><p><span class=topbar-nav-item><a href=https://peromage.github.io/>Recent</a>
 </span><span class=topbar-nav-item><a href=https://peromage.github.io/posts>All Posts</a>
@@ -19,13 +19,13 @@ When used as a command line tool, perl is powerful enough to replace traditional
 <a href=https://peromage.github.io/p/moving-from-arch-linux-to-nixos/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/ansi-escape-code-collection/>ANSI Escape Code Collection</a></h1><span class=post-date>Aug 27, 2023
 &nbsp;&#183;&nbsp; 5 minute read
 &nbsp;&#183;&nbsp;
-<a class=label href=https://peromage.github.io/tech>tech</a>
+<a class=label href=https://peromage.github.io/software>software</a>
 </span>The information in this collection is from Internet, which is collected for my personal convenience.
 CSI sequences Code Name Effect CSI n A CUU – Cursor Up Moves the cursor n (default 1) cells in the given direction. If the cursor is already at the edge of the screen, this has no effect. CSI n B CUD – Cursor Down CSI n C CUF – Cursor Forward CSI n D CUB – Cursor Back CSI n E CNL – Cursor Next Line Moves cursor to beginning of the line n (default 1) lines down.
 <a href=https://peromage.github.io/p/ansi-escape-code-collection/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/archive-multiboot-usb/>[Archive] Multiboot USB</a></h1><span class=post-date>Aug 27, 2023
 &nbsp;&#183;&nbsp; 1 minute read
 &nbsp;&#183;&nbsp;
-<a class=label href=https://peromage.github.io/tech>tech</a>
+<a class=label href=https://peromage.github.io/linux>linux</a>
 </span>Boot from any ISO file Hybrid UEFI GPT + BIOS MBR/GPT boot Preparation Create 3 partitions on a removable USB stick. A BIOS boot partition (gdisk type code EF02, or GUID 21686148-6449-6E6F-744E-656564454649) with no filesystem. This partition can be put in any place on the disk but it is recommended to put it at the begginning from sector 34 to 2047. At minimal 1 MiB. An EFI System partition (gdisk
 <a href=https://peromage.github.io/p/archive-multiboot-usb/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/different-ways-to-write-a-major-mode/>Different Ways to Write a Major Mode</a></h1><span class=post-date>Mar 16, 2023
 &nbsp;&#183;&nbsp; 3 minute read
@@ -48,7 +48,13 @@ Make sure JDK 17 is installed (According to the requirement of lsp-java). Create
 &nbsp;&#183;&nbsp;
 <a class=label href=https://peromage.github.io/emacs>emacs</a>
 </span>Background I previously wrote a post about managing blog posts with ox-hugo in org mode. I used to follow the recommendation to keep posts under org subtrees. As posts grew, I found that the opening speed is quite slow even I didn&rsquo;t have many pictures inserted. Although managing the entire site within one file does have some convenience, the slowness is something I can&rsquo;t bear. Also I feel it a
-<a href=https://peromage.github.io/p/file-based-blog-management-with-ox-hugo/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/use-lisp-data-files-in-emacs/>Use lisp-data Files in Emacs</a></h1><span class=post-date>Nov 14, 2022
+<a href=https://peromage.github.io/p/file-based-blog-management-with-ox-hugo/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/setup-windows-to-go-in-a-virtual-disk/>Setup Windows To Go in a Virtual Disk</a></h1><span class=post-date>Nov 14, 2022
+&nbsp;&#183;&nbsp; 7 minute read
+&nbsp;&#183;&nbsp;
+<a class=label href=https://peromage.github.io/linux>linux</a>
+</span>Ramble It looks like I had a lot stories about this Windows boot setup. I figure this post would be the last one I write about it since this is the most commonly used case I have so far.
+So I got a Steam Deck last year. It&rsquo;s pretty handy to use it as a mini PC in case I don&rsquo;t have one in hands. However, there are still things exclusive on Windows but I don&rsquo;t want to mess up with the internal SSD to dual-boot just for this temporary need.
+<a href=https://peromage.github.io/p/setup-windows-to-go-in-a-virtual-disk/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/use-lisp-data-files-in-emacs/>Use lisp-data Files in Emacs</a></h1><span class=post-date>Nov 14, 2022
 &nbsp;&#183;&nbsp; 2 minute read
 &nbsp;&#183;&nbsp;
 <a class=label href=https://peromage.github.io/emacs>emacs</a>
@@ -62,12 +68,4 @@ Read from file The biggest challenge is to parse file content to Lisp lists. Aft
 </span>I recently got my new laptop and I found that some additional tweaks need to be made for laptops. Thus, this post is to have a record in case I forget when I have to reinstall the system.
 Some basic setup Unlike desktop, laptops have to be secure so encrytion is a must.
 Details of how-to can be found on Arch wiki. I&rsquo;m not going to go through that here. However, I&rsquo;ll note down some considerations and things that need to pay attention to.
-<a href=https://peromage.github.io/p/arch-linux-on-laptop/>&nbsp;Read on &mldr;</a></div><div class=post><h1 class=post-title><a href=https://peromage.github.io/p/windows-rescure-quick-reference/>Windows Rescure Quick Reference</a></h1><span class=post-date>Oct 19, 2022
-&nbsp;&#183;&nbsp; 4 minute read
-&nbsp;&#183;&nbsp;
-<a class=label href=https://peromage.github.io/tech>tech</a>
-</span>Though I&rsquo;ve written posts about dual-booting Windows and Linux and multi-booting a USB drive, I have to go back and dig useful information out each time when I forget something.
-After breaking my dual-boot setup once again (forgot to backup boot partition), I decided to create this post for a quick reference.
-This reference assumes system is boot from UEFI and Windows is installed on a dedicated partition.
-Setup A USB With System Images Forget the previous multi-boot USB post.
-<a href=https://peromage.github.io/p/windows-rescure-quick-reference/>&nbsp;Read on &mldr;</a></div></div></div><script src=https://peromage.github.io/js/mathjax.3.2.2.tex-svg.min.js></script><div class=bottombar><div class=bottombar-sticky><div class=icons><span class=icons-item><a href=https://github.com/peromage target=_blank><i class="fab fa-github"></i></a> </span><span class=icons-item><a href=https://www.linkedin.com/in/fangdeng/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a> </span><span class=icons-item><a href=mailto:fang@elfang.com><i class="fas fa-envelope fa-1x"></i></a> </span><span class=icons-item><a href=/pub.txt><i class="fas fa-key fa-1x"></i></a></span></div><div class=footer><p>&copy; 2023 Fang Deng, <a href=https://peromage.github.io/license/>License</a><br><a href=/privacy title="Privacy notice">Privacy notice</a></p></div></div></div></body></html>
+<a href=https://peromage.github.io/p/arch-linux-on-laptop/>&nbsp;Read on &mldr;</a></div></div></div><script src=https://peromage.github.io/js/mathjax.3.2.2.tex-svg.min.js></script><div class=bottombar><div class=bottombar-sticky><div class=icons><span class=icons-item><a href=https://github.com/peromage target=_blank><i class="fab fa-github"></i></a> </span><span class=icons-item><a href=https://www.linkedin.com/in/fangdeng/ target=_blank><i class="fab fa-linkedin fa-1x"></i></a> </span><span class=icons-item><a href=mailto:fang@elfang.com><i class="fas fa-envelope fa-1x"></i></a> </span><span class=icons-item><a href=/pub.txt><i class="fas fa-key fa-1x"></i></a></span></div><div class=footer><p>&copy; 2024 Fang Deng, <a href=https://peromage.github.io/license/>License</a><br><a href=/privacy title="Privacy notice">Privacy notice</a></p></div></div></div></body></html>
