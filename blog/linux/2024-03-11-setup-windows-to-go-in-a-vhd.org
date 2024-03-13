@@ -17,7 +17,7 @@ The ultimate solution came to my mind is booting Windows from the VHD/VHDX.  I'v
 
 After many experiments I finally figured out a way to achieve this purpose.
 
-* Things Needed & TL;DR
+* Things Needed
 Make sure these things are ready before proceeding to the next step.
 
 - A flash drive
@@ -26,30 +26,25 @@ Make sure these things are ready before proceeding to the next step.
 - [[https://www.ventoy.net/en/plugin_vhdboot.html][Ventoy VHD boot plugin]]
 - A Windows 10/11 ISO image
 
-  TL;DR
-
-- Boot from the Windows ISO in the VM.
-- In the installer welcome window, press =Shift+F10= to open a command prompt.
-- Follow [[create-vdisk][here]] to create the virtual disk.
-- Follow [[verify-image-index][here]] to get the desired version of system index from the installer image.
-- Follow [[deploy-image][here]] to deploy the system image in the vdisk.
-- Follow [[fix-vm-bootloader][here]] to fix the bootloader of the VM.
-- Restart the VM to finish the installation.
-- After booting into the VM desktop, shut it down.
-- Install Ventoy on the flash drive.
-- Format the data partition of the flash drive with file system =NTFS=.
-- Copy the VHD boot plugin of Ventoy to the partition just formatted, which is =/ventoy/ventoy_vhdboot.img=.
-- Passthrough the flash drive to the VM, boot the VM from the installation ISO, press =Shift+F10= to open a command prompt and [[copy-vdisk][copy the vdisk to it]].  Use [[identify-volumes][this command]] if volume letters need to be identified.
+* TL;DR
+1. Boot from the Windows ISO in the VM.
+2. In the installer welcome window, press =Shift+F10= to open a command prompt.
+3. Follow all the commands in [[*Prepare the Windows Image][Prepare the Windows Image]] to get vdisk set up.
+4. Restart the VM to finish the installation and shut it down after booting into the desktop.
+5. Install Ventoy on the flash drive.
+6. Format the data partition of the flash drive with file system =NTFS=.
+7. Copy the VHD boot plugin of Ventoy to the partition just formatted, which is =/ventoy/ventoy_vhdboot.img=.
+8. Passthrough the flash drive to the VM and boot the VM from the installation ISO.  Then follow commands in [[*Copy the Prepared Windows Image][Copy the Prepared Windows Image]] to copy the vdisk to the flash drive.
 
 * Reminder - If Current Host is Windows
 I assume we don't have Windows environment. However, if you do, all those preparation steps mentioned below can be done on a bare metal Windows machine with Hyper-V enabled.
 
 There are some slight differences, where
 
-- In [[*Prepare the Windows Image][Prepare the Windows Image]], instead of creating one vdisk inside of the VM, create two on the host. Vdisk A is for EFI partition and vdisk B is for the Windows installation.
-- In [[Boot into Windows for the First Time][Boot into Windows for the First Time]], Attach two vdisks to a Hyper-V instance and follow the instruction.
-- In [[Prepare the Flash Drive][Prepare the Flash Drive]], follow the instructions.
-- In [[Copy the Prepared Windows Image][Copy the Prepared Windows Image]], instead of copying inside of the VM, copy the vdisk B directly on the host.
+1. In [[*Prepare the Windows Image][Prepare the Windows Image]], instead of creating one vdisk inside of the VM, create two on the host. Vdisk A is for EFI partition and vdisk B is for the Windows installation.
+2. In [[*Boot into Windows for the First Time][Boot into Windows for the First Time]], Attach two vdisks to a Hyper-V instance and follow the instruction.
+3. In [[*Prepare the Flash Drive][Prepare the Flash Drive]], follow the instructions.
+4. In [[*Copy the Prepared Windows Image][Copy the Prepared Windows Image]], instead of copying inside of the VM, copy the vdisk B directly on the host.
 
 * Prepare the Windows Image
 Boot from the Windows ISO in the VM.  After choosing the keyboard layout don't start the installation wizard.  Instead press =Shift+F10= to open a command line prompt.
