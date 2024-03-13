@@ -1,6 +1,6 @@
 #+title: Setup Windows To Go in a Virtual Disk
-#+date: <2022-11-14 Mon 21:29>
-#+hugo_lastmod: <2024-03-13 Wed 15:05>
+#+date: <2024-03-13 Wed 15:18>
+#+hugo_lastmod: <2024-03-13 Wed 15:18>
 #+hugo_tags: windows windowstogo boot vhd
 #+setupfile: ./setup.conf
 
