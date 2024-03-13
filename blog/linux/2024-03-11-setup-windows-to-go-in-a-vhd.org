@@ -1,0 +1,168 @@
+#+title: Setup Windows To Go in a Virtual Disk
+#+date: <2022-11-14 Mon 21:29>
+#+hugo_lastmod: <2024-03-13 Wed 15:05>
+#+hugo_tags: windows windowstogo boot vhd
+#+setupfile: ./setup.conf
+
+* Ramble
+It looks like I had a lot stories about this Windows boot setup.  I figure this post would be the last one I write about it since this is the most commonly used case I have so far.
+
+So I got a Steam Deck last year.  It's pretty handy to use it as a mini PC in case I don't have one in hands.  However, there are still things exclusive on Windows but I don't want to mess up with the internal SSD to dual-boot just for this temporary need.
+
+One solution is to install Windows on a micro SD card.  However, Windows installer does not allow you to do so because the micro SD card is recognized as a removable device.  And also the Windows To Go feature has been [[https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/deployment/windows-to-go/windows-to-go-overview][removed]] in Windows 10, which means you can't use the official tool to create a To Go workspace.
+
+Regardless what's been said in that article Windows still actually supports this To Go feature.  Even with Windows 11.  One solution exists out there is to use [[https://rufus.ie][Rufus]] to write the system image to a removable flash drive.  After some experiments I was not satisfied with it.  Firstly, it splits the flash into multiple partitions and Windows system files are exposed whenever you plug the card in a different machine.  It makes hard to re-purpose the card without re-formatting it.  Secondly, Rufus enables encryption which makes it even worse for a flash device (I know this is enforced by Windows 11 but it can be disabled).
+
+The ultimate solution came to my mind is booting Windows from the VHD/VHDX.  I've done this many times in the past and it worked very well.  However, when it is booting from a removable flash drive Windows installation can't pass the initialization stage saying Windows cannot be configured on this hardware.  Even =Shift+F10= and run =oobems= will be stuck forever.
+
+After many experiments I finally figured out a way to achieve this purpose.
+
+* Things Needed & TL;DR
+Make sure these things are ready before proceeding to the next step.
+
+- A flash drive
+- A virtual machine with at least 64GiB disk space
+- [[https://www.ventoy.net/en/index.html][Ventoy]]
+- [[https://www.ventoy.net/en/plugin_vhdboot.html][Ventoy VHD boot plugin]]
+- A Windows 10/11 ISO image
+
+  TL;DR
+
+- Boot from the Windows ISO in the VM.
+- In the installer welcome window, press =Shift+F10= to open a command prompt.
+- Follow [[create-vdisk][here]] to create the virtual disk.
+- Follow [[verify-image-index][here]] to get the desired version of system index from the installer image.
+- Follow [[deploy-image][here]] to deploy the system image in the vdisk.
+- Follow [[fix-vm-bootloader][here]] to fix the bootloader of the VM.
+- Restart the VM to finish the installation.
+- After booting into the VM desktop, shut it down.
+- Install Ventoy on the flash drive.
+- Format the data partition of the flash drive with file system =NTFS=.
+- Copy the VHD boot plugin of Ventoy to the partition just formatted, which is =/ventoy/ventoy_vhdboot.img=.
+- Passthrough the flash drive to the VM, boot the VM from the installation ISO, press =Shift+F10= to open a command prompt and [[copy-vdisk][copy the vdisk to it]].  Use [[identify-volumes][this command]] if volume letters need to be identified.
+
+* Reminder - If Current Host is Windows
+I assume we don't have Windows environment. However, if you do, all those preparation steps mentioned below can be done on a bare metal Windows machine with Hyper-V enabled.
+
+There are some slight differences, where
+
+- In [[*Prepare the Windows Image][Prepare the Windows Image]], instead of creating one vdisk inside of the VM, create two on the host. Vdisk A is for EFI partition and vdisk B is for the Windows installation.
+- In [[Boot into Windows for the First Time][Boot into Windows for the First Time]], Attach two vdisks to a Hyper-V instance and follow the instruction.
+- In [[Prepare the Flash Drive][Prepare the Flash Drive]], follow the instructions.
+- In [[Copy the Prepared Windows Image][Copy the Prepared Windows Image]], instead of copying inside of the VM, copy the vdisk B directly on the host.
+
+* Prepare the Windows Image
+Boot from the Windows ISO in the VM.  After choosing the keyboard layout don't start the installation wizard.  Instead press =Shift+F10= to open a command line prompt.
+
+We need to partition the VM's disk so that we can start the installed Windows inside of.
+
+Here are the commands used in the prompt.
+
+#+name: create-vdisk
+#+begin_src shell
+> diskpart
+# Find out and select the VM's disk
+DISKPART> list disk
+DISKPART> select disk 0
+
+# Initialize it
+DISKPART> clean
+DISKPART> convert gpt
+
+# Create the EFI partition
+DISKPART> create partition efi size=512
+DISKPART> select partition 1
+DISKPART> format fs=fat quick
+DISKPART> assign letter=E
+
+# Create the partition where Windows will be installed into with the rest of the space
+DISKPART> create partition primary
+DISKPART> select partition 2
+DISKPART> format fs=ntfs quick
+DISKPART> assign letter=D
+
+# Create a VHD file to host the Windows system files
+DISKPART> create vdisk file=d:\win.vhdx maximum=60000 type=expandable
+DISKPART> select vdisk file=d:\win.vhdx
+DISKPART> attach vdisk
+DISKPART> convert gpt
+DISKPART> create partition primary
+DISKPART> format fs=ntfs quick
+DISKPART> assign letter=V
+DISKPART> exit
+#+end_src
+
+Eventually we have the following volumes setup:
+- =C:=: DVD drive (mounted by default, can vary)
+- =E:=: VM EFI partition
+- =D:=: VM data partition (where vdisk resides)
+- =V:=: Windows partition
+
+60GB size should be far enough for a fresh new Windows installation.  And the vdisk type can be changed to =fixed= if it needs to be pre-allocated but the process time could be lengthy.  The reason that I use =vhdx= instead of =vhd= is because =vhdx= provides better data corruption protection and it supports differential disks which can be pretty handy later on.
+
+Next is to confirm the index of the desired Windows version in this ISO.
+
+NOTE: Only Windows Pro and above support Windows To Go.
+
+#+name: verify-image-index
+#+begin_src shell
+> dism /get-wiminfo /wimfile=c:\sources\install.wim
+#+end_src
+
+Then extract the system files.  Assuming the Pro version index is =6=.
+
+#+name: deploy-image
+#+begin_src shell
+> dism /apply-image /imagefile:g:\sources\install.wim /index:10 /applydir:h:\
+#+end_src
+
+Lastly build the boot loader so that we can boot inside the VM.
+
+#+name: fix-vm-bootloader
+#+begin_src shell
+> bcdboot v:\Windows /l en-us /s e: /f uefi
+#+end_src
+
+At this point the Windows system image is mostly prepared.  Now reboot the VM.
+
+* Boot into Windows for the First Time
+We need to boot into the newly installed Windows for at least once otherwise the installation won't be passing if we move it to a flash drive without this step.
+
+During the second part of installation make sure network is disconnected since we don't want Windows to install drivers for the virtual environment automatically.  However, the installer most likely doesn't allow you to proceed if you don't have network access.  To bypass it, when in that "connect to network" window, press =Shift+F10= and run the following command.  The system will restart automatically and there should be an option allowing you to setup without network.
+
+When everything is done and boot into the Windows desktop, shutdown the VM.
+
+* Prepare the Flash Drive
+The flash drive has to be set up so that we can boot from it.  For this purpose, I strongly suggest to use =Ventoy= due to the flexibility it provides.  For example, you occasionally move image files around or want to boot from a differential vdisk.  In that case the bootloader doesn't need to be updated every time.
+
+Of course this can still be done in the old-fashion way which builds the bootloader with the =bcdboot= command but it requires manual updates of the bootloader in above cases.  See how it is done in the previous step.
+
+With that being said, install =Ventoy= on the flash drive.  Then format the data partition (the biggest, usually the first one labeled /Ventoy/) of the flash drive into =NTFS= file system.  Otherwise the VHD/VHDX cannot be booted.
+
+Then copy the VHD boot plugin to the partition just formatted, that is =/ventoy/ventoy_vhdboot.img=.
+
+* Copy the Prepared Windows Image
+Keep the flash drive plugged in and pass it through to the VM so that the VM can access it.
+
+Boot from the Windows ISO image inside of the VM.  Don't start the installation and press =Shift+F10= to open a command line prompt just like earlier.
+
+Use =diskpart= to identify volumes mounted.
+
+#+name: identify-volumes
+#+begin_src shell
+> diskpart
+> list volume
+> exit
+#+end_src
+
+Then copy the prepared Windows image to the flash drive (assuming the VM data partition is =D:= and the flash drive data partition is =F:=).
+
+#+name: copy-vdisk
+#+begin_src shell
+> copy d:\win.vhdx f:\win.vhdx
+#+end_src
+
+Done!
+
+* Finalize the Installation
+Now the flash drive is ready to use on the target machine.  Boot from it and install any missing drivers and system updates.
