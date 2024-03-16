@@ -1,6 +1,6 @@
 #+title: Setup Windows To Go in a Virtual Disk
 #+date: <2024-03-13 Wed 15:18>
-#+hugo_lastmod: <2024-03-13 Wed 15:18>
+#+hugo_lastmod: <2024-03-16 Sat 18:38>
 #+hugo_tags: windows windowstogo boot vhd
 #+setupfile: ./setup.conf
 
@@ -125,16 +125,22 @@ We need to boot into the newly installed Windows for at least once otherwise the
 
 During the second part of installation make sure network is disconnected since we don't want Windows to install drivers for the virtual environment automatically.  However, the installer most likely doesn't allow you to proceed if you don't have network access.  To bypass it, when in that "connect to network" window, press =Shift+F10= and run the following command.  The system will restart automatically and there should be an option allowing you to setup without network.
 
+#+begin_src shell
+> oobe\BypassNRO
+#+end_src
+
 When everything is done and boot into the Windows desktop, shutdown the VM.
 
-* Prepare the Flash Drive
-The flash drive has to be set up so that we can boot from it.  For this purpose, I strongly suggest to use =Ventoy= due to the flexibility it provides.  For example, you occasionally move image files around or want to boot from a differential vdisk.  In that case the bootloader doesn't need to be updated every time.
+* Prepare a Bootable Drive
+Our drive has to be set up so that we can boot from it.  For this purpose, I strongly suggest to use =Ventoy= due to the flexibility it provides.  For example, you occasionally move image files around or want to boot from a differential vdisk.  In that case the bootloader doesn't need to be updated every time.
 
 Of course this can still be done in the old-fashion way which builds the bootloader with the =bcdboot= command but it requires manual updates of the bootloader in above cases.  See how it is done in the previous step.
 
-With that being said, install =Ventoy= on the flash drive.  Then format the data partition (the biggest, usually the first one labeled /Ventoy/) of the flash drive into =NTFS= file system.  Otherwise the VHD/VHDX cannot be booted.
+With that being said, install =Ventoy= on the drive.  Then format the data partition (the biggest, usually the first one labeled /Ventoy/) of the drive into =NTFS= file system.  Otherwise the VHD/VHDX cannot be booted.
 
 Then copy the VHD boot plugin to the partition just formatted, that is =/ventoy/ventoy_vhdboot.img=.
+
+*UPDATE*: It seems like Windows does not like to be booted from Ventoy.  There are chances that Windows will overwrite the bootloader on your other disks after system updates.  Good job Microsoft.  In that case, manually installing Windows boot manager on the drive by =bcdboot= command may be required.  Unless you're using [[https://github.com/Atlas-OS/Atlas][Atlas]] which shuts off auto update.
 
 * Copy the Prepared Windows Image
 Keep the flash drive plugged in and pass it through to the VM so that the VM can access it.
@@ -160,4 +166,6 @@ Then copy the prepared Windows image to the flash drive (assuming the VM data pa
 Done!
 
 * Finalize the Installation
-Now the flash drive is ready to use on the target machine.  Boot from it and install any missing drivers and system updates.
+Now the drive is ready to use on the target machine.  Boot from it and install any missing drivers and system updates.
+
+For advanced use cases, a [[https://learn.microsoft.com/en-us/previous-versions/windows/desktop/legacy/dd323654(v=vs.85)][differencing virtual disk]] can be created so that if the system is broken at some point we can quickly recover from it by discarding the old one and create a new one, or make the system read-only.
