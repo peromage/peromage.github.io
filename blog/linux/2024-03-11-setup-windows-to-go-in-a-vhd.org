@@ -156,11 +156,13 @@ Use =diskpart= to identify volumes mounted.
 > exit
 #+end_src
 
-Then copy the prepared Windows image to the flash drive (assuming the VM data partition is =D:= and the flash drive data partition is =F:=).
+Then copy the prepared Windows image to the flash drive (assuming the VM data partition is =D:= and the drive data partition is =F:=).
+
+I use [[https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy][robocopy]] as an example.
 
 #+name: copy-vdisk
 #+begin_src shell
-> copy d:\win.vhdx f:\win.vhdx
+> robocopy d:\ f:\ win.vhdx /mt /z
 #+end_src
 
 Done!
