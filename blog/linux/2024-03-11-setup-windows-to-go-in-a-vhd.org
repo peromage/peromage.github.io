@@ -43,7 +43,7 @@ There are some slight differences, where
 
 1. In [[*Prepare the Windows Image][Prepare the Windows Image]], instead of creating one vdisk inside of the VM, create two on the host. Vdisk A is for EFI partition and vdisk B is for the Windows installation.
 2. In [[*Boot into Windows for the First Time][Boot into Windows for the First Time]], Attach two vdisks to a Hyper-V instance and follow the instruction.
-3. In [[*Prepare the Flash Drive][Prepare the Flash Drive]], follow the instructions.
+3. In [[*Prepare a Bootable Drive][Prepare a Bootable Drive]], follow the instructions.
 4. In [[*Copy the Prepared Windows Image][Copy the Prepared Windows Image]], instead of copying inside of the VM, copy the vdisk B directly on the host.
 
 * Prepare the Windows Image
