@@ -101,7 +101,7 @@ NOTE: Only Windows Pro and above support Windows To Go.
 
 #+name: verify-image-index
 #+begin_src shell
-> dism /get-wiminfo /wimfile=c:\sources\install.wim
+> dism /get-wiminfo /wimfile:c:\sources\install.wim
 #+end_src
 
 Then extract the system files.  Assuming the Pro version index is =6=.
