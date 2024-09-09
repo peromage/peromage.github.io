@@ -1,5 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vnc on undefined behavior</title><link>https://peromage.github.io/tags/vnc/</link><description>Recent content in Vnc on undefined behavior</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 23 Oct 2023 21:28:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/vnc/index.xml" rel="self" type="application/rss+xml"/><item><title>VNC Quick Guide</title><link>https://peromage.github.io/p/vnc-quick-guide/</link><pubDate>Wed, 15 Jun 2022 17:40:00 +0000</pubDate><guid>https://peromage.github.io/p/vnc-quick-guide/</guid><description>I found that every time when I try to setup VNC for remote access I always have troubles so this post serves as a note for myself.
-Be aware VNC only works for X (not sure about Wayland).
-Choose a VNC Server Generally I use TigerVNC. It&amp;rsquo;s a fork of TightVNC with good performance and easy configuration.
-It has two types of installations:
-Standalone: It creates a new X server when the client is connected.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vnc on undefined behavior</title><link>https://peromage.github.io/tags/vnc/</link><description>Recent content in Vnc on undefined behavior</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 23 Oct 2023 21:28:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/vnc/index.xml" rel="self" type="application/rss+xml"/><item><title>VNC Quick Guide</title><link>https://peromage.github.io/p/vnc-quick-guide/</link><pubDate>Wed, 15 Jun 2022 17:40:00 +0000</pubDate><guid>https://peromage.github.io/p/vnc-quick-guide/</guid><description>&lt;p>I found that every time when I try to setup VNC for remote access I always have troubles so this post serves as a note for myself.&lt;/p>
+&lt;p>Be aware VNC only works for X (not sure about Wayland).&lt;/p>
+&lt;h2 id="choose-a-vnc-server">Choose a VNC Server&lt;/h2>
+&lt;p>Generally I use &lt;a href="https://tigervnc.org/">TigerVNC&lt;/a>. It&amp;rsquo;s a fork of &lt;em>TightVNC&lt;/em> with good performance and easy configuration.&lt;/p>
+&lt;p>It has two types of installations:&lt;/p>
+&lt;ul>
+&lt;li>Standalone: It creates a new X server when the client is connected. Independent from the local X server.&lt;/li>
+&lt;li>Scraping: It mirrors the local X server, like screen sharing.&lt;/li>
+&lt;/ul>
+&lt;p>Usually they are shipped with individual packages. To install, for example, on Ubuntu&lt;/p></description></item></channel></rss>

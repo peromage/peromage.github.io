@@ -1,37 +1,560 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on undefined behavior</title><link>https://peromage.github.io/posts/</link><description>Recent content in Posts on undefined behavior</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 17 Mar 2024 22:01:23 +0000</lastBuildDate><atom:link href="https://peromage.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Setup Windows To Go in a Virtual Disk</title><link>https://peromage.github.io/p/setup-windows-to-go-in-a-virtual-disk/</link><pubDate>Wed, 13 Mar 2024 15:18:00 +0000</pubDate><guid>https://peromage.github.io/p/setup-windows-to-go-in-a-virtual-disk/</guid><description>Ramble It looks like I had a lot stories about this Windows boot setup. I figure this post would be the last one I write about it since this is the most commonly used case I have so far.
-So I got a Steam Deck last year. It&amp;rsquo;s pretty handy to use it as a mini PC in case I don&amp;rsquo;t have one in hands. However, there are still things exclusive on Windows but I don&amp;rsquo;t want to mess up with the internal SSD to dual-boot just for this temporary need.</description></item><item><title>Perl Quick Reference</title><link>https://peromage.github.io/p/perl-quick-reference/</link><pubDate>Mon, 13 Nov 2023 15:44:00 +0000</pubDate><guid>https://peromage.github.io/p/perl-quick-reference/</guid><description>Preface Perl is a powerful tool to handle text processing. However, the learning curve might be steep due to some unusual syntax. I find myself even need to revisit the doc sometimes if I don&amp;rsquo;t use it often, so this post I&amp;rsquo;ll write down some commonly used patterns when it comes to text processing. That said this post is updated from time to time so remember to come back!
-When used as a command line tool, perl is powerful enough to replace traditional text processing tools like sed, awk, grep, tr etc.</description></item><item><title>Moving from Arch Linux to NixOS</title><link>https://peromage.github.io/p/moving-from-arch-linux-to-nixos/</link><pubDate>Sun, 29 Oct 2023 15:07:00 +0000</pubDate><guid>https://peromage.github.io/p/moving-from-arch-linux-to-nixos/</guid><description>I&amp;rsquo;ve been learning Nix for a while and using the Nix package manager on my work desktop that runs Ubuntu. However, I did not use the NixOS on my personal laptop because I thought I might put a lot effort after work to set it up, which I didn&amp;rsquo;t really want to. Until recent, the Arch dependencies broke again and I felt it kinda suck to fix those issues so I decided to give Nix a try.</description></item><item><title>ANSI Escape Code Collection</title><link>https://peromage.github.io/p/ansi-escape-code-collection/</link><pubDate>Sun, 27 Aug 2023 18:11:00 +0000</pubDate><guid>https://peromage.github.io/p/ansi-escape-code-collection/</guid><description>The information in this collection is from Internet, which is collected for my personal convenience.
-CSI sequences Code Name Effect CSI n A CUU – Cursor Up Moves the cursor n (default 1) cells in the given direction. If the cursor is already at the edge of the screen, this has no effect. CSI n B CUD – Cursor Down CSI n C CUF – Cursor Forward CSI n D CUB – Cursor Back CSI n E CNL – Cursor Next Line Moves cursor to beginning of the line n (default 1) lines down.</description></item><item><title>[Archive] Multiboot USB</title><link>https://peromage.github.io/p/archive-multiboot-usb/</link><pubDate>Sun, 27 Aug 2023 17:55:00 +0000</pubDate><guid>https://peromage.github.io/p/archive-multiboot-usb/</guid><description>Boot from any ISO file Hybrid UEFI GPT + BIOS MBR/GPT boot Preparation Create 3 partitions on a removable USB stick. A BIOS boot partition (gdisk type code EF02, or GUID 21686148-6449-6E6F-744E-656564454649) with no filesystem. This partition can be put in any place on the disk but it is recommended to put it at the begginning from sector 34 to 2047. At minimal 1 MiB. An EFI System partition (gdisk</description></item><item><title>Different Ways to Write a Major Mode</title><link>https://peromage.github.io/p/different-ways-to-write-a-major-mode/</link><pubDate>Thu, 16 Mar 2023 23:17:00 +0000</pubDate><guid>https://peromage.github.io/p/different-ways-to-write-a-major-mode/</guid><description>This post mainly helps myself remember how to quickly write a major mode. My memory is getting worse. So sad. :(
-Use define-derived-mode Doc: https://www.gnu.org/software/emacs/manual/html_node/elisp/Derived-Modes.html
-This perhaps the most common way to write a major mode.
-Most of the times I derive from fundamental-mode, or nil if the parent mode is not needed (a brand new mode).
-;; With a parent mode (define-derived-mode foo-mode fundamental-mode &amp;#34;Foo&amp;#34; (do something)) ;; Or nothing (define-derived-mode foo-mode nil &amp;#34;Foo&amp;#34; (do something)) Here is the common pattern that I use.</description></item><item><title>LSP Setup for Java</title><link>https://peromage.github.io/p/lsp-setup-for-java/</link><pubDate>Sat, 18 Feb 2023 17:04:00 +0000</pubDate><guid>https://peromage.github.io/p/lsp-setup-for-java/</guid><description>Update on &amp;lt;2023-06-07 Wed&amp;gt; Found a much easier way to configure this and tried again with the update-to-date lsp-java and it worked magically. Can&amp;rsquo;t recall why I had configuration issues before.
-Simply it would be:
-Make sure JDK 17 is installed (According to the requirement of lsp-java). Create a lib folder and put .jar files into it (or symlinks). See this issue. Run lsp-restart-workspace. Voila! Now LSP works as you would expect :).</description></item><item><title>File-based Blog Management with ox-hugo</title><link>https://peromage.github.io/p/file-based-blog-management-with-ox-hugo/</link><pubDate>Tue, 15 Nov 2022 09:58:00 +0000</pubDate><guid>https://peromage.github.io/p/file-based-blog-management-with-ox-hugo/</guid><description>Background I previously wrote a post about managing blog posts with ox-hugo in org mode. I used to follow the recommendation to keep posts under org subtrees. As posts grew, I found that the opening speed is quite slow even I didn&amp;rsquo;t have many pictures inserted. Although managing the entire site within one file does have some convenience, the slowness is something I can&amp;rsquo;t bear. Also I feel it a</description></item><item><title>Use lisp-data Files in Emacs</title><link>https://peromage.github.io/p/use-lisp-data-files-in-emacs/</link><pubDate>Mon, 14 Nov 2022 10:57:00 +0000</pubDate><guid>https://peromage.github.io/p/use-lisp-data-files-in-emacs/</guid><description>I found that there were few posts mentioning about using lisp-data files. However, it seems to be used widely in various packages.
-Emacs manumal has a very detailed description of how to read and write lisp objects. In this post I&amp;rsquo;ll mainly demonstrate one specific use case.
-Read from file The biggest challenge is to parse file content to Lisp lists. After a quick search with describe-function, read function is able to perfectly handle it in this case.</description></item><item><title>Arch Linux on Laptop</title><link>https://peromage.github.io/p/arch-linux-on-laptop/</link><pubDate>Tue, 08 Nov 2022 22:45:00 +0000</pubDate><guid>https://peromage.github.io/p/arch-linux-on-laptop/</guid><description>I recently got my new laptop and I found that some additional tweaks need to be made for laptops. Thus, this post is to have a record in case I forget when I have to reinstall the system.
-Some basic setup Unlike desktop, laptops have to be secure so encrytion is a must.
-Details of how-to can be found on Arch wiki. I&amp;rsquo;m not going to go through that here. However, I&amp;rsquo;ll note down some considerations and things that need to pay attention to.</description></item><item><title>Windows Rescure Quick Reference</title><link>https://peromage.github.io/p/windows-rescure-quick-reference/</link><pubDate>Wed, 19 Oct 2022 00:01:00 +0000</pubDate><guid>https://peromage.github.io/p/windows-rescure-quick-reference/</guid><description>Though I&amp;rsquo;ve written posts about dual-booting Windows and Linux and multi-booting a USB drive, I have to go back and dig useful information out each time when I forget something.
-After breaking my dual-boot setup once again (forgot to backup boot partition), I decided to create this post for a quick reference.
-This reference assumes system is boot from UEFI and Windows is installed on a dedicated partition.
-Setup A USB With System Images Forget the previous multi-boot USB post.</description></item><item><title>VNC Quick Guide</title><link>https://peromage.github.io/p/vnc-quick-guide/</link><pubDate>Wed, 15 Jun 2022 17:40:00 +0000</pubDate><guid>https://peromage.github.io/p/vnc-quick-guide/</guid><description>I found that every time when I try to setup VNC for remote access I always have troubles so this post serves as a note for myself.
-Be aware VNC only works for X (not sure about Wayland).
-Choose a VNC Server Generally I use TigerVNC. It&amp;rsquo;s a fork of TightVNC with good performance and easy configuration.
-It has two types of installations:
-Standalone: It creates a new X server when the client is connected.</description></item><item><title>Use Git Worktree to Work with Multiple Checkout at the Same Time</title><link>https://peromage.github.io/p/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</link><pubDate>Mon, 06 Jun 2022 00:30:00 +0000</pubDate><guid>https://peromage.github.io/p/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</guid><description>Troubles When working with a complicated project where you have to compare different history versions side by side, it soon becomes frustrating frequently checking out refs.
-The old stupid way is to clone multiple repos and checkout to the specific revisions. When the project is big this might be a trouble because you&amp;rsquo;re basically duplicating files.
-Savior Git provides a convenience sub-command worktree to checkout a specific ref in another directory without duplicating files.</description></item><item><title>Autoloading in Emacs</title><link>https://peromage.github.io/p/autoloading-in-emacs/</link><pubDate>Mon, 06 Jun 2022 00:00:00 +0000</pubDate><guid>https://peromage.github.io/p/autoloading-in-emacs/</guid><description>Autoloading is a neat feature in Emacs. It speeds up Emacs by lazy load the files. But it could be a little confusing if you&amp;rsquo;re switching from Vim.
-Myth - Not Working as Expected If you have used Vim you know in Vim you can put your library files to the load path variable and Vim autoloads them whenever one of the functions/variables is used. Initially I thought this is the same in Emacs but with a little effort to put the magic autoload comments before the function/variable definition.</description></item><item><title>Use Org Mode to Manage My Blog</title><link>https://peromage.github.io/p/use-org-mode-to-manage-my-blog/</link><pubDate>Sun, 05 Jun 2022 23:00:00 +0000</pubDate><guid>https://peromage.github.io/p/use-org-mode-to-manage-my-blog/</guid><description>I&amp;rsquo;ve been using Emacs since last year but until recent I started using org-mode seriously. After spending a couple of days reading and watching all kinds of org tutorial as well as using it for documentation, I realized that people who invented this must geniuses.
-Org document seems similar with Markdown: they are text markup format. However, Org provides far more capabilities to store metadata and greater editing experience together with Emacs&amp;rsquo; org-mode.</description></item><item><title>Initialize std::array at Compile Time</title><link>https://peromage.github.io/p/initialize-stdarray-at-compile-time/</link><pubDate>Wed, 16 Mar 2022 10:25:00 +0000</pubDate><guid>https://peromage.github.io/p/initialize-stdarray-at-compile-time/</guid><description>Background I&amp;rsquo;ve been working on optimization for some C++ code recently. One of the part is to initialize some data at compile time. Consider we have a C style enum definition:
-typedef enum Foo { AAA = 0, BBB, CCC } Foo_t; We want to have an array of the enum with undefined initial values 999 because by default initialization the values would be 0&amp;rsquo;s. However, std::array can only be initialized by initializer list, which is said:</description></item><item><title>My Common Windows VM Setup</title><link>https://peromage.github.io/p/my-common-windows-vm-setup/</link><pubDate>Sun, 13 Mar 2022 17:47:00 +0000</pubDate><guid>https://peromage.github.io/p/my-common-windows-vm-setup/</guid><description>Before Starting This post mainly discusses VM setup for Windows since I&amp;rsquo;ve been using Windows as a secondary OS for apps or games that cannot run on Linux.
-This post discusses setup on Arch Linux.
-This post assumes the CPU and motherboard support VT-d and IOMMU features. Detailed prerequisites can be found on this page.
-Install Hypervisor Follow Arch wiki to install and setup:
-QEMU Libvirt Virt-Manager OVMF Install Windows VM Before Installation Download the latest Windows 10 ISO from Microsoft.</description></item><item><title>Fix Metadata in Google Photo Takeout</title><link>https://peromage.github.io/p/fix-metadata-in-google-photo-takeout/</link><pubDate>Sun, 13 Mar 2022 00:12:00 +0000</pubDate><guid>https://peromage.github.io/p/fix-metadata-in-google-photo-takeout/</guid><description>Google Photo sucks.
-Troubles When exporting photos from Google Photo, a bunch of JSON files come with your photos. Those JSON files contain metadata which is supposed to be stored with your photo files. If you simple import those photo files into another photo manager you will most likely not get a chronological view. Obviously, Google does on purpose so that you will not leave it easily. However, there is a workaround that is able to merge those metadata into your photos.</description></item><item><title>Shadowsocks Quick Setup</title><link>https://peromage.github.io/p/shadowsocks-quick-setup/</link><pubDate>Sun, 13 Mar 2022 00:03:00 +0000</pubDate><guid>https://peromage.github.io/p/shadowsocks-quick-setup/</guid><description>This note is written for my personal convenience.
-Server Setup Installation Use system package manager to install shadowsocks-libev. In this case, for Arch Linux it is pacman.
-There is also a Python package which can be installed by pip but it seems not to be maintained for a long time.
-$ sudo pacman -S shadowsocks-libev Shadowsocks Server Configuration Config file is located at /etc/shadowsocks/myserver.json. On FreeBSD it is /usr/local/etc/shadowsocks/myserver.json
-The file name can vary.</description></item><item><title>SSH Over GPG Agent</title><link>https://peromage.github.io/p/ssh-over-gpg-agent/</link><pubDate>Sun, 13 Mar 2022 00:02:00 +0000</pubDate><guid>https://peromage.github.io/p/ssh-over-gpg-agent/</guid><description>This is a quick note of gpg-agent setup for SSH.
-Quick Setup Import your GPG authentication key. Enable SSH support for gpg-agent. $ echo enable-ssh-support &amp;gt;&amp;gt; $HOME/.gnupg/gpg-agent.conf Get the authentication keygrip. $ gpg -k --with-keygrip Add the authentication key to the keychain (replace KEYGRIP with the value obtained from the previous step) $ echo KEYGRIP &amp;gt;&amp;gt; $HOME/.gnupg/sshcontrol Add the following init code to .bashrc unset SSH_AGENT_PID export SSH_AUTH_SOCK=&amp;#34;$(gpgconf --list-dirs agent-ssh-socket)&amp;#34; export GPG_TTY=&amp;#34;$(tty)&amp;#34; gpg-connect-agent updatestartuptty /bye &amp;gt; /dev/null Kill any running ssh-agent and gpg-agent, and then open a new Bash session.</description></item><item><title>Minimalist's Multi-boot USB Drive</title><link>https://peromage.github.io/p/minimalists-multi-boot-usb-drive/</link><pubDate>Wed, 26 Jan 2022 20:34:00 +0000</pubDate><guid>https://peromage.github.io/p/minimalists-multi-boot-usb-drive/</guid><description>Story Recently I&amp;rsquo;ve realized a fact that I always have needs to keep a multi-boot USB in my pocket for either Linux or Windows installation. There are a lot tools out there already but I don&amp;rsquo;t really like them. At least, I mean, they are too flashy to me. A beautiful boot menu seems not to be attractive. What I need is just a simple and practical maybe a little ugly boot device.</description></item><item><title>Moving From Vim to Emacs</title><link>https://peromage.github.io/p/moving-from-vim-to-emacs/</link><pubDate>Sat, 14 Aug 2021 10:29:00 +0000</pubDate><guid>https://peromage.github.io/p/moving-from-vim-to-emacs/</guid><description>YouTube has been pushing me a lot Emacs related contents. This is weird since mostly I watch Vim videos only. But probably this is also a great opportunity to try Emacs again.
-I have tried Emacs half year ago. I looked a lot Elisp programming fundamentals and tried a few Emacs configurations from others including Doom Emacs. However, it didn&amp;rsquo;t last long since I found that I didn&amp;rsquo;t have enough time to configure this Emacs setup as good as the Vim setup that I was using.</description></item><item><title>Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC</title><link>https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</link><pubDate>Fri, 09 Jul 2021 16:40:00 +0000</pubDate><guid>https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</guid><description>Background Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further. Starting from Windows 7, Windows supports boots from</description></item><item><title>Git中的Subtree和Submodule</title><link>https://peromage.github.io/p/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</link><pubDate>Fri, 07 Apr 2017 20:53:00 +0000</pubDate><guid>https://peromage.github.io/p/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</guid><description>因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。 为什么有这样的需求 版本库嵌套很好理解，就是在一个 Git 仓库里面包含了</description></item><item><title>Windows+Linux双系统引导手记</title><link>https://peromage.github.io/p/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</link><pubDate>Wed, 05 Apr 2017 19:26:00 +0000</pubDate><guid>https://peromage.github.io/p/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</guid><description>0x00 情况简述 由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。 这台电脑的基本情况是这样的，64GB 固态硬盘 + 720GB 机械硬盘（实际可用空间有折</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on undefined behavior</title><link>https://peromage.github.io/posts/</link><description>Recent content in Posts on undefined behavior</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 09 Sep 2024 01:23:46 +0000</lastBuildDate><atom:link href="https://peromage.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Setup Windows To Go in a Virtual Disk</title><link>https://peromage.github.io/p/setup-windows-to-go-in-a-virtual-disk/</link><pubDate>Wed, 13 Mar 2024 15:18:00 +0000</pubDate><guid>https://peromage.github.io/p/setup-windows-to-go-in-a-virtual-disk/</guid><description>&lt;h2 id="ramble">Ramble&lt;/h2>
+&lt;p>It looks like I had a lot stories about this Windows boot setup. I figure this post would be the last one I write about it since this is the most commonly used case I have so far.&lt;/p>
+&lt;p>So I got a Steam Deck last year. It&amp;rsquo;s pretty handy to use it as a mini PC in case I don&amp;rsquo;t have one in hands. However, there are still things exclusive on Windows but I don&amp;rsquo;t want to mess up with the internal SSD to dual-boot just for this temporary need.&lt;/p></description></item><item><title>Perl Quick Reference</title><link>https://peromage.github.io/p/perl-quick-reference/</link><pubDate>Mon, 13 Nov 2023 15:44:00 +0000</pubDate><guid>https://peromage.github.io/p/perl-quick-reference/</guid><description>&lt;h2 id="preface">Preface&lt;/h2>
+&lt;p>Perl is a powerful tool to handle text processing. However, the learning curve might be steep due to some unusual syntax. I find myself even need to revisit the doc sometimes if I don&amp;rsquo;t use it often, so this post I&amp;rsquo;ll write down some commonly used patterns when it comes to text processing. That said this post is updated from time to time so remember to come back!&lt;/p></description></item><item><title>Moving from Arch Linux to NixOS</title><link>https://peromage.github.io/p/moving-from-arch-linux-to-nixos/</link><pubDate>Sun, 29 Oct 2023 15:07:00 +0000</pubDate><guid>https://peromage.github.io/p/moving-from-arch-linux-to-nixos/</guid><description>&lt;p>I&amp;rsquo;ve been learning Nix for a while and using the Nix package manager on my work desktop that runs Ubuntu. However, I did not use the NixOS on my personal laptop because I thought I might put a lot effort after work to set it up, which I didn&amp;rsquo;t really want to. Until recent, the Arch dependencies broke again and I felt it kinda suck to fix those issues so I decided to give Nix a try. To my suprise, the installation process is way simpler than I expected.&lt;/p></description></item><item><title>ANSI Escape Code Collection</title><link>https://peromage.github.io/p/ansi-escape-code-collection/</link><pubDate>Sun, 27 Aug 2023 18:11:00 +0000</pubDate><guid>https://peromage.github.io/p/ansi-escape-code-collection/</guid><description>&lt;p>The information in this collection is from Internet, which is collected for my personal convenience.&lt;/p>
+&lt;h2 id="csi-sequences">CSI sequences&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: left">Code&lt;/th>
+ &lt;th style="text-align: left">Name&lt;/th>
+ &lt;th style="text-align: left">Effect&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n A&lt;/td>
+ &lt;td style="text-align: left">CUU – Cursor Up&lt;/td>
+ &lt;td style="text-align: left">Moves the cursor n (default 1) cells in the given direction. If the cursor is already at the edge of the screen, this has no effect.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n B&lt;/td>
+ &lt;td style="text-align: left">CUD – Cursor Down&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n C&lt;/td>
+ &lt;td style="text-align: left">CUF – Cursor Forward&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n D&lt;/td>
+ &lt;td style="text-align: left">CUB – Cursor Back&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n E&lt;/td>
+ &lt;td style="text-align: left">CNL – Cursor Next Line&lt;/td>
+ &lt;td style="text-align: left">Moves cursor to beginning of the line n (default 1) lines down. (not ANSI.SYS)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n F&lt;/td>
+ &lt;td style="text-align: left">CPL – Cursor Previous Line&lt;/td>
+ &lt;td style="text-align: left">Moves cursor to beginning of the line n (default 1) lines up. (not ANSI.SYS)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n G&lt;/td>
+ &lt;td style="text-align: left">CHA – Cursor Horizontal Absolute&lt;/td>
+ &lt;td style="text-align: left">Moves the cursor to column n (default 1). (not ANSI.SYS)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n ; m H&lt;/td>
+ &lt;td style="text-align: left">CUP – Cursor Position&lt;/td>
+ &lt;td style="text-align: left">Moves the cursor to row n, column m. The values are 1-based, and default to 1 (top left corner) if omitted. A sequence such as CSI ;5H is a synonym for CSI 1;5H as well as CSI 17;H is the same as CSI 17H and CSI 17;1H&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n J&lt;/td>
+ &lt;td style="text-align: left">ED – Erase in Display&lt;/td>
+ &lt;td style="text-align: left">Clears part of the screen. If n is 0 (or missing), clear from cursor to end of screen. If n is 1, clear from cursor to beginning of the screen. If n is 2, clear entire screen (and moves cursor to upper left on DOS ANSI.SYS). If n is 3, clear entire screen and delete all lines saved in the scrollback buffer (this feature was added for xterm and is supported by other terminal applications).&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n K&lt;/td>
+ &lt;td style="text-align: left">EL – Erase in Line&lt;/td>
+ &lt;td style="text-align: left">Erases part of the line. If n is 0 (or missing), clear from cursor to the end of the line. If n is 1, clear from cursor to beginning of the line. If n is 2, clear entire line. Cursor position does not change.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n S&lt;/td>
+ &lt;td style="text-align: left">SU – Scroll Up&lt;/td>
+ &lt;td style="text-align: left">Scroll whole page up by n (default 1) lines. New lines are added at the bottom. (not ANSI.SYS)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n T&lt;/td>
+ &lt;td style="text-align: left">SD – Scroll Down&lt;/td>
+ &lt;td style="text-align: left">Scroll whole page down by n (default 1) lines. New lines are added at the top. (not ANSI.SYS)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n ; m f&lt;/td>
+ &lt;td style="text-align: left">HVP – Horizontal Vertical Position&lt;/td>
+ &lt;td style="text-align: left">Same as CUP&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI n m&lt;/td>
+ &lt;td style="text-align: left">SGR – Select Graphic Rendition&lt;/td>
+ &lt;td style="text-align: left">Sets the appearance of the following characters, see SGR parameters below.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI 5i&lt;/td>
+ &lt;td style="text-align: left">AUX Port On&lt;/td>
+ &lt;td style="text-align: left">Enable aux serial port usually for local serial printer&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI 4i&lt;/td>
+ &lt;td style="text-align: left">AUX Port Off&lt;/td>
+ &lt;td style="text-align: left">Disable aux serial port usually for local serial printer&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI 6n&lt;/td>
+ &lt;td style="text-align: left">DSR – Device Status Report&lt;/td>
+ &lt;td style="text-align: left">Reports the cursor position (CPR) to the application as (as though typed at the keyboard) ESC[n;mR, where n is the row and m is the column.)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI s&lt;/td>
+ &lt;td style="text-align: left">SCP – Save Cursor Position&lt;/td>
+ &lt;td style="text-align: left">Saves the cursor position/state.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI u&lt;/td>
+ &lt;td style="text-align: left">RCP – Restore Cursor Position&lt;/td>
+ &lt;td style="text-align: left">Restores the cursor position/state.&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h2 id="some-popular-private-sequences">Some popular private sequences&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: left">Code&lt;/th>
+ &lt;th style="text-align: left">Effect&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI ? 25 h&lt;/td>
+ &lt;td style="text-align: left">DECTCEM Shows the cursor, from the VT320.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI ? 25 l&lt;/td>
+ &lt;td style="text-align: left">DECTCEM Hides the cursor.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI ? 1049 h&lt;/td>
+ &lt;td style="text-align: left">Enable alternative screen buffer&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI ? 1049 l&lt;/td>
+ &lt;td style="text-align: left">Disable alternative screen buffer&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI ? 2004 h&lt;/td>
+ &lt;td style="text-align: left">Turn on bracketed paste mode. Text pasted into the terminal will be surrounded by ESC [200~ and ESC [201~, and characters in it should not be treated as commands (for example in Vim).[20] From Unix terminal emulators.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">CSI ? 2004 l&lt;/td>
+ &lt;td style="text-align: left">Turn off bracketed paste mode.&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h2 id="sgr-parameters">SGR parameters&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: left">Code&lt;/th>
+ &lt;th style="text-align: left">Effect&lt;/th>
+ &lt;th style="text-align: left">Note&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: left">0&lt;/td>
+ &lt;td style="text-align: left">Reset / Normal&lt;/td>
+ &lt;td style="text-align: left">all attributes off&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">1&lt;/td>
+ &lt;td style="text-align: left">Bold or increased intensity&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">2&lt;/td>
+ &lt;td style="text-align: left">Faint (decreased intensity)&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">3&lt;/td>
+ &lt;td style="text-align: left">Italic&lt;/td>
+ &lt;td style="text-align: left">Not widely supported. Sometimes treated as inverse.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">4&lt;/td>
+ &lt;td style="text-align: left">Underline&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">5&lt;/td>
+ &lt;td style="text-align: left">Slow Blink&lt;/td>
+ &lt;td style="text-align: left">less than 150 per minute&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">6&lt;/td>
+ &lt;td style="text-align: left">Rapid Blink&lt;/td>
+ &lt;td style="text-align: left">MS-DOS ANSI.SYS; 150+ per minute; not widely supported&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">7&lt;/td>
+ &lt;td style="text-align: left">reverse video&lt;/td>
+ &lt;td style="text-align: left">swap foreground and background colors&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">8&lt;/td>
+ &lt;td style="text-align: left">Conceal&lt;/td>
+ &lt;td style="text-align: left">Not widely supported.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">9&lt;/td>
+ &lt;td style="text-align: left">Crossed-out&lt;/td>
+ &lt;td style="text-align: left">Characters legible, but marked for deletion.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">10&lt;/td>
+ &lt;td style="text-align: left">Primary(default) font&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">11–19&lt;/td>
+ &lt;td style="text-align: left">Alternative font&lt;/td>
+ &lt;td style="text-align: left">Select alternative font {\displaystyle n-10} {\displaystyle n-10}&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">20&lt;/td>
+ &lt;td style="text-align: left">Fraktur&lt;/td>
+ &lt;td style="text-align: left">Rarely supported&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">21&lt;/td>
+ &lt;td style="text-align: left">Doubly underline or Bold off&lt;/td>
+ &lt;td style="text-align: left">Double-underline per ECMA-48.[22] See discussion&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">22&lt;/td>
+ &lt;td style="text-align: left">Normal color or intensity&lt;/td>
+ &lt;td style="text-align: left">Neither bold nor faint&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">23&lt;/td>
+ &lt;td style="text-align: left">Not italic, not Fraktur&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">24&lt;/td>
+ &lt;td style="text-align: left">Underline off&lt;/td>
+ &lt;td style="text-align: left">Not singly or doubly underlined&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">25&lt;/td>
+ &lt;td style="text-align: left">Blink off&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">27&lt;/td>
+ &lt;td style="text-align: left">Inverse off&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">28&lt;/td>
+ &lt;td style="text-align: left">Reveal&lt;/td>
+ &lt;td style="text-align: left">conceal off&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">29&lt;/td>
+ &lt;td style="text-align: left">Not crossed out&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">30–37&lt;/td>
+ &lt;td style="text-align: left">Set foreground color&lt;/td>
+ &lt;td style="text-align: left">See color table below&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">38&lt;/td>
+ &lt;td style="text-align: left">Set foreground color&lt;/td>
+ &lt;td style="text-align: left">Next arguments are 5;n or 2;r;g;b, see below&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">39&lt;/td>
+ &lt;td style="text-align: left">Default foreground color&lt;/td>
+ &lt;td style="text-align: left">implementation defined (according to standard)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">40–47&lt;/td>
+ &lt;td style="text-align: left">Set background color&lt;/td>
+ &lt;td style="text-align: left">See color table below&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">48&lt;/td>
+ &lt;td style="text-align: left">Set background color&lt;/td>
+ &lt;td style="text-align: left">Next arguments are 5;n or 2;r;g;b, see below&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">49&lt;/td>
+ &lt;td style="text-align: left">Default background color&lt;/td>
+ &lt;td style="text-align: left">implementation defined (according to standard)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">51&lt;/td>
+ &lt;td style="text-align: left">Framed&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">52&lt;/td>
+ &lt;td style="text-align: left">Encircled&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">53&lt;/td>
+ &lt;td style="text-align: left">Overlined&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">54&lt;/td>
+ &lt;td style="text-align: left">Not framed or encircled&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">55&lt;/td>
+ &lt;td style="text-align: left">Not overlined&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">60&lt;/td>
+ &lt;td style="text-align: left">ideogram underline or right side line&lt;/td>
+ &lt;td style="text-align: left">Rarely supported&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">61&lt;/td>
+ &lt;td style="text-align: left">ideogram double underline or double line on the right side&lt;/td>
+ &lt;td style="text-align: left">Rarely supported&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">62&lt;/td>
+ &lt;td style="text-align: left">ideogram overline or left side line&lt;/td>
+ &lt;td style="text-align: left">Rarely supported&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">63&lt;/td>
+ &lt;td style="text-align: left">ideogram double overline or double line on the left side&lt;/td>
+ &lt;td style="text-align: left">Rarely supported&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">64&lt;/td>
+ &lt;td style="text-align: left">ideogram stress marking&lt;/td>
+ &lt;td style="text-align: left">Rarely supported&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">65&lt;/td>
+ &lt;td style="text-align: left">ideogram attributes off&lt;/td>
+ &lt;td style="text-align: left">reset the effects of all of 60–64&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">90–97&lt;/td>
+ &lt;td style="text-align: left">Set bright foreground color&lt;/td>
+ &lt;td style="text-align: left">aixterm (not in standard)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">100–107&lt;/td>
+ &lt;td style="text-align: left">Set bright background color&lt;/td>
+ &lt;td style="text-align: left">aixterm (not in standard)&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h2 id="color-code">Color code&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: left">Color&lt;/th>
+ &lt;th style="text-align: left">Foreground&lt;/th>
+ &lt;th style="text-align: left">Background&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: left">Black&lt;/td>
+ &lt;td style="text-align: left">\u001b[30m&lt;/td>
+ &lt;td style="text-align: left">\u001b[40m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Red&lt;/td>
+ &lt;td style="text-align: left">\u001b[31m&lt;/td>
+ &lt;td style="text-align: left">\u001b[41m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Green&lt;/td>
+ &lt;td style="text-align: left">\u001b[32m&lt;/td>
+ &lt;td style="text-align: left">\u001b[42m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Yellow&lt;/td>
+ &lt;td style="text-align: left">\u001b[33m&lt;/td>
+ &lt;td style="text-align: left">\u001b[43m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Blue&lt;/td>
+ &lt;td style="text-align: left">\u001b[34m&lt;/td>
+ &lt;td style="text-align: left">\u001b[44m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Magenta&lt;/td>
+ &lt;td style="text-align: left">\u001b[35m&lt;/td>
+ &lt;td style="text-align: left">\u001b[45m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Cyan&lt;/td>
+ &lt;td style="text-align: left">\u001b[36m&lt;/td>
+ &lt;td style="text-align: left">\u001b[46m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">White&lt;/td>
+ &lt;td style="text-align: left">\u001b[37m&lt;/td>
+ &lt;td style="text-align: left">\u001b[47m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Bright Black&lt;/td>
+ &lt;td style="text-align: left">\u001b[30;1m&lt;/td>
+ &lt;td style="text-align: left">\u001b[40;1m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Bright Red&lt;/td>
+ &lt;td style="text-align: left">\u001b[31;1m&lt;/td>
+ &lt;td style="text-align: left">\u001b[41;1m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Bright Green&lt;/td>
+ &lt;td style="text-align: left">\u001b[32;1m&lt;/td>
+ &lt;td style="text-align: left">\u001b[42;1m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Bright Yellow&lt;/td>
+ &lt;td style="text-align: left">\u001b[33;1m&lt;/td>
+ &lt;td style="text-align: left">\u001b[43;1m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Bright Blue&lt;/td>
+ &lt;td style="text-align: left">\u001b[34;1m&lt;/td>
+ &lt;td style="text-align: left">\u001b[44;1m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Bright Magenta&lt;/td>
+ &lt;td style="text-align: left">\u001b[35;1m&lt;/td>
+ &lt;td style="text-align: left">\u001b[45;1m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Bright Cyan&lt;/td>
+ &lt;td style="text-align: left">\u001b[36;1m&lt;/td>
+ &lt;td style="text-align: left">\u001b[46;1m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Bright White&lt;/td>
+ &lt;td style="text-align: left">\u001b[37;1m&lt;/td>
+ &lt;td style="text-align: left">\u001b[47;1m&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Reset&lt;/td>
+ &lt;td style="text-align: left">\u001b[0m&lt;/td>
+ &lt;td style="text-align: left">\u001b[0m&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table></description></item><item><title>[Archive] Multiboot USB</title><link>https://peromage.github.io/p/archive-multiboot-usb/</link><pubDate>Sun, 27 Aug 2023 17:55:00 +0000</pubDate><guid>https://peromage.github.io/p/archive-multiboot-usb/</guid><description>&lt;p>Boot from any ISO file&lt;/p>
+&lt;h2 id="hybrid-uefi-gpt-plus-bios-mbr-gpt-boot">Hybrid UEFI GPT + BIOS MBR/GPT boot&lt;/h2>
+&lt;h3 id="preparation">Preparation&lt;/h3>
+&lt;p>Create 3 partitions on a removable USB stick.&lt;/p>
+&lt;ol>
+&lt;li>A BIOS boot partition (gdisk type code &lt;code>EF02&lt;/code>, or GUID &lt;code>21686148-6449-6E6F-744E-656564454649&lt;/code>) with no filesystem. This partition can be put in any place on the disk but it is recommended to put it at the begginning from sector 34 to 2047. At minimal 1 MiB.&lt;/li>
+&lt;li>An EFI System partition (gdisk type code &lt;code>EF00&lt;/code>) with a FAT32 filesystem. This partition can be as small as 50 MiB but it is better to set at least 256 MiB (550 MiB recommended).&lt;/li>
+&lt;li>Data partition (use a filesystem supported by GRUB). This partition can take up the rest of the space of the drive.&lt;/li>
+&lt;/ol>
+&lt;h3 id="grub-installation">GRUB Installation&lt;/h3>
+&lt;p>Mount EFI and data partitions.
+First install GRUB for UEFI:&lt;/p></description></item><item><title>Different Ways to Write a Major Mode</title><link>https://peromage.github.io/p/different-ways-to-write-a-major-mode/</link><pubDate>Thu, 16 Mar 2023 23:17:00 +0000</pubDate><guid>https://peromage.github.io/p/different-ways-to-write-a-major-mode/</guid><description>&lt;p>This post mainly helps myself remember how to quickly write a major mode. My memory is getting worse. So sad. :(&lt;/p>
+&lt;h2 id="use-define-derived-mode">Use define-derived-mode&lt;/h2>
+&lt;p>Doc: &lt;a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Derived-Modes.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Derived-Modes.html&lt;/a>&lt;/p>
+&lt;p>This perhaps the most common way to write a major mode.&lt;/p>
+&lt;p>Most of the times I derive from &lt;code>fundamental-mode&lt;/code>, or &lt;code>nil&lt;/code> if the parent mode is not needed (a brand new mode).&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-elisp" data-lang="elisp">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic">;; With a parent mode&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#204a87">define-derived-mode&lt;/span> &lt;span style="color:#000">foo-mode&lt;/span> &lt;span style="color:#000">fundamental-mode&lt;/span> &lt;span style="color:#4e9a06">&amp;#34;Foo&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#204a87">do&lt;/span> &lt;span style="color:#000">something&lt;/span>&lt;span style="color:#000;font-weight:bold">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic">;; Or nothing&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#204a87">define-derived-mode&lt;/span> &lt;span style="color:#000">foo-mode&lt;/span> &lt;span style="color:#000">nil&lt;/span> &lt;span style="color:#4e9a06">&amp;#34;Foo&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#204a87">do&lt;/span> &lt;span style="color:#000">something&lt;/span>&lt;span style="color:#000;font-weight:bold">))&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pr</description></item><item><title>LSP Setup for Java</title><link>https://peromage.github.io/p/lsp-setup-for-java/</link><pubDate>Sat, 18 Feb 2023 17:04:00 +0000</pubDate><guid>https://peromage.github.io/p/lsp-setup-for-java/</guid><description>&lt;h2 id="update-on">Update on &lt;!-- raw HTML omitted -->&lt;!-- raw HTML omitted -->&amp;lt;2023-06-07 Wed&amp;gt;&lt;!-- raw HTML omitted -->&lt;!-- raw HTML omitted -->&lt;/h2>
+&lt;p>Found a much easier way to configure this and tried again with the update-to-date &lt;code>lsp-java&lt;/code> and it worked magically. Can&amp;rsquo;t recall why I had configuration issues before.&lt;/p>
+&lt;p>Simply it would be:&lt;/p>
+&lt;ol>
+&lt;li>Make sure JDK 17 is installed (According to the requirement of &lt;code>lsp-java&lt;/code>).&lt;/li>
+&lt;li>Create a &lt;code>lib&lt;/code> folder and put &lt;code>.jar&lt;/code> files into it (or symlinks). See &lt;a href="https://github.com/emacs-lsp/lsp-java/issues/226">this issue&lt;/a>.&lt;/li>
+&lt;li>Run &lt;code>lsp-restart-workspace&lt;/code>.&lt;/li>
+&lt;/ol>
+&lt;p>Voila! Now LSP works as you would expect :).&lt;/p></description></item><item><title>File-based Blog Management with ox-hugo</title><link>https://peromage.github.io/p/file-based-blog-management-with-ox-hugo/</link><pubDate>Tue, 15 Nov 2022 09:58:00 +0000</pubDate><guid>https://peromage.github.io/p/file-based-blog-management-with-ox-hugo/</guid><description>&lt;h2 id="background">Background&lt;/h2>
+&lt;p>I previously wrote a &lt;a href="https://peromage.github.io/p/use-org-mode-to-manage-my-blog/">post&lt;/a> about managing blog posts with ox-hugo in org mode. I used to follow the recommendation to keep posts under org subtrees. As posts grew, I found that the opening speed is quite slow even I didn&amp;rsquo;t have many pictures inserted. Although managing the entire site within one file does have some convenience, the slowness is something I can&amp;rsquo;t bear.&lt;/p></description></item><item><title>Use lisp-data Files in Emacs</title><link>https://peromage.github.io/p/use-lisp-data-files-in-emacs/</link><pubDate>Mon, 14 Nov 2022 10:57:00 +0000</pubDate><guid>https://peromage.github.io/p/use-lisp-data-files-in-emacs/</guid><description>&lt;p>I found that there were few posts mentioning about using &lt;code>lisp-data&lt;/code> files. However, it seems to be used widely in various packages.&lt;/p>
+&lt;p>&lt;a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Read-and-Print.html">Emacs manumal&lt;/a> has a very detailed description of how to read and write lisp objects. In this post I&amp;rsquo;ll mainly demonstrate one specific use case.&lt;/p>
+&lt;h2 id="read-from-file">Read from file&lt;/h2>
+&lt;p>The biggest challenge is to parse file content to Lisp lists. After a quick search with &lt;code>describe-function&lt;/code>, &lt;code>read&lt;/code> function is able to perfectly handle it in this case.&lt;/p></description></item><item><title>Arch Linux on Laptop</title><link>https://peromage.github.io/p/arch-linux-on-laptop/</link><pubDate>Tue, 08 Nov 2022 22:45:00 +0000</pubDate><guid>https://peromage.github.io/p/arch-linux-on-laptop/</guid><description>&lt;p>I recently got my new laptop and I found that some additional tweaks need to be made for laptops. Thus, this post is to have a record in case I forget when I have to reinstall the system.&lt;/p>
+&lt;h2 id="some-basic-setup">Some basic setup&lt;/h2>
+&lt;p>Unlike desktop, laptops have to be secure so encrytion is a must.&lt;/p>
+&lt;p>Details of how-to can be found on Arch wiki. I&amp;rsquo;m not going to go through that here. However, I&amp;rsquo;ll note down some considerations and things that need to pay attention to.&lt;/p></description></item><item><title>Windows Rescure Quick Reference</title><link>https://peromage.github.io/p/windows-rescure-quick-reference/</link><pubDate>Wed, 19 Oct 2022 00:01:00 +0000</pubDate><guid>https://peromage.github.io/p/windows-rescure-quick-reference/</guid><description>&lt;p>Though I&amp;rsquo;ve written posts about &lt;a href="https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/">dual-booting Windows and Linux&lt;/a> and &lt;a href="https://peromage.github.io/p/minimalists-multi-boot-usb-drive/">multi-booting a USB drive&lt;/a>, I have to go back and dig useful information out each time when I forget something.&lt;/p>
+&lt;p>After breaking my dual-boot setup once again (forgot to backup boot partition), I decided to create this post for a quick reference.&lt;/p>
+&lt;p>This reference assumes system is boot from UEFI and Windows is installed on a dedicated partition.&lt;/p></description></item><item><title>VNC Quick Guide</title><link>https://peromage.github.io/p/vnc-quick-guide/</link><pubDate>Wed, 15 Jun 2022 17:40:00 +0000</pubDate><guid>https://peromage.github.io/p/vnc-quick-guide/</guid><description>&lt;p>I found that every time when I try to setup VNC for remote access I always have troubles so this post serves as a note for myself.&lt;/p>
+&lt;p>Be aware VNC only works for X (not sure about Wayland).&lt;/p>
+&lt;h2 id="choose-a-vnc-server">Choose a VNC Server&lt;/h2>
+&lt;p>Generally I use &lt;a href="https://tigervnc.org/">TigerVNC&lt;/a>. It&amp;rsquo;s a fork of &lt;em>TightVNC&lt;/em> with good performance and easy configuration.&lt;/p>
+&lt;p>It has two types of installations:&lt;/p>
+&lt;ul>
+&lt;li>Standalone: It creates a new X server when the client is connected. Independent from the local X server.&lt;/li>
+&lt;li>Scraping: It mirrors the local X server, like screen sharing.&lt;/li>
+&lt;/ul>
+&lt;p>Usually they are shipped with individual packages. To install, for example, on Ubuntu&lt;/p></description></item><item><title>Use Git Worktree to Work with Multiple Checkout at the Same Time</title><link>https://peromage.github.io/p/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</link><pubDate>Mon, 06 Jun 2022 00:30:00 +0000</pubDate><guid>https://peromage.github.io/p/use-git-worktree-to-work-with-multiple-checkout-at-the-same-time/</guid><description>&lt;h2 id="troubles">Troubles&lt;/h2>
+&lt;p>When working with a complicated project where you have to compare different history versions side by side, it soon becomes frustrating frequently checking out refs.&lt;/p>
+&lt;p>The old stupid way is to clone multiple repos and checkout to the specific revisions. When the project is big this might be a trouble because you&amp;rsquo;re basically duplicating files.&lt;/p>
+&lt;h2 id="savior">Savior&lt;/h2>
+&lt;p>Git provides a convenience sub-command &lt;code>worktree&lt;/code> to checkout a specific ref in another directory without duplicating files.&lt;/p></description></item><item><title>Autoloading in Emacs</title><link>https://peromage.github.io/p/autoloading-in-emacs/</link><pubDate>Mon, 06 Jun 2022 00:00:00 +0000</pubDate><guid>https://peromage.github.io/p/autoloading-in-emacs/</guid><description>&lt;p>Autoloading is a neat feature in Emacs. It speeds up Emacs by lazy load the files. But it could be a little confusing if you&amp;rsquo;re switching from Vim.&lt;/p>
+&lt;h2 id="myth-not-working-as-expected">Myth - Not Working as Expected&lt;/h2>
+&lt;p>If you have used Vim you know in Vim you can put your library files to the load path variable and Vim autoloads them whenever one of the functions/variables is used. Initially I thought this is the same in Emacs but with a little effort to put the magic autoload comments before the function/variable definition. It turned out I was wrong. When I called my functions Emacs could not find them until I explicitly require them. This is obviously not my intention.&lt;/p></description></item><item><title>Use Org Mode to Manage My Blog</title><link>https://peromage.github.io/p/use-org-mode-to-manage-my-blog/</link><pubDate>Sun, 05 Jun 2022 23:00:00 +0000</pubDate><guid>https://peromage.github.io/p/use-org-mode-to-manage-my-blog/</guid><description>&lt;p>I&amp;rsquo;ve been using Emacs since last year but until recent I started using &lt;code>org-mode&lt;/code> seriously. After spending a couple of days reading and watching all kinds of org tutorial as well as using it for documentation, I realized that people who invented this must geniuses.&lt;/p>
+&lt;p>Org document seems similar with Markdown: they are text markup format. However, Org provides far more capabilities to store metadata and greater editing experience together with Emacs&amp;rsquo; &lt;code>org-mode&lt;/code>.&lt;/p></description></item><item><title>Initialize std::array at Compile Time</title><link>https://peromage.github.io/p/initialize-stdarray-at-compile-time/</link><pubDate>Wed, 16 Mar 2022 10:25:00 +0000</pubDate><guid>https://peromage.github.io/p/initialize-stdarray-at-compile-time/</guid><description>&lt;h2 id="background">Background&lt;/h2>
+&lt;p>I&amp;rsquo;ve been working on optimization for some C++ code recently. One of the part is to initialize some data at compile time. Consider we have a C style enum definition:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c++" data-lang="c++">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87;font-weight:bold">typedef&lt;/span> &lt;span style="color:#204a87;font-weight:bold">enum&lt;/span> &lt;span style="color:#000">Foo&lt;/span> &lt;span style="color:#000;font-weight:bold">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000">AAA&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">0&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000">BBB&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000">CCC&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">}&lt;/span> &lt;span style="color:#000">Foo_t&lt;/span>&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pr</description></item><item><title>My Common Windows VM Setup</title><link>https://peromage.github.io/p/my-common-windows-vm-setup/</link><pubDate>Sun, 13 Mar 2022 17:47:00 +0000</pubDate><guid>https://peromage.github.io/p/my-common-windows-vm-setup/</guid><description>&lt;h2 id="before-starting">Before Starting&lt;/h2>
+&lt;p>This post mainly discusses VM setup for Windows since I&amp;rsquo;ve been using Windows as a secondary OS for apps or games that cannot run on Linux.&lt;/p>
+&lt;p>This post discusses setup on Arch Linux.&lt;/p>
+&lt;p>This post assumes the CPU and motherboard support &lt;code>VT-d&lt;/code> and &lt;code>IOMMU&lt;/code> features. Detailed prerequisites can be found on &lt;a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF">this page&lt;/a>.&lt;/p>
+&lt;h2 id="install-hypervisor">Install Hypervisor&lt;/h2>
+&lt;p>Follow Arch wiki to install and setup:&lt;/p></description></item><item><title>Fix Metadata in Google Photo Takeout</title><link>https://peromage.github.io/p/fix-metadata-in-google-photo-takeout/</link><pubDate>Sun, 13 Mar 2022 00:12:00 +0000</pubDate><guid>https://peromage.github.io/p/fix-metadata-in-google-photo-takeout/</guid><description>&lt;p>Google Photo sucks.&lt;/p>
+&lt;h2 id="troubles">Troubles&lt;/h2>
+&lt;p>When exporting photos from Google Photo, a bunch of JSON files come with your photos. Those JSON files contain metadata which is supposed to be stored with your photo files. If you simple import those photo files into another photo manager you will most likely not get a chronological view. Obviously, Google does on purpose so that you will not leave it easily.
+However, there is a workaround that is able to merge those metadata into your photos.&lt;/p></description></item><item><title>Shadowsocks Quick Setup</title><link>https://peromage.github.io/p/shadowsocks-quick-setup/</link><pubDate>Sun, 13 Mar 2022 00:03:00 +0000</pubDate><guid>https://peromage.github.io/p/shadowsocks-quick-setup/</guid><description>&lt;p>This note is written for my personal convenience.&lt;/p>
+&lt;h2 id="server-setup">Server Setup&lt;/h2>
+&lt;h3 id="installation">Installation&lt;/h3>
+&lt;p>Use system package manager to install &lt;code>shadowsocks-libev&lt;/code>. In this case, for Arch Linux it is &lt;code>pacman&lt;/code>.&lt;/p>
+&lt;p>There is also a Python package which can be installed by &lt;code>pip&lt;/code> but it seems not to be maintained for a long time.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sudo pacman -S shadowsocks-libev
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="shadowsocks-server-configuration">Shadowsocks Server Configuration&lt;/h3>
+&lt;p>Config file is located at &lt;code>/etc/shadowsocks/myserver.json&lt;/code>. On FreeBSD it is &lt;code>/usr/local/etc/shadowsocks/myserver.json&lt;/code>&lt;/p></description></item><item><title>SSH Over GPG Agent</title><link>https://peromage.github.io/p/ssh-over-gpg-agent/</link><pubDate>Sun, 13 Mar 2022 00:02:00 +0000</pubDate><guid>https://peromage.github.io/p/ssh-over-gpg-agent/</guid><description>&lt;p>This is a quick note of &lt;code>gpg-agent&lt;/code> setup for SSH.&lt;/p>
+&lt;h2 id="quick-setup">Quick Setup&lt;/h2>
+&lt;ol>
+&lt;li>Import your GPG authentication key.&lt;/li>
+&lt;li>Enable SSH support for &lt;code>gpg-agent&lt;/code>.&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">echo&lt;/span> enable-ssh-support &amp;gt;&amp;gt; &lt;span style="color:#000">$HOME&lt;/span>/.gnupg/gpg-agent.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
+&lt;li>Get the authentication keygrip.&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ gpg -k --with-keygrip
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
+&lt;li>Add the authentication key to the keychain (replace &lt;code>KEYGRIP&lt;/code> with the value obtained from the previous step)&lt;/li>
+&lt;/ol>
+&lt;!-- raw HTML omitted -->
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">echo&lt;/span> KEYGRIP &amp;gt;&amp;gt; &lt;span style="color:#000">$HOME&lt;/span>/.gnupg/sshcontrol
+&lt;/span>&lt;/span>&lt;/code>&lt;/pr</description></item><item><title>Minimalist's Multi-boot USB Drive</title><link>https://peromage.github.io/p/minimalists-multi-boot-usb-drive/</link><pubDate>Wed, 26 Jan 2022 20:34:00 +0000</pubDate><guid>https://peromage.github.io/p/minimalists-multi-boot-usb-drive/</guid><description>&lt;h2 id="story">Story&lt;/h2>
+&lt;p>Recently I&amp;rsquo;ve realized a fact that I always have needs to keep a multi-boot USB in my pocket for either Linux or Windows installation. There are a lot tools out there already but I don&amp;rsquo;t really like them. At least, I mean, they are too flashy to me. A beautiful boot menu seems not to be attractive. What I need is just a simple and practical maybe a little ugly boot device. It should be minimalist. More importantly, it has to be easy to setup with the tools on the system already and maintainable. No funky scripts.&lt;/p></description></item><item><title>Moving From Vim to Emacs</title><link>https://peromage.github.io/p/moving-from-vim-to-emacs/</link><pubDate>Sat, 14 Aug 2021 10:29:00 +0000</pubDate><guid>https://peromage.github.io/p/moving-from-vim-to-emacs/</guid><description>&lt;p>YouTube has been pushing me a lot Emacs related contents. This is weird since mostly I watch Vim videos only. But probably this is also a great opportunity to try Emacs again.&lt;/p>
+&lt;p>I have tried Emacs half year ago. I looked a lot Elisp programming fundamentals and tried a few Emacs configurations from others including Doom Emacs. However, it didn&amp;rsquo;t last long since I found that I didn&amp;rsquo;t have enough time to configure this Emacs setup as good as the &lt;a href="https://github.com/peromage/rice.vim">Vim setup&lt;/a> that I was using. Also using other&amp;rsquo;s configurations makes things complicated for me. They have too many packages included and I don&amp;rsquo;t know what they are.&lt;/p></description></item><item><title>Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC</title><link>https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</link><pubDate>Fri, 09 Jul 2021 16:40:00 +0000</pubDate><guid>https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</guid><description>&lt;h2 id="background">Background&lt;/h2>
+&lt;p>Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.&lt;/p>
+&lt;p>Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage. Also you are able to create differencing disks which are pretty much like snapshots.&lt;/p></description></item><item><title>Git中的Subtree和Submodule</title><link>https://peromage.github.io/p/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</link><pubDate>Fri, 07 Apr 2017 20:53:00 +0000</pubDate><guid>https://peromage.github.io/p/git%E4%B8%AD%E7%9A%84subtree%E5%92%8Csubmodule/</guid><description>&lt;p>因为最近弄自己的博客，涉及到了版本库嵌套的问题。记下来也算是给自己一个备忘。&lt;/p>
+&lt;h2 id="为什么有这样的需求">为什么有这样的需求&lt;/h2>
+&lt;p>版本库嵌套很好理解，就是在一个 Git 仓库里面包含了其他的 Git 仓库。通常有这样的需求往往涉及到协同开发。比如这里有一个插件单独的 Git 仓库姑且叫“Plugin”。现在我创建了一个自己的项目，其中需要用到这个“Plugin”插件。通常比较笨的办法就是把插件库源码拖下来，复制到自己的项目里。但是这样当插件库更新的时候，插件源码更新往往比较麻烦。而且如果在使用的过程中修改了插件的源码，也不便于插件单独的版本控制，更别说为插件库贡献代码了。但如果插件单独以 Git 仓库存在于我的项目目录中，以上的问题就解决了。&lt;/p></description></item><item><title>Windows+Linux双系统引导手记</title><link>https://peromage.github.io/p/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</link><pubDate>Wed, 05 Apr 2017 19:26:00 +0000</pubDate><guid>https://peromage.github.io/p/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</guid><description>&lt;h2 id="0x00-情况简述">0x00 情况简述&lt;/h2>
+&lt;p>由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。
+这台电脑的基本情况是这样的，64GB 固态硬盘 + 720GB 机械硬盘（实际可用空间有折损，这里为了表示方便），Windows 10 已经安装到了固态硬盘上。由于主板较老，只能支持 BIOS。巨硬又说过 Windows 只能支持 BIOS + MBR，所以第一块主位（Master）上的固态硬盘就只能采用 MBR 分区表，分成了两个区，500MB 用作启动分区，剩下的部分全部划给了系统分区。
+但是 Linux 表示没有巨硬这种尿性，所以为什么不使用更先进的 GPT 分区表？因此从位（Slave）上的机械硬盘被我分成了这个样子：&lt;/p></description></item></channel></rss>
