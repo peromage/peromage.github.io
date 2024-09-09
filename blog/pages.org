@@ -55,17 +55,9 @@ If you have concerns, please visit its home page for more information.
 - State "PUBLISHED"  from "DRAFT"      [2022-06-05 Mon 01:12]
 - State "CREATED"    from              [2022-06-05 Mon 01:12]
 :END:
-
-** Attributes
-- C++ developer
-- Emacser
-- Open source advocate
-- Likes Lisp and functional programming
-- Has a lot hair :)
-
 ** About
-I'm a C++ software developer working for an automotive company.  I like C++ and use it extensively at work.  However, I also use other popular languages like C#, Python, Java, JavaScript(TypeScript) and Rust from time to time.
+I'm a C++ developer with a lot hair though.  :P
 
-Writing blog is one of my hobbies and mainly for personal noting purposes so some content might be trivial.
+This blog is mainly used for my personal note taking and some random thoughts.
 
 You can find my contact at the bottom of this page.
