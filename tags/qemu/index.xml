@@ -3,4 +3,13 @@
 &lt;p>This post discusses setup on Arch Linux.&lt;/p>
 &lt;p>This post assumes the CPU and motherboard support &lt;code>VT-d&lt;/code> and &lt;code>IOMMU&lt;/code> features. Detailed prerequisites can be found on &lt;a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF">this page&lt;/a>.&lt;/p>
 &lt;h2 id="install-hypervisor">Install Hypervisor&lt;/h2>
-&lt;p>Follow Arch wiki to install and setup:&lt;/p></description></item></channel></rss>
+&lt;p>Follow Arch wiki to install and setup:&lt;/p>
+&lt;ol>
+&lt;li>&lt;a href="https://wiki.archlinux.org/title/QEMU">QEMU&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://wiki.archlinux.org/title/libvirt">Libvirt&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://wiki.archlinux.org/title/Virt-Manager">Virt-Manager&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF">OVMF&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h2 id="install-windows-vm">Install Windows VM&lt;/h2>
+&lt;h3 id="before-installation">Before Installation&lt;/h3>
+&lt;p>Download the latest Windows 10 ISO from &lt;a href="https://www.microsoft.com/en-ca/software-download/windows10ISO">Microsoft&lt;/a>. Windows 11 is buggy and requires Microsoft account login during installation, which sucks.&lt;/p></description></item></channel></rss>

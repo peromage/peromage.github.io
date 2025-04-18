@@ -1,108 +1,108 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ansi on undefined behavior</title><link>https://peromage.github.io/tags/ansi/</link><description>Recent content in Ansi on undefined behavior</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 09 Sep 2024 23:21:25 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/ansi/index.xml" rel="self" type="application/rss+xml"/><item><title>ANSI Escape Code Collection</title><link>https://peromage.github.io/p/ansi-escape-code-collection/</link><pubDate>Sun, 27 Aug 2023 18:11:00 +0000</pubDate><guid>https://peromage.github.io/p/ansi-escape-code-collection/</guid><description>&lt;p>The information in this collection is from Internet, which is collected for my personal convenience.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ansi on undefined behavior</title><link>https://peromage.github.io/tags/ansi/</link><description>Recent content in Ansi on undefined behavior</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Fri, 18 Apr 2025 03:22:35 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/ansi/index.xml" rel="self" type="application/rss+xml"/><item><title>ANSI Escape Code Collection</title><link>https://peromage.github.io/p/ansi-escape-code-collection/</link><pubDate>Sun, 27 Aug 2023 18:11:00 +0000</pubDate><guid>https://peromage.github.io/p/ansi-escape-code-collection/</guid><description>&lt;p>The information in this collection is from Internet, which is collected for my personal convenience.&lt;/p>
 &lt;h2 id="csi-sequences">CSI sequences&lt;/h2>
 &lt;table>
  &lt;thead>
  &lt;tr>
- &lt;th style="text-align: left">Code&lt;/th>
- &lt;th style="text-align: left">Name&lt;/th>
- &lt;th style="text-align: left">Effect&lt;/th>
+ &lt;th>Code&lt;/th>
+ &lt;th>Name&lt;/th>
+ &lt;th>Effect&lt;/th>
  &lt;/tr>
  &lt;/thead>
  &lt;tbody>
  &lt;tr>
- &lt;td style="text-align: left">CSI n A&lt;/td>
- &lt;td style="text-align: left">CUU – Cursor Up&lt;/td>
- &lt;td style="text-align: left">Moves the cursor n (default 1) cells in the given direction. If the cursor is already at the edge of the screen, this has no effect.&lt;/td>
+ &lt;td>CSI n A&lt;/td>
+ &lt;td>CUU – Cursor Up&lt;/td>
+ &lt;td>Moves the cursor n (default 1) cells in the given direction. If the cursor is already at the edge of the screen, this has no effect.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI n B&lt;/td>
- &lt;td style="text-align: left">CUD – Cursor Down&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>CSI n B&lt;/td>
+ &lt;td>CUD – Cursor Down&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI n C&lt;/td>
- &lt;td style="text-align: left">CUF – Cursor Forward&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>CSI n C&lt;/td>
+ &lt;td>CUF – Cursor Forward&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI n D&lt;/td>
- &lt;td style="text-align: left">CUB – Cursor Back&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>CSI n D&lt;/td>
+ &lt;td>CUB – Cursor Back&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI n E&lt;/td>
- &lt;td style="text-align: left">CNL – Cursor Next Line&lt;/td>
- &lt;td style="text-align: left">Moves cursor to beginning of the line n (default 1) lines down. (not ANSI.SYS)&lt;/td>
+ &lt;td>CSI n E&lt;/td>
+ &lt;td>CNL – Cursor Next Line&lt;/td>
+ &lt;td>Moves cursor to beginning of the line n (default 1) lines down. (not ANSI.SYS)&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI n F&lt;/td>
- &lt;td style="text-align: left">CPL – Cursor Previous Line&lt;/td>
- &lt;td style="text-align: left">Moves cursor to beginning of the line n (default 1) lines up. (not ANSI.SYS)&lt;/td>
+ &lt;td>CSI n F&lt;/td>
+ &lt;td>CPL – Cursor Previous Line&lt;/td>
+ &lt;td>Moves cursor to beginning of the line n (default 1) lines up. (not ANSI.SYS)&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI n G&lt;/td>
- &lt;td style="text-align: left">CHA – Cursor Horizontal Absolute&lt;/td>
- &lt;td style="text-align: left">Moves the cursor to column n (default 1). (not ANSI.SYS)&lt;/td>
+ &lt;td>CSI n G&lt;/td>
+ &lt;td>CHA – Cursor Horizontal Absolute&lt;/td>
+ &lt;td>Moves the cursor to column n (default 1). (not ANSI.SYS)&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI n ; m H&lt;/td>
- &lt;td style="text-align: left">CUP – Cursor Position&lt;/td>
- &lt;td style="text-align: left">Moves the cursor to row n, column m. The values are 1-based, and default to 1 (top left corner) if omitted. A sequence such as CSI ;5H is a synonym for CSI 1;5H as well as CSI 17;H is the same as CSI 17H and CSI 17;1H&lt;/td>
+ &lt;td>CSI n ; m H&lt;/td>
+ &lt;td>CUP – Cursor Position&lt;/td>
+ &lt;td>Moves the cursor to row n, column m. The values are 1-based, and default to 1 (top left corner) if omitted. A sequence such as CSI ;5H is a synonym for CSI 1;5H as well as CSI 17;H is the same as CSI 17H and CSI 17;1H&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI n J&lt;/td>
- &lt;td style="text-align: left">ED – Erase in Display&lt;/td>
- &lt;td style="text-align: left">Clears part of the screen. If n is 0 (or missing), clear from cursor to end of screen. If n is 1, clear from cursor to beginning of the screen. If n is 2, clear entire screen (and moves cursor to upper left on DOS ANSI.SYS). If n is 3, clear entire screen and delete all lines saved in the scrollback buffer (this feature was added for xterm and is supported by other terminal applications).&lt;/td>
+ &lt;td>CSI n J&lt;/td>
+ &lt;td>ED – Erase in Display&lt;/td>
+ &lt;td>Clears part of the screen. If n is 0 (or missing), clear from cursor to end of screen. If n is 1, clear from cursor to beginning of the screen. If n is 2, clear entire screen (and moves cursor to upper left on DOS ANSI.SYS). If n is 3, clear entire screen and delete all lines saved in the scrollback buffer (this feature was added for xterm and is supported by other terminal applications).&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI n K&lt;/td>
- &lt;td style="text-align: left">EL – Erase in Line&lt;/td>
- &lt;td style="text-align: left">Erases part of the line. If n is 0 (or missing), clear from cursor to the end of the line. If n is 1, clear from cursor to beginning of the line. If n is 2, clear entire line. Cursor position does not change.&lt;/td>
+ &lt;td>CSI n K&lt;/td>
+ &lt;td>EL – Erase in Line&lt;/td>
+ &lt;td>Erases part of the line. If n is 0 (or missing), clear from cursor to the end of the line. If n is 1, clear from cursor to beginning of the line. If n is 2, clear entire line. Cursor position does not change.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI n S&lt;/td>
- &lt;td style="text-align: left">SU – Scroll Up&lt;/td>
- &lt;td style="text-align: left">Scroll whole page up by n (default 1) lines. New lines are added at the bottom. (not ANSI.SYS)&lt;/td>
+ &lt;td>CSI n S&lt;/td>
+ &lt;td>SU – Scroll Up&lt;/td>
+ &lt;td>Scroll whole page up by n (default 1) lines. New lines are added at the bottom. (not ANSI.SYS)&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI n T&lt;/td>
- &lt;td style="text-align: left">SD – Scroll Down&lt;/td>
- &lt;td style="text-align: left">Scroll whole page down by n (default 1) lines. New lines are added at the top. (not ANSI.SYS)&lt;/td>
+ &lt;td>CSI n T&lt;/td>
+ &lt;td>SD – Scroll Down&lt;/td>
+ &lt;td>Scroll whole page down by n (default 1) lines. New lines are added at the top. (not ANSI.SYS)&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI n ; m f&lt;/td>
- &lt;td style="text-align: left">HVP – Horizontal Vertical Position&lt;/td>
- &lt;td style="text-align: left">Same as CUP&lt;/td>
+ &lt;td>CSI n ; m f&lt;/td>
+ &lt;td>HVP – Horizontal Vertical Position&lt;/td>
+ &lt;td>Same as CUP&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI n m&lt;/td>
- &lt;td style="text-align: left">SGR – Select Graphic Rendition&lt;/td>
- &lt;td style="text-align: left">Sets the appearance of the following characters, see SGR parameters below.&lt;/td>
+ &lt;td>CSI n m&lt;/td>
+ &lt;td>SGR – Select Graphic Rendition&lt;/td>
+ &lt;td>Sets the appearance of the following characters, see SGR parameters below.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI 5i&lt;/td>
- &lt;td style="text-align: left">AUX Port On&lt;/td>
- &lt;td style="text-align: left">Enable aux serial port usually for local serial printer&lt;/td>
+ &lt;td>CSI 5i&lt;/td>
+ &lt;td>AUX Port On&lt;/td>
+ &lt;td>Enable aux serial port usually for local serial printer&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI 4i&lt;/td>
- &lt;td style="text-align: left">AUX Port Off&lt;/td>
- &lt;td style="text-align: left">Disable aux serial port usually for local serial printer&lt;/td>
+ &lt;td>CSI 4i&lt;/td>
+ &lt;td>AUX Port Off&lt;/td>
+ &lt;td>Disable aux serial port usually for local serial printer&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI 6n&lt;/td>
- &lt;td style="text-align: left">DSR – Device Status Report&lt;/td>
- &lt;td style="text-align: left">Reports the cursor position (CPR) to the application as (as though typed at the keyboard) ESC[n;mR, where n is the row and m is the column.)&lt;/td>
+ &lt;td>CSI 6n&lt;/td>
+ &lt;td>DSR – Device Status Report&lt;/td>
+ &lt;td>Reports the cursor position (CPR) to the application as (as though typed at the keyboard) ESC[n;mR, where n is the row and m is the column.)&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI s&lt;/td>
- &lt;td style="text-align: left">SCP – Save Cursor Position&lt;/td>
- &lt;td style="text-align: left">Saves the cursor position/state.&lt;/td>
+ &lt;td>CSI s&lt;/td>
+ &lt;td>SCP – Save Cursor Position&lt;/td>
+ &lt;td>Saves the cursor position/state.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI u&lt;/td>
- &lt;td style="text-align: left">RCP – Restore Cursor Position&lt;/td>
- &lt;td style="text-align: left">Restores the cursor position/state.&lt;/td>
+ &lt;td>CSI u&lt;/td>
+ &lt;td>RCP – Restore Cursor Position&lt;/td>
+ &lt;td>Restores the cursor position/state.&lt;/td>
  &lt;/tr>
  &lt;/tbody>
 &lt;/table>
@@ -110,34 +110,34 @@
 &lt;table>
  &lt;thead>
  &lt;tr>
- &lt;th style="text-align: left">Code&lt;/th>
- &lt;th style="text-align: left">Effect&lt;/th>
+ &lt;th>Code&lt;/th>
+ &lt;th>Effect&lt;/th>
  &lt;/tr>
  &lt;/thead>
  &lt;tbody>
  &lt;tr>
- &lt;td style="text-align: left">CSI ? 25 h&lt;/td>
- &lt;td style="text-align: left">DECTCEM Shows the cursor, from the VT320.&lt;/td>
+ &lt;td>CSI ? 25 h&lt;/td>
+ &lt;td>DECTCEM Shows the cursor, from the VT320.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI ? 25 l&lt;/td>
- &lt;td style="text-align: left">DECTCEM Hides the cursor.&lt;/td>
+ &lt;td>CSI ? 25 l&lt;/td>
+ &lt;td>DECTCEM Hides the cursor.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI ? 1049 h&lt;/td>
- &lt;td style="text-align: left">Enable alternative screen buffer&lt;/td>
+ &lt;td>CSI ? 1049 h&lt;/td>
+ &lt;td>Enable alternative screen buffer&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI ? 1049 l&lt;/td>
- &lt;td style="text-align: left">Disable alternative screen buffer&lt;/td>
+ &lt;td>CSI ? 1049 l&lt;/td>
+ &lt;td>Disable alternative screen buffer&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI ? 2004 h&lt;/td>
- &lt;td style="text-align: left">Turn on bracketed paste mode. Text pasted into the terminal will be surrounded by ESC [200~ and ESC [201~, and characters in it should not be treated as commands (for example in Vim).[20] From Unix terminal emulators.&lt;/td>
+ &lt;td>CSI ? 2004 h&lt;/td>
+ &lt;td>Turn on bracketed paste mode. Text pasted into the terminal will be surrounded by ESC [200~ and ESC [201~, and characters in it should not be treated as commands (for example in Vim).[20] From Unix terminal emulators.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">CSI ? 2004 l&lt;/td>
- &lt;td style="text-align: left">Turn off bracketed paste mode.&lt;/td>
+ &lt;td>CSI ? 2004 l&lt;/td>
+ &lt;td>Turn off bracketed paste mode.&lt;/td>
  &lt;/tr>
  &lt;/tbody>
 &lt;/table>
@@ -145,211 +145,211 @@
 &lt;table>
  &lt;thead>
  &lt;tr>
- &lt;th style="text-align: left">Code&lt;/th>
- &lt;th style="text-align: left">Effect&lt;/th>
- &lt;th style="text-align: left">Note&lt;/th>
+ &lt;th>Code&lt;/th>
+ &lt;th>Effect&lt;/th>
+ &lt;th>Note&lt;/th>
  &lt;/tr>
  &lt;/thead>
  &lt;tbody>
  &lt;tr>
- &lt;td style="text-align: left">0&lt;/td>
- &lt;td style="text-align: left">Reset / Normal&lt;/td>
- &lt;td style="text-align: left">all attributes off&lt;/td>
+ &lt;td>0&lt;/td>
+ &lt;td>Reset / Normal&lt;/td>
+ &lt;td>all attributes off&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">1&lt;/td>
- &lt;td style="text-align: left">Bold or increased intensity&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>1&lt;/td>
+ &lt;td>Bold or increased intensity&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">2&lt;/td>
- &lt;td style="text-align: left">Faint (decreased intensity)&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>2&lt;/td>
+ &lt;td>Faint (decreased intensity)&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">3&lt;/td>
- &lt;td style="text-align: left">Italic&lt;/td>
- &lt;td style="text-align: left">Not widely supported. Sometimes treated as inverse.&lt;/td>
+ &lt;td>3&lt;/td>
+ &lt;td>Italic&lt;/td>
+ &lt;td>Not widely supported. Sometimes treated as inverse.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">4&lt;/td>
- &lt;td style="text-align: left">Underline&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>4&lt;/td>
+ &lt;td>Underline&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">5&lt;/td>
- &lt;td style="text-align: left">Slow Blink&lt;/td>
- &lt;td style="text-align: left">less than 150 per minute&lt;/td>
+ &lt;td>5&lt;/td>
+ &lt;td>Slow Blink&lt;/td>
+ &lt;td>less than 150 per minute&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">6&lt;/td>
- &lt;td style="text-align: left">Rapid Blink&lt;/td>
- &lt;td style="text-align: left">MS-DOS ANSI.SYS; 150+ per minute; not widely supported&lt;/td>
+ &lt;td>6&lt;/td>
+ &lt;td>Rapid Blink&lt;/td>
+ &lt;td>MS-DOS ANSI.SYS; 150+ per minute; not widely supported&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">7&lt;/td>
- &lt;td style="text-align: left">reverse video&lt;/td>
- &lt;td style="text-align: left">swap foreground and background colors&lt;/td>
+ &lt;td>7&lt;/td>
+ &lt;td>reverse video&lt;/td>
+ &lt;td>swap foreground and background colors&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">8&lt;/td>
- &lt;td style="text-align: left">Conceal&lt;/td>
- &lt;td style="text-align: left">Not widely supported.&lt;/td>
+ &lt;td>8&lt;/td>
+ &lt;td>Conceal&lt;/td>
+ &lt;td>Not widely supported.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">9&lt;/td>
- &lt;td style="text-align: left">Crossed-out&lt;/td>
- &lt;td style="text-align: left">Characters legible, but marked for deletion.&lt;/td>
+ &lt;td>9&lt;/td>
+ &lt;td>Crossed-out&lt;/td>
+ &lt;td>Characters legible, but marked for deletion.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">10&lt;/td>
- &lt;td style="text-align: left">Primary(default) font&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>10&lt;/td>
+ &lt;td>Primary(default) font&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">11–19&lt;/td>
- &lt;td style="text-align: left">Alternative font&lt;/td>
- &lt;td style="text-align: left">Select alternative font {\displaystyle n-10} {\displaystyle n-10}&lt;/td>
+ &lt;td>11–19&lt;/td>
+ &lt;td>Alternative font&lt;/td>
+ &lt;td>Select alternative font {\displaystyle n-10} {\displaystyle n-10}&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">20&lt;/td>
- &lt;td style="text-align: left">Fraktur&lt;/td>
- &lt;td style="text-align: left">Rarely supported&lt;/td>
+ &lt;td>20&lt;/td>
+ &lt;td>Fraktur&lt;/td>
+ &lt;td>Rarely supported&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">21&lt;/td>
- &lt;td style="text-align: left">Doubly underline or Bold off&lt;/td>
- &lt;td style="text-align: left">Double-underline per ECMA-48.[22] See discussion&lt;/td>
+ &lt;td>21&lt;/td>
+ &lt;td>Doubly underline or Bold off&lt;/td>
+ &lt;td>Double-underline per ECMA-48.[22] See discussion&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">22&lt;/td>
- &lt;td style="text-align: left">Normal color or intensity&lt;/td>
- &lt;td style="text-align: left">Neither bold nor faint&lt;/td>
+ &lt;td>22&lt;/td>
+ &lt;td>Normal color or intensity&lt;/td>
+ &lt;td>Neither bold nor faint&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">23&lt;/td>
- &lt;td style="text-align: left">Not italic, not Fraktur&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>23&lt;/td>
+ &lt;td>Not italic, not Fraktur&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">24&lt;/td>
- &lt;td style="text-align: left">Underline off&lt;/td>
- &lt;td style="text-align: left">Not singly or doubly underlined&lt;/td>
+ &lt;td>24&lt;/td>
+ &lt;td>Underline off&lt;/td>
+ &lt;td>Not singly or doubly underlined&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">25&lt;/td>
- &lt;td style="text-align: left">Blink off&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>25&lt;/td>
+ &lt;td>Blink off&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">27&lt;/td>
- &lt;td style="text-align: left">Inverse off&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>27&lt;/td>
+ &lt;td>Inverse off&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">28&lt;/td>
- &lt;td style="text-align: left">Reveal&lt;/td>
- &lt;td style="text-align: left">conceal off&lt;/td>
+ &lt;td>28&lt;/td>
+ &lt;td>Reveal&lt;/td>
+ &lt;td>conceal off&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">29&lt;/td>
- &lt;td style="text-align: left">Not crossed out&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>29&lt;/td>
+ &lt;td>Not crossed out&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">30–37&lt;/td>
- &lt;td style="text-align: left">Set foreground color&lt;/td>
- &lt;td style="text-align: left">See color table below&lt;/td>
+ &lt;td>30–37&lt;/td>
+ &lt;td>Set foreground color&lt;/td>
+ &lt;td>See color table below&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">38&lt;/td>
- &lt;td style="text-align: left">Set foreground color&lt;/td>
- &lt;td style="text-align: left">Next arguments are 5;n or 2;r;g;b, see below&lt;/td>
+ &lt;td>38&lt;/td>
+ &lt;td>Set foreground color&lt;/td>
+ &lt;td>Next arguments are 5;n or 2;r;g;b, see below&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">39&lt;/td>
- &lt;td style="text-align: left">Default foreground color&lt;/td>
- &lt;td style="text-align: left">implementation defined (according to standard)&lt;/td>
+ &lt;td>39&lt;/td>
+ &lt;td>Default foreground color&lt;/td>
+ &lt;td>implementation defined (according to standard)&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">40–47&lt;/td>
- &lt;td style="text-align: left">Set background color&lt;/td>
- &lt;td style="text-align: left">See color table below&lt;/td>
+ &lt;td>40–47&lt;/td>
+ &lt;td>Set background color&lt;/td>
+ &lt;td>See color table below&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">48&lt;/td>
- &lt;td style="text-align: left">Set background color&lt;/td>
- &lt;td style="text-align: left">Next arguments are 5;n or 2;r;g;b, see below&lt;/td>
+ &lt;td>48&lt;/td>
+ &lt;td>Set background color&lt;/td>
+ &lt;td>Next arguments are 5;n or 2;r;g;b, see below&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">49&lt;/td>
- &lt;td style="text-align: left">Default background color&lt;/td>
- &lt;td style="text-align: left">implementation defined (according to standard)&lt;/td>
+ &lt;td>49&lt;/td>
+ &lt;td>Default background color&lt;/td>
+ &lt;td>implementation defined (according to standard)&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">51&lt;/td>
- &lt;td style="text-align: left">Framed&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>51&lt;/td>
+ &lt;td>Framed&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">52&lt;/td>
- &lt;td style="text-align: left">Encircled&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>52&lt;/td>
+ &lt;td>Encircled&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">53&lt;/td>
- &lt;td style="text-align: left">Overlined&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>53&lt;/td>
+ &lt;td>Overlined&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">54&lt;/td>
- &lt;td style="text-align: left">Not framed or encircled&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>54&lt;/td>
+ &lt;td>Not framed or encircled&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">55&lt;/td>
- &lt;td style="text-align: left">Not overlined&lt;/td>
- &lt;td style="text-align: left">&lt;/td>
+ &lt;td>55&lt;/td>
+ &lt;td>Not overlined&lt;/td>
+ &lt;td>&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">60&lt;/td>
- &lt;td style="text-align: left">ideogram underline or right side line&lt;/td>
- &lt;td style="text-align: left">Rarely supported&lt;/td>
+ &lt;td>60&lt;/td>
+ &lt;td>ideogram underline or right side line&lt;/td>
+ &lt;td>Rarely supported&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">61&lt;/td>
- &lt;td style="text-align: left">ideogram double underline or double line on the right side&lt;/td>
- &lt;td style="text-align: left">Rarely supported&lt;/td>
+ &lt;td>61&lt;/td>
+ &lt;td>ideogram double underline or double line on the right side&lt;/td>
+ &lt;td>Rarely supported&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">62&lt;/td>
- &lt;td style="text-align: left">ideogram overline or left side line&lt;/td>
- &lt;td style="text-align: left">Rarely supported&lt;/td>
+ &lt;td>62&lt;/td>
+ &lt;td>ideogram overline or left side line&lt;/td>
+ &lt;td>Rarely supported&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">63&lt;/td>
- &lt;td style="text-align: left">ideogram double overline or double line on the left side&lt;/td>
- &lt;td style="text-align: left">Rarely supported&lt;/td>
+ &lt;td>63&lt;/td>
+ &lt;td>ideogram double overline or double line on the left side&lt;/td>
+ &lt;td>Rarely supported&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">64&lt;/td>
- &lt;td style="text-align: left">ideogram stress marking&lt;/td>
- &lt;td style="text-align: left">Rarely supported&lt;/td>
+ &lt;td>64&lt;/td>
+ &lt;td>ideogram stress marking&lt;/td>
+ &lt;td>Rarely supported&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">65&lt;/td>
- &lt;td style="text-align: left">ideogram attributes off&lt;/td>
- &lt;td style="text-align: left">reset the effects of all of 60–64&lt;/td>
+ &lt;td>65&lt;/td>
+ &lt;td>ideogram attributes off&lt;/td>
+ &lt;td>reset the effects of all of 60–64&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">90–97&lt;/td>
- &lt;td style="text-align: left">Set bright foreground color&lt;/td>
- &lt;td style="text-align: left">aixterm (not in standard)&lt;/td>
+ &lt;td>90–97&lt;/td>
+ &lt;td>Set bright foreground color&lt;/td>
+ &lt;td>aixterm (not in standard)&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">100–107&lt;/td>
- &lt;td style="text-align: left">Set bright background color&lt;/td>
- &lt;td style="text-align: left">aixterm (not in standard)&lt;/td>
+ &lt;td>100–107&lt;/td>
+ &lt;td>Set bright background color&lt;/td>
+ &lt;td>aixterm (not in standard)&lt;/td>
  &lt;/tr>
  &lt;/tbody>
 &lt;/table>
@@ -357,96 +357,96 @@
 &lt;table>
  &lt;thead>
  &lt;tr>
- &lt;th style="text-align: left">Color&lt;/th>
- &lt;th style="text-align: left">Foreground&lt;/th>
- &lt;th style="text-align: left">Background&lt;/th>
+ &lt;th>Color&lt;/th>
+ &lt;th>Foreground&lt;/th>
+ &lt;th>Background&lt;/th>
  &lt;/tr>
  &lt;/thead>
  &lt;tbody>
  &lt;tr>
- &lt;td style="text-align: left">Black&lt;/td>
- &lt;td style="text-align: left">\u001b[30m&lt;/td>
- &lt;td style="text-align: left">\u001b[40m&lt;/td>
+ &lt;td>Black&lt;/td>
+ &lt;td>\u001b[30m&lt;/td>
+ &lt;td>\u001b[40m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Red&lt;/td>
- &lt;td style="text-align: left">\u001b[31m&lt;/td>
- &lt;td style="text-align: left">\u001b[41m&lt;/td>
+ &lt;td>Red&lt;/td>
+ &lt;td>\u001b[31m&lt;/td>
+ &lt;td>\u001b[41m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Green&lt;/td>
- &lt;td style="text-align: left">\u001b[32m&lt;/td>
- &lt;td style="text-align: left">\u001b[42m&lt;/td>
+ &lt;td>Green&lt;/td>
+ &lt;td>\u001b[32m&lt;/td>
+ &lt;td>\u001b[42m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Yellow&lt;/td>
- &lt;td style="text-align: left">\u001b[33m&lt;/td>
- &lt;td style="text-align: left">\u001b[43m&lt;/td>
+ &lt;td>Yellow&lt;/td>
+ &lt;td>\u001b[33m&lt;/td>
+ &lt;td>\u001b[43m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Blue&lt;/td>
- &lt;td style="text-align: left">\u001b[34m&lt;/td>
- &lt;td style="text-align: left">\u001b[44m&lt;/td>
+ &lt;td>Blue&lt;/td>
+ &lt;td>\u001b[34m&lt;/td>
+ &lt;td>\u001b[44m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Magenta&lt;/td>
- &lt;td style="text-align: left">\u001b[35m&lt;/td>
- &lt;td style="text-align: left">\u001b[45m&lt;/td>
+ &lt;td>Magenta&lt;/td>
+ &lt;td>\u001b[35m&lt;/td>
+ &lt;td>\u001b[45m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Cyan&lt;/td>
- &lt;td style="text-align: left">\u001b[36m&lt;/td>
- &lt;td style="text-align: left">\u001b[46m&lt;/td>
+ &lt;td>Cyan&lt;/td>
+ &lt;td>\u001b[36m&lt;/td>
+ &lt;td>\u001b[46m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">White&lt;/td>
- &lt;td style="text-align: left">\u001b[37m&lt;/td>
- &lt;td style="text-align: left">\u001b[47m&lt;/td>
+ &lt;td>White&lt;/td>
+ &lt;td>\u001b[37m&lt;/td>
+ &lt;td>\u001b[47m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Bright Black&lt;/td>
- &lt;td style="text-align: left">\u001b[30;1m&lt;/td>
- &lt;td style="text-align: left">\u001b[40;1m&lt;/td>
+ &lt;td>Bright Black&lt;/td>
+ &lt;td>\u001b[30;1m&lt;/td>
+ &lt;td>\u001b[40;1m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Bright Red&lt;/td>
- &lt;td style="text-align: left">\u001b[31;1m&lt;/td>
- &lt;td style="text-align: left">\u001b[41;1m&lt;/td>
+ &lt;td>Bright Red&lt;/td>
+ &lt;td>\u001b[31;1m&lt;/td>
+ &lt;td>\u001b[41;1m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Bright Green&lt;/td>
- &lt;td style="text-align: left">\u001b[32;1m&lt;/td>
- &lt;td style="text-align: left">\u001b[42;1m&lt;/td>
+ &lt;td>Bright Green&lt;/td>
+ &lt;td>\u001b[32;1m&lt;/td>
+ &lt;td>\u001b[42;1m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Bright Yellow&lt;/td>
- &lt;td style="text-align: left">\u001b[33;1m&lt;/td>
- &lt;td style="text-align: left">\u001b[43;1m&lt;/td>
+ &lt;td>Bright Yellow&lt;/td>
+ &lt;td>\u001b[33;1m&lt;/td>
+ &lt;td>\u001b[43;1m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Bright Blue&lt;/td>
- &lt;td style="text-align: left">\u001b[34;1m&lt;/td>
- &lt;td style="text-align: left">\u001b[44;1m&lt;/td>
+ &lt;td>Bright Blue&lt;/td>
+ &lt;td>\u001b[34;1m&lt;/td>
+ &lt;td>\u001b[44;1m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Bright Magenta&lt;/td>
- &lt;td style="text-align: left">\u001b[35;1m&lt;/td>
- &lt;td style="text-align: left">\u001b[45;1m&lt;/td>
+ &lt;td>Bright Magenta&lt;/td>
+ &lt;td>\u001b[35;1m&lt;/td>
+ &lt;td>\u001b[45;1m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Bright Cyan&lt;/td>
- &lt;td style="text-align: left">\u001b[36;1m&lt;/td>
- &lt;td style="text-align: left">\u001b[46;1m&lt;/td>
+ &lt;td>Bright Cyan&lt;/td>
+ &lt;td>\u001b[36;1m&lt;/td>
+ &lt;td>\u001b[46;1m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Bright White&lt;/td>
- &lt;td style="text-align: left">\u001b[37;1m&lt;/td>
- &lt;td style="text-align: left">\u001b[47;1m&lt;/td>
+ &lt;td>Bright White&lt;/td>
+ &lt;td>\u001b[37;1m&lt;/td>
+ &lt;td>\u001b[47;1m&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">Reset&lt;/td>
- &lt;td style="text-align: left">\u001b[0m&lt;/td>
- &lt;td style="text-align: left">\u001b[0m&lt;/td>
+ &lt;td>Reset&lt;/td>
+ &lt;td>\u001b[0m&lt;/td>
+ &lt;td>\u001b[0m&lt;/td>
  &lt;/tr>
  &lt;/tbody>
 &lt;/table></description></item></channel></rss>

@@ -5,4 +5,5 @@
 &lt;p>There is also a Python package which can be installed by &lt;code>pip&lt;/code> but it seems not to be maintained for a long time.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sudo pacman -S shadowsocks-libev
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="shadowsocks-server-configuration">Shadowsocks Server Configuration&lt;/h3>
-&lt;p>Config file is located at &lt;code>/etc/shadowsocks/myserver.json&lt;/code>. On FreeBSD it is &lt;code>/usr/local/etc/shadowsocks/myserver.json&lt;/code>&lt;/p></description></item></channel></rss>
+&lt;p>Config file is located at &lt;code>/etc/shadowsocks/myserver.json&lt;/code>. On FreeBSD it is &lt;code>/usr/local/etc/shadowsocks/myserver.json&lt;/code>&lt;/p>
+&lt;p>The file name can vary.&lt;/p></description></item></channel></rss>
