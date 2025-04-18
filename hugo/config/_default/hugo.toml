@@ -1,6 +1,5 @@
 baseUrl = "https://peromage.github.io"
 title = "undefined behavior"
-paginate = 20
 
 disqusShortname = ""
 googleAnalytics = ""
@@ -12,3 +11,6 @@ hasCJKLanguage = true
 
 [author]
 name = "Fang Deng"
+
+[pagination]
+pagerSize = 20

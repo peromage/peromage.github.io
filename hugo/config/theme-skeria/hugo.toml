@@ -1,6 +1,7 @@
 theme = "skeria"
 
-paginate = 10
+[pagination]
+pagerSize = 10
 
 # All parameters below here are optional and can be mixed and matched.
 [params]
