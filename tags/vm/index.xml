@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vm on undefined behavior</title><link>https://peromage.github.io/tags/vm/</link><description>Recent content in Vm on undefined behavior</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sun, 22 Jan 2023 21:19:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/vm/index.xml" rel="self" type="application/rss+xml"/><item><title>My Common Windows VM Setup</title><link>https://peromage.github.io/p/my-common-windows-vm-setup/</link><pubDate>Sun, 13 Mar 2022 17:47:00 +0000</pubDate><guid>https://peromage.github.io/p/my-common-windows-vm-setup/</guid><description>&lt;h2 id="before-starting">Before Starting&lt;/h2>
-&lt;p>This post mainly discusses VM setup for Windows since I&amp;rsquo;ve been using Windows as a secondary OS for apps or games that cannot run on Linux.&lt;/p>
-&lt;p>This post discusses setup on Arch Linux.&lt;/p>
-&lt;p>This post assumes the CPU and motherboard support &lt;code>VT-d&lt;/code> and &lt;code>IOMMU&lt;/code> features. Detailed prerequisites can be found on &lt;a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF">this page&lt;/a>.&lt;/p>
-&lt;h2 id="install-hypervisor">Install Hypervisor&lt;/h2>
-&lt;p>Follow Arch wiki to install and setup:&lt;/p>
-&lt;ol>
-&lt;li>&lt;a href="https://wiki.archlinux.org/title/QEMU">QEMU&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://wiki.archlinux.org/title/libvirt">Libvirt&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://wiki.archlinux.org/title/Virt-Manager">Virt-Manager&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF">OVMF&lt;/a>&lt;/li>
-&lt;/ol>
-&lt;h2 id="install-windows-vm">Install Windows VM&lt;/h2>
-&lt;h3 id="before-installation">Before Installation&lt;/h3>
-&lt;p>Download the latest Windows 10 ISO from &lt;a href="https://www.microsoft.com/en-ca/software-download/windows10ISO">Microsoft&lt;/a>. Windows 11 is buggy and requires Microsoft account login during installation, which sucks.&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vm on undefined behavior</title><link>https://peromage.github.io/tags/vm/</link><description>Recent content in Vm on undefined behavior</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sun, 22 Jan 2023 21:19:00 +0000</lastBuildDate><atom:link href="https://peromage.github.io/tags/vm/index.xml" rel="self" type="application/rss+xml"/><item><title>My Common Windows VM Setup</title><link>https://peromage.github.io/p/my-common-windows-vm-setup/</link><pubDate>Sun, 13 Mar 2022 17:47:00 +0000</pubDate><guid>https://peromage.github.io/p/my-common-windows-vm-setup/</guid><description>&lt;h2 id="before-starting"&gt;Before Starting&lt;/h2&gt;
+&lt;p&gt;This post mainly discusses VM setup for Windows since I&amp;rsquo;ve been using Windows as a secondary OS for apps or games that cannot run on Linux.&lt;/p&gt;
+&lt;p&gt;This post discusses setup on Arch Linux.&lt;/p&gt;
+&lt;p&gt;This post assumes the CPU and motherboard support &lt;code&gt;VT-d&lt;/code&gt; and &lt;code&gt;IOMMU&lt;/code&gt; features. Detailed prerequisites can be found on &lt;a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF"&gt;this page&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="install-hypervisor"&gt;Install Hypervisor&lt;/h2&gt;
+&lt;p&gt;Follow Arch wiki to install and setup:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://wiki.archlinux.org/title/QEMU"&gt;QEMU&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://wiki.archlinux.org/title/libvirt"&gt;Libvirt&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://wiki.archlinux.org/title/Virt-Manager"&gt;Virt-Manager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF"&gt;OVMF&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="install-windows-vm"&gt;Install Windows VM&lt;/h2&gt;
+&lt;h3 id="before-installation"&gt;Before Installation&lt;/h3&gt;
+&lt;p&gt;Download the latest Windows 10 ISO from &lt;a href="https://www.microsoft.com/en-ca/software-download/windows10ISO"&gt;Microsoft&lt;/a&gt;. Windows 11 is buggy and requires Microsoft account login during installation, which sucks.&lt;/p&gt;</description></item></channel></rss>

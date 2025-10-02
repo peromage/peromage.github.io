@@ -1,82 +1,82 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on undefined behavior</title><link>https://peromage.github.io/categories/linux/</link><description>Recent content in Linux on undefined behavior</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Tue, 12 Aug 2025 03:29:08 +0000</lastBuildDate><atom:link href="https://peromage.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Setup Windows To Go in a Virtual Disk</title><link>https://peromage.github.io/p/setup-windows-to-go-in-a-virtual-disk/</link><pubDate>Wed, 13 Mar 2024 15:18:00 +0000</pubDate><guid>https://peromage.github.io/p/setup-windows-to-go-in-a-virtual-disk/</guid><description>&lt;h2 id="ramble">Ramble&lt;/h2>
-&lt;p>It looks like I had a lot stories about this Windows boot setup. I figure this post would be the last one I write about it since this is the most commonly used case I have so far.&lt;/p>
-&lt;p>So I got a Steam Deck last year. It&amp;rsquo;s pretty handy to use it as a mini PC in case I don&amp;rsquo;t have one in hands. However, there are still things exclusive on Windows but I don&amp;rsquo;t want to mess up with the internal SSD to dual-boot just for this temporary need.&lt;/p></description></item><item><title>Moving from Arch Linux to NixOS</title><link>https://peromage.github.io/p/moving-from-arch-linux-to-nixos/</link><pubDate>Sun, 29 Oct 2023 15:07:00 +0000</pubDate><guid>https://peromage.github.io/p/moving-from-arch-linux-to-nixos/</guid><description>&lt;p>I&amp;rsquo;ve been learning Nix for a while and using the Nix package manager on my work desktop that runs Ubuntu. However, I did not use the NixOS on my personal laptop because I thought I might put a lot effort after work to set it up, which I didn&amp;rsquo;t really want to. Until recent, the Arch dependencies broke again and I felt it kinda suck to fix those issues so I decided to give Nix a try. To my suprise, the installation process is way simpler than I expected.&lt;/p></description></item><item><title>[Archive] Multiboot USB</title><link>https://peromage.github.io/p/archive-multiboot-usb/</link><pubDate>Sun, 27 Aug 2023 17:55:00 +0000</pubDate><guid>https://peromage.github.io/p/archive-multiboot-usb/</guid><description>&lt;p>Boot from any ISO file&lt;/p>
-&lt;h2 id="hybrid-uefi-gpt-plus-bios-mbr-gpt-boot">Hybrid UEFI GPT + BIOS MBR/GPT boot&lt;/h2>
-&lt;h3 id="preparation">Preparation&lt;/h3>
-&lt;p>Create 3 partitions on a removable USB stick.&lt;/p>
-&lt;ol>
-&lt;li>A BIOS boot partition (gdisk type code &lt;code>EF02&lt;/code>, or GUID &lt;code>21686148-6449-6E6F-744E-656564454649&lt;/code>) with no filesystem. This partition can be put in any place on the disk but it is recommended to put it at the begginning from sector 34 to 2047. At minimal 1 MiB.&lt;/li>
-&lt;li>An EFI System partition (gdisk type code &lt;code>EF00&lt;/code>) with a FAT32 filesystem. This partition can be as small as 50 MiB but it is better to set at least 256 MiB (550 MiB recommended).&lt;/li>
-&lt;li>Data partition (use a filesystem supported by GRUB). This partition can take up the rest of the space of the drive.&lt;/li>
-&lt;/ol>
-&lt;h3 id="grub-installation">GRUB Installation&lt;/h3>
-&lt;p>Mount EFI and data partitions.
-First install GRUB for UEFI:&lt;/p></description></item><item><title>Arch Linux on Laptop</title><link>https://peromage.github.io/p/arch-linux-on-laptop/</link><pubDate>Tue, 08 Nov 2022 22:45:00 +0000</pubDate><guid>https://peromage.github.io/p/arch-linux-on-laptop/</guid><description>&lt;p>I recently got my new laptop and I found that some additional tweaks need to be made for laptops. Thus, this post is to have a record in case I forget when I have to reinstall the system.&lt;/p>
-&lt;h2 id="some-basic-setup">Some basic setup&lt;/h2>
-&lt;p>Unlike desktop, laptops have to be secure so encrytion is a must.&lt;/p>
-&lt;p>Details of how-to can be found on Arch wiki. I&amp;rsquo;m not going to go through that here. However, I&amp;rsquo;ll note down some considerations and things that need to pay attention to.&lt;/p></description></item><item><title>VNC Quick Guide</title><link>https://peromage.github.io/p/vnc-quick-guide/</link><pubDate>Wed, 15 Jun 2022 17:40:00 +0000</pubDate><guid>https://peromage.github.io/p/vnc-quick-guide/</guid><description>&lt;p>I found that every time when I try to setup VNC for remote access I always have troubles so this post serves as a note for myself.&lt;/p>
-&lt;p>Be aware VNC only works for X (not sure about Wayland).&lt;/p>
-&lt;h2 id="choose-a-vnc-server">Choose a VNC Server&lt;/h2>
-&lt;p>Generally I use &lt;a href="https://tigervnc.org/">TigerVNC&lt;/a>. It&amp;rsquo;s a fork of &lt;em>TightVNC&lt;/em> with good performance and easy configuration.&lt;/p>
-&lt;p>It has two types of installations:&lt;/p>
-&lt;ul>
-&lt;li>Standalone: It creates a new X server when the client is connected. Independent from the local X server.&lt;/li>
-&lt;li>Scraping: It mirrors the local X server, like screen sharing.&lt;/li>
-&lt;/ul>
-&lt;p>Usually they are shipped with individual packages. To install, for example, on Ubuntu&lt;/p></description></item><item><title>My Common Windows VM Setup</title><link>https://peromage.github.io/p/my-common-windows-vm-setup/</link><pubDate>Sun, 13 Mar 2022 17:47:00 +0000</pubDate><guid>https://peromage.github.io/p/my-common-windows-vm-setup/</guid><description>&lt;h2 id="before-starting">Before Starting&lt;/h2>
-&lt;p>This post mainly discusses VM setup for Windows since I&amp;rsquo;ve been using Windows as a secondary OS for apps or games that cannot run on Linux.&lt;/p>
-&lt;p>This post discusses setup on Arch Linux.&lt;/p>
-&lt;p>This post assumes the CPU and motherboard support &lt;code>VT-d&lt;/code> and &lt;code>IOMMU&lt;/code> features. Detailed prerequisites can be found on &lt;a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF">this page&lt;/a>.&lt;/p>
-&lt;h2 id="install-hypervisor">Install Hypervisor&lt;/h2>
-&lt;p>Follow Arch wiki to install and setup:&lt;/p>
-&lt;ol>
-&lt;li>&lt;a href="https://wiki.archlinux.org/title/QEMU">QEMU&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://wiki.archlinux.org/title/libvirt">Libvirt&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://wiki.archlinux.org/title/Virt-Manager">Virt-Manager&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF">OVMF&lt;/a>&lt;/li>
-&lt;/ol>
-&lt;h2 id="install-windows-vm">Install Windows VM&lt;/h2>
-&lt;h3 id="before-installation">Before Installation&lt;/h3>
-&lt;p>Download the latest Windows 10 ISO from &lt;a href="https://www.microsoft.com/en-ca/software-download/windows10ISO">Microsoft&lt;/a>. Windows 11 is buggy and requires Microsoft account login during installation, which sucks.&lt;/p></description></item><item><title>Shadowsocks Quick Setup</title><link>https://peromage.github.io/p/shadowsocks-quick-setup/</link><pubDate>Sun, 13 Mar 2022 00:03:00 +0000</pubDate><guid>https://peromage.github.io/p/shadowsocks-quick-setup/</guid><description>&lt;p>This note is written for my personal convenience.&lt;/p>
-&lt;h2 id="server-setup">Server Setup&lt;/h2>
-&lt;h3 id="installation">Installation&lt;/h3>
-&lt;p>Use system package manager to install &lt;code>shadowsocks-libev&lt;/code>. In this case, for Arch Linux it is &lt;code>pacman&lt;/code>.&lt;/p>
-&lt;p>There is also a Python package which can be installed by &lt;code>pip&lt;/code> but it seems not to be maintained for a long time.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sudo pacman -S shadowsocks-libev
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="shadowsocks-server-configuration">Shadowsocks Server Configuration&lt;/h3>
-&lt;p>Config file is located at &lt;code>/etc/shadowsocks/myserver.json&lt;/code>. On FreeBSD it is &lt;code>/usr/local/etc/shadowsocks/myserver.json&lt;/code>&lt;/p>
-&lt;p>The file name can vary.&lt;/p></description></item><item><title>SSH Over GPG Agent</title><link>https://peromage.github.io/p/ssh-over-gpg-agent/</link><pubDate>Sun, 13 Mar 2022 00:02:00 +0000</pubDate><guid>https://peromage.github.io/p/ssh-over-gpg-agent/</guid><description>&lt;p>This is a quick note of &lt;code>gpg-agent&lt;/code> setup for SSH.&lt;/p>
-&lt;h2 id="quick-setup">Quick Setup&lt;/h2>
-&lt;ol>
-&lt;li>Import your GPG authentication key.&lt;/li>
-&lt;li>Enable SSH support for &lt;code>gpg-agent&lt;/code>.&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">echo&lt;/span> enable-ssh-support &amp;gt;&amp;gt; &lt;span style="color:#000">$HOME&lt;/span>/.gnupg/gpg-agent.conf
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
-&lt;li>Get the authentication keygrip.&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ gpg -k --with-keygrip
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
-&lt;li>Add the authentication key to the keychain (replace &lt;code>KEYGRIP&lt;/code> with the value obtained from the previous step)&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">echo&lt;/span> KEYGRIP &amp;gt;&amp;gt; &lt;span style="color:#000">$HOME&lt;/span>/.gnupg/sshcontrol
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
-&lt;li>Add the following init code to &lt;code>.bashrc&lt;/code>&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">unset&lt;/span> SSH_AGENT_PID
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">export&lt;/span> &lt;span style="color:#000">SSH_AUTH_SOCK&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#4e9a06">&amp;#34;&lt;/span>&lt;span style="color:#204a87;font-weight:bold">$(&lt;/span>gpgconf --list-dirs agent-ssh-socket&lt;span style="color:#204a87;font-weight:bold">)&lt;/span>&lt;span style="color:#4e9a06">&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">export&lt;/span> &lt;span style="color:#000">GPG_TTY&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#4e9a06">&amp;#34;&lt;/span>&lt;span style="color:#204a87;font-weight:bold">$(&lt;/span>tty&lt;span style="color:#204a87;font-weight:bold">)&lt;/span>&lt;span style="color:#4e9a06">&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>gpg-connect-agent updatestartuptty /bye &amp;gt; /dev/null
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
-&lt;li>Kill any running &lt;code>ssh-agent&lt;/code> and &lt;code>gpg-agent&lt;/code>, and then open a new Bash session.&lt;/li>
-&lt;/ol>
-&lt;h2 id="misc">Misc&lt;/h2>
-&lt;h3 id="export-ssh-public-keys">Export SSH Public Keys&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ gpg --export-ssh-key &amp;lt;uid/fingerprint&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Minimalist's Multi-boot USB Drive</title><link>https://peromage.github.io/p/minimalists-multi-boot-usb-drive/</link><pubDate>Wed, 26 Jan 2022 20:34:00 +0000</pubDate><guid>https://peromage.github.io/p/minimalists-multi-boot-usb-drive/</guid><description>&lt;h2 id="story">Story&lt;/h2>
-&lt;p>Recently I&amp;rsquo;ve realized a fact that I always have needs to keep a multi-boot USB in my pocket for either Linux or Windows installation. There are a lot tools out there already but I don&amp;rsquo;t really like them. At least, I mean, they are too flashy to me. A beautiful boot menu seems not to be attractive. What I need is just a simple and practical maybe a little ugly boot device. It should be minimalist. More importantly, it has to be easy to setup with the tools on the system already and maintainable. No funky scripts.&lt;/p></description></item><item><title>Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC</title><link>https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</link><pubDate>Fri, 09 Jul 2021 16:40:00 +0000</pubDate><guid>https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</guid><description>&lt;h2 id="background">Background&lt;/h2>
-&lt;p>Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.&lt;/p>
-&lt;p>Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage. Also you are able to create differencing disks which are pretty much like snapshots.&lt;/p></description></item><item><title>Windows+Linux双系统引导手记</title><link>https://peromage.github.io/p/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</link><pubDate>Wed, 05 Apr 2017 19:26:00 +0000</pubDate><guid>https://peromage.github.io/p/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</guid><description>&lt;h2 id="0x00-情况简述">0x00 情况简述&lt;/h2>
-&lt;p>由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on undefined behavior</title><link>https://peromage.github.io/categories/linux/</link><description>Recent content in Linux on undefined behavior</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Thu, 02 Oct 2025 21:31:47 +0000</lastBuildDate><atom:link href="https://peromage.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Setup Windows To Go in a Virtual Disk</title><link>https://peromage.github.io/p/setup-windows-to-go-in-a-virtual-disk/</link><pubDate>Wed, 13 Mar 2024 15:18:00 +0000</pubDate><guid>https://peromage.github.io/p/setup-windows-to-go-in-a-virtual-disk/</guid><description>&lt;h2 id="ramble"&gt;Ramble&lt;/h2&gt;
+&lt;p&gt;It looks like I had a lot stories about this Windows boot setup. I figure this post would be the last one I write about it since this is the most commonly used case I have so far.&lt;/p&gt;
+&lt;p&gt;So I got a Steam Deck last year. It&amp;rsquo;s pretty handy to use it as a mini PC in case I don&amp;rsquo;t have one in hands. However, there are still things exclusive on Windows but I don&amp;rsquo;t want to mess up with the internal SSD to dual-boot just for this temporary need.&lt;/p&gt;</description></item><item><title>Moving from Arch Linux to NixOS</title><link>https://peromage.github.io/p/moving-from-arch-linux-to-nixos/</link><pubDate>Sun, 29 Oct 2023 15:07:00 +0000</pubDate><guid>https://peromage.github.io/p/moving-from-arch-linux-to-nixos/</guid><description>&lt;p&gt;I&amp;rsquo;ve been learning Nix for a while and using the Nix package manager on my work desktop that runs Ubuntu. However, I did not use the NixOS on my personal laptop because I thought I might put a lot effort after work to set it up, which I didn&amp;rsquo;t really want to. Until recent, the Arch dependencies broke again and I felt it kinda suck to fix those issues so I decided to give Nix a try. To my suprise, the installation process is way simpler than I expected.&lt;/p&gt;</description></item><item><title>[Archive] Multiboot USB</title><link>https://peromage.github.io/p/archive-multiboot-usb/</link><pubDate>Sun, 27 Aug 2023 17:55:00 +0000</pubDate><guid>https://peromage.github.io/p/archive-multiboot-usb/</guid><description>&lt;p&gt;Boot from any ISO file&lt;/p&gt;
+&lt;h2 id="hybrid-uefi-gpt-plus-bios-mbr-gpt-boot"&gt;Hybrid UEFI GPT + BIOS MBR/GPT boot&lt;/h2&gt;
+&lt;h3 id="preparation"&gt;Preparation&lt;/h3&gt;
+&lt;p&gt;Create 3 partitions on a removable USB stick.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A BIOS boot partition (gdisk type code &lt;code&gt;EF02&lt;/code&gt;, or GUID &lt;code&gt;21686148-6449-6E6F-744E-656564454649&lt;/code&gt;) with no filesystem. This partition can be put in any place on the disk but it is recommended to put it at the begginning from sector 34 to 2047. At minimal 1 MiB.&lt;/li&gt;
+&lt;li&gt;An EFI System partition (gdisk type code &lt;code&gt;EF00&lt;/code&gt;) with a FAT32 filesystem. This partition can be as small as 50 MiB but it is better to set at least 256 MiB (550 MiB recommended).&lt;/li&gt;
+&lt;li&gt;Data partition (use a filesystem supported by GRUB). This partition can take up the rest of the space of the drive.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="grub-installation"&gt;GRUB Installation&lt;/h3&gt;
+&lt;p&gt;Mount EFI and data partitions.
+First install GRUB for UEFI:&lt;/p&gt;</description></item><item><title>Arch Linux on Laptop</title><link>https://peromage.github.io/p/arch-linux-on-laptop/</link><pubDate>Tue, 08 Nov 2022 22:45:00 +0000</pubDate><guid>https://peromage.github.io/p/arch-linux-on-laptop/</guid><description>&lt;p&gt;I recently got my new laptop and I found that some additional tweaks need to be made for laptops. Thus, this post is to have a record in case I forget when I have to reinstall the system.&lt;/p&gt;
+&lt;h2 id="some-basic-setup"&gt;Some basic setup&lt;/h2&gt;
+&lt;p&gt;Unlike desktop, laptops have to be secure so encrytion is a must.&lt;/p&gt;
+&lt;p&gt;Details of how-to can be found on Arch wiki. I&amp;rsquo;m not going to go through that here. However, I&amp;rsquo;ll note down some considerations and things that need to pay attention to.&lt;/p&gt;</description></item><item><title>VNC Quick Guide</title><link>https://peromage.github.io/p/vnc-quick-guide/</link><pubDate>Wed, 15 Jun 2022 17:40:00 +0000</pubDate><guid>https://peromage.github.io/p/vnc-quick-guide/</guid><description>&lt;p&gt;I found that every time when I try to setup VNC for remote access I always have troubles so this post serves as a note for myself.&lt;/p&gt;
+&lt;p&gt;Be aware VNC only works for X (not sure about Wayland).&lt;/p&gt;
+&lt;h2 id="choose-a-vnc-server"&gt;Choose a VNC Server&lt;/h2&gt;
+&lt;p&gt;Generally I use &lt;a href="https://tigervnc.org/"&gt;TigerVNC&lt;/a&gt;. It&amp;rsquo;s a fork of &lt;em&gt;TightVNC&lt;/em&gt; with good performance and easy configuration.&lt;/p&gt;
+&lt;p&gt;It has two types of installations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Standalone: It creates a new X server when the client is connected. Independent from the local X server.&lt;/li&gt;
+&lt;li&gt;Scraping: It mirrors the local X server, like screen sharing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Usually they are shipped with individual packages. To install, for example, on Ubuntu&lt;/p&gt;</description></item><item><title>My Common Windows VM Setup</title><link>https://peromage.github.io/p/my-common-windows-vm-setup/</link><pubDate>Sun, 13 Mar 2022 17:47:00 +0000</pubDate><guid>https://peromage.github.io/p/my-common-windows-vm-setup/</guid><description>&lt;h2 id="before-starting"&gt;Before Starting&lt;/h2&gt;
+&lt;p&gt;This post mainly discusses VM setup for Windows since I&amp;rsquo;ve been using Windows as a secondary OS for apps or games that cannot run on Linux.&lt;/p&gt;
+&lt;p&gt;This post discusses setup on Arch Linux.&lt;/p&gt;
+&lt;p&gt;This post assumes the CPU and motherboard support &lt;code&gt;VT-d&lt;/code&gt; and &lt;code&gt;IOMMU&lt;/code&gt; features. Detailed prerequisites can be found on &lt;a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF"&gt;this page&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="install-hypervisor"&gt;Install Hypervisor&lt;/h2&gt;
+&lt;p&gt;Follow Arch wiki to install and setup:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://wiki.archlinux.org/title/QEMU"&gt;QEMU&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://wiki.archlinux.org/title/libvirt"&gt;Libvirt&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://wiki.archlinux.org/title/Virt-Manager"&gt;Virt-Manager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF"&gt;OVMF&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="install-windows-vm"&gt;Install Windows VM&lt;/h2&gt;
+&lt;h3 id="before-installation"&gt;Before Installation&lt;/h3&gt;
+&lt;p&gt;Download the latest Windows 10 ISO from &lt;a href="https://www.microsoft.com/en-ca/software-download/windows10ISO"&gt;Microsoft&lt;/a&gt;. Windows 11 is buggy and requires Microsoft account login during installation, which sucks.&lt;/p&gt;</description></item><item><title>Shadowsocks Quick Setup</title><link>https://peromage.github.io/p/shadowsocks-quick-setup/</link><pubDate>Sun, 13 Mar 2022 00:03:00 +0000</pubDate><guid>https://peromage.github.io/p/shadowsocks-quick-setup/</guid><description>&lt;p&gt;This note is written for my personal convenience.&lt;/p&gt;
+&lt;h2 id="server-setup"&gt;Server Setup&lt;/h2&gt;
+&lt;h3 id="installation"&gt;Installation&lt;/h3&gt;
+&lt;p&gt;Use system package manager to install &lt;code&gt;shadowsocks-libev&lt;/code&gt;. In this case, for Arch Linux it is &lt;code&gt;pacman&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;There is also a Python package which can be installed by &lt;code&gt;pip&lt;/code&gt; but it seems not to be maintained for a long time.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ sudo pacman -S shadowsocks-libev
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="shadowsocks-server-configuration"&gt;Shadowsocks Server Configuration&lt;/h3&gt;
+&lt;p&gt;Config file is located at &lt;code&gt;/etc/shadowsocks/myserver.json&lt;/code&gt;. On FreeBSD it is &lt;code&gt;/usr/local/etc/shadowsocks/myserver.json&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The file name can vary.&lt;/p&gt;</description></item><item><title>SSH Over GPG Agent</title><link>https://peromage.github.io/p/ssh-over-gpg-agent/</link><pubDate>Sun, 13 Mar 2022 00:02:00 +0000</pubDate><guid>https://peromage.github.io/p/ssh-over-gpg-agent/</guid><description>&lt;p&gt;This is a quick note of &lt;code&gt;gpg-agent&lt;/code&gt; setup for SSH.&lt;/p&gt;
+&lt;h2 id="quick-setup"&gt;Quick Setup&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Import your GPG authentication key.&lt;/li&gt;
+&lt;li&gt;Enable SSH support for &lt;code&gt;gpg-agent&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#204a87"&gt;echo&lt;/span&gt; enable-ssh-support &amp;gt;&amp;gt; &lt;span style="color:#000"&gt;$HOME&lt;/span&gt;/.gnupg/gpg-agent.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol&gt;
+&lt;li&gt;Get the authentication keygrip.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ gpg -k --with-keygrip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol&gt;
+&lt;li&gt;Add the authentication key to the keychain (replace &lt;code&gt;KEYGRIP&lt;/code&gt; with the value obtained from the previous step)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#204a87"&gt;echo&lt;/span&gt; KEYGRIP &amp;gt;&amp;gt; &lt;span style="color:#000"&gt;$HOME&lt;/span&gt;/.gnupg/sshcontrol
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol&gt;
+&lt;li&gt;Add the following init code to &lt;code&gt;.bashrc&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#204a87"&gt;unset&lt;/span&gt; SSH_AGENT_PID
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#204a87"&gt;export&lt;/span&gt; &lt;span style="color:#000"&gt;SSH_AUTH_SOCK&lt;/span&gt;&lt;span style="color:#ce5c00;font-weight:bold"&gt;=&lt;/span&gt;&lt;span style="color:#4e9a06"&gt;&amp;#34;&lt;/span&gt;&lt;span style="color:#204a87;font-weight:bold"&gt;$(&lt;/span&gt;gpgconf --list-dirs agent-ssh-socket&lt;span style="color:#204a87;font-weight:bold"&gt;)&lt;/span&gt;&lt;span style="color:#4e9a06"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#204a87"&gt;export&lt;/span&gt; &lt;span style="color:#000"&gt;GPG_TTY&lt;/span&gt;&lt;span style="color:#ce5c00;font-weight:bold"&gt;=&lt;/span&gt;&lt;span style="color:#4e9a06"&gt;&amp;#34;&lt;/span&gt;&lt;span style="color:#204a87;font-weight:bold"&gt;$(&lt;/span&gt;tty&lt;span style="color:#204a87;font-weight:bold"&gt;)&lt;/span&gt;&lt;span style="color:#4e9a06"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;gpg-connect-agent updatestartuptty /bye &amp;gt; /dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol&gt;
+&lt;li&gt;Kill any running &lt;code&gt;ssh-agent&lt;/code&gt; and &lt;code&gt;gpg-agent&lt;/code&gt;, and then open a new Bash session.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="misc"&gt;Misc&lt;/h2&gt;
+&lt;h3 id="export-ssh-public-keys"&gt;Export SSH Public Keys&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ gpg --export-ssh-key &amp;lt;uid/fingerprint&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>Minimalist's Multi-boot USB Drive</title><link>https://peromage.github.io/p/minimalists-multi-boot-usb-drive/</link><pubDate>Wed, 26 Jan 2022 20:34:00 +0000</pubDate><guid>https://peromage.github.io/p/minimalists-multi-boot-usb-drive/</guid><description>&lt;h2 id="story"&gt;Story&lt;/h2&gt;
+&lt;p&gt;Recently I&amp;rsquo;ve realized a fact that I always have needs to keep a multi-boot USB in my pocket for either Linux or Windows installation. There are a lot tools out there already but I don&amp;rsquo;t really like them. At least, I mean, they are too flashy to me. A beautiful boot menu seems not to be attractive. What I need is just a simple and practical maybe a little ugly boot device. It should be minimalist. More importantly, it has to be easy to setup with the tools on the system already and maintainable. No funky scripts.&lt;/p&gt;</description></item><item><title>Dual-booting Windows VHD and Native Linux on a BIOS+GPT PC</title><link>https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</link><pubDate>Fri, 09 Jul 2021 16:40:00 +0000</pubDate><guid>https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/</guid><description>&lt;h2 id="background"&gt;Background&lt;/h2&gt;
+&lt;p&gt;Previously I wrote a post for this dual-boot scenario. It is a little outdated. In the past year I mostly worked in the Linux environment on my old laptop, so the Windows seems not to be a necessity which occupies a dedicated partition. However, sometimes it is still needed. That is why I started thinking to improve this setup even further.&lt;/p&gt;
+&lt;p&gt;Starting from Windows 7, Windows supports boots from a VHD file which makes it so much easier to manage. Also you are able to create differencing disks which are pretty much like snapshots.&lt;/p&gt;</description></item><item><title>Windows+Linux双系统引导手记</title><link>https://peromage.github.io/p/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</link><pubDate>Wed, 05 Apr 2017 19:26:00 +0000</pubDate><guid>https://peromage.github.io/p/windows-linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%E6%89%8B%E8%AE%B0/</guid><description>&lt;h2 id="0x00-情况简述"&gt;0x00 情况简述&lt;/h2&gt;
+&lt;p&gt;由于开发需要 Linux 环境，所以将老的那台笔记本改造成了双系统。
 这台电脑的基本情况是这样的，64GB 固态硬盘 + 720GB 机械硬盘（实际可用空间有折损，这里为了表示方便），Windows 10 已经安装到了固态硬盘上。由于主板较老，只能支持 BIOS。巨硬又说过 Windows 只能支持 BIOS + MBR，所以第一块主位（Master）上的固态硬盘就只能采用 MBR 分区表，分成了两个区，500MB 用作启动分区，剩下的部分全部划给了系统分区。
-但是 Linux 表示没有巨硬这种尿性，所以为什么不使用更先进的 GPT 分区表？因此从位（Slave）上的机械硬盘被我分成了这个样子：&lt;/p></description></item></channel></rss>
+但是 Linux 表示没有巨硬这种尿性，所以为什么不使用更先进的 GPT 分区表？因此从位（Slave）上的机械硬盘被我分成了这个样子：&lt;/p&gt;</description></item></channel></rss>
