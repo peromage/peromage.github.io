@@ -4,9 +4,28 @@
 #+hugo_tags: ansi escape_code terminal
 #+setupfile: ./setup.conf
 
+* Get Started
 The information in this collection is from Internet, which is collected for my personal convenience.
 
-* CSI sequences
+[[https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797][Standard escape codes]] are prefixed with =Escape=:
+
+- Ctrl-Key: =^[=
+- Octal: =\033=
+- Unicode: =\u001b=
+- Hexadecimal: =\x1B=
+- Decimal: =27=
+
+Followed by the command, somtimes delimited by opening square bracket (=[=), known as a Control Sequence Introducer (CSI), optionally followed by arguments and the command itself.
+
+Arguments are delimeted by semi colon (=;=).
+
+For example:
+
+#+begin_src shell
+\x1b[1;31m  # Set style to bold, red foreground.
+#+end_src
+
+* CSI Sequences
 | Code        | Name                               | Effect                                                                                                                                                                                     |
 |-------------+------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | CSI n A     | CUU – Cursor Up                    | Moves the cursor n (default 1) cells in the given direction. If the cursor is already at the edge of the screen, this has no effect.                                                       |
@@ -29,7 +48,7 @@ The information in this collection is from Internet, which is collected for my p
 | CSI s       | SCP – Save Cursor Position         | Saves the cursor position/state.                                                                                                                                                           |
 | CSI u       | RCP – Restore Cursor Position      | Restores the cursor position/state.                                                                                                                                                        |
 
-* Some popular private sequences
+* Some Popular Private Sequences
 | Code         | Effect                                                                                                                                                                                     |
 |--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | CSI ? 25 h   | DECTCEM Shows the cursor, from the VT320.                                                                                                                                                  |
@@ -39,7 +58,7 @@ The information in this collection is from Internet, which is collected for my p
 | CSI ? 2004 h | Turn on bracketed paste mode. Text pasted into the terminal will be surrounded by ESC [200~ and ESC [201~, and characters in it should not be treated as commands (for example in Vim).[20] From Unix terminal emulators. |
 | CSI ? 2004 l | Turn off bracketed paste mode.                                                                                                                                                             |
 
-* SGR parameters
+* SGR Parameters
 |    Code | Effect                                                     | Note                                                              |
 |---------+------------------------------------------------------------+-------------------------------------------------------------------|
 |       0 | Reset / Normal                                             | all attributes off                                                |
@@ -83,7 +102,7 @@ The information in this collection is from Internet, which is collected for my p
 |   90–97 | Set bright foreground color                                | aixterm (not in standard)                                         |
 | 100–107 | Set bright background color                                | aixterm (not in standard)                                         |
 
-* Color code
+* Color Code
 | Color          | Foreground   | Background   |
 |----------------+--------------+--------------|
 | Black          | \u001b[30m   | \u001b[40m   |
@@ -103,3 +122,6 @@ The information in this collection is from Internet, which is collected for my p
 | Bright Cyan    | \u001b[36;1m | \u001b[46;1m |
 | Bright White   | \u001b[37;1m | \u001b[47;1m |
 | Reset          | \u001b[0m    | \u001b[0m    |
+
+* References
+https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
