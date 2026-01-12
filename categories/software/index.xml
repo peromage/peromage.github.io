@@ -1,5 +1,18 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Software on undefined behavior</title><link>https://peromage.github.io/categories/software/</link><description>Recent content in Software on undefined behavior</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Thu, 02 Oct 2025 21:31:46 +0000</lastBuildDate><atom:link href="https://peromage.github.io/categories/software/index.xml" rel="self" type="application/rss+xml"/><item><title>ANSI Escape Code Collection</title><link>https://peromage.github.io/p/ansi-escape-code-collection/</link><pubDate>Sun, 27 Aug 2023 18:11:00 +0000</pubDate><guid>https://peromage.github.io/p/ansi-escape-code-collection/</guid><description>&lt;p&gt;The information in this collection is from Internet, which is collected for my personal convenience.&lt;/p&gt;
-&lt;h2 id="csi-sequences"&gt;CSI sequences&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Software on undefined behavior</title><link>https://peromage.github.io/categories/software/</link><description>Recent content in Software on undefined behavior</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 12 Jan 2026 03:19:12 +0000</lastBuildDate><atom:link href="https://peromage.github.io/categories/software/index.xml" rel="self" type="application/rss+xml"/><item><title>ANSI Escape Code Collection</title><link>https://peromage.github.io/p/ansi-escape-code-collection/</link><pubDate>Sun, 27 Aug 2023 18:11:00 +0000</pubDate><guid>https://peromage.github.io/p/ansi-escape-code-collection/</guid><description>&lt;h2 id="get-started"&gt;Get Started&lt;/h2&gt;
+&lt;p&gt;The information in this collection is from Internet, which is collected for my personal convenience.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797"&gt;Standard escape codes&lt;/a&gt; are prefixed with &lt;code&gt;Escape&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Ctrl-Key: &lt;code&gt;^[&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Octal: &lt;code&gt;\033&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Unicode: &lt;code&gt;\u001b&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Hexadecimal: &lt;code&gt;\x1B&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Decimal: &lt;code&gt;27&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Followed by the command, somtimes delimited by opening square bracket (&lt;code&gt;[&lt;/code&gt;), known as a Control Sequence Introducer (CSI), optionally followed by arguments and the command itself.&lt;/p&gt;
+&lt;p&gt;Arguments are delimeted by semi colon (&lt;code&gt;;&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#4e9a06"&gt;\x&lt;/span&gt;1b&lt;span style="color:#ce5c00;font-weight:bold"&gt;[&lt;/span&gt;1&lt;span style="color:#000;font-weight:bold"&gt;;&lt;/span&gt;31m &lt;span style="color:#8f5902;font-style:italic"&gt;# Set style to bold, red foreground.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="csi-sequences"&gt;CSI Sequences&lt;/h2&gt;
 &lt;table&gt;
  &lt;thead&gt;
  &lt;tr&gt;
@@ -106,7 +119,7 @@
  &lt;/tr&gt;
  &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h2 id="some-popular-private-sequences"&gt;Some popular private sequences&lt;/h2&gt;
+&lt;h2 id="some-popular-private-sequences"&gt;Some Popular Private Sequences&lt;/h2&gt;
 &lt;table&gt;
  &lt;thead&gt;
  &lt;tr&gt;
@@ -141,7 +154,7 @@
  &lt;/tr&gt;
  &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h2 id="sgr-parameters"&gt;SGR parameters&lt;/h2&gt;
+&lt;h2 id="sgr-parameters"&gt;SGR Parameters&lt;/h2&gt;
 &lt;table&gt;
  &lt;thead&gt;
  &lt;tr&gt;
@@ -353,7 +366,7 @@
  &lt;/tr&gt;
  &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h2 id="color-code"&gt;Color code&lt;/h2&gt;
+&lt;h2 id="color-code"&gt;Color Code&lt;/h2&gt;
 &lt;table&gt;
  &lt;thead&gt;
  &lt;tr&gt;
@@ -449,7 +462,9 @@
  &lt;td&gt;\u001b[0m&lt;/td&gt;
  &lt;/tr&gt;
  &lt;/tbody&gt;
-&lt;/table&gt;</description></item><item><title>Windows Rescure Quick Reference</title><link>https://peromage.github.io/p/windows-rescure-quick-reference/</link><pubDate>Wed, 19 Oct 2022 00:01:00 +0000</pubDate><guid>https://peromage.github.io/p/windows-rescure-quick-reference/</guid><description>&lt;p&gt;Though I&amp;rsquo;ve written posts about &lt;a href="https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/"&gt;dual-booting Windows and Linux&lt;/a&gt; and &lt;a href="https://peromage.github.io/p/minimalists-multi-boot-usb-drive/"&gt;multi-booting a USB drive&lt;/a&gt;, I have to go back and dig useful information out each time when I forget something.&lt;/p&gt;
+&lt;/table&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797"&gt;https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Windows Rescure Quick Reference</title><link>https://peromage.github.io/p/windows-rescure-quick-reference/</link><pubDate>Wed, 19 Oct 2022 00:01:00 +0000</pubDate><guid>https://peromage.github.io/p/windows-rescure-quick-reference/</guid><description>&lt;p&gt;Though I&amp;rsquo;ve written posts about &lt;a href="https://peromage.github.io/p/dual-booting-windows-vhd-and-native-linux-on-a-bios-gpt-pc/"&gt;dual-booting Windows and Linux&lt;/a&gt; and &lt;a href="https://peromage.github.io/p/minimalists-multi-boot-usb-drive/"&gt;multi-booting a USB drive&lt;/a&gt;, I have to go back and dig useful information out each time when I forget something.&lt;/p&gt;
 &lt;p&gt;After breaking my dual-boot setup once again (forgot to backup boot partition), I decided to create this post for a quick reference.&lt;/p&gt;
 &lt;p&gt;This reference assumes system is boot from UEFI and Windows is installed on a dedicated partition.&lt;/p&gt;
 &lt;h2 id="setup-a-usb-with-system-images"&gt;Setup A USB With System Images&lt;/h2&gt;
